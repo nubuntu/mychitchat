@@ -1,0 +1,209 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AEF60988-35AF-41F5-8A87-DBE31E1D2BD3}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Skype4MP</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Skype4MP</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'SVN Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\SVN Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Core, Version=0.2.2.9991, Culture=neutral, processorArchitecture=x86" />
+    <Reference Include="Dialogs, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SVNBuild\xbmc\bin\Debug\plugins\windows\Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.DirectSound, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="Utils, Version=1.0.2610.34776, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SVNBuild\xbmc\bin\Debug\Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowPlugins, Version=1.0.2610.34791, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SVNBuild\xbmc\bin\Debug\plugins\windows\WindowPlugins.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DXSoundDeviceList.cs" />
+    <Compile Include="GUIAudioDevices.cs" />
+    <Compile Include="GUISkype.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUISkypeChat.cs" />
+    <Compile Include="GUISkypeContact.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUISkypeHistory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUISkypeOut.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUISkypeSettings.cs" />
+    <Compile Include="GUISkypeSMS.cs" />
+    <Compile Include="OptionTypeList.cs" />
+    <Compile Include="SkypeHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SkypeSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="SkypeSetupForm.resx">
+      <DependentUpon>SkypeSetupForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Content Include="keymap_skype.xml" />
+    <Content Include="skin\Blue3wide\mySkype.xml" />
+    <Content Include="skin\Blue3wide\mySkypeAcceptance.xml" />
+    <Content Include="skin\Blue3wide\mySkypeAudioDevices.xml" />
+    <Content Include="skin\Blue3wide\mySkypeChat.xml" />
+    <Content Include="skin\Blue3wide\mySkypeContact.xml" />
+    <Content Include="skin\Blue3wide\mySkypeHistory.xml" />
+    <Content Include="skin\Blue3wide\mySkypeOut.xml" />
+    <Content Include="skin\Blue3wide\mySkypeSettings.xml" />
+    <Content Include="skin\Blue3wide\mySkypeSMS.xml" />
+    <Content Include="skin\Blue3wide\Safe\mySkype.xml" />
+    <Content Include="skin\Blue3wide\Safe\mySkypeChat.xml" />
+    <Content Include="skin\Blue3wide\Safe\mySkypeContact.xml" />
+    <Content Include="skin\Blue3wide\Safe\mySkypeHistory.xml" />
+    <Content Include="skin\Blue3wide\Safe\mySkypeOut - Copy.xml" />
+    <Content Include="skin\Blue3wide\Safe\mySkypeOut.xml" />
+    <Content Include="skin\Blue3wide\Safe\mySkypeSMS.xml" />
+    <Content Include="skin\Blue3\mySkype.xml" />
+    <Content Include="skin\Blue3\mySkypeAudioDevices.xml" />
+    <Content Include="skin\Blue3\mySkypeChat.xml" />
+    <Content Include="skin\Blue3\mySkypeContact.xml" />
+    <Content Include="skin\Blue3\mySkypeHistory.xml" />
+    <Content Include="skin\Blue3\mySkypeOut.xml" />
+    <Content Include="skin\Blue3\mySkypeSettings.xml" />
+    <Content Include="skin\Blue3\mySkypeSMS.xml" />
+    <Content Include="skin\Media\skype_call_di.png" />
+    <Content Include="skin\Media\skype_call_en.png" />
+    <Content Include="skin\Media\skype_hangup_di.png" />
+    <Content Include="skin\Media\skype_hangup_en.png" />
+    <Content Include="skin\Media\skype_incoming.png" />
+    <Content Include="skin\Media\skype_logo.png" />
+    <Content Include="skin\Media\skype_missed.png" />
+    <Content Include="skin\Media\skype_outgoing.png" />
+    <Content Include="skin\Media\skype_status_away.png" />
+    <Content Include="skin\Media\skype_status_donotdist.png" />
+    <Content Include="skin\Media\skype_status_notavail.png" />
+    <Content Include="skin\Media\skype_status_offline.png" />
+    <Content Include="skin\Media\skype_status_online.png" />
+    <Content Include="skin\Media\skype_status_skypeme.png" />
+    <Content Include="Skype4MP Todo.txt" />
+    <Content Include="skype_strings_user.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Skype4MP.nsi" />
+    <None Include="Skype4MPMinimal.nsi" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SKYPE4COMLib">
+      <Guid>{03282B5D-B38F-469D-849A-09B0A7F4881B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>copy $(TargetFileName) D:\MediaPortalDev\SVNBuild\xbmc\bin\Debug\plugins\windows
+copy $(TargetName).pdb D:\MediaPortalDev\SVNBuild\xbmc\bin\Debug\plugins\windows</PostBuildEvent>
+  </PropertyGroup>
+</Project>
