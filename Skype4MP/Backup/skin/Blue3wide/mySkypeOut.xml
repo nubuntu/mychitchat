@@ -1,0 +1,254 @@
+﻿<window>
+	<!-- Widescreen 1366x768 (from BlueTwo wide\References.xml-->
+	<!--
+	   Button_width = Width of a number button = 65
+	   Button gap = pxels between buttons = 15
+	   h_margin = gap between outermost controls and the border of the dialog = 20
+	   
+	   Dialog_Width = 3*button width + 2*button_gap + 2*h_margin = 
+	   
+	   Left margin = (Screen Width - dialog width) / 2 = (1366 - 272) / 2 = 547
+	
+	   
+	   
+	-->
+   <id>1913</id>
+   <defaultcontrol>2</defaultcontrol>
+   <allowoverlay>no</allowoverlay>
+   <controls>
+      <control>
+         <type>image</type>
+         <id>0</id>
+         <posX>497</posX> <!-- 175-->-->
+         <posY>175</posY>
+         <width>372</width>
+         <height>400</height>
+         <texture>dialog_background.png</texture>
+      </control>
+      <control>
+         <description>Title</description>
+         <type>label</type>
+         <id>1</id>
+		  <posX>567</posX><!--185-->
+         <posY>185</posY>
+         <width>290</width>
+         <label>Call SkypeOut Number</label>
+         <font>font14</font>
+         <align>left</align>
+         <textcolor>FFFFFFFF</textcolor>
+      </control>
+      <control>
+         <description>Number</description>
+         <type>label</type>
+         <id>2</id>
+         <posX>557</posX>
+         <posY>245</posY>
+         <width>250</width>
+         <label>#Skype.SkypeOut.Number</label>
+         <font>font12</font>
+         <align>center</align>
+         <textcolor>FFFFFFFF</textcolor>
+      </control>
+	   <!-- <control-->
+	   <!-- layout>GridLayout(0, 6, 52, 8, 1)(rows, columns, spaceX, spaceY, TopDownLeftRight?)</layout
+	   <layout>GridLayout(5, 3, 1, 1)</layout>
+  -->
+	   <control>
+         <description>1</description>
+         <type>button</type>
+         <id>11</id>
+         <posX>540</posX>
+         <posY>285</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 1 </label>
+      </control>
+      <control>
+         <description>2</description>
+         <type>button</type>
+         <id>12</id>
+         <posX>640</posX>
+         <posY>285</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 2 </label>
+      </control>
+      <control>
+         <description>3</description>
+         <type>button</type>
+         <id>13</id>
+         <posX>744</posX>
+         <posY>285</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 3 </label>
+      </control>
+      <control>
+         <description>4</description>
+         <type>button</type>
+         <id>14</id>
+         <posX>540</posX>
+         <posY>338</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 4 </label>
+      </control>
+      <control>
+         <description>5</description>
+         <type>button</type>
+         <id>15</id>
+         <posX>640</posX>
+         <posY>338</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 5 </label>
+      </control>
+      <control>
+         <description>6</description>
+         <type>button</type>
+         <id>16</id>
+         <posX>744</posX>
+         <posY>338</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 6 </label>
+      </control>
+      <control>
+         <description>7</description>
+         <type>button</type>
+         <id>17</id>
+         <posX>540</posX>
+         <posY>391</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 7 </label>
+      </control>
+      <control>
+         <description>8</description>
+         <type>button</type>
+         <id>18</id>
+         <posX>640</posX>
+         <posY>391</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 8 </label>
+      </control>
+      <control>
+         <description>9</description>
+         <type>button</type>
+         <id>19</id>
+         <posX>744</posX>
+         <posY>391</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 9 </label>
+      </control>
+      <control>
+         <description>+</description>
+         <type>button</type>
+         <id>3</id>
+         <posX>540</posX>
+         <posY>444</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> + </label>
+      </control>
+      <control>
+         <description>0</description>
+         <type>button</type>
+         <id>10</id>
+         <posX>640</posX>
+         <posY>444</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label> 0 </label>
+      </control>
+      <control>
+         <description>Del</description>
+         <type>button</type>
+         <id>4</id>
+         <posX>744</posX>
+         <posY>444</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>85</width>
+         <height>38</height>
+         <textureFocus width="65" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="65" height="38">small_button_nofocus.png</textureNoFocus>
+         <label>Del</label>
+	  </control>
+  <!--/control-->
+  <control>
+         <description>call button</description>
+         <type>button</type>
+         <id>21</id>
+         <posX>575</posX>
+         <posY>490</posY>
+         <textXOff>25</textXOff>
+         <textYOff>5</textYOff>
+         <width>100</width>
+         <height>38</height>
+         <textureFocus width="80" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="80" height="38">small_button_nofocus.png</textureNoFocus>
+         <label>Call</label>
+      </control>
+      <control>
+         <description>close button</description>
+         <type>button</type>
+         <id>22</id>
+         <posX>691</posX>
+         <posY>490</posY>
+         <textXOff>20</textXOff>
+         <textYOff>5</textYOff>
+         <width>100</width>
+         <height>38</height>
+         <textureFocus width="80" height="38">small_button_focus.png</textureFocus>
+         <textureNoFocus width="80" height="38">small_button_nofocus.png</textureNoFocus>
+         <label>Close</label>
+      </control>
+   </controls>
+</window>

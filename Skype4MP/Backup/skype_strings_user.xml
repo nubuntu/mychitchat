@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?> 
+  <Language name="Custom" characters="255">
+    <Section name="unmapped"> 
+      <String id="101911" prefix="My ">Skype</String>
+      <String id="101912" prefix="My ">Skype Contact</String>
+      <String id="101913" prefix="My ">SkypeOut</String>
+      <String id="101914" prefix="My ">Skype History</String>
+      <String id="101915" prefix="My ">Skype Send Sms</String>
+      <String id="101916" prefix="My ">Skype Chat</String>
+    </Section>
+  </Language>

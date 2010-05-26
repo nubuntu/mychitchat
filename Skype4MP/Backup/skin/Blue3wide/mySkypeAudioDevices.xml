@@ -1,0 +1,243 @@
+﻿<window>
+	<!-- Widescreen 1366x768 pixels-->
+	<id>1919</id>
+	<defaultcontrol>2</defaultcontrol>
+	<allowoverlay>no</allowoverlay>
+	<controls>
+		<import>common.time.xml</import>
+		<control>
+			<description>Skype text label</description>
+			<type>label</type>
+			<id>1</id>
+			<posX>60</posX>
+			<posY>60</posY>
+			<label>Audio Devices</label>
+			<font>font16</font>
+			<align>left</align>
+			<textcolor>ffffffff</textcolor>
+		</control>
+		<control>
+			<description>BG</description>
+			<type>image</type>
+			<id>1</id>
+			<width>1280</width>
+			<height>720</height>
+		</control>
+		<control>
+			<type>image</type>
+			<id>1</id>
+			<posX>60</posX>
+			<posY>10</posY>
+			<width>80</width>
+			<height>80</height>
+			<zoom>yes</zoom>
+			<texture width="190" height="84">SkypeBlue_128x128.png</texture>
+		</control>
+		<control>
+			<description>Skype text label</description>
+			<type>label</type>
+			<id>1</id>
+			<posX>60</posX>
+			<posY>97</posY>
+			<label>Input</label>
+			<font>font14</font>
+			<align>left</align>
+			<textcolor>ffffffff</textcolor>
+		</control>
+		<control>
+			<type>group</type>
+			<layout>StackLayout</layout>
+			<description>group element</description>
+			<animation effect="fade" time="250">WindowOpen</animation>
+			<animation effect="fade" time="500">WindowClose</animation>
+			<animation effect="slide" time="250" start="-300,0">WindowOpen</animation>
+			<animation effect="slide" time="500" end="0,-300">WindowClose</animation>
+			<posX>100</posX>
+			<posY>130</posY>
+			<control>
+				<description>General</description>
+				<type>togglebutton</type>
+				<width>500</width> <!-- Required - makes the group wide enough ( I hope!) -->
+				<id>1001</id>
+				<label>AudioIn1</label>
+				<onup>1004</onup>
+				<ondown>1002</ondown>
+				<onleft>11</onleft>
+				<onright>11</onright>
+			</control>
+			<control>
+				<description>Voice/Video</description>
+				<type>togglebutton</type>
+				<id>1002</id>
+				<label>AudioIn2</label>
+				<onup>1001</onup>
+				<ondown>1003</ondown>
+				<onleft>11</onleft>
+				<onright>11</onright>
+			</control>
+			<control>
+				<description>Chat</description>
+				<type>togglebutton</type>
+				<id>1003</id>
+				<label>AudioIn3</label>
+				<onup>1002</onup>
+				<ondown>1004</ondown>
+				<onleft>11</onleft>
+				<onright>11</onright>
+			</control>
+			<control>
+				<description>Skype Credit</description>
+				<type>togglebutton</type>
+				<id>1004</id>
+				<label>AudioIn4</label>
+				<onup>1003</onup>
+				<ondown>1005</ondown>
+				<onleft>11</onleft>
+				<onright>11</onright>
+			</control>
+			<control>
+				<description>Save</description>
+				<type>togglebutton</type>
+				<id>1005</id>
+				<label>AudioIn5</label>
+				<onup>1004</onup>
+				<ondown>1006</ondown>
+				<onleft>101</onleft>
+				<onright>101</onright>
+			</control>
+			<control>
+				<description>Save</description>
+				<type>togglebutton</type>
+				<id>1006</id>
+				<label>AudioIn6</label>
+				<onup>1005</onup>
+				<ondown>1007</ondown>
+				<onleft>101</onleft>
+				<onright>101</onright>
+			</control>
+			<control>
+				<description>Save</description>
+				<type>togglebutton</type>
+				<id>1007</id>
+				<label>AudioIn7</label>
+				<onup>1006</onup>
+				<ondown>1008</ondown>
+				<onleft>101</onleft>
+				<onright>101</onright>
+			</control>
+			<control>
+				<description>Save</description>
+				<type>togglebutton</type>
+				<id>1008</id>
+				<label>AudioIn8</label>
+				<onup>1007</onup>
+				<ondown>1001</ondown>
+				<onleft>101</onleft>
+				<onright>101</onright>
+			</control>
+		</control>
+		<control>
+			<description>Skype text label</description>
+			<type>label</type>
+			<id>1</id>
+			<posX>660</posX>
+			<posY>97</posY>
+			<label>Output</label>
+			<font>font14</font>
+			<align>left</align>
+			<textcolor>ffffffff</textcolor>
+		</control>
+		<control>
+			<type>group</type>
+			<layout>StackLayout</layout>
+			<description>General group element</description>
+			<animation effect="fade" time="250">WindowOpen</animation>
+			<animation effect="fade" time="500">WindowClose</animation>
+			<animation effect="slide" time="250" start="-300,0">WindowOpen</animation>
+			<animation effect="slide" time="500" end="0,-300">WindowClose</animation>
+			<posX>700</posX>
+			<posY>130</posY>
+			<control>
+				<description>Start Skype with MP</description>
+				<type>togglebutton</type>
+				<id>2001</id>
+				<width>500</width> <!-- Required - makes the group wide enough ( I hope!) -->
+				<label>AudioOut1</label>
+				<onup>2008</onup>
+				<ondown>2002</ondown>
+				<onleft>11</onleft>
+				<onright>11</onright>
+			</control>
+			<control>
+				<description>Close on MP Exit</description>
+				<type>togglebutton</type>
+				<id>2002</id>
+				<label>AudioOut2</label>
+				<onup>2001</onup>
+				<ondown>2003</ondown>
+				<onleft>12</onleft>
+				<onright>12</onright>
+			</control>
+			<control>
+				<description>Silent Mode</description>
+				<type>togglebutton</type>
+				<id>2003</id>
+				<label>AudioOut3</label>
+				<onup>2002</onup>
+				<ondown>2004</ondown>
+				<onleft>13</onleft>
+				<onright>13</onright>
+			</control>
+			<control>
+				<description>Silent Mode</description>
+				<type>togglebutton</type>
+				<id>2004</id>
+				<label>AudioOut3</label>
+				<onup>2003</onup>
+				<ondown>2005</ondown>
+				<onleft>13</onleft>
+				<onright>13</onright>
+			</control>
+			<control>
+				<description>Silent Mode</description>
+				<type>togglebutton</type>
+				<id>2005</id>
+				<label>AudioOut3</label>
+				<onup>2004</onup>
+				<ondown>2006</ondown>
+				<onleft>13</onleft>
+				<onright>13</onright>
+			</control>
+			<control>
+				<description>Silent Mode</description>
+				<type>togglebutton</type>
+				<id>2006</id>
+				<label>AudioOut3</label>
+				<onup>2005</onup>
+				<ondown>2007</ondown>
+				<onleft>13</onleft>
+				<onright>13</onright>
+			</control>
+			<control>
+				<description>Silent Mode</description>
+				<type>togglebutton</type>
+				<id>2007</id>
+				<label>AudioOut3</label>
+				<onup>2006</onup>
+				<ondown>2008</ondown>
+				<onleft>13</onleft>
+				<onright>13</onright>
+			</control>
+			<control>
+				<description>Silent Mode</description>
+				<type>togglebutton</type>
+				<id>2008</id>
+				<label>AudioOut3</label>
+				<onup>2007</onup>
+				<ondown>2001</ondown>
+				<onleft>13</onleft>
+				<onright>13</onright>
+			</control>
+		</control>
+	</controls>
+</window>
