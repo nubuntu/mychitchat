@@ -8,9 +8,9 @@
     <ProjectGuid>{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jabber.MP</RootNamespace>
-    <AssemblyName>Jabber.MP</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <RootNamespace>MyChitChat</RootNamespace>
+    <AssemblyName>MyChitChat</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -32,10 +32,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL" />
-    <Reference Include="agsXMPP.ui, Version=1.0.3232.40225, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL" />
+    <Reference Include="agsXMPP.ui, Version=1.0.3800.21063, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL" />
     <Reference Include="core, Version=1.0.5.32056, Culture=neutral, processorArchitecture=x86" />
     <Reference Include="dialogs, Version=1.0.5.32061, Culture=neutral, processorArchitecture=x86" />
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -44,20 +47,25 @@
     <Reference Include="WindowPlugins, Version=1.0.5.32072, Culture=neutral, processorArchitecture=x86" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Jabber.cs" />
-    <Compile Include="JabberMP.cs" />
+    <Compile Include="Gui\Main.cs" />
+    <Compile Include="Jabber\Client.cs" />
+    <Compile Include="Gui\Chat.cs" />
+    <Compile Include="Plugin\Plugin.cs" />
+    <Compile Include="Jabber\Roster.cs">
+    </Compile>
+    <Compile Include="Plugin\Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
-    <Compile Include="SetupForm.cs">
+    <Compile Include="Plugin\Settings.cs" />
+    <Compile Include="Plugin\Config.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SetupForm.Designer.cs">
-      <DependentUpon>SetupForm.cs</DependentUpon>
+    <Compile Include="Plugin\Config.Designer.cs">
+      <DependentUpon>Config.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -66,27 +74,38 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SetupForm.resx">
-      <DependentUpon>SetupForm.cs</DependentUpon>
+    <EmbeddedResource Include="Plugin\Config.resx">
+      <DependentUpon>Config.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dll\core.dll" />
-    <Content Include="dll\dialogs.dll" />
-    <Content Include="dll\utils.dll" />
-    <Content Include="dll\WindowPlugins.dll" />
-    <Content Include="img\Jabber_banner.png" />
-    <Content Include="img\MyChitChat_icon_disabled.png" />
-    <Content Include="img\MyChitChat_icon_enabled.png" />
-    <Content Include="skin\Media\MyChitChat_contacts.png" />
-    <Content Include="skin\Media\MyChitChat_inbox_empty.png" />
-    <Content Include="skin\Media\MyChitChat_inbox_full.png" />
-    <Content Include="skin\Media\MyChitChat_incoming_message.png" />
-    <Content Include="skin\Media\MyChitChat_read_message.png" />
-    <Content Include="xmpp\agsXMPP.dll" />
-    <Content Include="xmpp\agsXMPP.ui.dll" />
-    <Content Include="xmpp\agsXMPP.xml" />
+    <Content Include="Resources\dll\core.dll" />
+    <Content Include="Resources\dll\dialogs.dll" />
+    <Content Include="Resources\dll\utils.dll" />
+    <Content Include="Resources\dll\WindowPlugins.dll" />
+    <Content Include="Resources\img\Jabber_banner.png" />
+    <Content Include="Resources\img\MyChitChat_icon_disabled.png" />
+    <Content Include="Resources\img\MyChitChat_icon_enabled.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat_contacts.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Blue3wide\Media\MyChitChat_inbox_empty.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Blue3wide\Media\MyChitChat_inbox_full.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Blue3wide\Media\MyChitChat_incoming_message.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Blue3wide\Media\MyChitChat_read_message.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\xmpp\agsXMPP.dll" />
+    <Content Include="Resources\xmpp\agsXMPP.ui.dll" />
+    <Content Include="Resources\xmpp\agsXMPP.xml" />
+    <Content Include="Skin\Blue3wide\MyChitChat_ChatWindow.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

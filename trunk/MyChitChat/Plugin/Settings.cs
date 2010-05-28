@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MediaPortal.Configuration;
+using MediaPortal;
 
-namespace Jabber.MP
-{
-    class Settings
-    {
+namespace MyChitChat.Plugin {
+    class Settings {
         #region Properties
 
         /// <summary>
         /// The jabber username
         /// </summary>
-        public static string Username
-        {
+        public static string Username {
             get { return username; }
             set { username = value; }
         }
@@ -22,8 +19,7 @@ namespace Jabber.MP
         /// <summary>
         /// The jabber server
         /// </summary>
-        public static string Server
-        {
+        public static string Server {
             get { return server; }
             set { server = value; }
         }
@@ -32,8 +28,7 @@ namespace Jabber.MP
         /// <summary>
         /// The jabber resource
         /// </summary>
-        public static string Resource
-        {
+        public static string Resource {
             get { return resource; }
             set { resource = value; }
         }
@@ -42,8 +37,7 @@ namespace Jabber.MP
         /// <summary>
         /// The jabber password
         /// </summary>
-        public static string Password
-        {
+        public static string Password {
             get { return password; }
             set { password = value; }
         }
@@ -54,15 +48,13 @@ namespace Jabber.MP
         /// <summary>
         /// Load the settings from the mediaportal config
         /// </summary>
-        public static void Load()
-        {
-            using (MediaPortal.Profile.Settings reader = new MediaPortal.Profile.Settings(Config.GetFile(Config.Dir.Config, "MediaPortal.xml")))
-            {
-                Username = reader.GetValue(JabberMP.ConfigSection, "username");
-                Server = reader.GetValue(JabberMP.ConfigSection, "server");
-                Resource = reader.GetValue(JabberMP.ConfigSection, "resource");
+        public static void Load() {
+            using (MediaPortal.Profile.Settings reader = new MediaPortal.Profile.Settings(MediaPortal.Configuration.Config.GetFile(MediaPortal.Configuration.Config.Dir.Config, "MediaPortal.xml"))) {
+                Username = reader.GetValue(Helper.PLUGIN_NAME, "username");
+                Server = reader.GetValue(Helper.PLUGIN_NAME, "server");
+                Resource = reader.GetValue(Helper.PLUGIN_NAME, "resource");
 
-                string encryptedPassword = reader.GetValue(JabberMP.ConfigSection, "password");
+                string encryptedPassword = reader.GetValue(Helper.PLUGIN_NAME, "password");
                 Password = decryptString(encryptedPassword);
             }
         }
@@ -70,17 +62,15 @@ namespace Jabber.MP
         /// <summary>
         /// Save the settings to the MP config
         /// </summary>
-        public static void Save()
-        {
-            using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(Config.GetFile(Config.Dir.Config, "MediaPortal.xml")))
-            {
+        public static void Save() {
+            using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(MediaPortal.Configuration.Config.GetFile(MediaPortal.Configuration.Config.Dir.Config, "MediaPortal.xml"))) {
                 // Encrypt the password
                 string encryptedPassword = encryptString(Password);
 
-                xmlwriter.SetValue(JabberMP.ConfigSection, "username", Username);
-                xmlwriter.SetValue(JabberMP.ConfigSection, "server", Server);
-                xmlwriter.SetValue(JabberMP.ConfigSection, "password", encryptedPassword);
-                xmlwriter.SetValue(JabberMP.ConfigSection, "resource", Resource);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "username", Username);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "server", Server);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "password", encryptedPassword);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "resource", Resource);
             }
         }
 
@@ -89,17 +79,13 @@ namespace Jabber.MP
         /// </summary>
         /// <param name="encrypted">The string to decrypt</param>
         /// <returns>The decrypted string or an empty string if something went wrong</returns>
-        private static string decryptString(string encrypted)
-        {
+        private static string decryptString(string encrypted) {
             string decrypted = String.Empty;
 
             EncryptDecrypt Crypto = new EncryptDecrypt();
-            try
-            {
+            try {
                 decrypted = Crypto.Decrypt(encrypted);
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 MediaPortal.GUI.Library.Log.Error("Could not decrypt config string!");
             }
 
@@ -111,17 +97,13 @@ namespace Jabber.MP
         /// </summary>
         /// <param name="decrypted">An unencrypted string</param>
         /// <returns>The string encrypted</returns>
-        private static string encryptString(string decrypted)
-        {
+        private static string encryptString(string decrypted) {
             EncryptDecrypt Crypto = new EncryptDecrypt();
             string encrypted = String.Empty;
 
-            try
-            {
+            try {
                 encrypted = Crypto.Encrypt(decrypted);
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 MediaPortal.GUI.Library.Log.Error("Could not encrypt setting string!");
                 encrypted = String.Empty;
             }

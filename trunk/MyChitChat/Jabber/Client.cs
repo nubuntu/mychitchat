@@ -4,11 +4,14 @@ using System.Text;
 using agsXMPP;
 using MediaPortal.GUI.Library;
 using agsXMPP.protocol.client;
+using agsXMPP.ui;
 using MediaPortal.Dialogs;
 using System.Text.RegularExpressions;
+using agsXMPP.protocol.iq.roster;
+using agsXMPP.ui.roster;
+using MyChitChat.Plugin;
 
-namespace Jabber.MP
-{
+namespace MyChitChat.Jabber {
     /// <summary>
     /// Delegate for the TestCompleted event
     /// </summary>
@@ -16,8 +19,7 @@ namespace Jabber.MP
     /// <param name="e"></param>
     public delegate void TestCompletedEventHandler(object sender, TestEventArgs e);
 
-    class Jabber
-    {
+    class Client {
         #region Private members
 
         /// <summary>
@@ -56,7 +58,7 @@ namespace Jabber.MP
         /// Is this a test for the settings?
         /// </summary>
         private bool _isTest = false;
-        
+
         #endregion
 
         #region Public members
@@ -73,16 +75,14 @@ namespace Jabber.MP
         /// <summary>
         /// Constructor.
         /// </summary>
-        public Jabber()
-        {
+        public Client() {
 
         }
 
         /// <summary>
         /// Test the connection settings
         /// </summary>
-        public void TestSettings()
-        {
+        public void TestSettings() {
             _connection.Priority = -1;
             _isTest = true;
         }
@@ -91,20 +91,18 @@ namespace Jabber.MP
         /// Connect to the jabber server,
         /// connection is done async.
         /// </summary>
-        public void Connect()
-        {
+        public void Connect() {
             _connection.Password = Settings.Password;
             _connection.Username = Settings.Username;
             _connection.Server = Settings.Server;
             _connection.Resource = Settings.Resource;
-
+           
             _connection.AutoAgents = false;
             _connection.AutoPresence = true;
             _connection.AutoRoster = true;
             _connection.AutoResolveConnectServer = true;
-
-            try
-            {
+            
+            try {
                 _connection.OnLogin += new ObjectHandler(_connection_OnLogin);
                 _connection.OnClose += new ObjectHandler(_connection_OnClose);
                 _connection.OnMessage += new agsXMPP.protocol.client.MessageHandler(_connection_OnMessage);
@@ -114,9 +112,7 @@ namespace Jabber.MP
                 _connection.OnStreamError += new XmppElementHandler(_connection_OnStreamError);
 
                 _connection.Open();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Log.Error(e.Message);
             }
         }
@@ -124,8 +120,7 @@ namespace Jabber.MP
         /// <summary>
         /// Disconnect from the server
         /// </summary>
-        public void Disconnect()
-        {
+        public void Disconnect() {
             _disconnect = true;
             _connection.Close();
         }
@@ -133,17 +128,13 @@ namespace Jabber.MP
         /// <summary>
         /// Waits for some seconds then tries to reconnect to the jabber server
         /// </summary>
-        public void Reconnect()
-        {
-            if (reconnectCounter < reconnectTries)
-            {
+        public void Reconnect() {
+            if (reconnectCounter < reconnectTries) {
                 reconnectCounter++;
                 Log.Info(String.Format("Jabber trying to reconnect (Try {0}) ...", reconnectCounter));
                 System.Threading.Thread.Sleep(reconnectTimeout);
                 Connect();
-            }
-            else
-            {
+            } else {
                 _disconnect = true;
             }
         }
@@ -153,8 +144,7 @@ namespace Jabber.MP
         /// </summary>
         /// <param name="Message">The message to send</param>
         /// <param name="To">Receiver of the message</param>
-        public void SendMessage(string Message, Jid To)
-        {
+        public void SendMessage(string Message, Jid To) {
             _connection.Send(new Message(To, MessageType.chat, Message));
         }
 
@@ -164,8 +154,7 @@ namespace Jabber.MP
         /// The user can answer with yes or no.
         /// </summary>
         /// <param name="msg"></param>
-        private void showQuestion(Message msg)
-        {
+        private void showQuestion(Message msg) {
             GUIDialogYesNo dialog = (GUIDialogYesNo)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_YES_NO);
             dialog.Reset();
             dialog.SetHeading(String.Format("Message from {0}@{1}:", msg.From.User, msg.From.Server));
@@ -180,22 +169,18 @@ namespace Jabber.MP
         /// Show a message
         /// </summary>
         /// <param name="msg"></param>
-        private void showMessage(Message msg)
-        {
+        private void showMessage(Message msg) {
             Regex lineCounter = new Regex("\n", RegexOptions.Multiline);
             MatchCollection lines = lineCounter.Matches(msg.Body);
 
             // Use a DialogText if there are more than 4 lines of text
-            if (lines.Count < maximumLinesForOkDialog)
-            {
+            if (lines.Count < maximumLinesForOkDialog) {
                 GUIDialogOK dialog = (GUIDialogOK)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_OK);
                 dialog.Reset();
                 dialog.SetHeading(String.Format("Message from {0}@{1}:", msg.From.User, msg.From.Server));
                 dialog.SetLine(1, msg.Body);
                 dialog.DoModal(GUIWindowManager.ActiveWindow);
-            }
-            else
-            {
+            } else {
                 GUIDialogText dialog = (GUIDialogText)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_TEXT);
                 dialog.Reset();
                 dialog.SetHeading(String.Format("Message from {0}@{1}:", msg.From.User, msg.From.Server));
@@ -213,8 +198,7 @@ namespace Jabber.MP
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void _connection_OnStreamError(object sender, agsXMPP.Xml.Dom.Element e)
-        {
+        void _connection_OnStreamError(object sender, agsXMPP.Xml.Dom.Element e) {
             Log.Error(String.Format("Jabber stream error: {0}", e.ToString()));
         }
 
@@ -223,34 +207,28 @@ namespace Jabber.MP
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="ex"></param>
-        void _connection_OnSocketError(object sender, Exception ex)
-        {
-            if (_isTest)
-            {
+        void _connection_OnSocketError(object sender, Exception ex) {
+            if (_isTest) {
                 TestEventArgs args = new TestEventArgs(false);
                 args.Exception = ex;
 
                 TestCompleted(this, args);
-            }
-            else
-            {
+            } else {
                 Reconnect();
             }
 
             Log.Error(String.Format("Jabber socket error: {0}", ex.Message));
         }
-        
+
         /// <summary>
         /// Login completed
         /// </summary>
         /// <param name="sender"></param>
-        void _connection_OnLogin(object sender)
-        {
+        void _connection_OnLogin(object sender) {
             reconnectCounter = 0;
 
             // This was a test for the login credentials
-            if (_isTest)
-            {
+            if (_isTest) {
                 TestCompleted(this, new TestEventArgs(true));
                 return;
             }
@@ -258,7 +236,7 @@ namespace Jabber.MP
             Log.Info("Login to jabber server completed.");
             _connection.Show = ShowType.NONE;
             _connection.Status = "Idle";
-            _connection.SendMyPresence();
+            _connection.SendMyPresence();    
         }
 
 
@@ -267,11 +245,9 @@ namespace Jabber.MP
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="ex"></param>
-        void _connection_OnError(object sender, Exception ex)
-        {
+        void _connection_OnError(object sender, Exception ex) {
             // This was a test for the login credentials
-            if (_isTest)
-            {
+            if (_isTest) {
                 TestCompleted(this, new TestEventArgs(false));
             }
 
@@ -283,20 +259,15 @@ namespace Jabber.MP
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="msg"></param>
-        void _connection_OnMessage(object sender, agsXMPP.protocol.client.Message msg)
-        {
+        void _connection_OnMessage(object sender, agsXMPP.protocol.client.Message msg) {
             Log.Debug(String.Format("New jabber message from {0}: {1}", msg.From.ToString(), msg.Body));
 
-            if (msg.Body != null && !_isTest)
-            {
+            if (msg.Body != null && !_isTest) {
                 // Show YES/NO dialog for messages where a question mark is contained
                 // The answer (yes or no) will be submitted.
-                if (msg.Body.Contains("?"))
-                {
+                if (msg.Body.Contains("?")) {
                     showQuestion(msg);
-                }
-                else
-                {
+                } else {
                     showMessage(msg);
                 }
             }
@@ -306,14 +277,10 @@ namespace Jabber.MP
         /// Disconnected.
         /// </summary>
         /// <param name="sender"></param>
-        void _connection_OnClose(object sender)
-        {
-            if (!_disconnect)
-            {
+        void _connection_OnClose(object sender) {
+            if (!_disconnect) {
                 Reconnect();
-            }
-            else
-            {
+            } else {
                 Log.Info("Jabber disconnected");
                 _disconnect = false;
                 reconnectCounter = 0;
@@ -325,11 +292,9 @@ namespace Jabber.MP
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void _connection_OnAuthError(object sender, agsXMPP.Xml.Dom.Element e)
-        {
+        void _connection_OnAuthError(object sender, agsXMPP.Xml.Dom.Element e) {
             // This was a test for the login credentials
-            if (_isTest)
-            {
+            if (_isTest) {
                 TestCompleted(this, new TestEventArgs(false));
             }
 
@@ -342,27 +307,23 @@ namespace Jabber.MP
     /// <summary>
     /// Event args for the test event
     /// </summary>
-    public class TestEventArgs : EventArgs
-    {
+    public class TestEventArgs : EventArgs {
         /// <summary>
         /// Was the test successful?
         /// </summary>
-        public bool Success
-        {
+        public bool Success {
             get { return success; }
             set { success = value; }
         }
         private bool success;
 
-        public Exception Exception
-        {
+        public Exception Exception {
             get { return exception; }
             set { exception = value; }
         }
         private Exception exception = null;
 
-        public TestEventArgs(bool WasSuccess)
-        {
+        public TestEventArgs(bool WasSuccess) {
             success = WasSuccess;
         }
     }
