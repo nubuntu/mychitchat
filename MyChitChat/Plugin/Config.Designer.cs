@@ -1,6 +1,6 @@
-﻿namespace Jabber.MP
+﻿namespace MyChitChat.Plugin
 {
-    partial class SetupForm
+    partial class Config
     {
         /// <summary>
         /// Required designer variable.
@@ -128,7 +128,7 @@
             this.textBoxResource.Name = "textBoxResource";
             this.textBoxResource.Size = new System.Drawing.Size(160, 20);
             this.textBoxResource.TabIndex = 4;
-            this.textBoxResource.Text = "Mediaportal";
+            this.textBoxResource.Text = "MediaPortal";
             this.textBoxResource.Leave += new System.EventHandler(this.textBoxResource_Leave);
             // 
             // label4
@@ -168,7 +168,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = global::Jabber.MP.Properties.Resources.Jabber_banner;
+            this.pictureBox1.Image = global::MyChitChat.Properties.Resources.Jabber_banner;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(384, 264);

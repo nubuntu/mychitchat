@@ -2,21 +2,26 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using MyChitChat.Jabber;
+using MediaPortal.UserInterface.Controls;
 
-namespace Jabber.MP
+namespace MyChitChat.Plugin
 {
-    public partial class SetupForm : Form
+    public partial class Config : MPConfigForm
     {
         delegate void SetTestReponse(TestEventArgs response);
 
-        private Jabber jabber = null;
+        private Client jabber = null;
         private Thread backgroundWorker = null;
 
-        public SetupForm()
+        public Config()
         {
             InitializeComponent();
+            this.Load += new EventHandler(MyChitChatConfig_Load);
+            this.Text += Helper.PLUGIN_NAME;            
+        }
 
-            this.Text += JabberMP.Version;
+        void MyChitChatConfig_Load(object sender, EventArgs e) {           
 
             Settings.Load();
 
@@ -80,7 +85,7 @@ namespace Jabber.MP
         /// </summary>
         private void TestJabber()
         {
-            jabber = new Jabber();
+            jabber = new Client();
 
             jabber.TestCompleted += new TestCompletedEventHandler(jabber_TestCompleted);
             jabber.TestSettings();
