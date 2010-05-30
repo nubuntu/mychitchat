@@ -85,7 +85,7 @@ namespace MyChitChat.Plugin
         /// </summary>
         private void TestJabber()
         {
-            jabber = new Client();
+            jabber = Client.Instance;
 
             jabber.TestCompleted += new TestCompletedEventHandler(jabber_TestCompleted);
             jabber.TestSettings();

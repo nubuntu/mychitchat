@@ -8,45 +8,17 @@ using MyChitChat.Jabber;
 using MyChitChat.Gui;
 
 namespace MyChitChat.Plugin {
-    [PluginIcons("MyChitChat_icon_enabled.png", "MyChitChat_icon_disabled.png")]
-    public class Plugin : GUIWindow, ISetupForm, IShowPlugin {
+    [PluginIcons("MyChitChat.Resources.img.MyChitChat_icon_enabled.png", "MyChitChat.Resources.img.MyChitChat_icon_disabled")]
+    public class Plugin : ISetupForm, IShowPlugin {
         #region Constants
 
         
         #endregion
-
-        #region Private members
-
-        /// <summary>
-        /// The jabber wrapper class
-        /// </summary>
-        private Client _jabber = null;
-        private GUIWindow _mainWindow = null;
-
-        #endregion
-        
+                
         public Plugin() {
             Log.Debug("MyChitChat started");
-            Settings.Load();
-
-            this._jabber = new Jabber.Client();
-            this._jabber.Connect();
-
-            this._mainWindow = new Main();
-        }        
-        
-
-        public override bool Load(string _skinFileName) {
-            return _mainWindow.Load(_skinFileName);
-        }
-
-        public override bool Init() {
-            return _mainWindow.Init(); 
-        }
-
-        ~Plugin() {
-            _jabber.Disconnect();
-        }
+            Settings.Load();           
+        }  
         
         #region ISetupForm Members
 

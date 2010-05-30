@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -12,6 +12,9 @@
     <AssemblyName>MyChitChat</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+    <TargetFrameworkSubset>Full</TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,9 +87,9 @@
     <Content Include="Resources\dll\dialogs.dll" />
     <Content Include="Resources\dll\utils.dll" />
     <Content Include="Resources\dll\WindowPlugins.dll" />
-    <Content Include="Resources\img\Jabber_banner.png" />
-    <Content Include="Resources\img\MyChitChat_icon_disabled.png" />
-    <Content Include="Resources\img\MyChitChat_icon_enabled.png" />
+    <EmbeddedResource Include="Resources\img\Jabber_banner.png" />
+    <EmbeddedResource Include="Resources\img\MyChitChat_icon_disabled.png" />
+    <EmbeddedResource Include="Resources\img\MyChitChat_icon_enabled.png" />
     <Content Include="Skin\Blue3wide\Media\MyChitChat_contacts.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -105,7 +108,12 @@
     <Content Include="Resources\xmpp\agsXMPP.dll" />
     <Content Include="Resources\xmpp\agsXMPP.ui.dll" />
     <Content Include="Resources\xmpp\agsXMPP.xml" />
-    <Content Include="Skin\Blue3wide\MyChitChat_ChatWindow.xml" />
+    <Content Include="Skin\Blue3wide\MyChitChat_Chat.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Blue3wide\MyChitChat_Main.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -115,4 +123,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>REM xcopy "$(TargetPath)" "..\..\..\MpiRelease" /Y
+xcopy "$(TargetPath)" "C:\Programme\Team MediaPortal\MediaPortal\plugins\Windows" /Y
+REM "C:\Programme\Team MediaPortal\MediaPortal\MediaPortal.exe"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
