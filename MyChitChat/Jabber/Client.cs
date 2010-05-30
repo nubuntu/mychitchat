@@ -18,8 +18,26 @@ namespace MyChitChat.Jabber {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     public delegate void TestCompletedEventHandler(object sender, TestEventArgs e);
+    public delegate void OnLoginEventHandler(object sender, TestEventArgs e);
+    public delegate void OnMessageEventHandler(object sender, Message msg);
 
-    class Client {
+    public sealed class Client {
+        static readonly Client instance = new Client();
+
+        // Explicit static constructor to tell C# compiler
+        // not to mark type as beforefieldinit
+        static Client() {
+        }
+
+        Client() {
+        }
+
+        public static Client Instance {
+            get {
+                return instance;
+            }
+        }
+
         #region Private members
 
         /// <summary>
@@ -48,6 +66,7 @@ namespace MyChitChat.Jabber {
         /// The connection to the jabber server
         /// </summary>
         private XmppClientConnection _connection = new XmppClientConnection();
+        private RosterControl _roster = new RosterControl();
 
         /// <summary>
         /// Was a disconnect requested?
@@ -67,17 +86,13 @@ namespace MyChitChat.Jabber {
         /// Event fired when the test is completed
         /// </summary>
         public event TestCompletedEventHandler TestCompleted;
+        public event OnLoginEventHandler OnLogin;
+        public event OnMessageEventHandler OnMessage;
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public Client() {
-
-        }
 
         /// <summary>
         /// Test the connection settings
@@ -96,16 +111,19 @@ namespace MyChitChat.Jabber {
             _connection.Username = Settings.Username;
             _connection.Server = Settings.Server;
             _connection.Resource = Settings.Resource;
-           
+
             _connection.AutoAgents = false;
             _connection.AutoPresence = true;
             _connection.AutoRoster = true;
             _connection.AutoResolveConnectServer = true;
-            
+            _connection.EnableCapabilities = true;
+
             try {
                 _connection.OnLogin += new ObjectHandler(_connection_OnLogin);
                 _connection.OnClose += new ObjectHandler(_connection_OnClose);
                 _connection.OnMessage += new agsXMPP.protocol.client.MessageHandler(_connection_OnMessage);
+                _connection.OnRosterItem += new XmppClientConnection.RosterHandler(_connection_OnRosterItem);
+                _connection.OnPresence += new PresenceHandler(_connection_OnPresence);
                 _connection.OnError += new ErrorHandler(_connection_OnError);
                 _connection.OnAuthError += new XmppElementHandler(_connection_OnAuthError);
                 _connection.OnSocketError += new ErrorHandler(_connection_OnSocketError);
@@ -115,6 +133,16 @@ namespace MyChitChat.Jabber {
             } catch (Exception e) {
                 Log.Error(e.Message);
             }
+        }
+
+       
+
+        void _connection_OnRosterItem(object sender, RosterItem item) {
+            _roster.AddRosterItem(item);
+        }
+
+        void _connection_OnPresence(object sender, Presence pres) {
+            _roster.SetPresence(pres);
         }
 
         /// <summary>
@@ -236,7 +264,8 @@ namespace MyChitChat.Jabber {
             Log.Info("Login to jabber server completed.");
             _connection.Show = ShowType.NONE;
             _connection.Status = "Idle";
-            _connection.SendMyPresence();    
+            _connection.SendMyPresence();
+            OnLogin(this, new TestEventArgs(true));
         }
 
 
@@ -261,16 +290,16 @@ namespace MyChitChat.Jabber {
         /// <param name="msg"></param>
         void _connection_OnMessage(object sender, agsXMPP.protocol.client.Message msg) {
             Log.Debug(String.Format("New jabber message from {0}: {1}", msg.From.ToString(), msg.Body));
-
-            if (msg.Body != null && !_isTest) {
-                // Show YES/NO dialog for messages where a question mark is contained
-                // The answer (yes or no) will be submitted.
-                if (msg.Body.Contains("?")) {
-                    showQuestion(msg);
-                } else {
-                    showMessage(msg);
-                }
-            }
+            OnMessage(sender, msg);
+            //if (msg.Body != null && !_isTest) {
+            //    // Show YES/NO dialog for messages where a question mark is contained
+            //    // The answer (yes or no) will be submitted.
+            //    if (msg.Body.Contains("?")) {
+            //        showQuestion(msg);
+            //    } else {
+            //        showMessage(msg);
+            //    }
+            //}
         }
 
         /// <summary>

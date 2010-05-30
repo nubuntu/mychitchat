@@ -43,6 +43,25 @@ namespace MyChitChat.Plugin {
         }
         private static string password = String.Empty;
 
+        /// <summary>
+        /// The jabber password
+        /// </summary>
+        public static int NotifyTimeOut {
+            get { return notifyTimeOut; }
+            set { notifyTimeOut = value; }
+        }
+        private static int notifyTimeOut = 10;
+
+        /// <summary>
+        /// The jabber password
+        /// </summary>
+        public static bool StartWithMediaPortal {
+            get { return startWithMediaPortal; }
+            set { startWithMediaPortal = value; }
+        }
+        private static bool startWithMediaPortal = true;
+
+
         #endregion
 
         /// <summary>
