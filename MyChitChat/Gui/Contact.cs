@@ -111,137 +111,137 @@ namespace MyChitChat.Gui {
 
         private void UpdateDisplay() {
 
-            if (m_currentUser != null) {
-                try {
-                    string userSex = string.Empty;
+        //    if (m_currentUser != null) {
+        //        try {
+        //            string userSex = string.Empty;
 
-                    switch (m_currentUser.Sex) {
-                        case TUserSex.usexMale:
-                            userSex = "Male";
-                            break;
-                        case TUserSex.usexFemale:
-                            userSex = "Female";
-                            break;
-                        case TUserSex.usexUnknown:
-                            userSex = "";
-                            break;
-                    }
+        //            switch (m_currentUser.Sex) {
+        //                case TUserSex.usexMale:
+        //                    userSex = "Male";
+        //                    break;
+        //                case TUserSex.usexFemale:
+        //                    userSex = "Female";
+        //                    break;
+        //                case TUserSex.usexUnknown:
+        //                    userSex = "";
+        //                    break;
+        //            }
 
-                    if (userSex != "usexNotSpecified" && userSex != string.Empty && userSex != null) {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_SEX, userSex);
-                    } else {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_SEX, SkypeHelper.EMPTY_STRING);
-                    }
-                } catch (Exception) {
-                    GUIPropertyManager.SetProperty(TAG_CONTACT_SEX, SkypeHelper.EMPTY_STRING);
-                }
+        //            if (userSex != "usexNotSpecified" && userSex != string.Empty && userSex != null) {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_SEX, userSex);
+        //            } else {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_SEX, SkypeHelper.EMPTY_STRING);
+        //            }
+        //        } catch (Exception) {
+        //            GUIPropertyManager.SetProperty(TAG_CONTACT_SEX, SkypeHelper.EMPTY_STRING);
+        //        }
 
-                try {
-                    string userName = m_currentUser.FullName;
-                    if (userName.Equals("")) {
-                        userName = m_currentUser.Handle;
-                    } else {
-                        userName += " (" + m_currentUser.Handle + ")";
-                    }
+        //        try {
+        //            string userName = m_currentUser.FullName;
+        //            if (userName.Equals("")) {
+        //                userName = m_currentUser.Handle;
+        //            } else {
+        //                userName += " (" + m_currentUser.Handle + ")";
+        //            }
 
-                    GUIPropertyManager.SetProperty(TAG_CONTACT_NAME, userName);
-                } catch (Exception) {
-                    GUIPropertyManager.SetProperty(TAG_CONTACT_NAME, SkypeHelper.EMPTY_STRING);
-                }
+        //            GUIPropertyManager.SetProperty(TAG_CONTACT_NAME, userName);
+        //        } catch (Exception) {
+        //            GUIPropertyManager.SetProperty(TAG_CONTACT_NAME, SkypeHelper.EMPTY_STRING);
+        //        }
 
-                try {
-                    if (m_currentUser.Birthday.Year != 1900) {
-                        string userBirthdate = m_currentUser.Birthday.ToShortDateString();
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_BIRTHDATE, userBirthdate);
-                    } else {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_BIRTHDATE, SkypeHelper.EMPTY_STRING);
-                    }
-                } catch (Exception) {
-                    GUIPropertyManager.SetProperty(TAG_CONTACT_BIRTHDATE, SkypeHelper.EMPTY_STRING);
-                }
+        //        try {
+        //            if (m_currentUser.Birthday.Year != 1900) {
+        //                string userBirthdate = m_currentUser.Birthday.ToShortDateString();
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_BIRTHDATE, userBirthdate);
+        //            } else {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_BIRTHDATE, SkypeHelper.EMPTY_STRING);
+        //            }
+        //        } catch (Exception) {
+        //            GUIPropertyManager.SetProperty(TAG_CONTACT_BIRTHDATE, SkypeHelper.EMPTY_STRING);
+        //        }
 
-                try {
-                    string userCountry = m_currentUser.Country;
+        //        try {
+        //            string userCountry = m_currentUser.Country;
 
 
-                    // Also calculate the time difference from here:
-                    int gmtOffsetContact = m_currentUser.Timezone;
-                    if (gmtOffsetContact != -24) {
-                        int gmtOffsetMe = GUISkype.SkypeAccess.CurrentUserProfile.Timezone;
-                        int diff = gmtOffsetContact - gmtOffsetMe;
-                        if (diff != 0) {
-                            userCountry += " (" + diff.ToString("+#0;-#0;") + " hrs)";
-                        }
-                    }
-                    if (userCountry != string.Empty && userCountry != null) {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_COUNTRY, userCountry);
-                    } else {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_COUNTRY, SkypeHelper.EMPTY_STRING);
-                    }
-                } catch (Exception) {
-                    GUIPropertyManager.SetProperty(TAG_CONTACT_COUNTRY, SkypeHelper.EMPTY_STRING);
-                }
+        //            // Also calculate the time difference from here:
+        //            int gmtOffsetContact = m_currentUser.Timezone;
+        //            if (gmtOffsetContact != -24) {
+        //                int gmtOffsetMe = GUISkype.SkypeAccess.CurrentUserProfile.Timezone;
+        //                int diff = gmtOffsetContact - gmtOffsetMe;
+        //                if (diff != 0) {
+        //                    userCountry += " (" + diff.ToString("+#0;-#0;") + " hrs)";
+        //                }
+        //            }
+        //            if (userCountry != string.Empty && userCountry != null) {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_COUNTRY, userCountry);
+        //            } else {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_COUNTRY, SkypeHelper.EMPTY_STRING);
+        //            }
+        //        } catch (Exception) {
+        //            GUIPropertyManager.SetProperty(TAG_CONTACT_COUNTRY, SkypeHelper.EMPTY_STRING);
+        //        }
 
-                try {
-                    string userCity = m_currentUser.City;
+        //        try {
+        //            string userCity = m_currentUser.City;
 
-                    if (userCity != string.Empty && userCity != null) {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_CITY, userCity);
-                    } else {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_CITY, SkypeHelper.EMPTY_STRING);
-                    }
-                } catch (Exception) {
-                    GUIPropertyManager.SetProperty(TAG_CONTACT_CITY, SkypeHelper.EMPTY_STRING);
-                }
+        //            if (userCity != string.Empty && userCity != null) {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_CITY, userCity);
+        //            } else {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_CITY, SkypeHelper.EMPTY_STRING);
+        //            }
+        //        } catch (Exception) {
+        //            GUIPropertyManager.SetProperty(TAG_CONTACT_CITY, SkypeHelper.EMPTY_STRING);
+        //        }
 
-                try {
-                    string userHomepage = m_currentUser.Homepage;
+        //        try {
+        //            string userHomepage = m_currentUser.Homepage;
 
-                    if (userHomepage != string.Empty && userHomepage != null) {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_HOMEPAGE, userHomepage);
-                    } else {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_HOMEPAGE, SkypeHelper.EMPTY_STRING);
-                    }
-                } catch (Exception) {
-                    GUIPropertyManager.SetProperty(TAG_CONTACT_HOMEPAGE, SkypeHelper.EMPTY_STRING);
-                }
+        //            if (userHomepage != string.Empty && userHomepage != null) {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_HOMEPAGE, userHomepage);
+        //            } else {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_HOMEPAGE, SkypeHelper.EMPTY_STRING);
+        //            }
+        //        } catch (Exception) {
+        //            GUIPropertyManager.SetProperty(TAG_CONTACT_HOMEPAGE, SkypeHelper.EMPTY_STRING);
+        //        }
 
-                try {
-                    string userProvince = m_currentUser.Province;
+        //        try {
+        //            string userProvince = m_currentUser.Province;
 
-                    if (userProvince != string.Empty && userProvince != null) {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_PROVINCE, userProvince);
-                    } else {
-                        GUIPropertyManager.SetProperty(TAG_CONTACT_PROVINCE, SkypeHelper.EMPTY_STRING);
-                    }
-                } catch (Exception) {
-                    GUIPropertyManager.SetProperty(TAG_CONTACT_PROVINCE, SkypeHelper.EMPTY_STRING);
-                }
-                GUIPropertyManager.SetProperty(TAG_CONTACT_IMG, SkypeHelper.GetStatusImage(m_currentUser.OnlineStatus));
+        //            if (userProvince != string.Empty && userProvince != null) {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_PROVINCE, userProvince);
+        //            } else {
+        //                GUIPropertyManager.SetProperty(TAG_CONTACT_PROVINCE, SkypeHelper.EMPTY_STRING);
+        //            }
+        //        } catch (Exception) {
+        //            GUIPropertyManager.SetProperty(TAG_CONTACT_PROVINCE, SkypeHelper.EMPTY_STRING);
+        //        }
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_IMG, SkypeHelper.GetStatusImage(m_currentUser.OnlineStatus));
 
-                GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS, SkypeHelper.GetOnlineStatus(m_currentUser.OnlineStatus));
-                GUILabelControl statusLabel = (GUILabelControl)GetControl((int)Controls.CONTROL_LBLSTATUS);
-                statusLabel.TextColor = SkypeHelper.GetColorFromOnlineStatus(m_currentUser.OnlineStatus);
-            } else {
-                GUIPropertyManager.SetProperty(TAG_CONTACT_NAME, SkypeHelper.EMPTY_STRING);
-                GUIPropertyManager.SetProperty(TAG_CONTACT_BIRTHDATE, SkypeHelper.EMPTY_STRING);
-                GUIPropertyManager.SetProperty(TAG_CONTACT_COUNTRY, SkypeHelper.EMPTY_STRING);
-                GUIPropertyManager.SetProperty(TAG_CONTACT_CITY, SkypeHelper.EMPTY_STRING);
-                GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS, SkypeHelper.EMPTY_STRING);
-                GUIPropertyManager.SetProperty(TAG_CONTACT_SEX, SkypeHelper.EMPTY_STRING);
-                GUIPropertyManager.SetProperty(TAG_CONTACT_HOMEPAGE, SkypeHelper.EMPTY_STRING);
-                GUIPropertyManager.SetProperty(TAG_CONTACT_PROVINCE, SkypeHelper.EMPTY_STRING);
-            }
-            //			// Refresh
-            //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLNAME );
-            //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLBIRTHDATE );
-            //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLCOUNTRY );
-            //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLCITY );
-            //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLPROVINCE );
-            //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLSEX );
-            //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLHOMEPAGE );
-            //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLSTATUS );
-        }
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS, SkypeHelper.GetOnlineStatus(m_currentUser.OnlineStatus));
+        //        GUILabelControl statusLabel = (GUILabelControl)GetControl((int)Controls.CONTROL_LBLSTATUS);
+        //        statusLabel.TextColor = SkypeHelper.GetColorFromOnlineStatus(m_currentUser.OnlineStatus);
+        //    } else {
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_NAME, SkypeHelper.EMPTY_STRING);
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_BIRTHDATE, SkypeHelper.EMPTY_STRING);
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_COUNTRY, SkypeHelper.EMPTY_STRING);
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_CITY, SkypeHelper.EMPTY_STRING);
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS, SkypeHelper.EMPTY_STRING);
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_SEX, SkypeHelper.EMPTY_STRING);
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_HOMEPAGE, SkypeHelper.EMPTY_STRING);
+        //        GUIPropertyManager.SetProperty(TAG_CONTACT_PROVINCE, SkypeHelper.EMPTY_STRING);
+        //    }
+        //    //			// Refresh
+        //    //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLNAME );
+        //    //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLBIRTHDATE );
+        //    //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLCOUNTRY );
+        //    //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLCITY );
+        //    //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLPROVINCE );
+        //    //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLSEX );
+        //    //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLHOMEPAGE );
+        //    //			GUIControl.RefreshControl(WINDOW_ID, (int)Controls.CONTROL_LBLSTATUS );
+        //}
 
         //public void DoModal(int dwParentId, Jid Friend) {
         //    m_dwParentWindowID = dwParentId;
@@ -268,7 +268,7 @@ namespace MyChitChat.Gui {
         //        GUIWindowManager.Process();
         //        //System.Threading.Thread.Sleep(100);
         //    }
-        //}
+        }
         void Close() {
 
             GUIWindowManager.IsSwitchingToNewWindow = true;

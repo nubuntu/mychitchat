@@ -7,6 +7,7 @@ using MyChitChat.Jabber;
 using agsXMPP.protocol.client;
 using System.Reflection;
 using System.ComponentModel;
+using agsXMPP;
 
 namespace MyChitChat.Plugin {
     static class Helper {
@@ -45,11 +46,15 @@ namespace MyChitChat.Plugin {
         }
                
         public static bool SHOULD_NOTIFY_MESSAGE {
-            get { return Settings.NotifyOnMessage || Enum.IsDefined(typeof(PLUGIN_WINDOW_IDS), GUIWindowManager.ActiveWindow); }
+            get { return Settings.NotifyOnMessage || PLUGIN_WINDOW_ACTIVE; }
         }
 
         public static bool SHOULD_NOTIFY_PRESENCE {
-            get { return Settings.NotifyOnPresence || Enum.IsDefined(typeof(PLUGIN_WINDOW_IDS), GUIWindowManager.ActiveWindow); }
+            get { return Settings.NotifyOnPresence || PLUGIN_WINDOW_ACTIVE; }
+        }
+
+        public static bool PLUGIN_WINDOW_ACTIVE {
+            get { return Enum.IsDefined(typeof(PLUGIN_WINDOW_IDS), GUIWindowManager.ActiveWindow); }
         }
                 
         public static readonly string SKINFILE_WINDOW_MAIN = PLUGIN_SKIN_PREFIX + "Main.xml";
@@ -60,7 +65,7 @@ namespace MyChitChat.Plugin {
 
         public static Client JABBER_CLIENT { 
             get { return Client.Instance; } 
-        }
+        }              
 
         public static string GetFriendlyPresenceState<T>(this object enumerationValue) where T : struct {
             Type type = enumerationValue.GetType();

@@ -68,7 +68,7 @@ namespace MyChitChat.Plugin {
             get { return notifyOnMessage; }
             set { notifyOnMessage = value; }
         }
-        private static bool notifyOnMessage = true;
+        private static bool notifyOnMessage = false;
 
         /// <summary>
         /// The jabber password
@@ -77,7 +77,7 @@ namespace MyChitChat.Plugin {
             get { return notifyOnPresence; }
             set { notifyOnPresence = value; }
         }
-        private static bool notifyOnPresence = true;
+        private static bool notifyOnPresence = false;
 
 
         #endregion

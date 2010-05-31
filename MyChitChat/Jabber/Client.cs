@@ -25,13 +25,13 @@ namespace MyChitChat.Jabber {
     public delegate void OnRosterItemEventHandler(object sender, Jid jid);
     public delegate void OnRosterStartEventHandler();
     public delegate void OnRosterEndEventHandler();
-  
+
     public sealed class Client {
         static readonly Client instance = new Client();
-
+        private static object locker = new object();
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
-        static Client() {            
+        static Client() {
         }
 
         Client() {
@@ -43,7 +43,7 @@ namespace MyChitChat.Jabber {
         }
 
         public Roster Roster {
-            get { return this._roster; }
+            get { lock (locker) { return this._roster; } }
         }
 
         public bool Connected {
@@ -104,7 +104,7 @@ namespace MyChitChat.Jabber {
         public event OnRosterItemEventHandler OnRosterItem;
         public event OnRosterStartEventHandler OnRosterStart;
         public event OnRosterEndEventHandler OnRosterEnd;
-        
+
         #endregion
 
         #region Methods
@@ -128,12 +128,13 @@ namespace MyChitChat.Jabber {
             _connection.Server = Settings.Server;
             _connection.Resource = Settings.Resource;
 
+            _connection.EnableCapabilities = true;
+
             _connection.AutoAgents = false;
             _connection.AutoPresence = true;
             _connection.AutoRoster = true;
             _connection.AutoResolveConnectServer = true;
-            _connection.EnableCapabilities = true;
-                        
+
             try {
                 _connection.OnLogin += new ObjectHandler(_connection_OnLogin);
                 _connection.OnClose += new ObjectHandler(_connection_OnClose);
@@ -146,7 +147,7 @@ namespace MyChitChat.Jabber {
                 _connection.OnAuthError += new XmppElementHandler(_connection_OnAuthError);
                 _connection.OnSocketError += new ErrorHandler(_connection_OnSocketError);
                 _connection.OnStreamError += new XmppElementHandler(_connection_OnStreamError);
-                
+
                 _connection.Open();
             } catch (Exception e) {
                 Log.Error(e.Message);
@@ -159,16 +160,20 @@ namespace MyChitChat.Jabber {
 
         void _connection_OnRosterEnd(object sender) {
             OnRosterEnd();
-        }            
+        }
 
         void _connection_OnRosterItem(object sender, RosterItem item) {
-            _roster.AddRosterItem(item);
-            OnRosterItem(sender, item.Jid);            
+            lock (locker) {
+                _roster.AddRosterItem(item);
+            }
+            OnRosterItem(sender, item.Jid);
         }
-       
+
 
         void _connection_OnPresence(object sender, Presence pres) {
-            _roster.SetPresence(pres);
+            lock (locker) {
+                _roster.SetPresence(pres);
+            }
             OnPresence(sender, pres);
         }
 
@@ -179,9 +184,13 @@ namespace MyChitChat.Jabber {
             this._connection.RequestRoster();
         }
 
-        public void RequestVcard(Jid jid, IqCB callBack) {
+        public Vcard RequestVcard(Jid jid) {
             VcardIq viq = new VcardIq(IqType.get, new Jid(jid.Bare));
-            _connection.IqGrabber.SendIq(viq, callBack, null);
+            IQ result = _connection.IqGrabber.SendIq(viq);
+            if (result != null && result.Type == IqType.result && result.Vcard != null) {
+                return result.Vcard;
+            }
+            return null;
         }
 
         /// <summary>
@@ -213,7 +222,7 @@ namespace MyChitChat.Jabber {
         /// <param name="To">Receiver of the message</param>
         public void SendMessage(string Message, Jid To) {
             _connection.Send(new Message(To, MessageType.chat, Message));
-        }        
+        }
 
         #endregion
 

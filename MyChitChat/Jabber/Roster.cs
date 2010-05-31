@@ -46,15 +46,20 @@ namespace MyChitChat.Jabber {
 
         public void SetPresence(Presence pres) {
             this._internalRoster.SetPresence(pres);
+            this._internalRoster.Show();
         }
 
         #endregion
 
+        public RosterContact GetRosterContact(Jid jid) {
+           return (new RosterContact(this._internalRoster.Roster[jid.Bare]));           
+        }
+
         public List<RosterContact> GetOnlineContacts() {
             this._onlineContacts = new List<RosterContact>();
-
+           
             foreach (KeyValuePair<string, RosterData> currentRosterInfo in this._internalRoster.Roster) {
-                if (currentRosterInfo.Value.Online) {
+                if (currentRosterInfo.Value.Online && currentRosterInfo.Value.RosterNode.RosterItem.Jid.User != null) {
                     this._onlineContacts.Add(new RosterContact(currentRosterInfo.Value));
                 }
             }
@@ -91,7 +96,7 @@ namespace MyChitChat.Jabber {
         }
 
         public String Nickname {
-            get { return _internalRosterData.RosterNode.RosterItem.Name; }
+            get { return _internalRosterData.RosterNode.Text; }
         }
 
         public String Group {
@@ -106,34 +111,20 @@ namespace MyChitChat.Jabber {
             get { return JID.Resource; }
         }
 
-        public ShowType Presence {
-            get { return _internalRosterData.RosterNode.Presence.Show; }
+        public Presence  Presence {
+            get { return _internalRosterData.RosterNode.Presence; }
+            set { _internalRosterData.RosterNode.Presence = value; }
         }
 
         public String Status {
-            get { return _internalRosterData.RosterNode.Presence.Status; }
+            get { return _internalRosterData.Presences.Values.ToString(); }
         }
 
         public Vcard GetContactVcard(Client jabberClient) {
-            return (_vcard != null) ? _vcard : this.GetContactVcardIq(jabberClient);
-
-        }
-
-        private Vcard GetContactVcardIq(Client jabberClient) {
-            jabberClient.RequestVcard(this.JID, new IqCB(VcardResult));
-            _vCardReceivedEvent.WaitOne(30000, false);
-            lock (locker) {
-                return _vcard;
+            if (this._vcard == null) {
+                this._vcard = jabberClient.RequestVcard(this.JID);
             }
-        }
-
-        private void VcardResult(object sender, IQ iq, object data) {            
-            if (iq.Type == IqType.result) {
-                lock (locker) {
-                    this._vcard = iq.Vcard;
-                }
-                _vCardReceivedEvent.Set();
-            }
-        }
+            return this._vcard;
+        }       
     }
 }
