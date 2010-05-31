@@ -53,13 +53,31 @@ namespace MyChitChat.Plugin {
         private static int notifyTimeOut = 10;
 
         /// <summary>
+        /// Automatically connect to Jabber on MediaPortal startup / on Plugin started
+        /// </summary>
+        public static bool AutoConnectStartup {
+            get { return autoConnectStartup; }
+            set { autoConnectStartup = value; }
+        }
+        private static bool autoConnectStartup = true;
+
+        /// <summary>
         /// The jabber password
         /// </summary>
-        public static bool StartWithMediaPortal {
-            get { return startWithMediaPortal; }
-            set { startWithMediaPortal = value; }
+        public static bool NotifyOnMessage {
+            get { return notifyOnMessage; }
+            set { notifyOnMessage = value; }
         }
-        private static bool startWithMediaPortal = true;
+        private static bool notifyOnMessage = true;
+
+        /// <summary>
+        /// The jabber password
+        /// </summary>
+        public static bool NotifyOnPresence {
+            get { return notifyOnPresence; }
+            set { notifyOnPresence = value; }
+        }
+        private static bool notifyOnPresence = true;
 
 
         #endregion

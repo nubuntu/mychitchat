@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -50,6 +50,7 @@
     <Reference Include="WindowPlugins, Version=1.0.5.32072, Culture=neutral, processorArchitecture=x86" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gui\Contact.cs" />
     <Compile Include="Gui\Main.cs" />
     <Compile Include="Jabber\Client.cs" />
     <Compile Include="Gui\Chat.cs" />
@@ -114,6 +115,8 @@
     <Content Include="Skin\Blue3wide\MyChitChat_Main.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="RegionsSnippet.txt" />
+    <Content Include="Skin\Blue3wide\MyChitChat_Contact.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

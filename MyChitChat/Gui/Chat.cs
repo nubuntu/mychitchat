@@ -10,7 +10,7 @@ namespace MyChitChat.Gui {
     class Chat : GUIWindow{
 
         public Chat() {
-            GetID = Helper.WINDOW_ID_CHAT;
+            GetID = (int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_CHAT;
         }
 
         /// <summary>
