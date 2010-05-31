@@ -10,13 +10,14 @@ using agsXMPP;
 using agsXMPP.protocol.client;
 using System.Text.RegularExpressions;
 using agsXMPP.protocol.iq.vcard;
+using agsXMPP.ui.roster;
 
 
 namespace MyChitChat.Gui {
     public class Main : GUIWindow {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+        
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
@@ -64,13 +65,13 @@ namespace MyChitChat.Gui {
             ShowNotifyDialog(Helper.PLUGIN_NAME, GUIGraphicsContext.Skin + @"\Media\MyChitChat_read_message.png", notifyMessage);
         }
 
-        private static void ShowNotifyDialog(string title, string icon, string message) {
+        private static void ShowNotifyDialog(string header, string icon, string text) {
             try {
                 GUIDialogNotify dialogMailNotify = (GUIDialogNotify)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_NOTIFY);
                 dialogMailNotify.TimeOut = Settings.NotifyTimeOut;
                 dialogMailNotify.SetImage(icon);
-                dialogMailNotify.SetHeading(title);
-                dialogMailNotify.SetText(message);
+                dialogMailNotify.SetHeading(header);
+                dialogMailNotify.SetText(text);
                 dialogMailNotify.DoModal(GUIWindowManager.ActiveWindow);
             } catch (Exception ex) {
                 Log.Error(ex);
@@ -80,11 +81,11 @@ namespace MyChitChat.Gui {
         private void ShowContactWindow(RosterContact currentContact) {
             // do not show info if no contact selected
             if (currentContact != null) {
-                Contact guiWindowContact = (Contact)GUIWindowManager.GetWindow(Helper.WINDOW_ID_CONTACT);
+                Contact guiWindowContact = (Contact)GUIWindowManager.GetWindow((int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_CONTACT);
                 if (guiWindowContact != null) {
                     guiWindowContact.CurrentVcard = currentContact.GetContactVcard(Helper.JABBER_CLIENT);
                     GUIWindowManager.ActivateWindow(guiWindowContact.GetID);
-                }                
+                }
             }
         }
 
@@ -130,8 +131,9 @@ namespace MyChitChat.Gui {
 
         private void BuildRoster() {
             List<RosterContact> test = Helper.JABBER_CLIENT.Roster.GetOnlineContacts();
-            Vcard vcard = test[0].GetContactVcard(Helper.JABBER_CLIENT);
-
+            if (test.Count > 0) {
+                Vcard vcard = test[1].GetContactVcard(Helper.JABBER_CLIENT);
+            }
         }
 
         #endregion
@@ -144,44 +146,53 @@ namespace MyChitChat.Gui {
 
         void JabberClient_OnLogin(object sender) {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
-            Settings.NotifyOnMessage = true;
-            Settings.NotifyOnPresence = true;
-            if (Helper.JABBER_CLIENT.Roster == null || Helper.JABBER_CLIENT.Roster.Count <= 0) {
-                Helper.JABBER_CLIENT.RefreshRoster();
-            }
+            //Settings.NotifyOnMessage = true;
+            Settings.NotifyOnPresence = true;            
             //ShowNotifyDialog("MyChitChat loaded...");
         }
 
         void JabberClient_OnRosterStart() {
-
-            GUIWaitCursor.Show();
-            throw new NotImplementedException();
+            if (Helper.PLUGIN_WINDOW_ACTIVE) {
+                GUIWaitCursor.Show();
+            }
         }
 
         void JabberClient_OnRosterEnd() {
-            GUIWaitCursor.Hide();
-            this.BuildRoster();
+            if (Helper.PLUGIN_WINDOW_ACTIVE) {
+                GUIWaitCursor.Hide();
+            }        
         }
 
+        protected override void OnShowContextMenu() {
+            BuildRoster();
+            base.OnShowContextMenu();
+        }
 
         void JabberClient_OnRosterItem(object sender, Jid jid) {
 
         }
 
         void JabberClient_OnPresence(object sender, Presence pres) {
-            if (Helper.SHOULD_NOTIFY_PRESENCE) {
-                ShowNotifyDialog(pres.Nickname.ToString(),
-                                 GUIGraphicsContext.Skin + @"\Media\MyChitChat_contacts.png",
-                                 String.Format("{0} ({1})",
-                                                Helper.GetFriendlyPresenceState<Helper.PLUGIN_WINDOW_IDS>(pres.Show),
-                                                pres.Status));
+            if (Helper.SHOULD_NOTIFY_PRESENCE && Helper.JABBER_CLIENT.Roster.Count > 0 && pres.From.User != null && (pres.Type == PresenceType.available || pres.Type == PresenceType.invisible)) {
+                RosterContact temp = Helper.JABBER_CLIENT.Roster.GetRosterContact(pres.From);
+                Vcard t = temp.GetContactVcard(Helper.JABBER_CLIENT);
+                //temp.Presence = pres;
+                string user = temp.Nickname;
+                string status = Helper.GetFriendlyPresenceState<Helper.JABBER_PRESENCE_STATES>((Helper.JABBER_PRESENCE_STATES)temp.Presence.Show);
+                if (!String.IsNullOrEmpty(pres.Status)) {
+                    status += "\n\"" + pres.Status + "\"";
+                }
+                if (!String.IsNullOrEmpty(pres.From.Resource)) {
+                    status += "\n@" + pres.From.Resource;
+                }
+                
+                ShowNotifyDialog(user, GUIGraphicsContext.Skin + @"\Media\MyChitChat_contacts.png", status);
             }
-            BuildRoster();
         }
 
         void JabberClient_OnMessage(object sender, agsXMPP.protocol.client.Message msg) {
             if (Helper.SHOULD_NOTIFY_MESSAGE) {
-                ShowNotifyDialog(msg.From.User.Replace("%", "@"), GUIGraphicsContext.Skin + @"\Media\MyChitChat_incoming_message.png", msg.Body);
+                //ShowNotifyDialog(msg.From.User.Replace("%", "@"), GUIGraphicsContext.Skin + @"\Media\MyChitChat_incoming_message.png", msg.Body);
                 showMessage(msg);
             }
         }
