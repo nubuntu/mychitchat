@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using agsXMPP.protocol.iq.roster;
 using agsXMPP.ui.roster;
 using MyChitChat.Plugin;
+using agsXMPP.protocol.iq.vcard;
 
 namespace MyChitChat.Jabber {
     /// <summary>
@@ -18,24 +19,35 @@ namespace MyChitChat.Jabber {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     public delegate void TestCompletedEventHandler(object sender, TestEventArgs e);
-    public delegate void OnLoginEventHandler(object sender, TestEventArgs e);
+    public delegate void OnLoginEventHandler(object sender);
     public delegate void OnMessageEventHandler(object sender, Message msg);
-
+    public delegate void OnPresenceEventHandler(object sender, Presence pres);
+    public delegate void OnRosterItemEventHandler(object sender, Jid jid);
+    public delegate void OnRosterStartEventHandler();
+    public delegate void OnRosterEndEventHandler();
+  
     public sealed class Client {
         static readonly Client instance = new Client();
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
-        static Client() {
+        static Client() {            
         }
 
         Client() {
+            this._roster = new Roster();
         }
 
         public static Client Instance {
-            get {
-                return instance;
-            }
+            get { return instance; }
+        }
+
+        public Roster Roster {
+            get { return this._roster; }
+        }
+
+        public bool Connected {
+            get { return _connection.Authenticated; }
         }
 
         #region Private members
@@ -66,7 +78,7 @@ namespace MyChitChat.Jabber {
         /// The connection to the jabber server
         /// </summary>
         private XmppClientConnection _connection = new XmppClientConnection();
-        private RosterControl _roster = new RosterControl();
+        private Roster _roster;
 
         /// <summary>
         /// Was a disconnect requested?
@@ -88,7 +100,11 @@ namespace MyChitChat.Jabber {
         public event TestCompletedEventHandler TestCompleted;
         public event OnLoginEventHandler OnLogin;
         public event OnMessageEventHandler OnMessage;
-
+        public event OnPresenceEventHandler OnPresence;
+        public event OnRosterItemEventHandler OnRosterItem;
+        public event OnRosterStartEventHandler OnRosterStart;
+        public event OnRosterEndEventHandler OnRosterEnd;
+        
         #endregion
 
         #region Methods
@@ -117,32 +133,55 @@ namespace MyChitChat.Jabber {
             _connection.AutoRoster = true;
             _connection.AutoResolveConnectServer = true;
             _connection.EnableCapabilities = true;
-
+                        
             try {
                 _connection.OnLogin += new ObjectHandler(_connection_OnLogin);
                 _connection.OnClose += new ObjectHandler(_connection_OnClose);
                 _connection.OnMessage += new agsXMPP.protocol.client.MessageHandler(_connection_OnMessage);
                 _connection.OnRosterItem += new XmppClientConnection.RosterHandler(_connection_OnRosterItem);
+                _connection.OnRosterStart += new ObjectHandler(_connection_OnRosterStart);
+                _connection.OnRosterEnd += new ObjectHandler(_connection_OnRosterEnd);
                 _connection.OnPresence += new PresenceHandler(_connection_OnPresence);
                 _connection.OnError += new ErrorHandler(_connection_OnError);
                 _connection.OnAuthError += new XmppElementHandler(_connection_OnAuthError);
                 _connection.OnSocketError += new ErrorHandler(_connection_OnSocketError);
                 _connection.OnStreamError += new XmppElementHandler(_connection_OnStreamError);
-
+                
                 _connection.Open();
             } catch (Exception e) {
                 Log.Error(e.Message);
             }
         }
 
-       
+        void _connection_OnRosterStart(object sender) {
+            OnRosterStart();
+        }
+
+        void _connection_OnRosterEnd(object sender) {
+            OnRosterEnd();
+        }            
 
         void _connection_OnRosterItem(object sender, RosterItem item) {
             _roster.AddRosterItem(item);
+            OnRosterItem(sender, item.Jid);            
         }
+       
 
         void _connection_OnPresence(object sender, Presence pres) {
             _roster.SetPresence(pres);
+            OnPresence(sender, pres);
+        }
+
+        /// <summary>
+        /// Refresh/Request the Roster
+        /// </summary>
+        public void RefreshRoster() {
+            this._connection.RequestRoster();
+        }
+
+        public void RequestVcard(Jid jid, IqCB callBack) {
+            VcardIq viq = new VcardIq(IqType.get, new Jid(jid.Bare));
+            _connection.IqGrabber.SendIq(viq, callBack, null);
         }
 
         /// <summary>
@@ -174,48 +213,7 @@ namespace MyChitChat.Jabber {
         /// <param name="To">Receiver of the message</param>
         public void SendMessage(string Message, Jid To) {
             _connection.Send(new Message(To, MessageType.chat, Message));
-        }
-
-
-        /// <summary>
-        /// Show message containing a question (mark).
-        /// The user can answer with yes or no.
-        /// </summary>
-        /// <param name="msg"></param>
-        private void showQuestion(Message msg) {
-            GUIDialogYesNo dialog = (GUIDialogYesNo)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_YES_NO);
-            dialog.Reset();
-            dialog.SetHeading(String.Format("Message from {0}@{1}:", msg.From.User, msg.From.Server));
-            dialog.SetLine(1, msg.Body);
-            dialog.SetDefaultToYes(true);
-            dialog.DoModal(GUIWindowManager.ActiveWindow);
-
-            SendMessage((dialog.IsConfirmed) ? "Yes" : "No", msg.From);
-        }
-
-        /// <summary>
-        /// Show a message
-        /// </summary>
-        /// <param name="msg"></param>
-        private void showMessage(Message msg) {
-            Regex lineCounter = new Regex("\n", RegexOptions.Multiline);
-            MatchCollection lines = lineCounter.Matches(msg.Body);
-
-            // Use a DialogText if there are more than 4 lines of text
-            if (lines.Count < maximumLinesForOkDialog) {
-                GUIDialogOK dialog = (GUIDialogOK)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_OK);
-                dialog.Reset();
-                dialog.SetHeading(String.Format("Message from {0}@{1}:", msg.From.User, msg.From.Server));
-                dialog.SetLine(1, msg.Body);
-                dialog.DoModal(GUIWindowManager.ActiveWindow);
-            } else {
-                GUIDialogText dialog = (GUIDialogText)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_TEXT);
-                dialog.Reset();
-                dialog.SetHeading(String.Format("Message from {0}@{1}:", msg.From.User, msg.From.Server));
-                dialog.SetText(msg.Body);
-                dialog.DoModal(GUIWindowManager.ActiveWindow);
-            }
-        }
+        }        
 
         #endregion
 
@@ -265,7 +263,7 @@ namespace MyChitChat.Jabber {
             _connection.Show = ShowType.NONE;
             _connection.Status = "Idle";
             _connection.SendMyPresence();
-            OnLogin(this, new TestEventArgs(true));
+            OnLogin(sender);
         }
 
 

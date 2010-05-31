@@ -94,7 +94,7 @@ namespace MyChitChat.Plugin {
 
         public static int GetWID {
             get {
-                return Helper.WINDOW_ID_MAIN;
+                return (int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_MAIN;
             }
         }
        
