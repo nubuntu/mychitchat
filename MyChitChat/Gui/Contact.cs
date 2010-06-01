@@ -94,7 +94,7 @@ namespace MyChitChat.Gui {
             }
         }
         public override bool Init() {
-            return Load(GUIGraphicsContext.Skin + @"\mySkypeContact.xml");
+            return Load(Helper.SKIN_FILE_CONTACT);
         }
         public override void PreInit() {
             //AllocResources();

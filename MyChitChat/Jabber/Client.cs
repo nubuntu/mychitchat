@@ -5,6 +5,7 @@ using agsXMPP.protocol.iq.roster;
 using agsXMPP.protocol.iq.vcard;
 using MediaPortal.GUI.Library;
 using MyChitChat.Plugin;
+using System.Collections.Generic;
 
 namespace MyChitChat.Jabber {
     /// <summary>
@@ -77,6 +78,7 @@ namespace MyChitChat.Jabber {
         /// </summary>
         private XmppClientConnection _connection = new XmppClientConnection();
         private Roster _roster;
+        private Dictionary<Jid, Vcard> _dicVCards = new Dictionary<Jid, Vcard>();
 
         /// <summary>
         /// Was a disconnect requested?
@@ -168,9 +170,8 @@ namespace MyChitChat.Jabber {
 
         void _connection_OnPresence(object sender, Presence pres) {
             _roster.SetPresence(pres);
-            RosterContact presentContact = _roster.GetRosterContact(pres.From);            
-            if(presentContact != null && presentContact.Online){
-                presentContact.Vcard = this.RequestVcard(presentContact.JID);
+            RosterContact presentContact = _roster.GetRosterContact(pres.From);           
+            if(presentContact != null && presentContact.Online && !presentContact.Group.Contains("Transport")){
                 OnPresence(presentContact);
             }
         }
@@ -182,14 +183,13 @@ namespace MyChitChat.Jabber {
             this._connection.RequestRoster();
         }
 
-        public Vcard RequestVcard(Jid jid) {
-            VcardIq viq = new VcardIq(IqType.get, new Jid(jid.Bare));
-            IQ result = _connection.IqGrabber.SendIq(viq);
-            if (result != null && result.Type == IqType.result && result.Vcard != null) {
-                return result.Vcard;
+        public void RequestVcard(Jid jid, IqCB VcardResult) {
+            VcardIq viq = new VcardIq(IqType.get, new Jid( jid.Bare));
+            if (!this._dicVCards.ContainsKey(jid)) {
+                _connection.IqGrabber.SendIq(viq, VcardResult, null);
             }
-            return null;
         }
+       
 
         /// <summary>
         /// Disconnect from the server

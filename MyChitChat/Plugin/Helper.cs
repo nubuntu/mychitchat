@@ -9,6 +9,7 @@ using System.Reflection;
 using System.ComponentModel;
 using agsXMPP;
 using MediaPortal.Dialogs;
+using System.Text.RegularExpressions;
 
 namespace MyChitChat.Plugin {
     static class Helper {
@@ -61,12 +62,15 @@ namespace MyChitChat.Plugin {
         }
 
         public enum PLUGIN_NOTIFY_WINDOWS {
+            [Description("Use Windowsize suitable for Message length")]
+            AUTO,
             [Description("Notify Window (lower right)")]
             WINDOW_DIALOG_NOTIFY = GUIWindow.Window.WINDOW_DIALOG_NOTIFY,
             [Description("Dialog Window (small) (centered)")]
             WINDOW_DIALOG_OK = GUIWindow.Window.WINDOW_DIALOG_OK,
             [Description("Dialog Window (large) (centered)")]
-            WINDOW_DIALOG_Text = GUIWindow.Window.WINDOW_DIALOG_TEXT            
+            WINDOW_DIALOG_TEXT = GUIWindow.Window.WINDOW_DIALOG_TEXT       
+            
         }
                
         public static bool SHOULD_NOTIFY_MESSAGE {
@@ -119,6 +123,13 @@ namespace MyChitChat.Plugin {
                 GUIWindow guiWindow = GUIWindowManager.GetWindow((int)notifyType);
                 switch (notifyType) { 
                     default:
+                    case PLUGIN_NOTIFY_WINDOWS.AUTO:                        
+                         if (text.Length <= 60) {
+                             ShowNotifyDialog(timeOut, header, icon, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY);
+                         } else {
+                             ShowNotifyDialog(timeOut, header, icon, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_TEXT);
+                         }
+                        break;
                     case PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY:
                         GUIDialogNotify notifyDialog = (GUIDialogNotify)guiWindow;
                         notifyDialog.Reset();
@@ -135,10 +146,12 @@ namespace MyChitChat.Plugin {
                         okDialog.SetLine(1, (text.Split(new char[]{'\n'}, StringSplitOptions.RemoveEmptyEntries))[0]);
                         okDialog.DoModal(GUIWindowManager.ActiveWindow);
                         break;
-                    case PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_Text:
+                    case PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_TEXT:
                         GUIDialogText textDialog = (GUIDialogText)guiWindow;
                         textDialog.Reset();
-                        textDialog.SetImage(icon);
+                        try {
+                            textDialog.SetImage(icon);
+                        } catch { }
                         textDialog.SetHeading(header);
                         textDialog.SetText(text);
                         textDialog.DoModal(GUIWindowManager.ActiveWindow);
