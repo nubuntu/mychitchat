@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using agsXMPP;
@@ -7,6 +8,7 @@ using agsXMPP.protocol.iq.roster;
 using agsXMPP.protocol.client;
 using agsXMPP.protocol.iq.vcard;
 using System.Threading;
+using MyChitChat.Plugin;
 
 
 namespace MyChitChat.Jabber {
@@ -20,6 +22,10 @@ namespace MyChitChat.Jabber {
             this._internalRoster = new RosterControl();
             //this._onlineContacts = new List<RosterContact>();
             //this._offlineContacts = new List<RosterContact>();
+        }
+
+        RosterControl InternalRoster {
+            get { return this._internalRoster; }
         }
 
         public int Count {
@@ -46,18 +52,17 @@ namespace MyChitChat.Jabber {
 
         public void SetPresence(Presence pres) {
             this._internalRoster.SetPresence(pres);
-            this._internalRoster.Show();
         }
 
         #endregion
 
         public RosterContact GetRosterContact(Jid jid) {
-           return (new RosterContact(this._internalRoster.Roster[jid.Bare]));           
+            return (new RosterContact(this._internalRoster.Roster[jid.Bare]));
         }
 
         public List<RosterContact> GetOnlineContacts() {
             this._onlineContacts = new List<RosterContact>();
-           
+
             foreach (KeyValuePair<string, RosterData> currentRosterInfo in this._internalRoster.Roster) {
                 if (currentRosterInfo.Value.Online && currentRosterInfo.Value.RosterNode.RosterItem.Jid.User != null) {
                     this._onlineContacts.Add(new RosterContact(currentRosterInfo.Value));
@@ -84,8 +89,6 @@ namespace MyChitChat.Jabber {
 
         private RosterData _internalRosterData = null;
         private Vcard _vcard = null;
-        private AutoResetEvent _vCardReceivedEvent = new AutoResetEvent(false);
-        private object locker = new object(); 
 
         public RosterContact(RosterData rdata) {
             this._internalRosterData = rdata;
@@ -111,20 +114,25 @@ namespace MyChitChat.Jabber {
             get { return JID.Resource; }
         }
 
-        public Presence  Presence {
-            get { return _internalRosterData.RosterNode.Presence; }
-            set { _internalRosterData.RosterNode.Presence = value; }
-        }
-
         public String Status {
-            get { return _internalRosterData.Presences.Values.ToString(); }
+            get {
+                return Helper.GetFriendlyPresenceState(_internalRosterData.Presences[this.JID.Bare].Presence.Show);
+            }
         }
 
-        public Vcard GetContactVcard(Client jabberClient) {
-            if (this._vcard == null) {
-                this._vcard = jabberClient.RequestVcard(this.JID);
+        public String StatusMessage {
+            get { return _internalRosterData.Presences[this.JID.Bare].Presence.Status; }
+        }
+
+        public ShowType StatusType {
+            get {
+                return _internalRosterData.Presences[this.JID.Bare].Presence.Show;
             }
-            return this._vcard;
-        }       
+        }
+
+        public Vcard Vcard {
+            get { return this._vcard; }
+            set { this._vcard = value; }
+        }
     }
 }
