@@ -54,10 +54,12 @@
     <Compile Include="Gui\Main.cs" />
     <Compile Include="Jabber\Client.cs" />
     <Compile Include="Gui\Chat.cs" />
+    <Compile Include="Jabber\Message.cs" />
     <Compile Include="Plugin\Plugin.cs" />
     <Compile Include="Jabber\Roster.cs">
     </Compile>
     <Compile Include="Plugin\Helper.cs" />
+    <Compile Include="Plugin\Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -91,24 +93,18 @@
     <EmbeddedResource Include="Resources\img\Jabber_banner.png" />
     <EmbeddedResource Include="Resources\img\MyChitChat_icon_disabled.png" />
     <EmbeddedResource Include="Resources\img\MyChitChat_icon_enabled.png" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat_contacts.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Skin\Blue3wide\Media\MyChitChat_inbox_empty.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Skin\Blue3wide\Media\MyChitChat_inbox_full.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Skin\Blue3wide\Media\MyChitChat_incoming_message.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Skin\Blue3wide\Media\MyChitChat_read_message.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\xmpp\agsXMPP.dll" />
     <Content Include="Resources\xmpp\agsXMPP.ui.dll" />
     <Content Include="Resources\xmpp\agsXMPP.xml" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\contacts.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\icon_error.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\icon_message.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\icon_presence.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\inbox_empty.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\inbox_full.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\incoming_message.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\notify_error.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\read_message.png" />
     <Content Include="Skin\Blue3wide\MyChitChat_Chat.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

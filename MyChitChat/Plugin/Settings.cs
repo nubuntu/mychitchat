@@ -62,7 +62,7 @@ namespace MyChitChat.Plugin {
         private static bool autoConnectStartup = true;
 
         /// <summary>
-        /// The jabber password
+        /// Notify on new incoming messages while plugin not shown
         /// </summary>
         public static bool NotifyOnMessage {
             get { return notifyOnMessage; }
@@ -71,13 +71,40 @@ namespace MyChitChat.Plugin {
         private static bool notifyOnMessage = false;
 
         /// <summary>
-        /// The jabber password
+        /// _Notify on contact presence chages while plugin not shown
         /// </summary>
         public static bool NotifyOnPresence {
             get { return notifyOnPresence; }
             set { notifyOnPresence = value; }
         }
         private static bool notifyOnPresence = false;
+
+        /// <summary>
+        /// Notify on error while plugin not shown
+        /// </summary>
+        public static bool NotifyOnError {
+            get { return notifyOnError; }
+            set { notifyOnError = value; }
+        }
+        private static bool notifyOnError = true;
+
+        /// <summary>
+        /// The window type used to notify on new incoming messages while plugin not shown
+        /// </summary>
+        public static Helper.PLUGIN_NOTIFY_WINDOWS NotifyWindowTypeMessage {
+            get { return notifyMessageWindowType; }
+            set { notifyMessageWindowType = value; }
+        }
+        private static Helper.PLUGIN_NOTIFY_WINDOWS notifyMessageWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_Text;
+
+        /// <summary>
+        /// The window type used to notify on contact presence chages while plugin not shown
+        /// </summary>
+        public static Helper.PLUGIN_NOTIFY_WINDOWS NotifyWindowTypePresence {
+            get { return notifyPresenceWindowType; }
+            set { notifyPresenceWindowType = value; }
+        }
+        private static Helper.PLUGIN_NOTIFY_WINDOWS notifyPresenceWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY;
 
 
         #endregion

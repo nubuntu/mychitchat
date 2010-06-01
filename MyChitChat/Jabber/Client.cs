@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using agsXMPP;
-using MediaPortal.GUI.Library;
 using agsXMPP.protocol.client;
-using agsXMPP.ui;
-using MediaPortal.Dialogs;
-using System.Text.RegularExpressions;
 using agsXMPP.protocol.iq.roster;
-using agsXMPP.ui.roster;
-using MyChitChat.Plugin;
 using agsXMPP.protocol.iq.vcard;
+using MediaPortal.GUI.Library;
+using MyChitChat.Plugin;
 
 namespace MyChitChat.Jabber {
     /// <summary>
@@ -20,15 +14,15 @@ namespace MyChitChat.Jabber {
     /// <param name="e"></param>
     public delegate void TestCompletedEventHandler(object sender, TestEventArgs e);
     public delegate void OnLoginEventHandler(object sender);
-    public delegate void OnMessageEventHandler(object sender, Message msg);
-    public delegate void OnPresenceEventHandler(object sender, Presence pres);
+    public delegate void OnMessageEventHandler(Message newMsg);
+    public delegate void OnPresenceEventHandler(RosterContact contact);
+    public delegate void OnErrorEventHandler(Exception e);    
     public delegate void OnRosterItemEventHandler(object sender, Jid jid);
     public delegate void OnRosterStartEventHandler();
     public delegate void OnRosterEndEventHandler();
 
     public sealed class Client {
         static readonly Client instance = new Client();
-        private static object locker = new object();
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
         static Client() {
@@ -43,7 +37,11 @@ namespace MyChitChat.Jabber {
         }
 
         public Roster Roster {
-            get { lock (locker) { return this._roster; } }
+            get { return this._roster; }
+        }
+
+        public MessageGrabber MessageGrabber {
+            get { return this._connection.MessageGrabber; }
         }
 
         public bool Connected {
@@ -100,6 +98,7 @@ namespace MyChitChat.Jabber {
         public event TestCompletedEventHandler TestCompleted;
         public event OnLoginEventHandler OnLogin;
         public event OnMessageEventHandler OnMessage;
+        public event OnErrorEventHandler OnError;        
         public event OnPresenceEventHandler OnPresence;
         public event OnRosterItemEventHandler OnRosterItem;
         public event OnRosterStartEventHandler OnRosterStart;
@@ -147,7 +146,6 @@ namespace MyChitChat.Jabber {
                 _connection.OnAuthError += new XmppElementHandler(_connection_OnAuthError);
                 _connection.OnSocketError += new ErrorHandler(_connection_OnSocketError);
                 _connection.OnStreamError += new XmppElementHandler(_connection_OnStreamError);
-
                 _connection.Open();
             } catch (Exception e) {
                 Log.Error(e.Message);
@@ -163,18 +161,18 @@ namespace MyChitChat.Jabber {
         }
 
         void _connection_OnRosterItem(object sender, RosterItem item) {
-            lock (locker) {
-                _roster.AddRosterItem(item);
-            }
+            _roster.AddRosterItem(item);
             OnRosterItem(sender, item.Jid);
         }
 
 
         void _connection_OnPresence(object sender, Presence pres) {
-            lock (locker) {
-                _roster.SetPresence(pres);
+            _roster.SetPresence(pres);
+            RosterContact presentContact = _roster.GetRosterContact(pres.From);            
+            if(presentContact != null && presentContact.Online){
+                presentContact.Vcard = this.RequestVcard(presentContact.JID);
+                OnPresence(presentContact);
             }
-            OnPresence(sender, pres);
         }
 
         /// <summary>
@@ -220,9 +218,15 @@ namespace MyChitChat.Jabber {
         /// </summary>
         /// <param name="Message">The message to send</param>
         /// <param name="To">Receiver of the message</param>
-        public void SendMessage(string Message, Jid To) {
-            _connection.Send(new Message(To, MessageType.chat, Message));
+        public Message SendMessage(string Message, Jid To) {
+           return SendMessage(Message, To, MessageType.chat);
         }
+
+        public Message SendMessage(string Message, Jid To, MessageType Type) {
+            agsXMPP.protocol.client.Message tmpMsg = new agsXMPP.protocol.client.Message(To, Type, Message);
+            _connection.Send(tmpMsg);
+            return new Message(tmpMsg, MessageTypes.Outgoing, DateTime.Now);
+        }       
 
         #endregion
 
@@ -288,6 +292,7 @@ namespace MyChitChat.Jabber {
             }
 
             Log.Error(String.Format("Jabber error: {0}", ex.Message));
+            OnError(ex);
         }
 
         /// <summary>
@@ -297,16 +302,7 @@ namespace MyChitChat.Jabber {
         /// <param name="msg"></param>
         void _connection_OnMessage(object sender, agsXMPP.protocol.client.Message msg) {
             Log.Debug(String.Format("New jabber message from {0}: {1}", msg.From.ToString(), msg.Body));
-            OnMessage(sender, msg);
-            //if (msg.Body != null && !_isTest) {
-            //    // Show YES/NO dialog for messages where a question mark is contained
-            //    // The answer (yes or no) will be submitted.
-            //    if (msg.Body.Contains("?")) {
-            //        showQuestion(msg);
-            //    } else {
-            //        showMessage(msg);
-            //    }
-            //}
+            OnMessage(new Message(msg,MessageTypes.Incoming, DateTime.Now));            
         }
 
         /// <summary>
