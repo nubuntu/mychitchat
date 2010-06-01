@@ -122,7 +122,9 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Business Logic Methods ~~~~~~~~~~~~~~~~~~~~
 
         private void BuildRoster() {
-            List<RosterContact> test = Helper.JABBER_CLIENT.Roster.GetOnlineContacts();
+            Helper.JABBER_CLIENT.Roster.Clear();
+            Helper.JABBER_CLIENT.RefreshRoster();
+           // List<RosterContact> test = Helper.JABBER_CLIENT.Roster.GetOnlineContacts();
 
         }
 
@@ -151,8 +153,8 @@ namespace MyChitChat.Gui {
 
         void JabberClient_OnLogin(object sender) {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
-            //Settings.NotifyOnMessage = true;
-            //Settings.NotifyOnPresence = true;            
+            Settings.NotifyOnMessage = true;
+            Settings.NotifyOnPresence = true;            
             //ShowNotifyDialog("MyChitChat loaded...");
         }
 

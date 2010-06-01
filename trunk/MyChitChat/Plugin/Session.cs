@@ -63,7 +63,7 @@ namespace MyChitChat.Plugin {
 
         private void AddMessageHistory(Message msg) {
             _listMessageHistory.Add(msg);
-            OnChatSessionUpdated();
+            //OnChatSessionUpdated();
         }
 
        

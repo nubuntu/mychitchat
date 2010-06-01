@@ -25,8 +25,9 @@ namespace MyChitChat.Jabber {
         public String Error { get { return this._internalMessage.Error.Message; } }
         public String FromNickname { get {
                 string tempNickName = Helper.JABBER_CLIENT.Roster.GetRosterContact(this.FromJID).Nickname;
-                return (!String.IsNullOrEmpty(tempNickName)) ? this.FromJID.Bare : tempNickName;            
-            ; } }
+                return (!String.IsNullOrEmpty(tempNickName)) ? tempNickName : this.FromJID.Bare;
+        } 
+        }
         public MessageType MessageType { get { return this._internalMessage.Type; } }
         public Chatstate ChatState { get { return this._internalMessage.Chatstate; } }
         public DateTime DateTimeReceived { get { return this._dateTimeReceived; } }

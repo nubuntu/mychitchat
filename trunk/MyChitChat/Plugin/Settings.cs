@@ -95,7 +95,7 @@ namespace MyChitChat.Plugin {
             get { return notifyMessageWindowType; }
             set { notifyMessageWindowType = value; }
         }
-        private static Helper.PLUGIN_NOTIFY_WINDOWS notifyMessageWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_Text;
+        private static Helper.PLUGIN_NOTIFY_WINDOWS notifyMessageWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;
 
         /// <summary>
         /// The window type used to notify on contact presence chages while plugin not shown
@@ -104,7 +104,7 @@ namespace MyChitChat.Plugin {
             get { return notifyPresenceWindowType; }
             set { notifyPresenceWindowType = value; }
         }
-        private static Helper.PLUGIN_NOTIFY_WINDOWS notifyPresenceWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY;
+        private static Helper.PLUGIN_NOTIFY_WINDOWS notifyPresenceWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;
 
 
         #endregion

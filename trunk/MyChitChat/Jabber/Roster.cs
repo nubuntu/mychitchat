@@ -15,11 +15,13 @@ namespace MyChitChat.Jabber {
     public class Roster : IRosterControl {
 
         private RosterControl _internalRoster;
+        private Dictionary<Jid, RosterContact> _dicRosterContacts;
         private List<RosterContact> _onlineContacts;
         private List<RosterContact> _offlineContacts;
 
         public Roster() {
             this._internalRoster = new RosterControl();
+            this._dicRosterContacts = new Dictionary<Jid, RosterContact>();
             //this._onlineContacts = new List<RosterContact>();
             //this._offlineContacts = new List<RosterContact>();
         }
@@ -40,6 +42,7 @@ namespace MyChitChat.Jabber {
 
         public void Clear() {
             this._internalRoster.Clear();
+            this._dicRosterContacts.Clear();
         }
 
         public bool RemoveRosterItem(RosterItem ritem) {
@@ -57,76 +60,102 @@ namespace MyChitChat.Jabber {
         #endregion
 
         public RosterContact GetRosterContact(Jid jid) {
-            return (new RosterContact(this._internalRoster.Roster[jid.Bare]));
+            if (this._dicRosterContacts.ContainsKey(jid)) {
+                return this._dicRosterContacts[jid];            
+            }else if (this._internalRoster.Roster.ContainsKey(jid.Bare)) {
+                RosterContact tmpContact = new RosterContact(this._internalRoster.Roster[jid.Bare], jid);
+                this._dicRosterContacts.Add(jid, tmpContact);
+                return tmpContact;
+            } else { return null; }
         }
 
-        public List<RosterContact> GetOnlineContacts() {
-            this._onlineContacts = new List<RosterContact>();
+        //public List<RosterContact> GetOnlineContacts() {
+        //    this._onlineContacts = new List<RosterContact>();
 
-            foreach (KeyValuePair<string, RosterData> currentRosterInfo in this._internalRoster.Roster) {
-                if (currentRosterInfo.Value.Online && currentRosterInfo.Value.RosterNode.RosterItem.Jid.User != null) {
-                    this._onlineContacts.Add(new RosterContact(currentRosterInfo.Value));
-                }
-            }
+        //    foreach (KeyValuePair<string, RosterData> currentRosterInfo in this._internalRoster.Roster) {
+        //        if (currentRosterInfo.Value.Online && currentRosterInfo.Value.RosterNode.RosterItem.Jid.User != null) {
+        //            this._onlineContacts.Add(new RosterContact(currentRosterInfo.Value));
+        //        }
+        //    }
 
-            return this._onlineContacts;
-        }
+        //    return this._onlineContacts;
+        //}
 
-        public List<RosterContact> GetOfflineContacts() {
-            this._offlineContacts = new List<RosterContact>();
+        //public List<RosterContact> GetOfflineContacts() {
+        //    this._offlineContacts = new List<RosterContact>();
 
-            foreach (KeyValuePair<string, RosterData> currentRosterInfo in this._internalRoster.Roster) {
-                if (!currentRosterInfo.Value.Online) {
-                    this._offlineContacts.Add(new RosterContact(currentRosterInfo.Value));
-                }
-            }
+        //    foreach (KeyValuePair<string, RosterData> currentRosterInfo in this._internalRoster.Roster) {
+        //        if (!currentRosterInfo.Value.Online) {
+        //            this._offlineContacts.Add(new RosterContact(currentRosterInfo.Value));
+        //        }
+        //    }
 
-            return this._offlineContacts;
-        }
+        //    return this._offlineContacts;
+        //}
     }
 
     public class RosterContact {
 
+        private Jid _internalJid = null;
         private RosterData _internalRosterData = null;
         private Vcard _vcard = null;
 
-        public RosterContact(RosterData rdata) {
+        public RosterContact(RosterData rdata, Jid jid) {
             this._internalRosterData = rdata;
+            this._internalJid = jid;
+            Helper.JABBER_CLIENT.RequestVcard(jid, new IqCB(VcardResult));
+        
+        }
+
+        private void VcardResult(object sender, IQ iq, object data) {
+            if (iq != null && iq.Type == IqType.result && iq.Vcard != null) {
+                this.Vcard = iq.Vcard;
+            }
         }
 
         public Jid JID {
-            get { return _internalRosterData.RosterNode.RosterItem.Jid; }
+            get { return this._internalJid; }
         }
 
         public String Nickname {
-            get { return _internalRosterData.RosterNode.Text; }
+            get { return this._internalRosterData.RosterNode.Text; }
         }
 
         public String Group {
-            get { return _internalRosterData.Group; }
+            get { return this._internalRosterData.Group; }
         }
 
         public bool Online {
-            get { return _internalRosterData.Online; }
+            get { return this._internalRosterData.Online; }
         }
 
         public String Resource {
-            get { return JID.Resource; }
+            get { return this.JID.Resource; }
         }
 
         public String Status {
             get {
-                return Helper.GetFriendlyPresenceState(_internalRosterData.Presences[this.JID.Bare].Presence.Show);
+                if (this._internalRosterData.Presences.ContainsKey(this.JID.ToString())) {
+                    return Helper.GetFriendlyPresenceState(this._internalRosterData.Presences[this.JID.ToString()].Presence.Show);
+                } else {
+                    return "";
+                }
             }
         }
 
         public String StatusMessage {
-            get { return _internalRosterData.Presences[this.JID.Bare].Presence.Status; }
+            get {
+                if (this._internalRosterData.Presences.ContainsKey(this.JID.ToString())) {
+                    return this._internalRosterData.Presences[this.JID.ToString()].Presence.Status;
+                } else { return ""; }
+            }
         }
 
         public ShowType StatusType {
             get {
-                return _internalRosterData.Presences[this.JID.Bare].Presence.Show;
+                if (this._internalRosterData.Presences.ContainsKey(this.JID.ToString())) {
+                    return this._internalRosterData.Presences[this.JID.ToString()].Presence.Show;
+                } else { return ShowType.xa; }
             }
         }
 
