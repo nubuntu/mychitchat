@@ -108,7 +108,7 @@ namespace MyChitChat.Plugin {
             get { return defaultStatusMessage; }
             set { defaultStatusMessage = value; }
         }
-        private static string defaultStatusMessage = "idle";
+        private static string defaultStatusMessage = "Online";
        
         /// <summary>
         /// The window type used to notify on new incoming messages while plugin not shown

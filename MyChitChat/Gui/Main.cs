@@ -8,8 +8,6 @@ using MyChitChat.Jabber;
 using MyChitChat.Plugin;
 
 
-
-
 namespace MyChitChat.Gui {
     public class Main : GUIWindow {
 
@@ -59,6 +57,23 @@ namespace MyChitChat.Gui {
             base.OnPageLoad();
         }
 
+        protected override void OnShowContextMenu() {
+            UpdateMyPresence("Test", true);
+            Helper.JABBER_CLIENT.Roster.Clear();
+            base.OnShowContextMenu();
+        }
+
+        protected override void OnWindowLoaded() {
+            Helper.SetMyCurrentPresencePluginEnabled();
+            base.OnWindowLoaded();
+        }
+
+        protected override void OnPreviousWindow() {
+            Helper.SetMyCurrentPresencePluginDisabled();
+            base.OnPreviousWindow();
+        }
+
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,24 +83,69 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private GUI Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-        private void UpdateMyPresence(string headerText ) {
-            Helper.ShowDialogSelectStatus(headerText, new GUIListItem.ItemSelectedHandler(OnDialogStatusSelected), false);
-        }
-        
-        private void OnDialogStatusSelected(GUIListItem item, GUIControl parent) {
-            if (item.Path == "custom") {
-                Helper.ShowDialogSelectStatus("Custom - Select Show Type", new GUIListItem.ItemSelectedHandler(OnDialogStatusSelectedCustom), true);
-            } else {
-                try {
-                    Helper.JABBER_PRESENCE_STATES selectedStatus = (Helper.JABBER_PRESENCE_STATES)Enum.Parse(typeof(Helper.JABBER_PRESENCE_STATES), item.Path);
-                } catch (Exception ex) { 
-                    Log.Error(ex);
-                }
-            }
-        }
+        private void UpdateMyPresence(string headerText, bool showCustomStatus) {
+            GUIDialogSelect2 dlgSelectStatus = (GUIDialogSelect2)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_SELECT2);
+            dlgSelectStatus.Reset();
+            dlgSelectStatus.SetHeading(headerText);
+            List<GUIListItem> labelList = new List<GUIListItem>();
 
-        private void OnDialogStatusSelectedCustom(GUIListItem item, GUIControl parent) {
-            OnDialogStatusSelected(item, parent);
+            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.ONLINE.ToString(),
+                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.ONLINE),
+                                                        Helper.MEDIA_STATUS_AVAILABLE,
+                                                        null)
+                                                        );
+            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.DO_NO_DISTURB.ToString(),
+                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.DO_NO_DISTURB),
+                                                        Helper.MEDIA_STATUS_DND,
+                                                        null)
+                                                        );
+            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.FREE_FOR_CHAT.ToString(),
+                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.FREE_FOR_CHAT),
+                                                        Helper.MEDIA_STATUS_CHAT,
+                                                        null)
+                                                        );
+            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.AWAY.ToString(),
+                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.AWAY),
+                                                        Helper.MEDIA_STATUS_AWAY,
+                                                        null)
+                                                        );
+            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.EXTENDED_AWAY.ToString(),
+                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.EXTENDED_AWAY),
+                                                        Helper.MEDIA_STATUS_XA,
+                                                        null)
+                                                        );
+            if (showCustomStatus) {
+                labelList.Add(new GUIListItem("Custom Status..."));
+            }
+            foreach (GUIListItem currentItem in labelList) {
+                dlgSelectStatus.Add(currentItem);
+            }
+            dlgSelectStatus.DoModal(GUIWindowManager.ActiveWindow);
+            if (dlgSelectStatus.SelectedLabelText == "Custom Status...") {
+                UpdateMyPresence("Show Custom Status as...", false);
+                return;
+            }
+
+            try {
+                Helper.JABBER_PRESENCE_STATES selectedStatus = (Helper.JABBER_PRESENCE_STATES)Enum.Parse(typeof(Helper.JABBER_PRESENCE_STATES), labelList[dlgSelectStatus.SelectedLabel].Path);
+                string tmpMessage = Helper.GetFriendlyPresenceState(selectedStatus);
+                if (!showCustomStatus) {
+                    VirtualKeyboard keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
+                    if (null == keyboard)
+                        return;
+
+                    keyboard.Reset();
+                    keyboard.Text = Helper.GetFriendlyPresenceState(selectedStatus);
+                    keyboard.DoModal(GUIWindowManager.ActiveWindow);
+                    if (keyboard.IsConfirmed) {
+                        tmpMessage = keyboard.Text;
+                    }
+                }
+                Helper.SetMyCurrentPresence(selectedStatus, tmpMessage);
+                Helper.JABBER_CLIENT.SendyMyPresence(Helper.JABBER_PRESENCE_CURRENT);
+            } catch (Exception ex) {
+                Log.Error(ex);
+            }
 
         }
 
@@ -192,12 +252,7 @@ namespace MyChitChat.Gui {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
             Settings.NotifyOnMessage = true;
             Settings.NotifyOnPresence = true;
-            //ShowNotifyDialog("MyChitChat loaded...");   
-            if (Settings.SetPresenceOnStartup) {
-                this.UpdateMyPresence(Helper.PLUGIN_NAME + " - I'm currently...");
-            } else {
-                Helper.JABBER_CLIENT.SendyMyPresence(Helper.JABBER_PRESENCE_DEFAULT);
-            }
+            //ShowNotifyDialog("MyChitChat loaded...");             
 
         }
 
@@ -228,19 +283,15 @@ namespace MyChitChat.Gui {
             if (Helper.PLUGIN_WINDOW_ACTIVE) {
                 GUIWaitCursor.Hide();
             }
+            if (Settings.SetPresenceOnStartup) {
+                this.UpdateMyPresence(Helper.PLUGIN_NAME + " - I'm currently...", true);
+            } else {
+                Helper.JABBER_CLIENT.SendyMyPresence(Helper.JABBER_PRESENCE_DEFAULT);
+            }
             InitializeGuiElements();
         }
 
-        protected override void OnShowContextMenu() {
-            BuildRoster();
-            base.OnShowContextMenu();
-        }
-
-
-
-
-
-
+        
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
