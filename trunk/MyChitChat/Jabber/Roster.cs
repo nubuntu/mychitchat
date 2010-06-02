@@ -15,19 +15,15 @@ namespace MyChitChat.Jabber {
     public class Roster : IRosterControl {
 
         private RosterControl _internalRoster;
-        private Dictionary<Jid, RosterContact> _dicRosterContacts;
-        private List<RosterContact> _onlineContacts;
-        private List<RosterContact> _offlineContacts;
+        private Dictionary<Jid, RosterContact> _dicRosterContacts;        
 
         public Roster() {
             this._internalRoster = new RosterControl();
-            this._dicRosterContacts = new Dictionary<Jid, RosterContact>();
-            //this._onlineContacts = new List<RosterContact>();
-            //this._offlineContacts = new List<RosterContact>();
+            this._dicRosterContacts = new Dictionary<Jid, RosterContact>();           
         }
 
-        RosterControl InternalRoster {
-            get { return this._internalRoster; }
+        Dictionary<Jid, RosterContact> RosterContacts {
+            get { return this._dicRosterContacts; }
         }
 
         public int Count {
@@ -37,7 +33,13 @@ namespace MyChitChat.Jabber {
         #region IRosterControl Member
 
         public RosterNode AddRosterItem(RosterItem ritem) {
-            return this._internalRoster.AddRosterItem(ritem);
+            RosterNode tmpNode = this._internalRoster.AddRosterItem(ritem);
+            Jid tmpJid = tmpNode.RosterItem.Jid;
+            if (this._internalRoster.Roster.ContainsKey(tmpJid.Bare)) {
+                RosterContact tmpContact = new RosterContact(tmpJid, this._internalRoster.Roster[tmpJid.Bare]);
+                this._dicRosterContacts.Add(tmpContact.JID, tmpContact);
+            }
+            return tmpNode;
         }
 
         public void Clear() {
@@ -60,38 +62,15 @@ namespace MyChitChat.Jabber {
         #endregion
 
         public RosterContact GetRosterContact(Jid jid) {
-            if (this._dicRosterContacts.ContainsKey(jid)) {
-                return this._dicRosterContacts[jid];            
-            }else if (this._internalRoster.Roster.ContainsKey(jid.Bare)) {
-                RosterContact tmpContact = new RosterContact(this._internalRoster.Roster[jid.Bare], jid);
-                this._dicRosterContacts.Add(jid, tmpContact);
-                return tmpContact;
-            } else { return null; }
+            return (this._dicRosterContacts.ContainsKey(jid)) ? this._dicRosterContacts[jid] : null;
         }
 
-        //public List<RosterContact> GetOnlineContacts() {
-        //    this._onlineContacts = new List<RosterContact>();
-
-        //    foreach (KeyValuePair<string, RosterData> currentRosterInfo in this._internalRoster.Roster) {
-        //        if (currentRosterInfo.Value.Online && currentRosterInfo.Value.RosterNode.RosterItem.Jid.User != null) {
-        //            this._onlineContacts.Add(new RosterContact(currentRosterInfo.Value));
-        //        }
-        //    }
-
-        //    return this._onlineContacts;
-        //}
-
-        //public List<RosterContact> GetOfflineContacts() {
-        //    this._offlineContacts = new List<RosterContact>();
-
-        //    foreach (KeyValuePair<string, RosterData> currentRosterInfo in this._internalRoster.Roster) {
-        //        if (!currentRosterInfo.Value.Online) {
-        //            this._offlineContacts.Add(new RosterContact(currentRosterInfo.Value));
-        //        }
-        //    }
-
-        //    return this._offlineContacts;
-        //}
+        public List<RosterContact> GetRosterContacts(bool? onlineContactsOnly) {
+            return this._dicRosterContacts.Values.Where(
+                    contact => !onlineContactsOnly.HasValue || contact.Online == onlineContactsOnly.Value
+                )
+                .ToList<RosterContact>();
+        }
     }
 
     public class RosterContact {
@@ -100,11 +79,10 @@ namespace MyChitChat.Jabber {
         private RosterData _internalRosterData = null;
         private Vcard _vcard = null;
 
-        public RosterContact(RosterData rdata, Jid jid) {
-            this._internalRosterData = rdata;
+        public RosterContact(Jid jid, RosterData rdata) {
             this._internalJid = jid;
+            this._internalRosterData = rdata;
             Helper.JABBER_CLIENT.RequestVcard(jid, new IqCB(VcardResult));
-        
         }
 
         private void VcardResult(object sender, IQ iq, object data) {
@@ -136,9 +114,9 @@ namespace MyChitChat.Jabber {
         public String Status {
             get {
                 if (this._internalRosterData.Presences.ContainsKey(this.JID.ToString())) {
-                    return Helper.GetFriendlyPresenceState(this._internalRosterData.Presences[this.JID.ToString()].Presence.Show);
+                    return Helper.GetFriendlyPresenceState((Helper.JABBER_PRESENCE_STATES)this._internalRosterData.Presences[this.JID.ToString()].Presence.Show);
                 } else {
-                    return "";
+                    return String.Empty;
                 }
             }
         }
@@ -147,7 +125,7 @@ namespace MyChitChat.Jabber {
             get {
                 if (this._internalRosterData.Presences.ContainsKey(this.JID.ToString())) {
                     return this._internalRosterData.Presences[this.JID.ToString()].Presence.Status;
-                } else { return ""; }
+                } else { return String.Empty; }
             }
         }
 

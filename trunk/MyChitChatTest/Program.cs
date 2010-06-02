@@ -9,7 +9,7 @@ namespace MyChitChat.Test {
     class Program {
         static void Main(string[] args) {
             Plugin.Plugin myChitChat = new MyChitChat.Plugin.Plugin();
-            myChitChat.ShowPlugin();
+            
         }
     }
 }

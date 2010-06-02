@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MediaPortal;
+using agsXMPP.protocol.client;
 
 namespace MyChitChat.Plugin {
     class Settings {
@@ -88,6 +89,27 @@ namespace MyChitChat.Plugin {
         }
         private static bool notifyOnError = true;
 
+        /// <summary>
+        /// Display Select Status dialog on plugin start
+        /// </summary>
+        public static bool SetPresenceOnStartup {
+            get { return setStatusOnStartup; }
+            set { setStatusOnStartup = value; }
+        }
+        private static bool setStatusOnStartup = true;
+
+        public static ShowType DefaultShowType {
+            get { return defaultShowType; }
+            set { defaultShowType = value; }
+        }
+        private static ShowType defaultShowType = ShowType.NONE;
+
+        public static string DefaultStatusMessage {
+            get { return defaultStatusMessage; }
+            set { defaultStatusMessage = value; }
+        }
+        private static string defaultStatusMessage = "idle";
+       
         /// <summary>
         /// The window type used to notify on new incoming messages while plugin not shown
         /// </summary>

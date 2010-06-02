@@ -51,10 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gui\Contact.cs" />
+    <Compile Include="Gui\Dialog.cs" />
     <Compile Include="Gui\Main.cs" />
     <Compile Include="Jabber\Client.cs" />
     <Compile Include="Gui\Chat.cs" />
     <Compile Include="Jabber\Message.cs" />
+    <Compile Include="Plugin\Cache.cs" />
     <Compile Include="Plugin\Plugin.cs" />
     <Compile Include="Jabber\Roster.cs">
     </Compile>

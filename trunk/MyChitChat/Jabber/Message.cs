@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 namespace MyChitChat.Jabber {
 
-    
-    public class Message  {
+
+    public class Message {
         private agsXMPP.protocol.client.Message _internalMessage;
         private DateTime _dateTimeReceived;
         private MessageTypes _messageType;
@@ -23,10 +23,11 @@ namespace MyChitChat.Jabber {
         public String Subject { get { return this._internalMessage.Subject; } }
         public String Body { get { return this._internalMessage.Body; } }
         public String Error { get { return this._internalMessage.Error.Message; } }
-        public String FromNickname { get {
+        public String FromNickname {
+            get {
                 string tempNickName = Helper.JABBER_CLIENT.Roster.GetRosterContact(this.FromJID).Nickname;
                 return (!String.IsNullOrEmpty(tempNickName)) ? tempNickName : this.FromJID.Bare;
-        } 
+            }
         }
         public MessageType MessageType { get { return this._internalMessage.Type; } }
         public Chatstate ChatState { get { return this._internalMessage.Chatstate; } }
@@ -34,7 +35,7 @@ namespace MyChitChat.Jabber {
 
 
         #region IComparable Member
-        public int CompareTo(object obj) {        
+        public int CompareTo(object obj) {
             return DateTime.Compare(this.DateTimeReceived, ((Message)obj).DateTimeReceived);
         }
         #endregion
