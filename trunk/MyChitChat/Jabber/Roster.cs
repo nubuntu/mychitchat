@@ -15,11 +15,11 @@ namespace MyChitChat.Jabber {
     public class Roster : IRosterControl {
 
         private RosterControl _internalRoster;
-        private Dictionary<Jid, RosterContact> _dicRosterContacts;        
+        private Dictionary<Jid, RosterContact> _dicRosterContacts;
 
         public Roster() {
             this._internalRoster = new RosterControl();
-            this._dicRosterContacts = new Dictionary<Jid, RosterContact>();           
+            this._dicRosterContacts = new Dictionary<Jid, RosterContact>();
         }
 
         Dictionary<Jid, RosterContact> RosterContacts {
@@ -37,14 +37,16 @@ namespace MyChitChat.Jabber {
             Jid tmpJid = tmpNode.RosterItem.Jid;
             if (this._internalRoster.Roster.ContainsKey(tmpJid.Bare)) {
                 RosterContact tmpContact = new RosterContact(tmpJid, this._internalRoster.Roster[tmpJid.Bare]);
-                this._dicRosterContacts.Add(tmpContact.JID, tmpContact);
+                if (!this._dicRosterContacts.ContainsKey(tmpContact.JID)) {
+                    this._dicRosterContacts.Add(tmpContact.JID, tmpContact);
+                }
             }
             return tmpNode;
         }
 
         public void Clear() {
-            this._internalRoster.Clear();
-            this._dicRosterContacts.Clear();
+            //this._internalRoster.Clear();
+            //this._dicRosterContacts.Clear();
         }
 
         public bool RemoveRosterItem(RosterItem ritem) {

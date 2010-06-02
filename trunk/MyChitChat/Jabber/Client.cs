@@ -158,9 +158,10 @@ namespace MyChitChat.Jabber {
         }
 
         public void SendyMyPresence(Presence myPresence) {
-            _connection.Show = myPresence.Show;
-            _connection.Status = myPresence.Status;
-            _connection.SendMyPresence();
+            //_connection.Show = myPresence.Show;
+            //_connection.Status = myPresence.Status;            
+            //_connection.SendMyPresence();
+            _connection.Send(myPresence);
         }
 
         void _connection_OnRosterStart(object sender) {
@@ -178,6 +179,7 @@ namespace MyChitChat.Jabber {
 
 
         void _connection_OnPresence(object sender, Presence pres) {
+            //TODO: JID Recognition is fucked up!
             _roster.SetPresence(pres);
             RosterContact presentContact = _roster.GetRosterContact(pres.From);           
             if(presentContact != null && presentContact.Online && !presentContact.Group.Contains("Transport")){

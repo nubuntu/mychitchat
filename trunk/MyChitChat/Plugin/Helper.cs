@@ -34,7 +34,7 @@ namespace MyChitChat.Plugin {
         public static readonly string MEDIA_ICON_MESSAGE = SKIN_PATH_MEDIA + "icon_message.png";
         public static readonly string MEDIA_ICON_PRESENCE = SKIN_PATH_MEDIA + "icon_presence.png";
 
-        public static readonly string MEDIA_STATUS_ONLINE = SKIN_PATH_MEDIA + "status_online.png";
+        public static readonly string MEDIA_STATUS_AVAILABLE = SKIN_PATH_MEDIA + "status_available.png";
         public static readonly string MEDIA_STATUS_AWAY = SKIN_PATH_MEDIA + "status_away.png";
         public static readonly string MEDIA_STATUS_XA = SKIN_PATH_MEDIA + "status_xa.png";
         public static readonly string MEDIA_STATUS_CHAT = SKIN_PATH_MEDIA + "status_chat.png";
@@ -57,7 +57,7 @@ namespace MyChitChat.Plugin {
         }
 
         public enum JABBER_PRESENCE_STATES : int {
-            [Description("Online")]
+            [Description("Available")]
             ONLINE = ShowType.NONE,
             [Description("Away")]
             AWAY = ShowType.away,
@@ -110,8 +110,22 @@ namespace MyChitChat.Plugin {
 
         public static Presence JABBER_PRESENCE_CURRENT {
             get { return myCurrentPresence; }
-            set { myCurrentPresence = value; }
         }
+
+        public static void SetMyCurrentPresence(JABBER_PRESENCE_STATES showType, string statusMessage) {
+            myCurrentPresence = new Presence((ShowType)showType, statusMessage);
+            myCurrentPresence.Type = PresenceType.invisible;
+        }
+
+        public static void SetMyCurrentPresencePluginEnabled() {
+            JABBER_CLIENT.SendyMyPresence(new Presence(myCurrentPresence.Show, myCurrentPresence.Status + String.Format(" [MediaPortal {0} enabled]", PLUGIN_NAME )));
+        }
+        public static void SetMyCurrentPresencePluginDisabled() {
+            JABBER_CLIENT.SendyMyPresence(new Presence(myCurrentPresence.Show, myCurrentPresence.Status + String.Format(" [MediaPortal {0} disabled]", PLUGIN_NAME))); 
+            JABBER_CLIENT.SendyMyPresence(myCurrentPresence);
+        }
+
+
         private static Presence myCurrentPresence = JABBER_PRESENCE_DEFAULT;
 
         public static String GetFriendlyPresenceState(JABBER_PRESENCE_STATES showType) {
@@ -167,44 +181,6 @@ namespace MyChitChat.Plugin {
             }
             return tmp;
         }
-               
-        public static void ShowDialogSelectStatus(string headerText, GUIListItem.ItemSelectedHandler callBack, bool custom) {
-            GUIDialogSelect2 dlgSelectStatus = (GUIDialogSelect2)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_SELECT2);
-            dlgSelectStatus.Reset();
-            dlgSelectStatus.SetHeading(headerText);
-
-            dlgSelectStatus.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.ONLINE.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.ONLINE),
-                                                        Helper.MEDIA_STATUS_ONLINE,
-                                                        callBack)
-                                                        );
-            dlgSelectStatus.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.DO_NO_DISTURB.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.DO_NO_DISTURB),
-                                                        Helper.MEDIA_STATUS_DND,
-                                                        callBack)
-                                                        );
-            dlgSelectStatus.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.FREE_FOR_CHAT.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.FREE_FOR_CHAT),
-                                                        Helper.MEDIA_STATUS_CHAT,
-                                                        callBack)
-                                                        );
-            dlgSelectStatus.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.AWAY.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.AWAY),
-                                                        Helper.MEDIA_STATUS_AWAY,
-                                                        callBack)
-                                                        );
-            dlgSelectStatus.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.EXTENDED_AWAY.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.EXTENDED_AWAY),
-                                                        Helper.MEDIA_STATUS_XA,
-                                                        callBack)
-                                                        );
-            if (!custom) {
-                dlgSelectStatus.Add(Helper.CreateGuiListItem("custom","Custom Status...", String.Empty, String.Empty, callBack);                                                       
-            }
-            dlgSelectStatus.DoModal(GUIWindowManager.ActiveWindow);
-            if(dlgSelectStatus.SelectedLabel
-        }
-
 
         /// <summary>
         /// Displays a yes/no dialog with custom labels for the buttons
