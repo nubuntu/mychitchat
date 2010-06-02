@@ -30,7 +30,7 @@ namespace MyChitChat.Jabber {
         }
 
         Client() {
-            this._roster = new Roster();
+            this._roster = new Roster();           
         }
 
         public static Client Instance {
@@ -47,6 +47,10 @@ namespace MyChitChat.Jabber {
 
         public bool Connected {
             get { return _connection.Authenticated; }
+        }
+
+        public Jid MyJID {
+            get { return _connection.MyJID; }
         }
 
         #region Private members
@@ -78,8 +82,7 @@ namespace MyChitChat.Jabber {
         /// </summary>
         private XmppClientConnection _connection = new XmppClientConnection();
         private Roster _roster;
-        private Dictionary<Jid, Vcard> _dicVCards = new Dictionary<Jid, Vcard>();
-
+        
         /// <summary>
         /// Was a disconnect requested?
         /// </summary>
@@ -154,6 +157,12 @@ namespace MyChitChat.Jabber {
             }
         }
 
+        public void SendyMyPresence(Presence myPresence) {
+            _connection.Show = myPresence.Show;
+            _connection.Status = myPresence.Status;
+            _connection.SendMyPresence();
+        }
+
         void _connection_OnRosterStart(object sender) {
             OnRosterStart();
         }
@@ -185,9 +194,7 @@ namespace MyChitChat.Jabber {
 
         public void RequestVcard(Jid jid, IqCB VcardResult) {
             VcardIq viq = new VcardIq(IqType.get, new Jid( jid.Bare));
-            if (!this._dicVCards.ContainsKey(jid)) {
-                _connection.IqGrabber.SendIq(viq, VcardResult, null);
-            }
+            _connection.IqGrabber.SendIq(viq, VcardResult, null);            
         }
        
 
@@ -272,10 +279,7 @@ namespace MyChitChat.Jabber {
                 return;
             }
 
-            Log.Info("Login to jabber server completed.");
-            _connection.Show = ShowType.NONE;
-            _connection.Status = "Idle";
-            _connection.SendMyPresence();
+            Log.Info("Login to jabber server completed.");            
             OnLogin(sender);
         }
 

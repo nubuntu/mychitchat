@@ -17,7 +17,7 @@ namespace MyChitChat.Plugin {
                 
         public Plugin() {
             Log.Debug("MyChitChat started");
-            Settings.Load();           
+            Settings.Load();             
         }  
         
         #region ISetupForm Members

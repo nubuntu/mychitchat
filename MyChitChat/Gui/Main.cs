@@ -8,11 +8,19 @@ using MyChitChat.Jabber;
 using MyChitChat.Plugin;
 
 
+
+
 namespace MyChitChat.Gui {
     public class Main : GUIWindow {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         private Dictionary<Jid, Session> _dicChatSessions;
+        private RosterContact _myContactInfo;
+        #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        [SkinControlAttribute(50)]
+        protected GUIFacadeControl ctrlFacade = null;
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
@@ -43,11 +51,12 @@ namespace MyChitChat.Gui {
             return Load(Helper.SKIN_FILE_MAIN);
         }
 
-        protected override void OnWindowLoaded() {
+        protected override void OnPageLoad() {
             if (!Helper.JABBER_CLIENT.Connected) {
                 Helper.JABBER_CLIENT.Connect();
             }
-            base.OnWindowLoaded();
+            this.CreateGuiElements();
+            base.OnPageLoad();
         }
 
         #endregion
@@ -57,6 +66,44 @@ namespace MyChitChat.Gui {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private GUI Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+        private void UpdateMyPresence(string headerText ) {
+            Helper.ShowDialogSelectStatus(headerText, new GUIListItem.ItemSelectedHandler(OnDialogStatusSelected), false);
+        }
+        
+        private void OnDialogStatusSelected(GUIListItem item, GUIControl parent) {
+            if (item.Path == "custom") {
+                Helper.ShowDialogSelectStatus("Custom - Select Show Type", new GUIListItem.ItemSelectedHandler(OnDialogStatusSelectedCustom), true);
+            } else {
+                try {
+                    Helper.JABBER_PRESENCE_STATES selectedStatus = (Helper.JABBER_PRESENCE_STATES)Enum.Parse(typeof(Helper.JABBER_PRESENCE_STATES), item.Path);
+                } catch (Exception ex) { 
+                    Log.Error(ex);
+                }
+            }
+        }
+
+        private void OnDialogStatusSelectedCustom(GUIListItem item, GUIControl parent) {
+            OnDialogStatusSelected(item, parent);
+
+        }
+
+        private void CreateGuiElements() {
+            if (ctrlFacade == null) {
+                Log.Error(new NullReferenceException("No FacadeControl specified in: " + Helper.SKIN_FILE_MAIN));
+                return;
+            }
+
+        }
+
+        private void InitializeGuiElements() {
+
+        }
+
+        private void BuildRoster() {
+
+        }
 
         private void ShowContactWindow(RosterContact currentContact) {
             // do not show info if no contact selected
@@ -113,20 +160,10 @@ namespace MyChitChat.Gui {
             Helper.JABBER_CLIENT.RefreshRoster();
         }
 
-        private void UpdateGuiElements() {
-            //throw new NotImplementedException();
-        }
-
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Business Logic Methods ~~~~~~~~~~~~~~~~~~~~
 
-        private void BuildRoster() {
-            Helper.JABBER_CLIENT.Roster.Clear();
-            Helper.JABBER_CLIENT.RefreshRoster();
-           // List<RosterContact> test = Helper.JABBER_CLIENT.Roster.GetOnlineContacts();
-
-        }
 
         private Session CheckCreateSession(Message msg) {
             if (this._dicChatSessions.ContainsKey(msg.FromJID)) {
@@ -135,9 +172,9 @@ namespace MyChitChat.Gui {
                 Session tmpSession = null;
                 RosterContact tmpContact = Helper.JABBER_CLIENT.Roster.GetRosterContact(msg.FromJID);
                 if (tmpContact != null) {
-                    tmpSession = new Session(tmpContact,Helper.JABBER_CLIENT);
+                    tmpSession = new Session(tmpContact, Helper.JABBER_CLIENT);
                     this._dicChatSessions.Add(msg.FromJID, tmpSession);
-                }                
+                }
                 return tmpSession;
             }
         }
@@ -154,8 +191,14 @@ namespace MyChitChat.Gui {
         void JabberClient_OnLogin(object sender) {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
             Settings.NotifyOnMessage = true;
-            Settings.NotifyOnPresence = true;            
-            //ShowNotifyDialog("MyChitChat loaded...");
+            Settings.NotifyOnPresence = true;
+            //ShowNotifyDialog("MyChitChat loaded...");   
+            if (Settings.SetPresenceOnStartup) {
+                this.UpdateMyPresence(Helper.PLUGIN_NAME + " - I'm currently...");
+            } else {
+                Helper.JABBER_CLIENT.SendyMyPresence(Helper.JABBER_PRESENCE_DEFAULT);
+            }
+
         }
 
         void JABBER_CLIENT_OnError(Exception exception) {
@@ -185,9 +228,9 @@ namespace MyChitChat.Gui {
             if (Helper.PLUGIN_WINDOW_ACTIVE) {
                 GUIWaitCursor.Hide();
             }
-            UpdateGuiElements();
+            InitializeGuiElements();
         }
-        
+
         protected override void OnShowContextMenu() {
             BuildRoster();
             base.OnShowContextMenu();
