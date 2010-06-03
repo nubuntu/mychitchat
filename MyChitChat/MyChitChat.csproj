@@ -55,6 +55,7 @@
     <Compile Include="Gui\Main.cs" />
     <Compile Include="Jabber\Client.cs" />
     <Compile Include="Gui\Chat.cs" />
+    <Compile Include="Jabber\Kopie von Client.cs" />
     <Compile Include="Jabber\Message.cs" />
     <Compile Include="Plugin\Cache.cs" />
     <Compile Include="Plugin\Plugin.cs" />
@@ -115,6 +116,17 @@
     </Content>
     <Content Include="RegionsSnippet.txt" />
     <Content Include="Skin\Blue3wide\MyChitChat_Contact.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nJim\nJim.csproj">
+      <Project>{3AAB1BC8-0466-411C-91AD-995D2D555A05}</Project>
+      <Name>nJim</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Skin\Blue3wide\Media\MyChitChat\activity\" />
+    <Folder Include="Skin\Blue3wide\Media\MyChitChat\mood\" />
+    <Folder Include="Skin\Blue3wide\Media\MyChitChat\status\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

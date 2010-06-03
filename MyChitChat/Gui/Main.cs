@@ -6,6 +6,7 @@ using MediaPortal.Dialogs;
 using MediaPortal.GUI.Library;
 using MyChitChat.Jabber;
 using MyChitChat.Plugin;
+using nJim;
 
 
 namespace MyChitChat.Gui {
@@ -13,7 +14,6 @@ namespace MyChitChat.Gui {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         private Dictionary<Jid, Session> _dicChatSessions;
-        private RosterContact _myContactInfo;
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -24,34 +24,41 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
 
         public Main() {
-            Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JabberClient_OnLogin);
+            Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JABBER_CLIENT_OnLogin);
             Helper.JABBER_CLIENT.OnError += new OnErrorEventHandler(JABBER_CLIENT_OnError);
-            Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JabberClient_OnMessage);
-            Helper.JABBER_CLIENT.OnPresence += new OnPresenceEventHandler(JabberClient_OnPresence);
-            Helper.JABBER_CLIENT.OnRosterItem += new OnRosterItemEventHandler(JabberClient_OnRosterItem);
-            Helper.JABBER_CLIENT.OnRosterStart += new OnRosterStartEventHandler(JabberClient_OnRosterStart);
-            Helper.JABBER_CLIENT.OnRosterEnd += new OnRosterEndEventHandler(JabberClient_OnRosterEnd);
+            Helper.JABBER_CLIENT.OnRosterEnd += new OnRosterEndEventHandler(JABBER_CLIENT_OnRosterEnd);
+            Helper.JABBER_CLIENT.OnRosterStart += new OnRosterStartEventHandler(JABBER_CLIENT_OnRosterStart);
             this._dicChatSessions = new Dictionary<Jid, Session>();
         }
 
+
+
         ~Main() {
-            Helper.JABBER_CLIENT.Disconnect();
-        }
+            try {
+                Helper.JABBER_CLIENT.Close();
+                Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(Roster_PresenceUpdated);
+                Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
+                Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
+                Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);                
+            } catch (Exception ex) {
+                Log.Error(ex);
+            }
+        }       
 
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public override bool Init() {
-            if (Settings.AutoConnectStartup) {
-                Helper.JABBER_CLIENT.Connect();
+            if (Settings.autoConnectStartup) {
+                Helper.JABBER_CLIENT.Login();
             }
             return Load(Helper.SKIN_FILE_MAIN);
         }
 
         protected override void OnPageLoad() {
-            if (!Helper.JABBER_CLIENT.Connected) {
-                Helper.JABBER_CLIENT.Connect();
+            if (!Helper.JABBER_CLIENT.LoggedIn) {
+                Helper.JABBER_CLIENT.Login();
             }
             this.CreateGuiElements();
             base.OnPageLoad();
@@ -59,17 +66,17 @@ namespace MyChitChat.Gui {
 
         protected override void OnShowContextMenu() {
             UpdateMyPresence("Test", true);
-            Helper.JABBER_CLIENT.Roster.Clear();
+            //Helper.JABBER_CLIENT.Roster..Clear();
             base.OnShowContextMenu();
         }
 
         protected override void OnWindowLoaded() {
-            Helper.SetMyCurrentPresencePluginEnabled();
+            //Helper.SetMyCurrentPresencePluginEnabled();
             base.OnWindowLoaded();
         }
 
         protected override void OnPreviousWindow() {
-            Helper.SetMyCurrentPresencePluginDisabled();
+            //Helper.SetMyCurrentPresencePluginDisabled();
             base.OnPreviousWindow();
         }
 
@@ -84,68 +91,68 @@ namespace MyChitChat.Gui {
 
 
         private void UpdateMyPresence(string headerText, bool showCustomStatus) {
-            GUIDialogSelect2 dlgSelectStatus = (GUIDialogSelect2)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_SELECT2);
-            dlgSelectStatus.Reset();
-            dlgSelectStatus.SetHeading(headerText);
-            List<GUIListItem> labelList = new List<GUIListItem>();
+            //GUIDialogSelect2 dlgSelectStatus = (GUIDialogSelect2)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_SELECT2);
+            //dlgSelectStatus.Reset();
+            //dlgSelectStatus.SetHeading(headerText);
+            //List<GUIListItem> labelList = new List<GUIListItem>();
 
-            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.ONLINE.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.ONLINE),
-                                                        Helper.MEDIA_STATUS_AVAILABLE,
-                                                        null)
-                                                        );
-            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.DO_NO_DISTURB.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.DO_NO_DISTURB),
-                                                        Helper.MEDIA_STATUS_DND,
-                                                        null)
-                                                        );
-            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.FREE_FOR_CHAT.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.FREE_FOR_CHAT),
-                                                        Helper.MEDIA_STATUS_CHAT,
-                                                        null)
-                                                        );
-            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.AWAY.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.AWAY),
-                                                        Helper.MEDIA_STATUS_AWAY,
-                                                        null)
-                                                        );
-            labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.EXTENDED_AWAY.ToString(),
-                                                        Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.EXTENDED_AWAY),
-                                                        Helper.MEDIA_STATUS_XA,
-                                                        null)
-                                                        );
-            if (showCustomStatus) {
-                labelList.Add(new GUIListItem("Custom Status..."));
-            }
-            foreach (GUIListItem currentItem in labelList) {
-                dlgSelectStatus.Add(currentItem);
-            }
-            dlgSelectStatus.DoModal(GUIWindowManager.ActiveWindow);
-            if (dlgSelectStatus.SelectedLabelText == "Custom Status...") {
-                UpdateMyPresence("Show Custom Status as...", false);
-                return;
-            }
+            //labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.ONLINE.ToString(),
+            //                                            Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.ONLINE),
+            //                                            Helper.MEDIA_STATUS_AVAILABLE,
+            //                                            null)
+            //                                            );
+            //labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.DO_NO_DISTURB.ToString(),
+            //                                            Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.DO_NO_DISTURB),
+            //                                            Helper.MEDIA_STATUS_DND,
+            //                                            null)
+            //                                            );
+            //labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.FREE_FOR_CHAT.ToString(),
+            //                                            Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.FREE_FOR_CHAT),
+            //                                            Helper.MEDIA_STATUS_CHAT,
+            //                                            null)
+            //                                            );
+            //labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.AWAY.ToString(),
+            //                                            Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.AWAY),
+            //                                            Helper.MEDIA_STATUS_AWAY,
+            //                                            null)
+            //                                            );
+            //labelList.Add(Helper.CreateGuiListItem(Helper.JABBER_PRESENCE_STATES.EXTENDED_AWAY.ToString(),
+            //                                            Helper.GetFriendlyPresenceState(Helper.JABBER_PRESENCE_STATES.EXTENDED_AWAY),
+            //                                            Helper.MEDIA_STATUS_XA,
+            //                                            null)
+            //                                            );
+            //if (showCustomStatus) {
+            //    labelList.Add(new GUIListItem("Custom Status..."));
+            //}
+            //foreach (GUIListItem currentItem in labelList) {
+            //    dlgSelectStatus.Add(currentItem);
+            //}
+            //dlgSelectStatus.DoModal(GUIWindowManager.ActiveWindow);
+            //if (dlgSelectStatus.SelectedLabelText == "Custom Status...") {
+            //    UpdateMyPresence("Show Custom Status as...", false);
+            //    return;
+            //}
 
-            try {
-                Helper.JABBER_PRESENCE_STATES selectedStatus = (Helper.JABBER_PRESENCE_STATES)Enum.Parse(typeof(Helper.JABBER_PRESENCE_STATES), labelList[dlgSelectStatus.SelectedLabel].Path);
-                string tmpMessage = Helper.GetFriendlyPresenceState(selectedStatus);
-                if (!showCustomStatus) {
-                    VirtualKeyboard keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
-                    if (null == keyboard)
-                        return;
+            //try {
+            //    Helper.JABBER_PRESENCE_STATES selectedStatus = (Helper.JABBER_PRESENCE_STATES)Enum.Parse(typeof(Helper.JABBER_PRESENCE_STATES), labelList[dlgSelectStatus.SelectedLabel].Path);
+            //    string tmpMessage = Helper.GetFriendlyPresenceState(selectedStatus);
+            //    if (!showCustomStatus) {
+            //        VirtualKeyboard keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
+            //        if (null == keyboard)
+            //            return;
 
-                    keyboard.Reset();
-                    keyboard.Text = Helper.GetFriendlyPresenceState(selectedStatus);
-                    keyboard.DoModal(GUIWindowManager.ActiveWindow);
-                    if (keyboard.IsConfirmed) {
-                        tmpMessage = keyboard.Text;
-                    }
-                }
-                Helper.SetMyCurrentPresence(selectedStatus, tmpMessage);
-                Helper.JABBER_CLIENT.SendyMyPresence(Helper.JABBER_PRESENCE_CURRENT);
-            } catch (Exception ex) {
-                Log.Error(ex);
-            }
+            //        keyboard.Reset();
+            //        keyboard.Text = Helper.GetFriendlyPresenceState(selectedStatus);
+            //        keyboard.DoModal(GUIWindowManager.ActiveWindow);
+            //        if (keyboard.IsConfirmed) {
+            //            tmpMessage = keyboard.Text;
+            //        }
+            //    }
+            //    Helper.SetMyCurrentPresence(selectedStatus, tmpMessage);
+            //    Helper.JABBER_CLIENT.SendyMyPresence(Helper.JABBER_PRESENCE_CURRENT);
+            //} catch (Exception ex) {
+            //    Log.Error(ex);
+            //}
 
         }
 
@@ -165,15 +172,15 @@ namespace MyChitChat.Gui {
 
         }
 
-        private void ShowContactWindow(RosterContact currentContact) {
-            // do not show info if no contact selected
-            if (currentContact != null) {
-                Contact guiWindowContact = (Contact)GUIWindowManager.GetWindow((int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_CONTACT);
-                if (guiWindowContact != null) {
-                    GUIWindowManager.ActivateWindow(guiWindowContact.GetID);
-                }
-            }
-        }
+        //private void ShowContactWindow(RosterContact currentContact) {
+        //    // do not show info if no contact selected
+        //    if (currentContact != null) {
+        //        Contact guiWindowContact = (Contact)GUIWindowManager.GetWindow((int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_CONTACT);
+        //        if (guiWindowContact != null) {
+        //            GUIWindowManager.ActivateWindow(guiWindowContact.GetID);
+        //        }
+        //    }
+        //}
 
         private void ShowChatWindow(Session currentChatSession) {
             // do not show info if no contact selected
@@ -186,38 +193,49 @@ namespace MyChitChat.Gui {
             }
         }
 
-        private void NotifyError(Exception exception) {
-            if (Helper.SHOULD_NOTIFY_ERROR) {
-                Helper.ShowNotifyDialog(3 * Settings.NotifyTimeOut,
-                    Helper.PLUGIN_NAME + " Error!",
-                    Helper.MEDIA_ICON_ERROR,
-                    exception.ToString(),
-                    Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY
-                );
-            }
+        private void NotifyError(nJim.Enums.ErrorType type, string message) {
+            Helper.ShowNotifyDialog(3 * Settings.notifyTimeOut,
+                Helper.PLUGIN_NAME + " Error!",
+                Helper.MEDIA_ICON_ERROR,
+                type.ToString() + "\n" + message,
+                Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY
+            );
         }
 
-        private void NotifyPresence(RosterContact contact) {
-            if (Helper.SHOULD_NOTIFY_PRESENCE) {
-                string status = contact.Status;
-                if (!String.IsNullOrEmpty(contact.StatusMessage)) {
-                    status += "\n\"" + contact.StatusMessage + "\"";
-                }
-                if (!String.IsNullOrEmpty(contact.Resource)) {
-                    status += "\n@" + contact.Resource;
-                }
-                Helper.ShowNotifyDialog(Settings.NotifyTimeOut, contact.Nickname, Helper.MEDIA_ICON_PRESENCE, status, Settings.NotifyWindowTypePresence);
+        private void NotifyPresMooActTun(nJim.Contact contact, Mood? mood, Activity? activity, Tune? tune) {
+            string header = String.Empty;
+            string message = string.Empty;
+
+            Helper.PresMooActNotifyInfo notifyInfo = new Helper.PresMooActNotifyInfo();
+            notifyInfo.nickname = contact.identity.nickname;
+            notifyInfo.resource = contact.identity.jabberID.resource;
+            notifyInfo.stamp = contact.lastUpdated;
+            notifyInfo.header = string.Format("{0} [{1}]", notifyInfo.nickname, notifyInfo.stamp.ToShortTimeString());
+            notifyInfo.status = Helper.GetFriendlyStatusType(contact.status.type);
+            notifyInfo.message = contact.status.message;
+            notifyInfo.icon = Helper.GetStatusIcon(contact.status);
+            if (mood.HasValue) {
+                notifyInfo.mood = mood.Value.type.ToString().ToUpper();
+                notifyInfo.message = notifyInfo.mood + "\n" + mood.Value.text;
+                notifyInfo.icon = Helper.GetMoodIcon(mood.Value);
             }
+            if (activity.HasValue) {
+                notifyInfo.activity = activity.Value.type.ToString().ToUpper();
+                notifyInfo.message = notifyInfo.activity + "\n" + activity.Value.text;
+                notifyInfo.icon = Helper.GetActivityIcon(activity.Value);
+            }
+            if (tune.HasValue) {
+                notifyInfo.tune = string.Format("{0}\n{1}", tune.Value.artist, tune.Value.title);
+                notifyInfo.message = notifyInfo.tune;
+                notifyInfo.icon = Helper.GetTuneIcon(tune.Value);
+            }
+            header = notifyInfo.nickname;
+            message += notifyInfo.resource;
+            Helper.ShowNotifyDialog(header, notifyInfo.icon, message, Settings.notifyWindowTypePresence);
         }
 
         private void NotifyMessage(Message msg) {
-            if (Helper.SHOULD_NOTIFY_MESSAGE) {
-                Helper.ShowNotifyDialog(Settings.NotifyTimeOut, msg.FromNickname, Helper.MEDIA_ICON_MESSAGE, msg.Body, Settings.NotifyWindowTypeMessage);
-            }
-        }
-
-        private void RefreshContactList() {
-            Helper.JABBER_CLIENT.RefreshRoster();
+            Helper.ShowNotifyDialog(Settings.notifyTimeOut, msg.FromNickname, Helper.MEDIA_ICON_MESSAGE, msg.Body, Settings.notifyWindowTypeMessage);
         }
 
         #endregion
@@ -226,72 +244,101 @@ namespace MyChitChat.Gui {
 
 
         private Session CheckCreateSession(Message msg) {
-            if (this._dicChatSessions.ContainsKey(msg.FromJID)) {
-                return this._dicChatSessions[msg.FromJID];
-            } else {
-                Session tmpSession = null;
-                RosterContact tmpContact = Helper.JABBER_CLIENT.Roster.GetRosterContact(msg.FromJID);
-                if (tmpContact != null) {
-                    tmpSession = new Session(tmpContact, Helper.JABBER_CLIENT);
-                    this._dicChatSessions.Add(msg.FromJID, tmpSession);
-                }
-                return tmpSession;
-            }
+            //if (this._dicChatSessions.ContainsKey(msg.FromJID)) {
+            //    return this._dicChatSessions[msg.FromJID];
+            //} else {
+            //    Session tmpSession = null;
+            //    RosterContact tmpContact = Helper.JABBER_CLIENT.Roster.GetRosterContact(msg.FromJID);
+            //    if (tmpContact != null) {
+            //        tmpSession = new Session(tmpContact, Helper.JABBER_CLIENT);
+            //        this._dicChatSessions.Add(msg.FromJID, tmpSession);
+            //    }
+            //    return tmpSession;
+            //}
+            return null;
         }
 
 
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Events & Delegates ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        void JabberClient_OnLogin(object sender) {
+
+        void JABBER_CLIENT_OnLogin(object sender) {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
-            Settings.NotifyOnMessage = true;
-            Settings.NotifyOnPresence = true;
-            //ShowNotifyDialog("MyChitChat loaded...");             
+            //ShowNotifyDialog("MyChitChat loaded...");   
+
+            Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
+            Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(Roster_PresenceUpdated);
+            Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
+            Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
+            Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
+
+            //Status s = new Status();
+            //s.type = Enums.StatusType.Normal;
+            //s.message = "dotNet Jabber Instant Messaging Library";
+            //Helper.JABBER_CLIENT.Presence.status = s;
+            //Helper.JABBER_CLIENT.Presence.autoIdleMinutes = 1;
+            //Mood m = new Mood();
+            //m.type = Enums.MoodType.neutral;
+            //m.text = "Hummeur normale";
+            //Helper.JABBER_CLIENT.Presence.mood = m;
+            //Activity a = new Activity();
+            //a.type = Enums.ActivityType.coding;
+            //a.text = "Dévelopement de nJim";
+            //Helper.JABBER_CLIENT.Presence.activity = a;
 
         }
 
-        void JABBER_CLIENT_OnError(Exception exception) {
-            NotifyError(exception);
+
+        void JABBER_CLIENT_OnError(nJim.Enums.ErrorType type, string message) {
+            NotifyError(type, message);
         }
 
-        void JabberClient_OnPresence(RosterContact presContact) {
-            NotifyPresence(presContact);
+        void JABBER_CLIENT_OnRosterStart() {
+            GUIWaitCursor.Show();
         }
 
-        void JabberClient_OnMessage(MyChitChat.Jabber.Message msg) {
-            NotifyMessage(msg);
-            Session currentSession = CheckCreateSession(msg);
-        }
-
-        void JabberClient_OnRosterStart() {
-            if (Helper.PLUGIN_WINDOW_ACTIVE) {
-                GUIWaitCursor.Show();
-            }
-        }
-
-        void JabberClient_OnRosterItem(object sender, Jid jid) {
-
-        }
-
-        void JabberClient_OnRosterEnd() {
-            if (Helper.PLUGIN_WINDOW_ACTIVE) {
-                GUIWaitCursor.Hide();
-            }
-            if (Settings.SetPresenceOnStartup) {
+        void JABBER_CLIENT_OnRosterEnd() {
+            GUIWaitCursor.Hide();
+            if (Settings.setPresenceOnStartup) {
                 this.UpdateMyPresence(Helper.PLUGIN_NAME + " - I'm currently...", true);
             } else {
-                Helper.JABBER_CLIENT.SendyMyPresence(Helper.JABBER_PRESENCE_DEFAULT);
+                //Helper.JABBER_CLIENT.SendyMyPresence(Helper.JABBER_PRESENCE_DEFAULT);
             }
             InitializeGuiElements();
         }
 
-        
+        void JABBER_CLIENT_OnMessage(Message msg) {
+            if (Settings.notifyOnMessage && Settings.notifyOutsidePlugin)
+                NotifyMessage(msg);
+            Session currentSession = CheckCreateSession(msg);
+        }
+
+        void Roster_PresenceUpdated(nJim.Contact contact) {
+            if (Settings.notifyOnPresenceUpdate && Settings.notifyOutsidePlugin)
+                NotifyPresMooActTun(contact, null, null, null);
+        }
+
+        void Roster_MoodUpdated(nJim.Contact contact, Mood mood) {
+            if (Settings.notifyOnMoodUpdate && Settings.notifyOutsidePlugin)
+                NotifyPresMooActTun(contact, mood, null, null);
+        }
+
+        void Roster_ActivityUpdated(nJim.Contact contact, Activity activity) {
+            if (Settings.notifyOnActivityUpdate && Settings.notifyOutsidePlugin)
+                NotifyPresMooActTun(contact, null, activity, null);
+        }
+
+        void Roster_TuneUpdated(nJim.Contact contact, Tune tune) {
+            if (Settings.notifyOnTuneUpdate && Settings.notifyOutsidePlugin)
+                NotifyPresMooActTun(contact, null, null, tune);
+        }
+
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

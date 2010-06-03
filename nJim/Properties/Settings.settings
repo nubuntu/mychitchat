@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="nJim.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="YAK" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Co6Pg9_V34FjxJtacBHg.sZ.hFtTF1hKFEZE03M7JXflOlMsgBdQzjX7hUP1EUH_ek8M</Value>
+    </Setting>
+    <Setting Name="YGCU" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://local.yahooapis.com/MapsService/V1/geocode</Value>
+    </Setting>
+    <Setting Name="YMIU" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://local.yahooapis.com/MapsService/V1/mapImage</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

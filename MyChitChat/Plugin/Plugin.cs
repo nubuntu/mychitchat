@@ -12,14 +12,14 @@ namespace MyChitChat.Plugin {
     public class Plugin : ISetupForm, IShowPlugin {
         #region Constants
 
-        
+
         #endregion
-                
+
         public Plugin() {
             Log.Debug("MyChitChat started");
-            Settings.Load();             
-        }  
-        
+            Settings.Load();
+        }
+
         #region ISetupForm Members
 
         // Returns the name of the plugin which is shown in the plugin menu
@@ -88,7 +88,7 @@ namespace MyChitChat.Plugin {
 
         #region IShowPlugin Member
 
-        public bool ShowDefaultHome() {            
+        public bool ShowDefaultHome() {
             return false;
         }
 
@@ -97,7 +97,7 @@ namespace MyChitChat.Plugin {
                 return (int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_MAIN;
             }
         }
-       
+
         #endregion
     }
 }
