@@ -39,11 +39,11 @@ namespace MyChitChat.Gui {
                 Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(Roster_PresenceUpdated);
                 Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
                 Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
-                Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);                
+                Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
             } catch (Exception ex) {
                 Log.Error(ex);
             }
-        }       
+        }
 
         #endregion
 
@@ -207,10 +207,14 @@ namespace MyChitChat.Gui {
             string message = string.Empty;
 
             Helper.PresMooActNotifyInfo notifyInfo = new Helper.PresMooActNotifyInfo();
-            notifyInfo.nickname = contact.identity.nickname;
+            if (contact.identity.nickname != String.Empty) {
+                notifyInfo.nickname = contact.identity.nickname;
+            } else {
+                notifyInfo.nickname = contact.identity.jabberID.user;
+            }
             notifyInfo.resource = contact.identity.jabberID.resource;
             notifyInfo.stamp = contact.lastUpdated;
-            notifyInfo.header = string.Format("{0} [{1}]", notifyInfo.nickname, notifyInfo.stamp.ToShortTimeString());
+            notifyInfo.header = string.Format("[{1}] {0} ", notifyInfo.nickname, notifyInfo.stamp.ToShortTimeString());
             notifyInfo.status = Helper.GetFriendlyStatusType(contact.status.type);
             notifyInfo.message = contact.status.message;
             notifyInfo.icon = Helper.GetStatusIcon(contact.status);
@@ -229,13 +233,15 @@ namespace MyChitChat.Gui {
                 notifyInfo.message = notifyInfo.tune;
                 notifyInfo.icon = Helper.GetTuneIcon(tune.Value);
             }
-            header = notifyInfo.nickname;
-            message += notifyInfo.resource;
+            header = notifyInfo.header;
+            message += notifyInfo.status;
+            message += "\n\"" + notifyInfo.message + "\"";
+            message += "\n" + notifyInfo.resource;
             Helper.ShowNotifyDialog(header, notifyInfo.icon, message, Settings.notifyWindowTypePresence);
         }
 
         private void NotifyMessage(Message msg) {
-            Helper.ShowNotifyDialog(Settings.notifyTimeOut, msg.FromNickname, Helper.MEDIA_ICON_MESSAGE, msg.Body, Settings.notifyWindowTypeMessage);
+            Helper.ShowNotifyDialog(Settings.notifyTimeOut, msg.FromJID.User, Helper.MEDIA_ICON_MESSAGE, msg.Body, Settings.notifyWindowTypeMessage);
         }
 
         #endregion
@@ -277,19 +283,19 @@ namespace MyChitChat.Gui {
             Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
             Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
 
-            //Status s = new Status();
-            //s.type = Enums.StatusType.Normal;
-            //s.message = "dotNet Jabber Instant Messaging Library";
-            //Helper.JABBER_CLIENT.Presence.status = s;
-            //Helper.JABBER_CLIENT.Presence.autoIdleMinutes = 1;
-            //Mood m = new Mood();
-            //m.type = Enums.MoodType.neutral;
-            //m.text = "Hummeur normale";
-            //Helper.JABBER_CLIENT.Presence.mood = m;
-            //Activity a = new Activity();
-            //a.type = Enums.ActivityType.coding;
-            //a.text = "Dévelopement de nJim";
-            //Helper.JABBER_CLIENT.Presence.activity = a;
+            Status s = new Status();
+            s.type = Enums.StatusType.Normal;
+            s.message = "dotNet Jabber Instant Messaging Library";
+            Helper.JABBER_CLIENT.Presence.status = s;
+            Helper.JABBER_CLIENT.Presence.autoIdleMinutes = 1;
+            Mood m = new Mood();
+            m.type = Enums.MoodType.neutral;
+            m.text = "Hummeur normale";
+            Helper.JABBER_CLIENT.Presence.mood = m;
+            Activity a = new Activity();
+            a.type = Enums.ActivityType.coding;
+            a.text = "Dévelopement de nJim";
+            Helper.JABBER_CLIENT.Presence.activity = a;
 
         }
 
@@ -319,7 +325,7 @@ namespace MyChitChat.Gui {
         }
 
         void Roster_PresenceUpdated(nJim.Contact contact) {
-            if (Settings.notifyOnPresenceUpdate && Settings.notifyOutsidePlugin)
+            if (Settings.notifyOnPresenceUpdate && Settings.notifyOutsidePlugin && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full )
                 NotifyPresMooActTun(contact, null, null, null);
         }
 

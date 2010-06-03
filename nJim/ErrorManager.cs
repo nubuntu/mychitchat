@@ -61,7 +61,7 @@ namespace nJim
 			Jabber.xmpp.OnAuthError += new agsXMPP.XmppElementHandler(ElementError);
 			Jabber.xmpp.OnRegisterError += new agsXMPP.XmppElementHandler(ElementError);
 			Jabber.xmpp.OnSocketError += new agsXMPP.ErrorHandler(Error);
-			Jabber.xmpp.OnXmppError += new agsXMPP.XmppElementHandler(ElementError);
+			//Jabber.xmpp.OnXmppError += new agsXMPP.XmppElementHandler(ElementError);
 		}
 
 		#endregion
@@ -77,7 +77,7 @@ namespace nJim
 			Jabber.xmpp.OnAuthError -= new agsXMPP.XmppElementHandler(ElementError);
 			Jabber.xmpp.OnRegisterError -= new agsXMPP.XmppElementHandler(ElementError);
 			Jabber.xmpp.OnSocketError -= new agsXMPP.ErrorHandler(Error);
-			Jabber.xmpp.OnXmppError -= new agsXMPP.XmppElementHandler(ElementError);
+			//Jabber.xmpp.OnXmppError -= new agsXMPP.XmppElementHandler(ElementError);
 		}
 
 		#endregion

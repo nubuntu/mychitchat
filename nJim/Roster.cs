@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using agsXMPP;
 
 namespace nJim
 {
@@ -115,8 +116,7 @@ namespace nJim
 			try
 			{
 				PresenceUpdated(contact);
-			}
-			catch { }
+            } catch { }
 		}
 
 		/// <summary>
@@ -300,7 +300,7 @@ namespace nJim
 				{
 					if (jid.Resource != null && contacts[jid.Bare].ContainsKey(jid.Resource.Trim()))
 					{
-						Jabber.xmpp.PresenceManager.Unsubcribe(jid);
+						Jabber.xmpp.PresenceManager.Unsubscribe(jid);
 						Jabber.xmpp.RosterManager.RemoveRosterItem(jid);
 					}
 					else
@@ -309,7 +309,7 @@ namespace nJim
 						{
 							remove(r.Value.identity.jabberID.full);
 						}
-						Jabber.xmpp.PresenceManager.Unsubcribe(jid);
+						Jabber.xmpp.PresenceManager.Unsubscribe(jid);
 						Jabber.xmpp.RosterManager.RemoveRosterItem(jid);
 					}
 				}
@@ -327,8 +327,8 @@ namespace nJim
 			{
 				if (!contacts.ContainsKey(jid.Bare))
 				{
-					Jabber.xmpp.RosterManager.AddRosterItem(new agsXMPP.Jid(jid.Bare));
-					Jabber.xmpp.PresenceManager.Subcribe(new agsXMPP.Jid(jid.Bare));
+					Jabber.xmpp.RosterManager.AddRosterItem(new agsXMPP.Jid(jid.Bare));					
+                    Jabber.xmpp.PresenceManager.Subscribe(new agsXMPP.Jid(jid.Bare));
 				}
 			}
 		}
@@ -365,7 +365,7 @@ namespace nJim
 		{
 			if (Jabber.xmpp.Authenticated && (new agsXMPP.Jid(jbid)) != null)
 			{
-				Jabber.xmpp.PresenceManager.Subcribe(new agsXMPP.Jid(jbid));
+				Jabber.xmpp.PresenceManager.Subscribe(new agsXMPP.Jid(jbid));
 			}
 		}
 
@@ -377,7 +377,7 @@ namespace nJim
 		{
 			if (Jabber.xmpp.Authenticated && (new agsXMPP.Jid(jbid)) != null)
 			{
-				Jabber.xmpp.PresenceManager.Unsubcribe(new agsXMPP.Jid(jbid));
+				Jabber.xmpp.PresenceManager.Unsubscribe(new agsXMPP.Jid(jbid));
 			}
 		}
 
@@ -462,14 +462,14 @@ namespace nJim
 							}
 							break;
 						case agsXMPP.protocol.client.PresenceType.subscribed:
-							//Jabber.xmpp.PresenceManager.Subcribe(presence.From);
+							Jabber.xmpp.PresenceManager.Subscribe(presence.From);
 							SetPresence(presence);
 							break;
 						case agsXMPP.protocol.client.PresenceType.unsubscribe:
 							OnInformUnsubscribtion(bare);
 							break;
 						case agsXMPP.protocol.client.PresenceType.unsubscribed:
-							//Jabber.xmpp.PresenceManager.Unsubcribe(presence.From);
+							Jabber.xmpp.PresenceManager.Unsubscribe(presence.From);
 							SetPresence(presence);
 							break;
 						case agsXMPP.protocol.client.PresenceType.error:
@@ -494,8 +494,7 @@ namespace nJim
 				string resource = (presence.From.Resource != null) ? presence.From.Resource.Trim() : string.Empty;
 				if (contacts.ContainsKey(bare))
 				{
-					if (resource != string.Empty)
-					{
+                    if (resource != string.Empty) {
 						if (!contacts[bare].ContainsKey(resource))
 						{
 							contacts[bare].Add(resource, new Contact(presence.From, string.Empty, null));
@@ -564,7 +563,7 @@ namespace nJim
 						}
 						contacts[bare][resource].lastUpdated = DateTime.Now;
 						OnPresenceUpdated(contacts[bare][resource]);
-					}
+                    }
 					privacyListUpdated(Jabber._privacy);
 				}
 			}
