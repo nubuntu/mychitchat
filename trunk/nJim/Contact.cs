@@ -306,7 +306,7 @@ namespace nJim
 		{
 			if (_identity != null)
 			{
-				_identity.save();
+				//_identity.save();
 				_identity.Dispose();
 				_identity = null;
 			}

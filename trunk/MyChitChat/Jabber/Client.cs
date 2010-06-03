@@ -51,6 +51,13 @@ namespace MyChitChat.Jabber {
             get { return instance._jabberConnection.XMPPConnection.MessageGrabber; }
         }
 
+        public Jid MyJID {
+            get { return new Jid(instance._jabberConnection.identity.jabberID.full); }
+        }
+        public JabberID MyJabberID {
+            get { return instance._jabberConnection.identity.jabberID; }
+        }
+
         public bool LoggedIn {
             get { return instance._jabberConnection.XMPPConnection.Authenticated; }
         }
@@ -98,7 +105,7 @@ namespace MyChitChat.Jabber {
             _jabberConnection.password = Settings.password;
             _jabberConnection.server = Settings.server;
             _jabberConnection.resource = Settings.resource;
-
+            
             _jabberConnection.debug = true;
             _jabberConnection.compress = true;
             _jabberConnection.keepAlive = true;
@@ -115,6 +122,7 @@ namespace MyChitChat.Jabber {
 
             _jabberConnection.errors.ErrorRaised += new nJim.ErrorHandler(_jabberConnection_ErrorRaised);
             _jabberConnection.XMPPConnection.OnMessage += new agsXMPP.protocol.client.MessageHandler(JabberClient_OnMessage);
+           
             _jabberConnection.Connected += new NeutralHandler(_jabberConnection_Connected);
             _jabberConnection.Disconnected += new NeutralHandler(_jabberConnection_Disconnected);
             _jabberConnection.RosterStartUpdate += new NeutralHandler(_jabberConnection_RosterStartUpdate);
@@ -124,7 +132,7 @@ namespace MyChitChat.Jabber {
 
         void JabberClient_OnMessage(object sender, agsXMPP.protocol.client.Message msg) {
             Log.Debug(String.Format("New jabber message from {0}: {1}", msg.From.ToString(), msg.Body));
-            if (msg.Type == MessageType.chat && msg.From != null) {
+            if (msg.Type == MessageType.chat && msg.From != null && msg.From != new Jid(_jabberConnection.identity.jabberID.full)) {
                 OnMessage(new Message(msg, MessageTypes.Incoming, DateTime.Now));
             }
         }

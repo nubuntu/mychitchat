@@ -185,7 +185,7 @@ namespace nJim
 						iq.SwitchDirection();
 						iq.Type = IqType.result;
 						agsXMPP.protocol.iq.avatar.Avatar avatar = iq.Query as agsXMPP.protocol.iq.avatar.Avatar;
-						avatar.Data = null;
+						//avatar.Data = null;
 						if (Jabber._identity.photo != null && Jabber._identity.photoFormat != null)
 						{
 							MemoryStream ms = new MemoryStream();

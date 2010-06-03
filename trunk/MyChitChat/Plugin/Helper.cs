@@ -233,7 +233,7 @@ namespace MyChitChat.Plugin {
             }
         }
         public static void ShowNotifyDialog(string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
-            ShowNotifyDialog(header, icon, text, notifyType);
+            ShowNotifyDialog(Settings.notifyTimeOut, header, icon, text, notifyType);
         }
         public static void ShowNotifyDialog(int timeOut, string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
             try {
