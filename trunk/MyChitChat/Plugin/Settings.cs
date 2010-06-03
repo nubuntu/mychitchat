@@ -2,131 +2,44 @@
 using System.Collections.Generic;
 using System.Text;
 using MediaPortal;
-using agsXMPP.protocol.client;
+using nJim;
 
 namespace MyChitChat.Plugin {
     class Settings {
         #region Properties
 
         /// <summary>
-        /// The jabber username
-        /// </summary>
-        public static string Username {
-            get { return username; }
-            set { username = value; }
-        }
-        private static string username = String.Empty;
+        /// The jabber account information
+        /// </summary>       
+        public static string username = String.Empty;       
+        public static string server = String.Empty;
+        public static string resource = "MediaPortal";
+        public static string password = String.Empty;  
+  
 
-        /// <summary>
-        /// The jabber server
-        /// </summary>
-        public static string Server {
-            get { return server; }
-            set { server = value; }
-        }
-        private static string server = String.Empty;
+        public static int notifyTimeOut = 10;        
+        public static bool autoConnectStartup = true;
+        public static bool notifyOutsidePlugin = true;
+        public static bool notifyOnMessage = true;
+        public static bool notifyOnPresenceUpdate = true;
+        public static bool notifyOnMoodUpdate = true;
+        public static bool notifyOnActivityUpdate = true;
+        public static bool notifyOnTuneUpdate = true;
+        
+        public static bool notifyOnError = true;     
+        public static bool setPresenceOnStartup = true;
 
-        /// <summary>
-        /// The jabber resource
-        /// </summary>
-        public static string Resource {
-            get { return resource; }
-            set { resource = value; }
-        }
-        private static string resource = "MediaPortal";
+        public static Enums.StatusType defaultStatusType = Enums.StatusType.Normal;
+        public static string defaultStatusMessage = Helper.GetFriendlyStatusType(defaultStatusType);
 
-        /// <summary>
-        /// The jabber password
-        /// </summary>
-        public static string Password {
-            get { return password; }
-            set { password = value; }
-        }
-        private static string password = String.Empty;
+        public static int autoIdleTimeOut = 5;
+        public static Enums.StatusType autoIdleStatusType = Enums.StatusType.Away;
+        public static string autoIdleStatusMessage = Helper.GetFriendlyStatusType(autoIdleStatusType);
 
-        /// <summary>
-        /// The jabber password
-        /// </summary>
-        public static int NotifyTimeOut {
-            get { return notifyTimeOut; }
-            set { notifyTimeOut = value; }
-        }
-        private static int notifyTimeOut = 10;
+         
 
-        /// <summary>
-        /// Automatically connect to Jabber on MediaPortal startup / on Plugin started
-        /// </summary>
-        public static bool AutoConnectStartup {
-            get { return autoConnectStartup; }
-            set { autoConnectStartup = value; }
-        }
-        private static bool autoConnectStartup = true;
-
-        /// <summary>
-        /// Notify on new incoming messages while plugin not shown
-        /// </summary>
-        public static bool NotifyOnMessage {
-            get { return notifyOnMessage; }
-            set { notifyOnMessage = value; }
-        }
-        private static bool notifyOnMessage = false;
-
-        /// <summary>
-        /// _Notify on contact presence chages while plugin not shown
-        /// </summary>
-        public static bool NotifyOnPresence {
-            get { return notifyOnPresence; }
-            set { notifyOnPresence = value; }
-        }
-        private static bool notifyOnPresence = false;
-
-        /// <summary>
-        /// Notify on error while plugin not shown
-        /// </summary>
-        public static bool NotifyOnError {
-            get { return notifyOnError; }
-            set { notifyOnError = value; }
-        }
-        private static bool notifyOnError = true;
-
-        /// <summary>
-        /// Display Select Status dialog on plugin start
-        /// </summary>
-        public static bool SetPresenceOnStartup {
-            get { return setStatusOnStartup; }
-            set { setStatusOnStartup = value; }
-        }
-        private static bool setStatusOnStartup = true;
-
-        public static ShowType DefaultShowType {
-            get { return defaultShowType; }
-            set { defaultShowType = value; }
-        }
-        private static ShowType defaultShowType = ShowType.NONE;
-
-        public static string DefaultStatusMessage {
-            get { return defaultStatusMessage; }
-            set { defaultStatusMessage = value; }
-        }
-        private static string defaultStatusMessage = "Online";
-       
-        /// <summary>
-        /// The window type used to notify on new incoming messages while plugin not shown
-        /// </summary>
-        public static Helper.PLUGIN_NOTIFY_WINDOWS NotifyWindowTypeMessage {
-            get { return notifyMessageWindowType; }
-            set { notifyMessageWindowType = value; }
-        }
-        private static Helper.PLUGIN_NOTIFY_WINDOWS notifyMessageWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;
-
-        /// <summary>
-        /// The window type used to notify on contact presence chages while plugin not shown
-        /// </summary>
-        public static Helper.PLUGIN_NOTIFY_WINDOWS NotifyWindowTypePresence {
-            get { return notifyPresenceWindowType; }
-            set { notifyPresenceWindowType = value; }
-        }
-        private static Helper.PLUGIN_NOTIFY_WINDOWS notifyPresenceWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;
+        public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypeMessage = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;
+        public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypePresence = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;
 
 
         #endregion
@@ -136,12 +49,12 @@ namespace MyChitChat.Plugin {
         /// </summary>
         public static void Load() {
             using (MediaPortal.Profile.Settings reader = new MediaPortal.Profile.Settings(MediaPortal.Configuration.Config.GetFile(MediaPortal.Configuration.Config.Dir.Config, "MediaPortal.xml"))) {
-                Username = reader.GetValue(Helper.PLUGIN_NAME, "username");
-                Server = reader.GetValue(Helper.PLUGIN_NAME, "server");
-                Resource = reader.GetValue(Helper.PLUGIN_NAME, "resource");
+                username = reader.GetValue(Helper.PLUGIN_NAME, "username");
+                server = reader.GetValue(Helper.PLUGIN_NAME, "server");
+                resource = reader.GetValue(Helper.PLUGIN_NAME, "resource");
 
                 string encryptedPassword = reader.GetValue(Helper.PLUGIN_NAME, "password");
-                Password = decryptString(encryptedPassword);
+                password = decryptString(encryptedPassword);
             }
         }
 
@@ -151,12 +64,12 @@ namespace MyChitChat.Plugin {
         public static void Save() {
             using (MediaPortal.Profile.Settings xmlwriter = new MediaPortal.Profile.Settings(MediaPortal.Configuration.Config.GetFile(MediaPortal.Configuration.Config.Dir.Config, "MediaPortal.xml"))) {
                 // Encrypt the password
-                string encryptedPassword = encryptString(Password);
+                string encryptedPassword = encryptString(password);
 
-                xmlwriter.SetValue(Helper.PLUGIN_NAME, "username", Username);
-                xmlwriter.SetValue(Helper.PLUGIN_NAME, "server", Server);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "username", username);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "server", server);
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "password", encryptedPassword);
-                xmlwriter.SetValue(Helper.PLUGIN_NAME, "resource", Resource);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "resource", resource);
             }
         }
 

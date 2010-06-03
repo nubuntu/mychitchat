@@ -5,6 +5,7 @@ using System.Text;
 using MyChitChat.Jabber;
 using agsXMPP;
 using agsXMPP.Collections;
+using nJim;
 
 
 namespace MyChitChat.Plugin {
@@ -14,27 +15,27 @@ namespace MyChitChat.Plugin {
     class Session {
 
         private Client _chatClient;
-        private RosterContact _chatPartner;
+        private Identity _chatPartner;
         private List<Message> _listMessageHistory;
         private DateTime _dateTimeSessionStarted;
 
-        public Session(RosterContact chatPartner, Client chatClient) {
+        public Session(Identity chatPartner, Client chatClient) {
             this._chatClient = chatClient;
             this._chatPartner = chatPartner;
             this._listMessageHistory = new List<Message>();
             this._dateTimeSessionStarted = DateTime.Now;
-            this._chatClient.MessageGrabber.Add(chatPartner.JID, new BareJidComparer(), new MessageCB(CurrentChatListener), null);
+            this._chatClient.MessageGrabber.Add(new Jid(this._chatPartner.jabberID.full) , new BareJidComparer(), new MessageCB(CurrentChatListener), null);
         }
         
-        ~Session() {          
-            this._chatClient.MessageGrabber.Remove(this.ChatPartnerJID);
+        ~Session() {
+            this._chatClient.MessageGrabber.Remove(new Jid(this._chatPartner.jabberID.full));
 			this._chatClient = null;		
         }
 
         public event OnChatSessionUpdatedEventHandler OnChatSessionUpdated;
 
-        public Jid ChatPartnerJID { get { return this._chatPartner.JID; } }
-        public String ChatPartnerNickname { get { return this._chatPartner.Nickname; } }
+        public JabberID ChatPartnerJID { get { return this._chatPartner.jabberID; } }
+        public String ChatPartnerNickname { get { return this._chatPartner.nickname; } }
         public DateTime DateTimeLastActive {
             get {
                 return (_listMessageHistory.Count > 0)
@@ -51,7 +52,7 @@ namespace MyChitChat.Plugin {
         }
 
         public void Reply(string replyMessage) {
-            Message sentMsg = this._chatClient.SendMessage(replyMessage, this.ChatPartnerJID);
+            Message sentMsg = this._chatClient.SendMessage(replyMessage, new Jid(this.ChatPartnerJID.full));
             AddMessageHistory(sentMsg);            
         }
 

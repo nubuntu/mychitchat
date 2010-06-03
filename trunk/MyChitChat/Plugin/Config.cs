@@ -9,9 +9,7 @@ namespace MyChitChat.Plugin
 {
     public partial class Config : MPConfigForm
     {
-        delegate void SetTestReponse(TestEventArgs response);
-
-        private Client jabber = null;
+        private Client _testClient = null;
         private Thread backgroundWorker = null;
 
         public Config()
@@ -25,10 +23,10 @@ namespace MyChitChat.Plugin
 
             Settings.Load();
 
-            textBoxUsername.Text = Settings.Username;
-            textBoxServer.Text = Settings.Server;
-            textBoxResource.Text = Settings.Resource;
-            textBoxPassword.Text = Settings.Password;
+            textBoxUsername.Text = Settings.username;
+            textBoxServer.Text = Settings.server;
+            textBoxResource.Text = Settings.resource;
+            textBoxPassword.Text = Settings.password;
         }
 
         /// <summary>
@@ -85,19 +83,33 @@ namespace MyChitChat.Plugin
         /// </summary>
         private void TestJabber()
         {
-            jabber = Client.Instance;
-
-            jabber.TestCompleted += new TestCompletedEventHandler(jabber_TestCompleted);
-            jabber.TestSettings();
-            jabber.Connect();
+            _testClient = Client.Instance;
+            _testClient.OnError += new OnErrorEventHandler(_testClient_OnError);
+            _testClient.OnLogin += new OnLoginEventHandler(_testClient_OnLogin);
+            _testClient.Login();
         }
 
+        void _testClient_OnLogin(object sender) {
+            SetTestResponse(new TestEventArgs(true));
+        }
+
+        void _testClient_OnError(nJim.Enums.ErrorType type, string message) {
+            SetTestResponse(new TestEventArgs(false, type, message));
+        }
+
+        delegate void RefreshGuiComponentsCallBack(TestEventArgs response);
         /// <summary>
         /// Display the test response in the setup form
         /// </summary>
-        /// <param name="response"></param>
-        private void setTestResponse(TestEventArgs response)
+        /// <param name="response"></param>  
+        
+        private void SetTestResponse(TestEventArgs response)
         {
+            // Update the GUI thread-safe
+            if (labelStatus.InvokeRequired || buttonTest.InvokeRequired) {
+                RefreshGuiComponentsCallBack refreshGuiComponentsCallBack = new RefreshGuiComponentsCallBack(SetTestResponse);
+                this.Invoke(refreshGuiComponentsCallBack, new object[] { });
+            }
             if (response.Success)
             {
                 labelStatus.ForeColor = Color.Green;
@@ -108,38 +120,17 @@ namespace MyChitChat.Plugin
                 labelStatus.ForeColor = Color.Red;
 
                 // Auth error
-                if (response.Exception == null)
+                if (response.ErrorType.HasValue)
                 {
-                    labelStatus.Text = "Login not OK!";
-                }
-                // Exception while testing connection
-                else
-                {
-                    labelStatus.Text = "An error occured! Login may be ok ...";
-                }
+                    labelStatus.Text = "An error occured! Login may be ok ... " +response.ErrorMessage;
+                }               
             }
 
             labelStatus.Visible = true;
             buttonTest.Text = "Test";
             buttonTest.Enabled = true;
          }
-
-        /// <summary>
-        /// Event is raised when the credential test has been completed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void jabber_TestCompleted(object sender, TestEventArgs e)
-        {
-            jabber.Disconnect();
-
-            // Update the GUI thread-safe
-            if (labelStatus.InvokeRequired || buttonTest.InvokeRequired)
-            {
-                SetTestReponse setResponseDelegate = new SetTestReponse(setTestResponse);
-                this.Invoke(setResponseDelegate, new Object[] { e });
-            }
-        }
+       
 
         /// <summary>
         /// Form is closing, save data to mediaportal config
@@ -158,7 +149,7 @@ namespace MyChitChat.Plugin
         /// <param name="e"></param>
         private void textBoxUsername_Leave(object sender, EventArgs e)
         {
-            Settings.Username = textBoxUsername.Text;
+            Settings.username = textBoxUsername.Text;
         }
 
         /// <summary>
@@ -168,7 +159,7 @@ namespace MyChitChat.Plugin
         /// <param name="e"></param>
         private void textBoxServer_Leave(object sender, EventArgs e)
         {
-            Settings.Server = textBoxServer.Text;
+            Settings.server = textBoxServer.Text;
         }
 
         /// <summary>
@@ -178,7 +169,7 @@ namespace MyChitChat.Plugin
         /// <param name="e"></param>
         private void textBoxPassword_Leave(object sender, EventArgs e)
         {
-            Settings.Password = textBoxPassword.Text;
+            Settings.password = textBoxPassword.Text;
         }
 
         /// <summary>
@@ -188,7 +179,43 @@ namespace MyChitChat.Plugin
         /// <param name="e"></param>
         private void textBoxResource_Leave(object sender, EventArgs e)
         {
-            Settings.Resource = textBoxResource.Text;
+            Settings.resource = textBoxResource.Text;
         }
     }
+        /// <summary>
+        /// Event args for the test event
+        /// </summary>
+        public class TestEventArgs : EventArgs {
+            /// <summary>
+            /// Was the test successful?
+            /// </summary>
+            public bool Success {
+                get { return _success; }
+                set { _success = value; }
+            }
+            private bool _success;
+
+            public nJim.Enums.ErrorType? ErrorType {
+                get { return _errorType; }
+                set { _errorType = value; }
+            }
+
+            private nJim.Enums.ErrorType? _errorType = null;
+
+            public string ErrorMessage {
+                get { return _errorMessage; }
+                set { _errorMessage = value; }
+            }
+
+            private string _errorMessage = String.Empty;
+
+            public TestEventArgs(bool successful) : this(successful, null, String.Empty){                 
+            }
+            
+            public TestEventArgs(bool successful, nJim.Enums.ErrorType? errorType, string ErrorMessage ) {
+                _success = successful;
+                _errorType = errorType;
+                _errorMessage = ErrorMessage;
+            }
+        }
 }

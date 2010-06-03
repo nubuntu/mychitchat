@@ -15,6 +15,7 @@ using MediaPortal.Util;
 using MyChitChat.Plugin;
 using agsXMPP;
 using agsXMPP.protocol.iq.vcard;
+using nJim;
 
 
 namespace MyChitChat.Gui {
@@ -69,6 +70,17 @@ namespace MyChitChat.Gui {
 
 
         public Contact() {
+            //Helper.JABBER_CLIENT.Identity.identityRetrieved += new IdentityHandler(jabberIdentityRetrieved);
+            //Helper.JABBER_CLIENT.Roster.ContactAdded += new ContactHandler(jabberRosterContactAdded);
+            //Helper.JABBER_CLIENT.Roster.ContactRemoved += new ContactHandler(jabberRosterContactRemoved);
+            //Helper.JABBER_CLIENT.Roster.ResourceAdded += new ResourceHandler(jabberRosterResourceAdded);
+            //Helper.JABBER_CLIENT.Roster.ResourceRemoved += new ResourceHandler(jabberRosterResourceRemoved);
+            //Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(jabberRosterResourcePresence);
+            //Helper.JABBER_CLIENT.Roster.AskForSubscribtion += new ContactHandler(jabberRosterResourceAskForSubscribtion);
+            //Helper.JABBER_CLIENT.Roster.InformUnsubscribtion += new ContactHandler(jabberRosterResourceInformUnsubscribtion);
+            //Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(jabberMood);
+            //Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(jabberActivity);
+            //Helper.JABBER_CLIENT.Roster.LocationUpdated += new ResourceLocationHandler(jabberLocation);
             try {
                 GetID = WINDOW_ID;
                 LoadSettings();
