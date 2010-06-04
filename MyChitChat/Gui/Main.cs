@@ -32,8 +32,13 @@ namespace MyChitChat.Gui {
             this._dicChatSessions = new Dictionary<Jid, Session>();
         }
 
-        
-
+        public override void OnAction(MediaPortal.GUI.Library.Action action) {
+            if (action.wID == MediaPortal.GUI.Library.Action.ActionType.ACTION_SHOW_FULLSCREEN) {
+                Helper.JABBER_CLIENT.Presence.status = Helper.GetStatusFromType(Enums.StatusType.DoNotDisturb, "I'm in Fullscreen mode so please knock it off...");
+                Helper.JABBER_CLIENT.Presence.applyStatus();
+            }
+            base.OnAction(action);
+        }
         
         ~Main() {
             try {
