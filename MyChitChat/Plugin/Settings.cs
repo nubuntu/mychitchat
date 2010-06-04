@@ -30,13 +30,17 @@ namespace MyChitChat.Plugin {
         public static bool setPresenceOnStartup = true;
 
         public static Enums.StatusType defaultStatusType = Enums.StatusType.Normal;
-        public static string defaultStatusMessage = Helper.GetFriendlyStatusType(defaultStatusType);
+        public static string defaultStatusMessage = "Online with " + Helper.PLUGIN_NAME;
 
         public static int autoIdleTimeOut = 5;
         public static Enums.StatusType autoIdleStatusType = Enums.StatusType.Away;
-        public static string autoIdleStatusMessage = Helper.GetFriendlyStatusType(autoIdleStatusType);
+        public static string autoIdleStatusMessage = Helper.ToSentence(autoIdleStatusType.ToString());
 
-         
+        public static Enums.MoodType defaultMoodType = Enums.MoodType.neutral;
+        public static string defaultMoodMessage = "I'm feeling very entertained right now thx to MediaPortal ('Ya know the kick-ass open source MediaCenter alternative)...";
+
+        public static Enums.ActivityType defaultActivityType = Enums.ActivityType.relaxing;
+        public static string defaultActivityMessage = "I'm using MediaPortal at the moment...";
 
         public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypeMessage = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;
         public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypePresence = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;

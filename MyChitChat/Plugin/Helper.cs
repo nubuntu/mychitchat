@@ -10,6 +10,7 @@ using MediaPortal.Dialogs;
 using System.Text.RegularExpressions;
 using System.IO;
 using nJim;
+using MyChitChat.Gui;
 
 namespace MyChitChat.Plugin {
     static class Helper {
@@ -39,21 +40,21 @@ namespace MyChitChat.Plugin {
         public static readonly string MEDIA_STATUS_CHAT = SKIN_PATH_MEDIA + "status_chat.png";
         public static readonly string MEDIA_STATUS_DND = SKIN_PATH_MEDIA + "status_dnd.png";
 
-        public static string GetStatusIcon(Status status) {
-            string tmpPath = String.Format(@"{0}\status\{1}.png", SKIN_PATH_MEDIA, status.type.ToString());
+        public static string GetStatusIcon(string status) {
+            string tmpPath = String.Format(@"{0}\status\{1}.png", SKIN_PATH_MEDIA, status);
             return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\status\default.png", SKIN_PATH_MEDIA);
         }
 
-        public static string GetMoodIcon(Mood mood) {
-            string tmpPath = String.Format(@"{0}\mood\{1}.png", SKIN_PATH_MEDIA, mood.type.ToString());
+        public static string GetMoodIcon(string mood) {
+            string tmpPath = String.Format(@"{0}\mood\{1}.png", SKIN_PATH_MEDIA, mood);
             return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\mood\default.png", SKIN_PATH_MEDIA);
         }
 
-        public static string GetActivityIcon(Activity activity) {
-            string tmpPath = String.Format(@"{0}\activity\{1}.png", SKIN_PATH_MEDIA, activity.type.ToString());
+        public static string GetActivityIcon(string activity) {
+            string tmpPath = String.Format(@"{0}\activity\{1}.png", SKIN_PATH_MEDIA, activity);
             return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\activity\default.png", SKIN_PATH_MEDIA);
         }
-        
+
         public static string GetTuneIcon(Tune tune) {
             //TODO: FanArt yeah!!!
             //return String.Format(@"{0}\tune\{1}", SKIN_PATH_MEDIA, tune.artist);
@@ -75,30 +76,9 @@ namespace MyChitChat.Plugin {
             WINDOW_ID_CHAT = WINDOW_ID_MAIN + 1001,
             WINDOW_ID_CONTACT = WINDOW_ID_MAIN + 1002,
         }
-        
-        /// <summary>
-        /// Convertit le type de status utilisé par la librairie en type de status utilisé par la librairie agsXMPP
-        /// </summary>
-        /// <param name="type">Type de status</param>
-        /// <returns></returns>
-        public static string GetFriendlyStatusType(Enums.StatusType type) {
-            switch (type) {
-                case Enums.StatusType.Normal: return "Available";
-                case Enums.StatusType.Unvailable: return "Unavailable";
-                case Enums.StatusType.Away: return "Away";
-                case Enums.StatusType.ExtendedAway: return "Extended Away";
-                case Enums.StatusType.DoNotDisturb: return "Do not Disturb";
-                case Enums.StatusType.ReadyToChat: return "Free for Chat";
-                case Enums.StatusType.Invisible: return "Invisible";
-                default: return "Unknown";           
-            }
-        }
 
-        public static Status GetStatusFromType(Enums.StatusType type) {
-            Status tmpStatus = new Status();
-            tmpStatus.type = type;
-            tmpStatus.message = GetFriendlyStatusType(type);
-            return tmpStatus;
+        public static string ToSentence(string input) {
+            return Regex.Replace(input, ".[A-Z]", m => m.ToString()[0] + " " + char.ToLower(m.ToString()[1]));
         }
 
         public enum PLUGIN_NOTIFY_WINDOWS {
@@ -111,7 +91,7 @@ namespace MyChitChat.Plugin {
             [Description("Dialog Window (large) (centered)")]
             WINDOW_DIALOG_TEXT = GUIWindow.Window.WINDOW_DIALOG_TEXT
 
-        }      
+        }
 
         public struct PresMooActNotifyInfo {
             public string header;
@@ -130,22 +110,22 @@ namespace MyChitChat.Plugin {
 
         public static Client JABBER_CLIENT {
             get { return Client.Instance; }
-        }        
+        }
 
         public static Roster JABBER_CONTACTS {
             get { return Client.Instance.Roster; }
         }
 
         public static Presence JABBER_PRESENCE_DEFAULT {
-            get { 
-                Presence currentPresence = new Presence();  
-                
-                return currentPresence; 
+            get {
+                Presence currentPresence = new Presence();
+
+                return currentPresence;
             }
         }
 
         public static Mood PRESENCE_CURRENT_MOOD {
-            get { return myCurrentPresence.mood ; }
+            get { return myCurrentPresence.mood; }
         }
 
         //public static void SetMyCurrentPresence(Enums.StatusType showType, string statusMessage) {
@@ -163,7 +143,7 @@ namespace MyChitChat.Plugin {
 
 
         private static Presence myCurrentPresence = JABBER_PRESENCE_DEFAULT;
-       
+
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GUI Helper Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -192,98 +172,29 @@ namespace MyChitChat.Plugin {
             return tmp;
         }
 
-        /// <summary>
-        /// Displays a yes/no dialog with custom labels for the buttons
-        /// This method may become obsolete in the future if media portal adds more dialogs
-        /// </summary>
-        /// <returns>True if yes was clicked, False if no was clicked</returns>
-        /// This has been taken (stolen really) from the wonderful MovingPictures Plugin -Anthrax.
-        public static bool ShowCustomYesNo(int parentWindowID, string heading, string lines, string yesLabel, string noLabel, bool defaultYes) {
-            GUIDialogYesNo dialog = (GUIDialogYesNo)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_YES_NO);
-            try {
-                dialog.Reset();
-                dialog.SetHeading(heading);
-                string[] linesArray = lines.Split(new string[] { "\\n" }, StringSplitOptions.None);
-                if (linesArray.Length > 0)
-                    dialog.SetLine(1, linesArray[0]);
-                if (linesArray.Length > 1)
-                    dialog.SetLine(2, linesArray[1]);
-                if (linesArray.Length > 2)
-                    dialog.SetLine(3, linesArray[2]);
-                if (linesArray.Length > 3)
-                    dialog.SetLine(4, linesArray[3]);
-                dialog.SetDefaultToYes(defaultYes);
 
-                foreach (System.Windows.UIElement item in dialog.Children) {
-                    if (item is GUIButtonControl) {
-                        GUIButtonControl btn = (GUIButtonControl)item;
-                        if (btn.GetID == 11 && !String.IsNullOrEmpty(yesLabel)) // Yes button
-                            btn.Label = yesLabel;
-                        else if (btn.GetID == 10 && !String.IsNullOrEmpty(noLabel)) // No button
-                            btn.Label = noLabel;
-                    }
-                }
-                dialog.DoModal(parentWindowID);
-                return dialog.IsConfirmed;
-            } finally {
-                // set the standard yes/no dialog back to it's original state (yes/no buttons)
-                if (dialog != null) {
-                    dialog.ClearAll();
-                }
-            }
-        }
-        public static void ShowNotifyDialog(string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
-            ShowNotifyDialog(Settings.notifyTimeOut, header, icon, text, notifyType);
-        }
-        public static void ShowNotifyDialog(int timeOut, string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
-            try {
-                GUIWindow guiWindow = GUIWindowManager.GetWindow((int)notifyType);
-                switch (notifyType) {
-                    default:
-                    case PLUGIN_NOTIFY_WINDOWS.AUTO:
-                        if (text.Length <= 60) {
-                            ShowNotifyDialog(timeOut, header, icon, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY);
-                        } else {
-                            ShowNotifyDialog(timeOut, header, icon, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_TEXT);
-                        }
-                        break;
-                    case PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY:
-                        GUIDialogNotify notifyDialog = (GUIDialogNotify)guiWindow;
-                        notifyDialog.Reset();
-                        notifyDialog.TimeOut = timeOut;
-                        notifyDialog.SetImage(icon);
-                        notifyDialog.SetHeading(header);
-                        notifyDialog.SetText(text);
-                        notifyDialog.DoModal(GUIWindowManager.ActiveWindow);
-                        break;
-                    case PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_OK:
-                        GUIDialogOK okDialog = (GUIDialogOK)guiWindow;
-                        okDialog.Reset();
-                        okDialog.SetHeading(header);
-                        okDialog.SetLine(1, (text.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))[0]);
-                        okDialog.DoModal(GUIWindowManager.ActiveWindow);
-                        break;
-                    case PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_TEXT:
-                        GUIDialogText textDialog = (GUIDialogText)guiWindow;
-                        textDialog.Reset();
-                        try {
-                            textDialog.SetImage(icon);
-                        } catch { }
-                        textDialog.SetHeading(header);
-                        textDialog.SetText(text);
-                        textDialog.DoModal(GUIWindowManager.ActiveWindow);
-                        break;
-                }
-            } catch (Exception ex) {
-                Log.Error(ex);
-            }
-        }
-
-
-        public static void ShowNotifyDialog(string text) {
-            ShowNotifyDialog(Settings.notifyTimeOut, PLUGIN_NAME, MEDIA_ICON_DEFAULT, text, PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY);
-        }
 
         #endregion
+
+        private void SetDefaultPresence() {
+            Helper.JABBER_CLIENT.Presence.status = Helper.GetStatusFromType(Settings.defaultStatusType, Settings.defaultStatusMessage);
+            Helper.JABBER_CLIENT.Presence.applyStatus();
+            Helper.JABBER_CLIENT.Presence.setActivity(Settings.defaultActivityTypem, Settings.defaultActivityMessage);
+            Helper.JABBER_CLIENT.Presence.setMood(Settings.defaultMoodType, Settings.defaultMoodMessage);
+        }
+
+
+        public static Status GetStatusFromType(Enums.StatusType type, string message) {
+            Status tmpStatus = new Status();
+            tmpStatus.type = type;
+            tmpStatus.message = message;
+            return tmpStatus;
+        }
+        public static Status GetStatusFromType(Enums.StatusType type) {
+            Status tmpStatus = new Status();
+            tmpStatus.type = type;
+            tmpStatus.message = Helper.ToSentence(type.ToString());
+            return tmpStatus;
+        }
     }
 }

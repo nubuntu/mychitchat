@@ -3,9 +3,193 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MediaPortal.Dialogs;
+using MediaPortal.GUI.Library;
+using nJim;
+using MyChitChat.Plugin;
 
 namespace MyChitChat.Gui {
-    class Dialog : GUIDialogWindow {
+    static class Dialog {
 
+        private static IDialogbox  _dlgSelectStatus;
+        private static IDialogbox _dlgSelectMood;
+        private static IDialogbox _dlgSelectActivity;
+
+        static Dialog() {
+            _dlgSelectStatus = BuildDialogSelect(typeof(Enums.StatusType));
+            _dlgSelectMood = BuildDialogSelect(typeof(Enums.MoodType));
+            _dlgSelectActivity = BuildDialogSelect(typeof(Enums.ActivityType));
+        }
+
+        private static IDialogbox BuildDialogSelect(Type enumType) {
+            IDialogbox dlgSelectStatus = (IDialogbox)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_SELECT2);
+            dlgSelectStatus.SetHeading(String.Format("I'm currently {0}...", enumType.ToString()));
+            foreach (string type in Enum.GetNames(enumType.GetType())) {
+                dlgSelectStatus.Add(
+                   Helper.CreateGuiListItem(type,
+                        Helper.ToSentence(type),
+                        type,
+                        String.Empty,
+                        Helper.GetStatusIcon(type),
+                        type == Enums.StatusType.Invisible.ToString(),
+                        null,
+                        false
+                        )
+                     );
+            }
+            return dlgSelectStatus;
+        }
+
+        public static DialogResult ShowDialogSelect(IDialogbox dialog, bool addCustomButton) {
+            dialog.Reset(); //check if labels are removed by this!!!            
+            GUIListItem customButton = new GUIListItem("Set Custom Status...");           
+            if (addCustomButton) {
+                dialog.Add(customButton);
+            }
+            dialog.DoModal(GUIWindowManager.ActiveWindow);
+            DialogResult result = new DialogResult(dialog.SelectedLabel, dialog.SelectedLabelText.Replace( " ", "" ), dialog.SelectedLabelText);
+            if (dialog.SelectedLabelText == "Set Custom Status...") {                
+                result = ShowDialogSelect(dialog, false);
+                result.message = GetKeyBoardInput(result.selectedLabelText);
+            }
+            return result;
+        }
+
+
+        public static Status SelectAndSetStatus() {
+            DialogResult tmpResult = ShowDialogSelect(_dlgSelectStatus, true);
+            Status tmpStatus = new Status();
+            tmpStatus.type = (Enums.StatusType)Enum.Parse(typeof(Enums.StatusType), tmpResult.selectedLabelText);
+            tmpStatus.message = tmpResult.message;            
+            Helper.JABBER_CLIENT.Presence.status = tmpStatus;
+            Helper.JABBER_CLIENT.Presence.applyStatus();
+            return tmpStatus;
+        }
+
+        public static Mood SelectAndSetMood() {
+            DialogResult tmpResult = ShowDialogSelect(_dlgSelectMood, true);
+            Helper.JABBER_CLIENT.Presence.setMood((Enums.MoodType)Enum.Parse(typeof(Enums.MoodType), tmpResult.selectedLabelText), tmpResult.selectedLabelText);            
+            return Helper.JABBER_CLIENT.Presence.mood;
+        }
+
+         public static Activity SelectAndSetActivity() {
+            DialogResult tmpResult = ShowDialogSelect(_dlgSelectActivity, true);
+            Helper.JABBER_CLIENT.Presence.setActivity((Enums.ActivityType)Enum.Parse(typeof(Enums.ActivityType), tmpResult.selectedLabelText), tmpResult.selectedLabelText);            
+            return Helper.JABBER_CLIENT.Presence.activity;
+        }
+
+        /// <summary>
+        /// Displays a yes/no dialog with custom labels for the buttons
+        /// This method may become obsolete in the future if media portal adds more dialogs
+        /// </summary>
+        /// <returns>True if yes was clicked, False if no was clicked</returns>
+        /// This has been taken (stolen really) from the wonderful MovingPictures Plugin -Anthrax.
+        public static bool ShowCustomYesNo(int parentWindowID, string heading, string lines, string yesLabel, string noLabel, bool defaultYes) {
+            GUIDialogYesNo dialog = (GUIDialogYesNo)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_YES_NO);
+            try {
+                dialog.Reset();
+                dialog.SetHeading(heading);
+                string[] linesArray = lines.Split(new string[] { "\\n" }, StringSplitOptions.None);
+                if (linesArray.Length > 0)
+                    dialog.SetLine(1, linesArray[0]);
+                if (linesArray.Length > 1)
+                    dialog.SetLine(2, linesArray[1]);
+                if (linesArray.Length > 2)
+                    dialog.SetLine(3, linesArray[2]);
+                if (linesArray.Length > 3)
+                    dialog.SetLine(4, linesArray[3]);
+                dialog.SetDefaultToYes(defaultYes);
+
+                foreach (System.Windows.UIElement item in dialog.Children) {
+                    if (item is GUIButtonControl) {
+                        GUIButtonControl btn = (GUIButtonControl)item;
+                        if (btn.GetID == 11 && !String.IsNullOrEmpty(yesLabel)) // Yes button
+                            btn.Label = yesLabel;
+                        else if (btn.GetID == 10 && !String.IsNullOrEmpty(noLabel)) // No button
+                            btn.Label = noLabel;
+                    }
+                }
+                dialog.DoModal(parentWindowID);
+                return dialog.IsConfirmed;
+            } finally {
+                // set the standard yes/no dialog back to it's original state (yes/no buttons)
+                if (dialog != null) {
+                    dialog.ClearAll();
+                }
+            }
+        }
+        public static void ShowNotifyDialog(string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
+            ShowNotifyDialog(Settings.notifyTimeOut, header, icon, text, notifyType);
+        }
+        public static void ShowNotifyDialog(int timeOut, string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
+            try {
+                GUIWindow guiWindow = GUIWindowManager.GetWindow((int)notifyType);
+                switch (notifyType) {
+                    default:
+                    case Helper.PLUGIN_NOTIFY_WINDOWS.AUTO:
+                        if (text.Length <= 60) {
+                            ShowNotifyDialog(timeOut, header, icon, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY);
+                        } else {
+                            ShowNotifyDialog(timeOut, header, icon, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_TEXT);
+                        }
+                        break;
+                    case Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY:
+                        GUIDialogNotify notifyDialog = (GUIDialogNotify)guiWindow;
+                        notifyDialog.Reset();
+                        notifyDialog.TimeOut = timeOut;
+                        notifyDialog.SetImage(icon);
+                        notifyDialog.SetHeading(header);
+                        notifyDialog.SetText(text);
+                        notifyDialog.DoModal(GUIWindowManager.ActiveWindow);
+                        break;
+                    case Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_OK:
+                        GUIDialogOK okDialog = (GUIDialogOK)guiWindow;
+                        okDialog.Reset();
+                        okDialog.SetHeading(header);
+                        okDialog.SetLine(1, (text.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries))[0]);
+                        okDialog.DoModal(GUIWindowManager.ActiveWindow);
+                        break;
+                    case Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_TEXT:
+                        GUIDialogText textDialog = (GUIDialogText)guiWindow;
+                        textDialog.Reset();
+                        try {
+                            textDialog.SetImage(icon);
+                        } catch { }
+                        textDialog.SetHeading(header);
+                        textDialog.SetText(text);
+                        textDialog.DoModal(GUIWindowManager.ActiveWindow);
+                        break;
+                }
+            } catch (Exception ex) {
+                Log.Error(ex);
+            }
+        }
+        public static void ShowNotifyDialog(string text) {
+            ShowNotifyDialog(Settings.notifyTimeOut, Helper.PLUGIN_NAME, Helper.MEDIA_ICON_DEFAULT, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY);
+        }
+
+        private static string GetKeyBoardInput(string defaultText) {
+            VirtualKeyboard keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
+            if (null == keyboard)
+                return string.Empty;
+            keyboard.Reset();
+            keyboard.Text = defaultText;
+            keyboard.DoModal(GUIWindowManager.ActiveWindow);
+            if (keyboard.IsConfirmed) {
+                return keyboard.Text;
+            } else {
+                return String.Empty;
+            }
+        }
+    }
+    internal struct DialogResult {
+        internal int selectedIndex;
+        internal string selectedLabelText;
+        internal string message;
+
+        public DialogResult(int index, string text, string message) {
+            this.selectedIndex = index;
+            this.selectedLabelText = text;
+            this.message = message;
+        }
     }
 }
