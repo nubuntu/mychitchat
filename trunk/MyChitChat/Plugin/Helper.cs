@@ -176,10 +176,10 @@ namespace MyChitChat.Plugin {
 
         #endregion
 
-        private void SetDefaultPresence() {
+        public static void SetDefaultPresence() {
             Helper.JABBER_CLIENT.Presence.status = Helper.GetStatusFromType(Settings.defaultStatusType, Settings.defaultStatusMessage);
             Helper.JABBER_CLIENT.Presence.applyStatus();
-            Helper.JABBER_CLIENT.Presence.setActivity(Settings.defaultActivityTypem, Settings.defaultActivityMessage);
+            Helper.JABBER_CLIENT.Presence.setActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
             Helper.JABBER_CLIENT.Presence.setMood(Settings.defaultMoodType, Settings.defaultMoodMessage);
         }
 
