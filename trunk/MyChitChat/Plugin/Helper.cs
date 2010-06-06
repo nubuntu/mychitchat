@@ -13,7 +13,7 @@ using nJim;
 using MyChitChat.Gui;
 
 namespace MyChitChat.Plugin {
-    static class Helper {
+    public static class Helper {
         #region Constants
 
         /// <summary>
@@ -42,17 +42,17 @@ namespace MyChitChat.Plugin {
 
         public static string GetStatusIcon(string status) {
             string tmpPath = String.Format(@"{0}\status\{1}.png", SKIN_PATH_MEDIA, status);
-            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\status\default.png", SKIN_PATH_MEDIA);
+            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\status\default_status.png", SKIN_PATH_MEDIA);
         }
 
         public static string GetMoodIcon(string mood) {
             string tmpPath = String.Format(@"{0}\mood\{1}.png", SKIN_PATH_MEDIA, mood);
-            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\mood\default.png", SKIN_PATH_MEDIA);
+            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\mood\default_mood.png", SKIN_PATH_MEDIA);
         }
 
         public static string GetActivityIcon(string activity) {
             string tmpPath = String.Format(@"{0}\activity\{1}.png", SKIN_PATH_MEDIA, activity);
-            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\activity\default.png", SKIN_PATH_MEDIA);
+            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\activity\default_activity.png", SKIN_PATH_MEDIA);
         }
 
         public static string GetTuneIcon(Tune tune) {
@@ -77,8 +77,9 @@ namespace MyChitChat.Plugin {
             WINDOW_ID_CONTACT = WINDOW_ID_MAIN + 1002,
         }
 
-        public static string ToSentence(string input) {
-            return Regex.Replace(input, ".[A-Z]", m => m.ToString()[0] + " " + char.ToLower(m.ToString()[1]));
+        public static string ToSentence(string pascalCaseString) {
+            Regex r = new Regex("(?<=[a-z])(?<x>[A-Z])|(?<=.)(?<x>[A-Z])(?=[a-z])");
+            return r.Replace(pascalCaseString, " ${x}");
         }
 
         public enum PLUGIN_NOTIFY_WINDOWS {
@@ -108,12 +109,21 @@ namespace MyChitChat.Plugin {
 
         #endregion
 
+        static readonly Client _client = new Client();
+
+        // Explicit static constructor to tell C# compiler
+        // not to mark type as beforefieldinit
+        
+       
+        
         public static Client JABBER_CLIENT {
-            get { return Client.Instance; }
+            get {
+                return _client;
+            }
         }
 
         public static Roster JABBER_CONTACTS {
-            get { return Client.Instance.Roster; }
+            get { return _client.Roster; }
         }
 
         public static Presence JABBER_PRESENCE_DEFAULT {
@@ -177,10 +187,21 @@ namespace MyChitChat.Plugin {
         #endregion
 
         public static void SetDefaultPresence() {
-            Helper.JABBER_CLIENT.Presence.status = Helper.GetStatusFromType(Settings.defaultStatusType, Settings.defaultStatusMessage);
-            Helper.JABBER_CLIENT.Presence.applyStatus();
-            Helper.JABBER_CLIENT.Presence.setActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
-            Helper.JABBER_CLIENT.Presence.setMood(Settings.defaultMoodType, Settings.defaultMoodMessage);
+
+            Status initialStatus = new Status();
+            initialStatus.type = Settings.defaultStatusType;
+            initialStatus.message = Settings.defaultStatusMessage;
+            Activity initialActivity = new Activity();
+            initialActivity.type = Settings.defaultActivityType;
+            initialActivity.text = Settings.defaultActivityMessage;
+            Mood initialMood = new Mood();
+            initialMood.type = Settings.defaultMoodType;
+            initialMood.text = Settings.defaultMoodMessage;
+
+            Helper.JABBER_CLIENT.Presence.status = initialStatus;
+            Helper.JABBER_CLIENT.Presence.activity = initialActivity;
+            Helper.JABBER_CLIENT.Presence.mood = initialMood;
+            Log.Info("Default Presence info set.");            
         }
 
 

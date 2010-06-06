@@ -83,7 +83,7 @@ namespace MyChitChat.Plugin
         /// </summary>
         private void TestJabber()
         {
-            _testClient = Client.Instance;
+            _testClient = new Client();
             _testClient.OnError += new OnErrorEventHandler(_testClient_OnError);
             _testClient.OnLogin += new OnLoginEventHandler(_testClient_OnLogin);
             _testClient.Login();

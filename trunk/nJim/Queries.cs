@@ -126,7 +126,7 @@ namespace nJim
 
 		private void xmppOnIq(object sender, IQ iq)
 		{
-			if (iq.Type == IqType.get)
+            if (iq.Type == IqType.get)
 			{
 				if (iq.Query != null)
 				{

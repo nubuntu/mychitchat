@@ -393,6 +393,7 @@ namespace nJim
 			if (item.Jid != null)
 			{
 				string bare = item.Jid.Bare.Trim();
+                
 				string resource = (item.Jid.Resource != null) ? item.Jid.Resource.Trim() : string.Empty;
 				if (item.Subscription == agsXMPP.protocol.iq.roster.SubscriptionType.remove)
 				{
@@ -490,7 +491,7 @@ namespace nJim
 		{
 			if (presence.From != null && presence.To.Bare == Jabber.xmpp.MyJID.Bare)
 			{
-				string bare = presence.From.Bare;
+				string bare = presence.From.Bare.ToLower();
 				string resource = (presence.From.Resource != null) ? presence.From.Resource.Trim() : string.Empty;
 				if (contacts.ContainsKey(bare))
 				{
@@ -748,7 +749,7 @@ namespace nJim
 											activityTypes.Remove("activity");
 											if (activityTypes.Count > 0)
 											{
-												object o = Enum.Parse(typeof(Enums.ActivityType), activityTypes[0], true);
+												object o = Enum.Parse(typeof(Enums.ActivityType), activityTypes[1], true);
 												if (o != null)
 												{
 													activityType = (Enums.ActivityType)o;
