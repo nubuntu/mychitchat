@@ -36,7 +36,7 @@ namespace MyChitChat.Plugin {
         public static Enums.StatusType autoIdleStatusType = Enums.StatusType.Away;
         public static string autoIdleStatusMessage = Helper.ToSentence(autoIdleStatusType.ToString());
 
-        public static Enums.MoodType defaultMoodType = Enums.MoodType.neutral;
+        public static Enums.MoodType defaultMoodType = Enums.MoodType.contented;
         public static string defaultMoodMessage = "I'm feeling very entertained right now thx to MediaPortal ('Ya know the kick-ass open source MediaCenter alternative)...";
 
         public static Enums.ActivityType defaultActivityType = Enums.ActivityType.relaxing;

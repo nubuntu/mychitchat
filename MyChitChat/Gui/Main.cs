@@ -28,25 +28,31 @@ namespace MyChitChat.Gui {
             Helper.JABBER_CLIENT.OnError += new OnErrorEventHandler(JABBER_CLIENT_OnError);
             Helper.JABBER_CLIENT.OnRosterEnd += new OnRosterEndEventHandler(JABBER_CLIENT_OnRosterEnd);
             Helper.JABBER_CLIENT.OnRosterStart += new OnRosterStartEventHandler(JABBER_CLIENT_OnRosterStart);
-            
+
             this._dicChatSessions = new Dictionary<Jid, Session>();
         }
 
-        public override void OnAction(MediaPortal.GUI.Library.Action action) {
-            if (action.wID == MediaPortal.GUI.Library.Action.ActionType.ACTION_SHOW_FULLSCREEN) {
-                Helper.JABBER_CLIENT.Presence.status = Helper.GetStatusFromType(Enums.StatusType.DoNotDisturb, "I'm in Fullscreen mode so please knock it off...");
-                Helper.JABBER_CLIENT.Presence.applyStatus();
-            }
-            base.OnAction(action);
-        }
-        
+        //public override void OnAction(MediaPortal.GUI.Library.Action action) {
+        //    switch ((MediaPortal.GUI.Library.Action.ActionType)action.wID) {
+        //        case MediaPortal.GUI.Library.Action.ActionType.ACTION_MUSIC_PLAY:
+        //            Helper.JABBER_CLIENT.Presence.setActivity(Enums.ActivityType.relaxing, "Music....");                    
+        //            break;
+        //        case MediaPortal.GUI.Library.Action.ActionType.ACTION_SHOW_FULLSCREEN:
+        //            Helper.JABBER_CLIENT.Presence.status = Helper.GetStatusFromType(Enums.StatusType.DoNotDisturb, "I'm in Fullscreen mode so please knock it off...");
+        //            Helper.JABBER_CLIENT.Presence.applyStatus();
+        //            break;
+
+        //    }
+        //    base.OnAction(action);
+
+        //}
         ~Main() {
             try {
                 Helper.JABBER_CLIENT.Close();
-                Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(Roster_PresenceUpdated);
-                Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
-                Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
-                Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
+                Helper.JABBER_CLIENT.Roster.PresenceUpdated -= new ResourceHandler(Roster_PresenceUpdated);
+                Helper.JABBER_CLIENT.Roster.MoodUpdated -= new ResourceMoodHandler(Roster_MoodUpdated);
+                Helper.JABBER_CLIENT.Roster.ActivityUpdated -= new ResourceActivityHandler(Roster_ActivityUpdated);
+                Helper.JABBER_CLIENT.Roster.TuneUpdated -= new ResourceTuneHandler(Roster_TuneUpdated);
             } catch (Exception ex) {
                 Log.Error(ex);
             }
@@ -72,9 +78,12 @@ namespace MyChitChat.Gui {
         }
 
         protected override void OnShowContextMenu() {
-            Dialog.SelectAndSetStatus();
-            Dialog.SelectAndSetActivity();
-            Dialog.SelectAndSetMood();
+            Helper.JABBER_CLIENT.Presence.setMood(Enums.MoodType.cold, "very");
+            Helper.JABBER_CLIENT.Presence.setActivity(Enums.ActivityType.cooking, "plenty");
+            Dialog.Instance.SelectAndSetStatus();
+            Dialog.Instance.SelectAndSetActivity();
+            Dialog.Instance.SelectAndSetMood();
+            Helper.JABBER_CLIENT.Presence.setTune("Test song", "Anthrax", 200);
             base.OnShowContextMenu();
         }
 
@@ -132,7 +141,7 @@ namespace MyChitChat.Gui {
         }
 
         private void NotifyError(nJim.Enums.ErrorType type, string message) {
-            Dialog.ShowNotifyDialog(3 * Settings.notifyTimeOut,
+            Dialog.Instance.ShowNotifyDialog(3 * Settings.notifyTimeOut,
                 Helper.PLUGIN_NAME + " Error!",
                 Helper.MEDIA_ICON_ERROR,
                 type.ToString() + "\n" + message,
@@ -143,7 +152,7 @@ namespace MyChitChat.Gui {
         private void NotifyPresMooActTun(nJim.Contact contact, Mood? mood, Activity? activity, Tune? tune) {
             string header = String.Empty;
             string message = string.Empty;
-            
+
             Helper.PresMooActNotifyInfo notifyInfo = new Helper.PresMooActNotifyInfo();
             if (contact.identity.nickname != String.Empty) {
                 notifyInfo.nickname = contact.identity.nickname;
@@ -163,7 +172,10 @@ namespace MyChitChat.Gui {
             }
             if (activity.HasValue) {
                 notifyInfo.activity = activity.Value.type.ToString().ToUpper();
-                notifyInfo.message = notifyInfo.activity + "\n" + activity.Value.text;
+                notifyInfo.message = notifyInfo.activity;
+                if (!String.IsNullOrEmpty(activity.Value.text)) {
+                    notifyInfo.message += "\n" + activity.Value.text;
+                }
                 notifyInfo.icon = Helper.GetActivityIcon(activity.Value.type.ToString());
             }
             if (tune.HasValue) {
@@ -173,20 +185,24 @@ namespace MyChitChat.Gui {
             }
             header = notifyInfo.header;
             message += notifyInfo.status;
-            message += "\n\"" + notifyInfo.message + "\"";
-            message += "\n" + notifyInfo.resource;
-            Dialog.ShowNotifyDialog(header, notifyInfo.icon, message, Settings.notifyWindowTypePresence);
+            if (!String.IsNullOrEmpty(notifyInfo.message)) {
+                message += "\n'" + notifyInfo.message + "'";
+            }
+            if (!String.IsNullOrEmpty(notifyInfo.resource)) {
+                message += "\n" + notifyInfo.resource;
+            }
+            Dialog.Instance.ShowNotifyDialog(header, notifyInfo.icon, message, Settings.notifyWindowTypePresence);
         }
 
         private void NotifyMessage(Message msg) {
-            Dialog.ShowNotifyDialog(Settings.notifyTimeOut, msg.FromJID.User, Helper.MEDIA_ICON_MESSAGE, msg.Body, Settings.notifyWindowTypeMessage);
+            Dialog.Instance.ShowNotifyDialog(Settings.notifyTimeOut, msg.FromJID.User, Helper.MEDIA_ICON_MESSAGE, msg.Body, Settings.notifyWindowTypeMessage);
         }
 
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Business Logic Methods ~~~~~~~~~~~~~~~~~~~~
-        
-       
+
+
         private Session CheckCreateSession(Message msg) {
             //if (this._dicChatSessions.ContainsKey(msg.FromJID)) {
             //    return this._dicChatSessions[msg.FromJID];
@@ -232,12 +248,12 @@ namespace MyChitChat.Gui {
         }
 
         void JABBER_CLIENT_OnRosterEnd() {
-            GUIWaitCursor.Hide();            
+            GUIWaitCursor.Hide();
             if (Settings.setPresenceOnStartup) {
-                Dialog.SelectAndSetStatus();
-            } 
+                Dialog.Instance.SelectAndSetStatus();
+            }
             InitializeGuiElements();
-        }        
+        }
 
         void JABBER_CLIENT_OnMessage(Message msg) {
             if (Settings.notifyOnMessage && Settings.notifyOutsidePlugin)
@@ -246,7 +262,7 @@ namespace MyChitChat.Gui {
         }
 
         void Roster_PresenceUpdated(nJim.Contact contact) {
-            if (Settings.notifyOnPresenceUpdate && Settings.notifyOutsidePlugin && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full )
+            if (Settings.notifyOnPresenceUpdate && Settings.notifyOutsidePlugin && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full)
                 NotifyPresMooActTun(contact, null, null, null);
         }
 

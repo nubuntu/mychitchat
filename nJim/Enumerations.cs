@@ -915,6 +915,11 @@ namespace nJim
 		/// </summary>
 		public enum ActivityType
 		{
+           
+			/// <summary>
+			/// Aucun activité
+			/// </summary>
+			none,
 
 			/// <summary>
 			/// Faire des corvées
@@ -1269,12 +1274,8 @@ namespace nJim
 			/// <summary>
 			/// Écrit
 			/// </summary>
-			writing,
+			writing
 
-			/// <summary>
-			/// Aucun activité
-			/// </summary>
-			none
 
 		}
 

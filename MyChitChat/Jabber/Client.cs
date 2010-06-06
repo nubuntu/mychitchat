@@ -17,49 +17,42 @@ namespace MyChitChat.Jabber {
     public delegate void OnRosterStartEventHandler();
     public delegate void OnRosterEndEventHandler();
 
-    public sealed class Client {
+    public class Client {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Singleton Stuff ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        static readonly Client instance = new Client();
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
-        static Client() {
-        }
-
-        Client() {
+       
+        public Client() {
+            this._jabberConnection = new nJim.Jabber();            
         }
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        public static Client Instance {
-            get { return instance; }
-        }
-
+        
         public Roster Roster {
-            get { return instance._jabberConnection.roster; }
+            get { return this._jabberConnection.roster; }
         }
 
         public Identity Identity {
-            get { return instance._jabberConnection.identity; }
+            get { return this._jabberConnection.identity; }
         }
 
         public nJim.Presence Presence {
-            get { return instance._jabberConnection.presence; }
+            get { return this._jabberConnection.presence; }
         }
 
         public MessageGrabber MessageGrabber {
-            get { return instance._jabberConnection.XMPPConnection.MessageGrabber; }
+            get { return this._jabberConnection.XMPPConnection.MessageGrabber; }
         }
 
         public Jid MyJID {
-            get { return new Jid(instance._jabberConnection.identity.jabberID.full); }
+            get { return new Jid(this._jabberConnection.identity.jabberID.full); }
         }
         public JabberID MyJabberID {
-            get { return instance._jabberConnection.identity.jabberID; }
+            get { return this._jabberConnection.identity.jabberID; }
         }
 
         public bool LoggedIn {
-            get { return instance._jabberConnection.XMPPConnection.Authenticated; }
+            get { return this._jabberConnection.XMPPConnection.Authenticated; }
         }
 
         #endregion
@@ -68,7 +61,7 @@ namespace MyChitChat.Jabber {
         /// <summary>
         /// The connection to the jabber server
         /// </summary>
-        private nJim.Jabber _jabberConnection = new nJim.Jabber();
+        private nJim.Jabber _jabberConnection;
         /// <summary>
         /// Was a disconnect requested?
         /// </summary>
@@ -88,10 +81,7 @@ namespace MyChitChat.Jabber {
 
         #endregion
 
-        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
-
-        #endregion
-
+       
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         #endregion
@@ -128,6 +118,7 @@ namespace MyChitChat.Jabber {
             _jabberConnection.RosterStartUpdate += new NeutralHandler(_jabberConnection_RosterStartUpdate);
             _jabberConnection.RosterEndUpdate += new NeutralHandler(_jabberConnection_RosterEndUpdate);
             _jabberConnection.connect();
+           
         }
 
         void JabberClient_OnMessage(object sender, agsXMPP.protocol.client.Message msg) {
@@ -194,6 +185,7 @@ namespace MyChitChat.Jabber {
             _jabberConnection.presence.autoIdleMinutes = Settings.autoIdleTimeOut;
             _jabberConnection.presence.autoIdleStatus = Helper.GetStatusFromType(Settings.autoIdleStatusType);
             Log.Info("Login to jabber server completed.");
+
             OnLogin(sender);
         }
 

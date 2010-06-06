@@ -39,7 +39,7 @@ namespace MyChitChat.Gui {
         }
 
         void _currentChatSession_OnChatSessionUpdated() {
-            Dialog.ShowNotifyDialog(this._currentChatSession.ListMessages.Count.ToString());
+            Dialog.Instance.ShowNotifyDialog(this._currentChatSession.ListMessages.Count.ToString());
         }
     }
 }

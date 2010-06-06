@@ -8,26 +8,53 @@ using nJim;
 using MyChitChat.Plugin;
 
 namespace MyChitChat.Gui {
-    static class Dialog {
+    public sealed class Dialog {
+        static readonly Dialog _instance = new Dialog();
 
-        private static IDialogbox  _dlgSelectStatus;
-        private static IDialogbox _dlgSelectMood;
-        private static IDialogbox _dlgSelectActivity;
+        private GUIDialogMenu _dlgSelect;
+        private List<GUIListItem> _lstSelectStatus;
+        private List<GUIListItem> _lstSelectMood;
+        private List<GUIListItem> _lstSelectActivity;
 
-        static Dialog() {
-            _dlgSelectStatus = BuildDialogSelect(typeof(Enums.StatusType));
-            _dlgSelectMood = BuildDialogSelect(typeof(Enums.MoodType));
-            _dlgSelectActivity = BuildDialogSelect(typeof(Enums.ActivityType));
+        private Dialog() {
+            _dlgSelect = new GUIDialogMenu();
+            _lstSelectStatus = BuildDialogSelectList(typeof(Enums.StatusType));
+            _lstSelectMood = BuildDialogSelectList(typeof(Enums.MoodType));
+            _lstSelectActivity = BuildDialogSelectList(typeof(Enums.ActivityType));
         }
 
-        private static IDialogbox BuildDialogSelect(Type enumType) {
-            IDialogbox dlgSelectStatus = (IDialogbox)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_SELECT2);
-            dlgSelectStatus.SetHeading(String.Format("I'm currently {0}...", enumType.ToString()));
-            foreach (string type in Enum.GetNames(enumType.GetType())) {
-                dlgSelectStatus.Add(
+        public static Dialog Instance {
+            get {
+                return _instance;
+            }
+        }
+
+        
+       
+       
+
+        private GUIDialogMenu BuildDialogSelect(List<GUIListItem> list) {
+            _dlgSelect = GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_MENU) as GUIDialogMenu;
+            _dlgSelect.ResetAllControls();
+            _dlgSelect.Reset();
+            _dlgSelect.Init();
+            _dlgSelect.InitControls();
+            _dlgSelect.Process();
+            _dlgSelect.ShowQuickNumbers = false;
+            _dlgSelect.SetHeading("I'm currently ...");
+            foreach (GUIListItem item in list) {
+                _dlgSelect.Add(item);
+            }
+            return _dlgSelect;
+        }
+
+        private List<GUIListItem> BuildDialogSelectList(Type enumType) {
+            List<GUIListItem> tmpList = new List<GUIListItem>();
+            foreach (string type in Enum.GetNames(enumType)) {
+                tmpList.Add(
                    Helper.CreateGuiListItem(type,
-                        Helper.ToSentence(type),
-                        type,
+                        type.ToString(),
+                        String.Empty,
                         String.Empty,
                         Helper.GetStatusIcon(type),
                         type == Enums.StatusType.Invisible.ToString(),
@@ -36,44 +63,48 @@ namespace MyChitChat.Gui {
                         )
                      );
             }
-            return dlgSelectStatus;
+            return tmpList;
         }
 
-        public static DialogResult ShowDialogSelect(IDialogbox dialog, bool addCustomButton) {
-            dialog.Reset(); //check if labels are removed by this!!!            
-            GUIListItem customButton = new GUIListItem("Set Custom Status...");           
+
+
+        public DialogResult ShowDialogSelect(List<GUIListItem> listLabels, bool addCustomButton) {
+            _dlgSelect = BuildDialogSelect(listLabels);
+            GUIListItem customButton = new GUIListItem("Set Custom Status...");
             if (addCustomButton) {
-                dialog.Add(customButton);
+                _dlgSelect.Add(customButton);
             }
-            dialog.DoModal(GUIWindowManager.ActiveWindow);
-            DialogResult result = new DialogResult(dialog.SelectedLabel, dialog.SelectedLabelText.Replace( " ", "" ), dialog.SelectedLabelText);
-            if (dialog.SelectedLabelText == "Set Custom Status...") {                
-                result = ShowDialogSelect(dialog, false);
+            _dlgSelect.DoModal(GUIWindowManager.ActiveWindow);
+            DialogResult result = new DialogResult(_dlgSelect.SelectedLabel, _dlgSelect.SelectedLabelText.Replace(" ", ""), _dlgSelect.SelectedLabelText);
+            _dlgSelect.ResetAllControls();
+            _dlgSelect.Reset();
+            if (result.selectedLabelText == "Set Custom Status...") {
+                result = ShowDialogSelect(listLabels, false);
                 result.message = GetKeyBoardInput(result.selectedLabelText);
             }
             return result;
         }
 
 
-        public static Status SelectAndSetStatus() {
-            DialogResult tmpResult = ShowDialogSelect(_dlgSelectStatus, true);
+        public Status SelectAndSetStatus() {
+            DialogResult tmpResult = ShowDialogSelect(_lstSelectStatus, true);
             Status tmpStatus = new Status();
             tmpStatus.type = (Enums.StatusType)Enum.Parse(typeof(Enums.StatusType), tmpResult.selectedLabelText);
-            tmpStatus.message = tmpResult.message;            
+            tmpStatus.message = tmpResult.message;
             Helper.JABBER_CLIENT.Presence.status = tmpStatus;
             Helper.JABBER_CLIENT.Presence.applyStatus();
             return tmpStatus;
         }
 
-        public static Mood SelectAndSetMood() {
-            DialogResult tmpResult = ShowDialogSelect(_dlgSelectMood, true);
-            Helper.JABBER_CLIENT.Presence.setMood((Enums.MoodType)Enum.Parse(typeof(Enums.MoodType), tmpResult.selectedLabelText), tmpResult.selectedLabelText);            
+        public Mood SelectAndSetMood() {
+            DialogResult tmpResult = ShowDialogSelect(_lstSelectMood, true);
+            Helper.JABBER_CLIENT.Presence.setMood((Enums.MoodType)Enum.Parse(typeof(Enums.MoodType), tmpResult.selectedLabelText), tmpResult.selectedLabelText);
             return Helper.JABBER_CLIENT.Presence.mood;
         }
 
-         public static Activity SelectAndSetActivity() {
-            DialogResult tmpResult = ShowDialogSelect(_dlgSelectActivity, true);
-            Helper.JABBER_CLIENT.Presence.setActivity((Enums.ActivityType)Enum.Parse(typeof(Enums.ActivityType), tmpResult.selectedLabelText), tmpResult.selectedLabelText);            
+        public Activity SelectAndSetActivity() {
+            DialogResult tmpResult = ShowDialogSelect(_lstSelectActivity, true);
+            Helper.JABBER_CLIENT.Presence.setActivity((Enums.ActivityType)Enum.Parse(typeof(Enums.ActivityType), tmpResult.selectedLabelText), tmpResult.selectedLabelText);
             return Helper.JABBER_CLIENT.Presence.activity;
         }
 
@@ -83,7 +114,7 @@ namespace MyChitChat.Gui {
         /// </summary>
         /// <returns>True if yes was clicked, False if no was clicked</returns>
         /// This has been taken (stolen really) from the wonderful MovingPictures Plugin -Anthrax.
-        public static bool ShowCustomYesNo(int parentWindowID, string heading, string lines, string yesLabel, string noLabel, bool defaultYes) {
+        public bool ShowCustomYesNo(int parentWindowID, string heading, string lines, string yesLabel, string noLabel, bool defaultYes) {
             GUIDialogYesNo dialog = (GUIDialogYesNo)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_YES_NO);
             try {
                 dialog.Reset();
@@ -117,10 +148,10 @@ namespace MyChitChat.Gui {
                 }
             }
         }
-        public static void ShowNotifyDialog(string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
+        public void ShowNotifyDialog(string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
             ShowNotifyDialog(Settings.notifyTimeOut, header, icon, text, notifyType);
         }
-        public static void ShowNotifyDialog(int timeOut, string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
+        public void ShowNotifyDialog(int timeOut, string header, string icon, string text, Helper.PLUGIN_NOTIFY_WINDOWS notifyType) {
             try {
                 GUIWindow guiWindow = GUIWindowManager.GetWindow((int)notifyType);
                 switch (notifyType) {
@@ -163,11 +194,11 @@ namespace MyChitChat.Gui {
                 Log.Error(ex);
             }
         }
-        public static void ShowNotifyDialog(string text) {
+        public void ShowNotifyDialog(string text) {
             ShowNotifyDialog(Settings.notifyTimeOut, Helper.PLUGIN_NAME, Helper.MEDIA_ICON_DEFAULT, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY);
         }
 
-        private static string GetKeyBoardInput(string defaultText) {
+        private string GetKeyBoardInput(string defaultText) {
             VirtualKeyboard keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
             if (null == keyboard)
                 return string.Empty;
@@ -180,8 +211,12 @@ namespace MyChitChat.Gui {
                 return String.Empty;
             }
         }
+
+        internal void Init() {
+
+        }
     }
-    internal struct DialogResult {
+    public struct DialogResult {
         internal int selectedIndex;
         internal string selectedLabelText;
         internal string message;

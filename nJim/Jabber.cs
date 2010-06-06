@@ -482,7 +482,7 @@ namespace nJim
             xmpp.AutoAgents = false;
             xmpp.AutoPresence = false;
             xmpp.AutoRoster = false;
-            xmpp.EnableCapabilities = true;
+            xmpp.EnableCapabilities = false;
             
 			xmpp.OnReadXml += new XmlHandler(xmppOnReadXml);
 			xmpp.OnWriteXml += new XmlHandler(xmppOnWriteXml);

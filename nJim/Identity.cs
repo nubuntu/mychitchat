@@ -322,14 +322,14 @@ namespace nJim {
                     return;
                 }
                 // Formats acceptés: BMP, PNG, GIG, JPG, et ICON
-                if (value.RawFormat.ToString().Contains(ImageFormat.Bmp.Guid.ToString()) ||
+                if (value == null) {
+                    _photo = null;
+                }else if (value.RawFormat.ToString().Contains(ImageFormat.Bmp.Guid.ToString()) ||
                     value.RawFormat.ToString().Contains(ImageFormat.Gif.Guid.ToString()) ||
                     value.RawFormat.ToString().Contains(ImageFormat.Icon.Guid.ToString()) ||
                     value.RawFormat.ToString().Contains(ImageFormat.Jpeg.Guid.ToString()) ||
                     value.RawFormat.ToString().Contains(ImageFormat.Png.Guid.ToString())) {
                     _photo = value;
-                } else {
-                    _photo = null;
                 }
                 _photoHash = string.Empty;
                 if (_photo != null && photoFormat != null) {
