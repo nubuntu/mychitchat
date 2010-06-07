@@ -24,7 +24,7 @@ namespace MyChitChat.Plugin {
         public const string PLUGIN_VERSION = "0.1.0";
         public const string PLUGIN_DESCRIPTION = "TODO";
 
-        public static readonly string SKIN_PATH_XML = GUIGraphicsContext.Skin + @"\";
+        public static readonly string SKIN_PATH_XML = GUIGraphicsContext.Skin + @"\" + PLUGIN_NAME+ @"\";
         public static readonly string SKIN_PATH_MEDIA = GUIGraphicsContext.Skin + @"\Media\" + PLUGIN_NAME + @"\";
         public static readonly string SKIN_FILE_MAIN = SKIN_PATH_XML + PLUGIN_NAME + "_Main.xml";
         public static readonly string SKIN_FILE_CHAT = SKIN_PATH_XML + PLUGIN_NAME + "_Chat.xml";

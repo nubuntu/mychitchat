@@ -747,13 +747,14 @@ namespace nJim
 											Enums.ActivityType activityType = Enums.ActivityType.none;
 											List<string> activityTypes = recurseActivityTags(activity, new List<string>());
 											activityTypes.Remove("activity");
-											if (activityTypes.Count > 0)
-											{
-												object o = Enum.Parse(typeof(Enums.ActivityType), activityTypes[1], true);
-												if (o != null)
-												{
-													activityType = (Enums.ActivityType)o;
-												}
+                                            activityTypes.Remove("text");
+											if (activityTypes.Count > 0) {
+                                                try {
+                                                    object o = Enum.Parse(typeof(Enums.ActivityType), activityTypes[activityTypes.Count-1], true);
+                                                    if (o != null) {
+                                                        activityType = (Enums.ActivityType)o;
+                                                    }
+                                                } catch { } 
 											}
 											string activityString = string.Empty;
 											if (activity.HasTag("text") && activity.SelectSingleElement("text").Value != null)
