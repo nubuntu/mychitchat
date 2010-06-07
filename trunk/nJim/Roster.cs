@@ -44,6 +44,13 @@ namespace nJim
 		private Dictionary<string, Dictionary<string, Contact>> contacts = new Dictionary<string, Dictionary<string, Contact>>();
 
         /// <summary>
+        /// Liste des contacts du Roster
+        /// </summary>
+        public Dictionary<string, Dictionary<string, Contact>> ContactList {
+            get { return contacts; }
+        }
+
+        /// <summary>
         /// Stocke les UserPEP des qu'il sont reçus
         /// </summary>
         private Dictionary<string, UserPEP> initialUserPEP = new Dictionary<string, UserPEP>();

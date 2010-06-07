@@ -112,10 +112,10 @@
     <Content Include="Skin\Blue3wide\Media\MyChitChat\incoming_message.png" />
     <Content Include="Skin\Blue3wide\Media\MyChitChat\notify_error.png" />
     <Content Include="Skin\Blue3wide\Media\MyChitChat\read_message.png" />
-    <Content Include="Skin\Blue3wide\MyChitChat\MyChitChat_Chat.xml" />
-    <Content Include="Skin\Blue3wide\MyChitChat\MyChitChat_Contact.xml" />
-    <Content Include="Skin\Blue3wide\MyChitChat\MyChitChat_Main.xml" />
     <Content Include="RegionsSnippet.txt" />
+    <Content Include="Skin\Blue3wide\MyChitChat_Chat.xml" />
+    <Content Include="Skin\Blue3wide\MyChitChat_Contact.xml" />
+    <Content Include="Skin\Blue3wide\MyChitChat_Main.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\nJim\nJim.csproj">

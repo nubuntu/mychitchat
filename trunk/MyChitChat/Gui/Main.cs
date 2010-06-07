@@ -28,6 +28,9 @@ namespace MyChitChat.Gui {
 
         [SkinControlAttribute(501)]
         protected GUIButtonControl btnSetActivity = null;
+
+        [SkinControlAttribute(502)]
+        protected GUIButtonControl btnRoster = null;
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
@@ -83,7 +86,12 @@ namespace MyChitChat.Gui {
                 Helper.JABBER_CLIENT.Login();
             }
             this.CreateGuiElements();
+            //MediaPortal.Player.BassMusicPlayer.Player.PlaybackStart += new MediaPortal.Player.BassAudioEngine.PlaybackStartHandler(Player_PlaybackStart);
             base.OnPageLoad();
+        }
+
+        void Player_PlaybackStart(object sender, double duration) {
+            throw new NotImplementedException();
         }
 
         protected override void OnShowContextMenu() {
@@ -111,9 +119,12 @@ namespace MyChitChat.Gui {
                 Dialog.Instance.SelectAndSetMood();
             if (control == btnSetActivity)
                 Dialog.Instance.SelectAndSetActivity();
+            if (control == btnRoster)
+                UpdateContactsFacade();
             base.OnClicked(controlId, control, actionType);
         }
 
+       
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,7 +187,7 @@ namespace MyChitChat.Gui {
                 notifyInfo.nickname = contact.identity.jabberID.user;
             }
             message = notifyInfo.nickname;
-            
+
             notifyInfo.resource = contact.identity.jabberID.resource;
             notifyInfo.stamp = contact.lastUpdated;
             notifyInfo.status = Translations.GetByName(contact.status.type.ToString());
@@ -216,6 +227,15 @@ namespace MyChitChat.Gui {
             Dialog.Instance.ShowNotifyDialog(Settings.notifyTimeOut, msg.FromJID.User, Helper.MEDIA_ICON_MESSAGE, msg.Body, Settings.notifyWindowTypeMessage);
         }
 
+        private void UpdateContactsFacade() {
+            foreach (KeyValuePair<string, Dictionary<string, nJim.Contact>> currentJID in Helper.JABBER_CLIENT.Roster.ContactList ) {
+                foreach (KeyValuePair<string, nJim.Contact> currentResource in currentJID.Value) {
+                    ctrlFacade.Add (Helper.CreateGuiListItem(currentResource.Key, currentResource.Value.identity.nickname, Translations.GetByName (currentResource.Value.status.type.ToString()), currentResource.Value.lastUpdated.ToShortTimeString(),string.Empty,false,null, false));
+                }
+            }
+        }
+
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Business Logic Methods ~~~~~~~~~~~~~~~~~~~~
@@ -254,6 +274,7 @@ namespace MyChitChat.Gui {
             Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
             Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
             Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
+
             Helper.SetDefaultPresence();
         }
 
@@ -270,9 +291,10 @@ namespace MyChitChat.Gui {
             if (Settings.setPresenceOnStartup) {
                 Dialog.Instance.SelectAndSetStatus();
             }
-            InitializeGuiElements();
+            UpdateContactsFacade();
         }
 
+      
         void JABBER_CLIENT_OnMessage(Message msg) {
             if (Settings.notifyOnMessage && Settings.notifyOutsidePlugin)
                 NotifyMessage(msg);
@@ -280,23 +302,31 @@ namespace MyChitChat.Gui {
         }
 
         void Roster_PresenceUpdated(nJim.Contact contact) {
-            if (Settings.notifyOnPresenceUpdate && Settings.notifyOutsidePlugin && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full)
+            if (Settings.notifyOnPresenceUpdate && Settings.notifyOutsidePlugin && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full) {
                 NotifyPresMooActTun(contact, null, null, null);
+                UpdateContactsFacade();
+            }
         }
 
         void Roster_MoodUpdated(nJim.Contact contact, Mood mood) {
-            if (Settings.notifyOnMoodUpdate && Settings.notifyOutsidePlugin)
+            if (Settings.notifyOnMoodUpdate && Settings.notifyOutsidePlugin) {
                 NotifyPresMooActTun(contact, mood, null, null);
+                UpdateContactsFacade();
+            }
         }
 
         void Roster_ActivityUpdated(nJim.Contact contact, Activity activity) {
-            if (Settings.notifyOnActivityUpdate && Settings.notifyOutsidePlugin)
+            if (Settings.notifyOnActivityUpdate && Settings.notifyOutsidePlugin) {
                 NotifyPresMooActTun(contact, null, activity, null);
+                UpdateContactsFacade();
+            }
         }
 
         void Roster_TuneUpdated(nJim.Contact contact, Tune tune) {
-            if (Settings.notifyOnTuneUpdate && Settings.notifyOutsidePlugin)
+            if (Settings.notifyOnTuneUpdate && Settings.notifyOutsidePlugin) {
                 NotifyPresMooActTun(contact, null, null, tune);
+                UpdateContactsFacade();
+            }
         }
 
 
