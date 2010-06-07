@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using MyChitChat.Jabber;
 using MediaPortal.UserInterface.Controls;
+using nJim;
 
 namespace MyChitChat.Plugin
 {
@@ -15,8 +17,7 @@ namespace MyChitChat.Plugin
         public Config()
         {
             InitializeComponent();
-            this.Load += new EventHandler(MyChitChatConfig_Load);
-            this.Text += Helper.PLUGIN_NAME;            
+            this.Load += new EventHandler(MyChitChatConfig_Load);             
         }
 
         void MyChitChatConfig_Load(object sender, EventArgs e) {           
@@ -27,6 +28,40 @@ namespace MyChitChat.Plugin
             textBoxServer.Text = Settings.server;
             textBoxResource.Text = Settings.resource;
             textBoxPassword.Text = Settings.password;
+
+            comboBoxStartupStatus.DataSource = Translations.EnumToList<Enums.StatusType>();
+            comboBoxStartupStatus.SelectionChangeCommitted += new EventHandler(comboBoxStartupStatus_SelectionChangeCommitted);
+            comboBoxStartupStatus.SelectedIndex = (int)Settings.defaultStatusType;
+            textBoxStartupStatus.Text = Settings.defaultStatusMessage;
+
+            comboBoxStartupActivity.DataSource = Translations.EnumToList<Enums.ActivityType>();
+            comboBoxStartupActivity.SelectionChangeCommitted += new EventHandler(comboBoxStartupActivity_SelectionChangeCommitted);
+            comboBoxStartupActivity.SelectedIndex = (int)Settings.defaultActivityType;
+            textBoxStartupActivity.Text = Settings.defaultActivityMessage;
+
+            comboBoxStartupMood.DataSource = Translations.EnumToList<Enums.MoodType>();
+            comboBoxStartupMood.SelectionChangeCommitted += new EventHandler(comboBoxStartupMood_SelectionChangeCommitted);
+            comboBoxStartupMood.SelectedIndex = (int)Settings.defaultMoodType;
+            textBoxStartupMood.Text = Settings.defaultMoodMessage;
+
+            numericUpDownIdleTimeOut.Value = Settings.autoIdleTimeOut;
+
+
+        }
+
+        void comboBoxStartupStatus_SelectionChangeCommitted(object sender, EventArgs e) {
+            Settings.defaultStatusType = ((KeyValuePair<string, Enums.StatusType>)((ComboBox)sender).SelectedItem).Value;
+            textBoxStartupStatus.Text = ((KeyValuePair<string, Enums.StatusType>)((ComboBox)sender).SelectedItem).Key;
+        }
+
+        void comboBoxStartupActivity_SelectionChangeCommitted(object sender, EventArgs e) {
+            Settings.defaultActivityType = ((KeyValuePair<string, Enums.ActivityType>)((ComboBox)sender).SelectedItem).Value;
+            textBoxStartupActivity.Text = ((KeyValuePair<string, Enums.ActivityType>)((ComboBox)sender).SelectedItem).Key;
+        }
+
+        void comboBoxStartupMood_SelectionChangeCommitted(object sender, EventArgs e) {
+            Settings.defaultMoodType = ((KeyValuePair<string, Enums.MoodType>)((ComboBox)sender).SelectedItem).Value;
+            textBoxStartupMood.Text = ((KeyValuePair<string, Enums.MoodType>)((ComboBox)sender).SelectedItem).Key;
         }
 
         /// <summary>
@@ -181,6 +216,27 @@ namespace MyChitChat.Plugin
         {
             Settings.resource = textBoxResource.Text;
         }
+
+        private void textBoxStartupStatus_TextChanged(object sender, EventArgs e) {
+            Settings.defaultStatusMessage = textBoxStartupStatus.Text;
+        }
+
+        private void textBoxAutoIdleStatus_TextChanged(object sender, EventArgs e) {
+            Settings.autoIdleStatusMessage = textBoxAutoIdleStatus.Text;
+        }
+
+        private void textBoxStartupActivity_TextChanged(object sender, EventArgs e) {
+            Settings.defaultActivityMessage = textBoxStartupActivity.Text;
+        }
+
+        private void textBoxStartupMood_TextChanged(object sender, EventArgs e) {
+            Settings.defaultMoodMessage = textBoxStartupMood.Text;
+        }
+
+        private void numericUpDownIdleTimeOut_ValueChanged(object sender, EventArgs e) {
+            Settings.autoIdleTimeOut = (int)numericUpDownIdleTimeOut.Value;
+        }             
+
     }
         /// <summary>
         /// Event args for the test event

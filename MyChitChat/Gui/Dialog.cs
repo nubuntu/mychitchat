@@ -27,11 +27,8 @@ namespace MyChitChat.Gui {
             get {
                 return _instance;
             }
-        }
-
-        
-       
-       
+        }    
+              
 
         private GUIDialogMenu BuildDialogSelect(List<GUIListItem> list) {
             _dlgSelect = GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_MENU) as GUIDialogMenu;
@@ -53,7 +50,7 @@ namespace MyChitChat.Gui {
             foreach (string type in Enum.GetNames(enumType)) {
                 tmpList.Add(
                    Helper.CreateGuiListItem(type,
-                        type.ToString(),
+                        Translations.GetByName(type.ToString()),
                         String.Empty,
                         String.Empty,
                         Helper.GetStatusIcon(type),
@@ -75,7 +72,8 @@ namespace MyChitChat.Gui {
                 _dlgSelect.Add(customButton);
             }
             _dlgSelect.DoModal(GUIWindowManager.ActiveWindow);
-            DialogResult result = new DialogResult(_dlgSelect.SelectedLabel, _dlgSelect.SelectedLabelText.Replace(" ", ""), _dlgSelect.SelectedLabelText);
+
+            DialogResult result = new DialogResult(_dlgSelect.SelectedLabel, _dlgSelect.SelectedLabelText, _dlgSelect.SelectedLabelText);
             _dlgSelect.ResetAllControls();
             _dlgSelect.Reset();
             if (result.selectedLabelText == "Set Custom Status...") {
@@ -89,7 +87,7 @@ namespace MyChitChat.Gui {
         public Status SelectAndSetStatus() {
             DialogResult tmpResult = ShowDialogSelect(_lstSelectStatus, true);
             Status tmpStatus = new Status();
-            tmpStatus.type = (Enums.StatusType)Enum.Parse(typeof(Enums.StatusType), tmpResult.selectedLabelText);
+            tmpStatus.type = (Enums.StatusType)tmpResult.selectedIndex;
             tmpStatus.message = tmpResult.message;
             Helper.JABBER_CLIENT.Presence.status = tmpStatus;
             Helper.JABBER_CLIENT.Presence.applyStatus();
@@ -98,13 +96,13 @@ namespace MyChitChat.Gui {
 
         public Mood SelectAndSetMood() {
             DialogResult tmpResult = ShowDialogSelect(_lstSelectMood, true);
-            Helper.JABBER_CLIENT.Presence.setMood((Enums.MoodType)Enum.Parse(typeof(Enums.MoodType), tmpResult.selectedLabelText), tmpResult.selectedLabelText);
+            Helper.JABBER_CLIENT.Presence.setMood((Enums.MoodType)tmpResult.selectedIndex, tmpResult.message);
             return Helper.JABBER_CLIENT.Presence.mood;
         }
 
         public Activity SelectAndSetActivity() {
             DialogResult tmpResult = ShowDialogSelect(_lstSelectActivity, true);
-            Helper.JABBER_CLIENT.Presence.setActivity((Enums.ActivityType)Enum.Parse(typeof(Enums.ActivityType), tmpResult.selectedLabelText), tmpResult.selectedLabelText);
+            Helper.JABBER_CLIENT.Presence.setActivity((Enums.ActivityType)tmpResult.selectedIndex, tmpResult.message);
             return Helper.JABBER_CLIENT.Presence.activity;
         }
 
