@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using agsXMPP;
 using MediaPortal.Dialogs;
-using MediaPortal.GUI.Library;
 using MyChitChat.Jabber;
 using MyChitChat.Plugin;
 using nJim;
+using MediaPortal.GUI.Library;
 
 
 namespace MyChitChat.Gui {
@@ -161,10 +161,10 @@ namespace MyChitChat.Gui {
             }
             notifyInfo.resource = contact.identity.jabberID.resource;
             notifyInfo.stamp = contact.lastUpdated;
-            notifyInfo.header = string.Format("[{1}] {0} ", notifyInfo.nickname, notifyInfo.stamp.ToShortTimeString());
-            notifyInfo.status = Helper.ToSentence(contact.status.type.ToString());
+            notifyInfo.status = Translations.GetByName(contact.status.type.ToString());
             notifyInfo.message = contact.status.message;
             notifyInfo.icon = Helper.GetStatusIcon(contact.status.type.ToString());
+
             if (mood.HasValue) {
                 notifyInfo.mood = mood.Value.type.ToString().ToUpper();
                 notifyInfo.message = notifyInfo.mood + "\n" + mood.Value.text;
@@ -183,14 +183,11 @@ namespace MyChitChat.Gui {
                 notifyInfo.message = notifyInfo.tune;
                 notifyInfo.icon = Helper.GetTuneIcon(tune.Value);
             }
-            header = notifyInfo.header;
+            notifyInfo.header = string.Format("[{0}] {1}@{2} ", notifyInfo.stamp.ToShortTimeString(), notifyInfo.nickname, notifyInfo.resource);            
             message += notifyInfo.status;
             if (!String.IsNullOrEmpty(notifyInfo.message)) {
                 message += "\n'" + notifyInfo.message + "'";
-            }
-            if (!String.IsNullOrEmpty(notifyInfo.resource)) {
-                message += "\n" + notifyInfo.resource;
-            }
+            }            
             Dialog.Instance.ShowNotifyDialog(header, notifyInfo.icon, message, Settings.notifyWindowTypePresence);
         }
 

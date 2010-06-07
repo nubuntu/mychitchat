@@ -60,6 +60,13 @@ namespace MyChitChat.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Config_Stripes {
+            get {
+                object obj = ResourceManager.GetObject("Config_Stripes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Jabber_banner {
             get {
                 object obj = ResourceManager.GetObject("Jabber_banner", resourceCulture);

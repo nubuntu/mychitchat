@@ -21,6 +21,7 @@ namespace MyChitChat.Plugin {
         /// </summary>
         public const string PLUGIN_NAME = "MyChitChat";
         public const string PLUGIN_AUTHOR = "Anthrax";
+        public const string PLUGIN_VERSION = "0.1.0";
         public const string PLUGIN_DESCRIPTION = "TODO";
 
         public static readonly string SKIN_PATH_XML = GUIGraphicsContext.Skin + @"\";
@@ -29,16 +30,11 @@ namespace MyChitChat.Plugin {
         public static readonly string SKIN_FILE_CHAT = SKIN_PATH_XML + PLUGIN_NAME + "_Chat.xml";
         public static readonly string SKIN_FILE_CONTACT = SKIN_PATH_XML + PLUGIN_NAME + "_Contact.xml";
 
-        public static readonly string MEDIA_ICON_DEFAULT = SKIN_PATH_MEDIA + "icon_default.png";
-        public static readonly string MEDIA_ICON_ERROR = SKIN_PATH_MEDIA + "icon_error.png";
-        public static readonly string MEDIA_ICON_MESSAGE = SKIN_PATH_MEDIA + "icon_message.png";
-        public static readonly string MEDIA_ICON_PRESENCE = SKIN_PATH_MEDIA + "icon_presence.png";
-
-        public static readonly string MEDIA_STATUS_AVAILABLE = SKIN_PATH_MEDIA + "status_available.png";
-        public static readonly string MEDIA_STATUS_AWAY = SKIN_PATH_MEDIA + "status_away.png";
-        public static readonly string MEDIA_STATUS_XA = SKIN_PATH_MEDIA + "status_xa.png";
-        public static readonly string MEDIA_STATUS_CHAT = SKIN_PATH_MEDIA + "status_chat.png";
-        public static readonly string MEDIA_STATUS_DND = SKIN_PATH_MEDIA + "status_dnd.png";
+        public static readonly string MEDIA_ICON_DEFAULT = SKIN_PATH_MEDIA + @"\plugin\icon_default.png";
+        public static readonly string MEDIA_ICON_ERROR = SKIN_PATH_MEDIA + @"\plugin\icon_error.png";
+        public static readonly string MEDIA_ICON_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_message.png";
+        public static readonly string MEDIA_ICON_PRESENCE = SKIN_PATH_MEDIA + @"\plugin\icon_presence.png";
+               
 
         public static string GetStatusIcon(string status) {
             string tmpPath = String.Format(@"{0}\status\{1}.png", SKIN_PATH_MEDIA, status);
@@ -61,12 +57,7 @@ namespace MyChitChat.Plugin {
             string tmpPath = String.Format(@"{0}\tune\default.png", SKIN_PATH_MEDIA);
             return File.Exists(tmpPath) ? tmpPath : MEDIA_ICON_DEFAULT;
         }
-
-        /// <summary>
-        /// Version of the plugin
-        /// </summary>
-        public const string PLUGIN_VERSION = "0.1";
-
+               
         public static bool PLUGIN_WINDOW_ACTIVE {
             get { return Enum.IsDefined(typeof(PLUGIN_WINDOW_IDS), GUIWindowManager.ActiveWindow); }
         }
@@ -76,12 +67,7 @@ namespace MyChitChat.Plugin {
             WINDOW_ID_CHAT = WINDOW_ID_MAIN + 1001,
             WINDOW_ID_CONTACT = WINDOW_ID_MAIN + 1002,
         }
-
-        public static string ToSentence(string pascalCaseString) {
-            Regex r = new Regex("(?<=[a-z])(?<x>[A-Z])|(?<=.)(?<x>[A-Z])(?=[a-z])");
-            return r.Replace(pascalCaseString, " ${x}");
-        }
-
+                
         public enum PLUGIN_NOTIFY_WINDOWS {
             [Description("Use Windowsize suitable for Message length")]
             AUTO,
@@ -107,6 +93,7 @@ namespace MyChitChat.Plugin {
             public string icon;
         }
 
+    
         #endregion
 
         static readonly Client _client = new Client();
@@ -191,16 +178,16 @@ namespace MyChitChat.Plugin {
             Status initialStatus = new Status();
             initialStatus.type = Settings.defaultStatusType;
             initialStatus.message = Settings.defaultStatusMessage;
-            Activity initialActivity = new Activity();
-            initialActivity.type = Settings.defaultActivityType;
-            initialActivity.text = Settings.defaultActivityMessage;
-            Mood initialMood = new Mood();
-            initialMood.type = Settings.defaultMoodType;
-            initialMood.text = Settings.defaultMoodMessage;
+            //Activity initialActivity = new Activity();
+            //initialActivity.type = Settings.defaultActivityType;
+            //initialActivity.text = Settings.defaultActivityMessage;
+            //Mood initialMood = new Mood();
+            //initialMood.type = Settings.defaultMoodType;
+            //initialMood.text = Settings.defaultMoodMessage;
 
             Helper.JABBER_CLIENT.Presence.status = initialStatus;
-            Helper.JABBER_CLIENT.Presence.activity = initialActivity;
-            Helper.JABBER_CLIENT.Presence.mood = initialMood;
+            Helper.JABBER_CLIENT.Presence.setActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
+            Helper.JABBER_CLIENT.Presence.setMood(Settings.defaultMoodType, Settings.defaultMoodMessage);
             Log.Info("Default Presence info set.");            
         }
 
@@ -214,7 +201,7 @@ namespace MyChitChat.Plugin {
         public static Status GetStatusFromType(Enums.StatusType type) {
             Status tmpStatus = new Status();
             tmpStatus.type = type;
-            tmpStatus.message = Helper.ToSentence(type.ToString());
+            tmpStatus.message = Translations.GetByName(type.ToString());
             return tmpStatus;
         }
     }
