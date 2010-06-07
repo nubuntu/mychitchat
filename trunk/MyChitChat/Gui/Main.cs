@@ -19,6 +19,15 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         [SkinControlAttribute(50)]
         protected GUIFacadeControl ctrlFacade = null;
+
+        [SkinControlAttribute(499)]
+        protected GUIButtonControl btnSetStatus = null;
+
+        [SkinControlAttribute(500)]
+        protected GUIButtonControl btnSetMood = null;
+
+        [SkinControlAttribute(501)]
+        protected GUIButtonControl btnSetActivity = null;
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
@@ -95,6 +104,15 @@ namespace MyChitChat.Gui {
             base.OnPreviousWindow();
         }
 
+        protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType) {
+            if (control == btnSetStatus)
+                Dialog.Instance.SelectAndSetStatus();
+            if (control == btnSetMood)
+                Dialog.Instance.SelectAndSetMood();
+            if (control == btnSetActivity)
+                Dialog.Instance.SelectAndSetActivity();
+            base.OnClicked(controlId, control, actionType);
+        }
 
         #endregion
 
@@ -150,15 +168,15 @@ namespace MyChitChat.Gui {
         }
 
         private void NotifyPresMooActTun(nJim.Contact contact, Mood? mood, Activity? activity, Tune? tune) {
-            string header = String.Empty;
-            string message = string.Empty;
-
+            string message = String.Empty;
             Helper.PresMooActNotifyInfo notifyInfo = new Helper.PresMooActNotifyInfo();
             if (contact.identity.nickname != String.Empty) {
                 notifyInfo.nickname = contact.identity.nickname;
             } else {
                 notifyInfo.nickname = contact.identity.jabberID.user;
             }
+            message = notifyInfo.nickname;
+            
             notifyInfo.resource = contact.identity.jabberID.resource;
             notifyInfo.stamp = contact.lastUpdated;
             notifyInfo.status = Translations.GetByName(contact.status.type.ToString());
@@ -166,15 +184,18 @@ namespace MyChitChat.Gui {
             notifyInfo.icon = Helper.GetStatusIcon(contact.status.type.ToString());
 
             if (mood.HasValue) {
-                notifyInfo.mood = mood.Value.type.ToString().ToUpper();
-                notifyInfo.message = notifyInfo.mood + "\n" + mood.Value.text;
+                notifyInfo.mood = mood.Value.type.ToString().ToUpperInvariant();
+                notifyInfo.message = notifyInfo.mood;
+                if (!String.IsNullOrEmpty(mood.Value.text)) {
+                    notifyInfo.message += "\n'" + mood.Value.text + "'";
+                }
                 notifyInfo.icon = Helper.GetMoodIcon(mood.Value.type.ToString());
             }
             if (activity.HasValue) {
-                notifyInfo.activity = activity.Value.type.ToString().ToUpper();
+                notifyInfo.activity = activity.Value.type.ToString().ToUpperInvariant();
                 notifyInfo.message = notifyInfo.activity;
                 if (!String.IsNullOrEmpty(activity.Value.text)) {
-                    notifyInfo.message += "\n" + activity.Value.text;
+                    notifyInfo.message += "\n'" + activity.Value.text + "'";
                 }
                 notifyInfo.icon = Helper.GetActivityIcon(activity.Value.type.ToString());
             }
@@ -183,12 +204,12 @@ namespace MyChitChat.Gui {
                 notifyInfo.message = notifyInfo.tune;
                 notifyInfo.icon = Helper.GetTuneIcon(tune.Value);
             }
-            notifyInfo.header = string.Format("[{0}] {1}@{2} ", notifyInfo.stamp.ToShortTimeString(), notifyInfo.nickname, notifyInfo.resource);            
-            message += notifyInfo.status;
             if (!String.IsNullOrEmpty(notifyInfo.message)) {
-                message += "\n'" + notifyInfo.message + "'";
-            }            
-            Dialog.Instance.ShowNotifyDialog(header, notifyInfo.icon, message, Settings.notifyWindowTypePresence);
+                message += "\n" + notifyInfo.message;
+            }
+            notifyInfo.header = string.Format("[{0}] {1} @ {2} ", notifyInfo.stamp.ToShortTimeString(), notifyInfo.status, notifyInfo.resource);
+
+            Dialog.Instance.ShowNotifyDialog(notifyInfo.header, notifyInfo.icon, message, Settings.notifyWindowTypePresence);
         }
 
         private void NotifyMessage(Message msg) {

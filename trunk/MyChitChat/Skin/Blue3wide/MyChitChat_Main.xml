@@ -54,27 +54,27 @@
         <control>
           <id>499</id>
           <width>510</width>         
-          <description>CheezSitesOverview</description>
+          <description>Update my Status</description>
           <type>button</type>
           <onup>506</onup>
           <ondown>500</ondown>
-          <label>CheezSites Overview</label>
+          <label>Update my Status</label>
         </control>
         <control>
           <id>500</id>
-          <description>BrowseLatestCheez</description>
+          <description>Update my Mood</description>
           <type>button</type>
           <onup>499</onup>
           <ondown>501</ondown>
-          <label>Browse Latest Online Cheez..</label>
+          <label>Update my Mood</label>
         </control>
         <control>
           <id>501</id>
-          <description>BrowseRandomCheez</description>
+          <description>Update my Activity</description>
           <type>button</type>
           <onup>500</onup>
           <ondown>502</ondown>
-          <label>Browse Random Online Cheez..</label>
+          <label>Update my Activity</label>
         </control>
         <control>
           <id>502</id>
