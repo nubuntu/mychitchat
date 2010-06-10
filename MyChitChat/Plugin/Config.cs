@@ -44,6 +44,7 @@ namespace MyChitChat.Plugin
             comboBoxStartupMood.SelectedIndex = (int)Settings.defaultMoodType;
             textBoxStartupMood.Text = Settings.defaultMoodMessage;
 
+            comboBoxWindowSize.DataSource = Translations.EnumToList<Helper.PLUGIN_NOTIFY_WINDOWS>();
             numericUpDownIdleTimeOut.Value = Settings.autoIdleTimeOut;
 
 

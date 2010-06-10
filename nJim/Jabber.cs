@@ -735,7 +735,7 @@ namespace nJim
 		private void xmppOnRosterEnd(object sender)
 		{
 			OnRosterEndUpdate();
-			presence.applyStatus();
+            //presence.applyStatus();
 		}
 
 		/// <summary>

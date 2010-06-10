@@ -65,19 +65,14 @@ namespace MyChitChat.Plugin {
         public enum PLUGIN_WINDOW_IDS : int {
             WINDOW_ID_MAIN = 90000,
             WINDOW_ID_CHAT = WINDOW_ID_MAIN + 1001,
-            WINDOW_ID_CONTACT = WINDOW_ID_MAIN + 1002,
+            WINDOW_ID_DETAILS = WINDOW_ID_MAIN + 1002,
         }
                 
         public enum PLUGIN_NOTIFY_WINDOWS {
-            [Description("Use Windowsize suitable for Message length")]
-            AUTO,
-            [Description("Notify Window (lower right)")]
+            WINDOW_DIALOG_AUTO,
             WINDOW_DIALOG_NOTIFY = GUIWindow.Window.WINDOW_DIALOG_NOTIFY,
-            [Description("Dialog Window (small) (centered)")]
             WINDOW_DIALOG_OK = GUIWindow.Window.WINDOW_DIALOG_OK,
-            [Description("Dialog Window (large) (centered)")]
             WINDOW_DIALOG_TEXT = GUIWindow.Window.WINDOW_DIALOG_TEXT
-
         }
 
         public struct PresMooActNotifyInfo {
@@ -177,20 +172,28 @@ namespace MyChitChat.Plugin {
 
             Status initialStatus = new Status();
             initialStatus.type = Settings.defaultStatusType;
-            initialStatus.message = Settings.defaultStatusMessage;
-            //Activity initialActivity = new Activity();
-            //initialActivity.type = Settings.defaultActivityType;
-            //initialActivity.text = Settings.defaultActivityMessage;
-            //Mood initialMood = new Mood();
-            //initialMood.type = Settings.defaultMoodType;
-            //initialMood.text = Settings.defaultMoodMessage;
-
+            initialStatus.message = Settings.defaultStatusMessage;           
             Helper.JABBER_CLIENT.Presence.status = initialStatus;
             Helper.JABBER_CLIENT.Presence.setActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
             Helper.JABBER_CLIENT.Presence.setMood(Settings.defaultMoodType, Settings.defaultMoodMessage);
             Log.Info("Default Presence info set.");            
         }
 
+        public static void SetStatus(Enums.StatusType type, string message){
+            Status tmpStatus = new Status();
+            tmpStatus.type = type;
+            tmpStatus.message = message;
+            Helper.JABBER_CLIENT.Presence.status = tmpStatus;
+            Helper.JABBER_CLIENT.Presence.applyStatus();
+        }
+
+        public static void SetActivity(Enums.ActivityType type, string message) {
+            JABBER_CLIENT.Presence.setActivity(type, message);
+        }
+
+        public static void SetMood(Enums.MoodType type, string message) {
+            JABBER_CLIENT.Presence.setMood(type, message);
+        }
 
         public static Status GetStatusFromType(Enums.StatusType type, string message) {
             Status tmpStatus = new Status();
@@ -198,6 +201,12 @@ namespace MyChitChat.Plugin {
             tmpStatus.message = message;
             return tmpStatus;
         }
+
+        public static void SetTune(string title, string artist, int length) {           
+            JABBER_CLIENT.Presence.setTune(title, artist, length);
+        }
+
+
         public static Status GetStatusFromType(Enums.StatusType type) {
             Status tmpStatus = new Status();
             tmpStatus.type = type;
