@@ -19,15 +19,20 @@ namespace MyChitChat.Plugin {
 
         public static int notifyTimeOut = 10;        
         public static bool autoConnectStartup = true;
-        public static bool notifyOutsidePlugin = true;
         public static bool notifyOnMessage = true;
+        public static bool notifyOnMessageGlobally = true;
         public static bool notifyOnPresenceUpdate = true;
+        public static bool notifyOnPresenceGlobally = true;
         public static bool notifyOnMoodUpdate = true;
+        public static bool notifyOnMoodGlobally = true;
         public static bool notifyOnActivityUpdate = true;
+        public static bool notifyOnActivityGlobally = true;
         public static bool notifyOnTuneUpdate = true;
+        public static bool notifyOnTuneGlobally = true;
         
-        public static bool notifyOnError = true;     
-        public static bool setPresenceOnStartup = true;
+        public static bool notifyOnError = true;
+        public static bool notifyOnGlobally = true;   
+        public static bool selectPresenceOnStartup = true;
 
         public static int autoIdleTimeOut = 5;
         public static Enums.StatusType autoIdleStatusType = Enums.StatusType.Away;
@@ -42,8 +47,8 @@ namespace MyChitChat.Plugin {
         public static Enums.ActivityType defaultActivityType = Enums.ActivityType.relaxing;
         public static string defaultActivityMessage = Translations.defaultActivityMessage;
 
-        public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypeMessage = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;
-        public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypePresence = Helper.PLUGIN_NOTIFY_WINDOWS.AUTO;
+        public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypeMessage = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_AUTO;
+        public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypePresence = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_AUTO;
         
         #endregion
 

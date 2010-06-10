@@ -5,7 +5,22 @@
 <!-- Contributed by Anthrax (plugin author) -->
 
 <strings>
+
+  <!-- Plugin / Configuration Strings -->
+  <string Field="WINDOW_DIALOG_AUTO">Automatically use a suitable dialog for Message length</string>
+  <string Field="WINDOW_DIALOG_NOTIFY">Notify Window (lower right)</string>
+  <string Field="WINDOW_DIALOG_OK">Dialog Window (small) (centered)</string>
+  <string Field="WINDOW_DIALOG_TEXT">Dialog Window (large) (centered)</string>
+
+  <!-- Presence default strings - these are overridden by the user defined strings in the plugin config -->
+  <string Field="defaultStatusMessage">using MediaPortal</string>
+  <string Field="defaultMoodMessage">I'm feeling very entertained right now thx to MediaPortal ('Ya know the kick-ass open source MediaCenter alternative)...</string>
+  <string Field="defaultActivityMessage">I'm using MediaPortal at the moment...</string>
+  <string Field="defaultIdleMessage"> idle at the moment...</string>
+
   <!-- Jabber / XMPP Status Types -->
+
+    <string Field="none"></string>
 
   <string Field="Normal">Online</string>
   <string Field="ReadyToChat">Geschwätzig</string>

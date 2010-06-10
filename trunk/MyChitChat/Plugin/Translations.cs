@@ -127,7 +127,7 @@ namespace MyChitChat.Plugin {
             return enumValArray;
         }
 
-        public static List<KeyValuePair<string,T>> EnumToList<T>() {
+        public static List<KeyValuePair<string, T>> EnumToList<T>() {
             Type enumType = typeof(T);
 
             // Can't use type constraints on value types, so have to do check like this
@@ -144,7 +144,7 @@ namespace MyChitChat.Plugin {
             }
 
             return enumValList;
-        } 
+        }
 
         /// <summary>
         /// Takes an input string and replaces all ${named} variables with the proper translation if available
@@ -170,6 +170,11 @@ namespace MyChitChat.Plugin {
         public static string defaultMoodMessage = "I'm feeling very entertained right now thx to MediaPortal ('Ya know the kick-ass open source MediaCenter alternative)...";
         public static string defaultActivityMessage = "I'm using MediaPortal at the moment...";
         public static string defaultIdleMessage = Helper.PLUGIN_NAME + " idle at the moment...";
+
+        public static string WINDOW_DIALOG_AUTO = "Automatically use a suitable dialog for Message length";
+        public static string WINDOW_DIALOG_NOTIFY = "Notify Window (lower right)";
+        public static string WINDOW_DIALOG_OK = "Dialog Window (small) (centered)";
+        public static string WINDOW_DIALOG_TEXT = "Dialog Window (large) (centered)";
 
         public static string none = "";
 

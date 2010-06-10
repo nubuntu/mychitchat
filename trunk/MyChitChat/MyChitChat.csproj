@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gui\Contact.cs" />
+    <Compile Include="Gui\Details.cs" />
     <Compile Include="Gui\Dialog.cs" />
     <Compile Include="Gui\Main.cs" />
     <Compile Include="Jabber\Client.cs" />
@@ -141,6 +142,6 @@
   <PropertyGroup>
     <PostBuildEvent>REM xcopy "$(TargetPath)" "..\..\..\MpiRelease" /Y
 xcopy "$(TargetPath)" "C:\Programme\Team MediaPortal\MediaPortal\plugins\Windows" /Y
-REM "C:\Programme\Team MediaPortal\MediaPortal\MediaPortal.exe"</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

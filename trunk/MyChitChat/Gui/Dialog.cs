@@ -86,17 +86,13 @@ namespace MyChitChat.Gui {
 
         public Status SelectAndSetStatus() {
             DialogResult tmpResult = ShowDialogSelect(_lstSelectStatus, true);
-            Status tmpStatus = new Status();
-            tmpStatus.type = (Enums.StatusType)tmpResult.selectedIndex;
-            tmpStatus.message = tmpResult.message;
-            Helper.JABBER_CLIENT.Presence.status = tmpStatus;
-            Helper.JABBER_CLIENT.Presence.applyStatus();
-            return tmpStatus;
+            Helper.SetStatus((Enums.StatusType)tmpResult.selectedIndex, tmpResult.message);
+            return Helper.JABBER_CLIENT.Presence.status;
         }
 
         public Mood SelectAndSetMood() {
             DialogResult tmpResult = ShowDialogSelect(_lstSelectMood, true);
-            Helper.JABBER_CLIENT.Presence.setMood((Enums.MoodType)tmpResult.selectedIndex, tmpResult.message);
+            Helper.SetMood((Enums.MoodType)tmpResult.selectedIndex, tmpResult.message);
             return Helper.JABBER_CLIENT.Presence.mood;
         }
 
@@ -154,7 +150,7 @@ namespace MyChitChat.Gui {
                 GUIWindow guiWindow = GUIWindowManager.GetWindow((int)notifyType);
                 switch (notifyType) {
                     default:
-                    case Helper.PLUGIN_NOTIFY_WINDOWS.AUTO:
+                    case Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_AUTO:
                         if (text.Length <= 60) {
                             ShowNotifyDialog(timeOut, header, icon, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY);
                         } else {
