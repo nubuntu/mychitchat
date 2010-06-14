@@ -24,7 +24,7 @@ namespace MyChitChat.Plugin {
         public const string PLUGIN_VERSION = "0.1.0";
         public const string PLUGIN_DESCRIPTION = "TODO";
 
-        public static readonly string SKIN_PATH_XML = GUIGraphicsContext.Skin + @"\" + PLUGIN_NAME+ @"\";
+        public static readonly string SKIN_PATH_XML = GUIGraphicsContext.Skin + @"\";
         public static readonly string SKIN_PATH_MEDIA = GUIGraphicsContext.Skin + @"\Media\" + PLUGIN_NAME + @"\";
         public static readonly string SKIN_FILE_MAIN = SKIN_PATH_XML + PLUGIN_NAME + "_Main.xml";
         public static readonly string SKIN_FILE_CHAT = SKIN_PATH_XML + PLUGIN_NAME + "_Chat.xml";
@@ -36,7 +36,7 @@ namespace MyChitChat.Plugin {
         public static readonly string MEDIA_ICON_PRESENCE = SKIN_PATH_MEDIA + @"\plugin\icon_presence.png";
         public static readonly string MEDIA_ICON_INCOMING_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_incoming_message.png";
         public static readonly string MEDIA_ICON_OUTGOING_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_outgoing_message.png";
-               
+
 
         public static string GetStatusIcon(string status) {
             string tmpPath = String.Format(@"{0}\status\{1}.png", SKIN_PATH_MEDIA, status);
@@ -59,7 +59,7 @@ namespace MyChitChat.Plugin {
             string tmpPath = String.Format(@"{0}\tune\default.png", SKIN_PATH_MEDIA);
             return File.Exists(tmpPath) ? tmpPath : MEDIA_ICON_DEFAULT;
         }
-               
+
         public static bool PLUGIN_WINDOW_ACTIVE {
             get { return Enum.IsDefined(typeof(PLUGIN_WINDOW_IDS), GUIWindowManager.ActiveWindow); }
         }
@@ -69,7 +69,7 @@ namespace MyChitChat.Plugin {
             WINDOW_ID_CHAT = WINDOW_ID_MAIN + 1001,
             WINDOW_ID_DETAILS = WINDOW_ID_MAIN + 1002,
         }
-                
+
         public enum PLUGIN_NOTIFY_WINDOWS {
             WINDOW_DIALOG_AUTO,
             WINDOW_DIALOG_NOTIFY = GUIWindow.Window.WINDOW_DIALOG_NOTIFY,
@@ -90,16 +90,16 @@ namespace MyChitChat.Plugin {
             public string icon;
         }
 
-    
+
         #endregion
 
         static readonly Client _client = new Client();
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
-        
-       
-        
+
+
+
         public static Client JABBER_CLIENT {
             get {
                 return _client;
@@ -171,17 +171,13 @@ namespace MyChitChat.Plugin {
         #endregion
 
         public static void SetDefaultPresence() {
-
-            Status initialStatus = new Status();
-            initialStatus.type = Settings.defaultStatusType;
-            initialStatus.message = Settings.defaultStatusMessage;           
-            Helper.JABBER_CLIENT.Presence.status = initialStatus;
-            Helper.JABBER_CLIENT.Presence.setActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
-            Helper.JABBER_CLIENT.Presence.setMood(Settings.defaultMoodType, Settings.defaultMoodMessage);
-            Log.Info("Default Presence info set.");            
+        SetStatus(Settings.defaultStatusType, Settings.defaultStatusMessage);
+            SetActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
+            SetMood(Settings.defaultMoodType, Settings.defaultMoodMessage);
+            Log.Info("Default Presence info set.");
         }
 
-        public static void SetStatus(Enums.StatusType type, string message){
+        public static void SetStatus(Enums.StatusType type, string message) {
             Status tmpStatus = new Status();
             tmpStatus.type = type;
             tmpStatus.message = message;
@@ -204,7 +200,7 @@ namespace MyChitChat.Plugin {
             return tmpStatus;
         }
 
-        public static void SetTune(string title, string artist, int length) {           
+        public static void SetTune(string title, string artist, int length) {
             JABBER_CLIENT.Presence.setTune(title, artist, length);
         }
 
