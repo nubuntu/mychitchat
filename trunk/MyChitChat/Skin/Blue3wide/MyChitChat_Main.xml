@@ -148,5 +148,27 @@
       <posY>680</posY>
       <width>500</width>
     </control>
+    <control>
+      <description>Message History</description>
+      <type>textbox</type>
+      <id>600</id>
+      <posX>220</posX>
+      <posY>220</posY>
+      <width>410</width>
+      <height>300</height>
+      <spinWidth>16</spinWidth>
+      <spinHeight>16</spinHeight>
+      <spinPosX>610</spinPosX>
+      <spinPosY>530</spinPosY>
+      <spinColor>ffffffff</spinColor>
+      <textureUp>page_up_nofocus.png</textureUp>
+      <textureDown>page_down_nofocus.png</textureDown>
+      <textureUpFocus>page_up_focus.png</textureUpFocus>
+      <textureDownFocus>page_down_focus.png</textureDownFocus>
+      <image>icon-folder.png</image>
+      <font>font13</font>
+      <textcolor>ffffffff</textcolor>
+      <colordiffuse>ffffffff</colordiffuse>
+    </control>
   </controls>
 </window>

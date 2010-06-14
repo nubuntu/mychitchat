@@ -34,6 +34,7 @@ namespace MyChitChat.Plugin
             this.labelStatus = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageJabber = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
             this.linkLabelCreateAccount = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxResource = new System.Windows.Forms.TextBox();
@@ -48,6 +49,7 @@ namespace MyChitChat.Plugin
             this.tabPageDefault = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxSelectOnStartup = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBoxStartupStatus = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -75,23 +77,24 @@ namespace MyChitChat.Plugin
             this.checkBoxMessagePlugin = new System.Windows.Forms.CheckBox();
             this.checkBoxMessageGlobally = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBoxStatusPlugin = new System.Windows.Forms.CheckBox();
+            this.checkBoxStatusGlobally = new System.Windows.Forms.CheckBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBoxActivityPlugin = new System.Windows.Forms.CheckBox();
+            this.checkBoxActivityGlobally = new System.Windows.Forms.CheckBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMoodPlugin = new System.Windows.Forms.CheckBox();
+            this.checkBoxMoodGlobally = new System.Windows.Forms.CheckBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.checkBoxTunePlugin = new System.Windows.Forms.CheckBox();
+            this.checkBoxTuneGlobally = new System.Windows.Forms.CheckBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.checkBoxErrorPlugin = new System.Windows.Forms.CheckBox();
+            this.checkBoxErrorGlobally = new System.Windows.Forms.CheckBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.comboBoxWindowSize = new System.Windows.Forms.ComboBox();
             this.activityTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.statusTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPageJabber.SuspendLayout();
             this.tabPageDefault.SuspendLayout();
@@ -107,10 +110,11 @@ namespace MyChitChat.Plugin
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.activityTypeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusTypeBindingSource)).BeginInit();
-            this.groupBox9.SuspendLayout();
-            this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelStatus
@@ -158,6 +162,15 @@ namespace MyChitChat.Plugin
             this.tabPageJabber.TabIndex = 0;
             this.tabPageJabber.Text = "Jabber Credentials";
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(303, 47);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(38, 13);
+            this.label14.TabIndex = 19;
+            this.label14.Text = "Server";
+            // 
             // linkLabelCreateAccount
             // 
             this.linkLabelCreateAccount.AutoSize = true;
@@ -168,6 +181,7 @@ namespace MyChitChat.Plugin
             this.linkLabelCreateAccount.TabIndex = 18;
             this.linkLabelCreateAccount.TabStop = true;
             this.linkLabelCreateAccount.Text = "Create Account";
+            this.linkLabelCreateAccount.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCreateAccount_LinkClicked);
             // 
             // label4
             // 
@@ -185,6 +199,7 @@ namespace MyChitChat.Plugin
             this.textBoxResource.Size = new System.Drawing.Size(160, 20);
             this.textBoxResource.TabIndex = 15;
             this.textBoxResource.Text = "MediaPortal";
+            this.textBoxResource.Leave += new System.EventHandler(this.textBoxResource_Leave);
             // 
             // textBoxPassword
             // 
@@ -193,6 +208,7 @@ namespace MyChitChat.Plugin
             this.textBoxPassword.Size = new System.Drawing.Size(160, 20);
             this.textBoxPassword.TabIndex = 14;
             this.textBoxPassword.UseSystemPasswordChar = true;
+            this.textBoxPassword.Leave += new System.EventHandler(this.textBoxPassword_Leave);
             // 
             // textBoxServer
             // 
@@ -200,6 +216,7 @@ namespace MyChitChat.Plugin
             this.textBoxServer.Name = "textBoxServer";
             this.textBoxServer.Size = new System.Drawing.Size(160, 20);
             this.textBoxServer.TabIndex = 13;
+            this.textBoxServer.Leave += new System.EventHandler(this.textBoxServer_Leave);
             // 
             // textBoxUsername
             // 
@@ -207,6 +224,7 @@ namespace MyChitChat.Plugin
             this.textBoxUsername.Name = "textBoxUsername";
             this.textBoxUsername.Size = new System.Drawing.Size(160, 20);
             this.textBoxUsername.TabIndex = 12;
+            this.textBoxUsername.Leave += new System.EventHandler(this.textBoxUsername_Leave);
             // 
             // linkFAQ
             // 
@@ -218,6 +236,7 @@ namespace MyChitChat.Plugin
             this.linkFAQ.TabIndex = 17;
             this.linkFAQ.TabStop = true;
             this.linkFAQ.Text = "Jabber FAQ";
+            this.linkFAQ.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkFAQ_LinkClicked);
             // 
             // buttonTest
             // 
@@ -227,6 +246,7 @@ namespace MyChitChat.Plugin
             this.buttonTest.TabIndex = 16;
             this.buttonTest.Text = "Test";
             this.buttonTest.UseVisualStyleBackColor = true;
+            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 
             // label3
             // 
@@ -280,7 +300,7 @@ namespace MyChitChat.Plugin
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBox9);
+            this.groupBox1.Controls.Add(this.checkBoxSelectOnStartup);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.textBoxStartupStatus);
             this.groupBox1.Controls.Add(this.label5);
@@ -291,6 +311,18 @@ namespace MyChitChat.Plugin
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Startup Status";
+            // 
+            // checkBoxSelectOnStartup
+            // 
+            this.checkBoxSelectOnStartup.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.checkBoxSelectOnStartup.Location = new System.Drawing.Point(9, 64);
+            this.checkBoxSelectOnStartup.Name = "checkBoxSelectOnStartup";
+            this.checkBoxSelectOnStartup.Size = new System.Drawing.Size(69, 45);
+            this.checkBoxSelectOnStartup.TabIndex = 4;
+            this.checkBoxSelectOnStartup.Text = "Select on Startup";
+            this.checkBoxSelectOnStartup.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.checkBoxSelectOnStartup.UseVisualStyleBackColor = true;
+            this.checkBoxSelectOnStartup.CheckedChanged += new System.EventHandler(this.checkBoxSelectOnStartup_CheckedChanged);
             // 
             // label6
             // 
@@ -526,6 +558,7 @@ namespace MyChitChat.Plugin
             this.flowLayoutPanel1.Controls.Add(this.groupBox6);
             this.flowLayoutPanel1.Controls.Add(this.groupBox7);
             this.flowLayoutPanel1.Controls.Add(this.groupBox8);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox11);
             this.flowLayoutPanel1.Controls.Add(this.groupBox10);
             this.flowLayoutPanel1.Controls.Add(this.groupBox9);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -540,7 +573,7 @@ namespace MyChitChat.Plugin
             this.groupBox5.Controls.Add(this.checkBoxMessageGlobally);
             this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(140, 65);
+            this.groupBox5.Size = new System.Drawing.Size(146, 65);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "On Incoming Message";
@@ -554,6 +587,7 @@ namespace MyChitChat.Plugin
             this.checkBoxMessagePlugin.TabIndex = 1;
             this.checkBoxMessagePlugin.Text = "Plugin";
             this.checkBoxMessagePlugin.UseVisualStyleBackColor = true;
+            this.checkBoxMessagePlugin.CheckedChanged += new System.EventHandler(this.checkBoxMessagePlugin_CheckedChanged);
             // 
             // checkBoxMessageGlobally
             // 
@@ -564,172 +598,194 @@ namespace MyChitChat.Plugin
             this.checkBoxMessageGlobally.TabIndex = 0;
             this.checkBoxMessageGlobally.Text = "MediaPortal";
             this.checkBoxMessageGlobally.UseVisualStyleBackColor = true;
+            this.checkBoxMessageGlobally.CheckedChanged += new System.EventHandler(this.checkBoxMessageGlobally_CheckedChanged);
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.checkBox1);
-            this.groupBox6.Controls.Add(this.checkBox2);
-            this.groupBox6.Location = new System.Drawing.Point(149, 3);
+            this.groupBox6.Controls.Add(this.checkBoxStatusPlugin);
+            this.groupBox6.Controls.Add(this.checkBoxStatusGlobally);
+            this.groupBox6.Location = new System.Drawing.Point(155, 3);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(150, 65);
             this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "On Contact Status Update";
             // 
-            // checkBox1
+            // checkBoxStatusPlugin
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 42);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(55, 17);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Plugin";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBoxStatusPlugin.AutoSize = true;
+            this.checkBoxStatusPlugin.Location = new System.Drawing.Point(6, 42);
+            this.checkBoxStatusPlugin.Name = "checkBoxStatusPlugin";
+            this.checkBoxStatusPlugin.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxStatusPlugin.TabIndex = 1;
+            this.checkBoxStatusPlugin.Text = "Plugin";
+            this.checkBoxStatusPlugin.UseVisualStyleBackColor = true;
+            this.checkBoxStatusPlugin.CheckedChanged += new System.EventHandler(this.checkBoxStatusPlugin_CheckedChanged);
             // 
-            // checkBox2
+            // checkBoxStatusGlobally
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 19);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(82, 17);
-            this.checkBox2.TabIndex = 0;
-            this.checkBox2.Text = "MediaPortal";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBoxStatusGlobally.AutoSize = true;
+            this.checkBoxStatusGlobally.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxStatusGlobally.Name = "checkBoxStatusGlobally";
+            this.checkBoxStatusGlobally.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxStatusGlobally.TabIndex = 0;
+            this.checkBoxStatusGlobally.Text = "MediaPortal";
+            this.checkBoxStatusGlobally.UseVisualStyleBackColor = true;
+            this.checkBoxStatusGlobally.CheckedChanged += new System.EventHandler(this.checkBoxStatusGlobally_CheckedChanged);
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.checkBox3);
-            this.groupBox7.Controls.Add(this.checkBox4);
-            this.groupBox7.Location = new System.Drawing.Point(305, 3);
+            this.groupBox7.Controls.Add(this.checkBoxActivityPlugin);
+            this.groupBox7.Controls.Add(this.checkBoxActivityGlobally);
+            this.groupBox7.Location = new System.Drawing.Point(311, 3);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(150, 65);
             this.groupBox7.TabIndex = 3;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "On Contact Actvitiy Update";
             // 
-            // checkBox3
+            // checkBoxActivityPlugin
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(6, 42);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(55, 17);
-            this.checkBox3.TabIndex = 1;
-            this.checkBox3.Text = "Plugin";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBoxActivityPlugin.AutoSize = true;
+            this.checkBoxActivityPlugin.Location = new System.Drawing.Point(6, 42);
+            this.checkBoxActivityPlugin.Name = "checkBoxActivityPlugin";
+            this.checkBoxActivityPlugin.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxActivityPlugin.TabIndex = 1;
+            this.checkBoxActivityPlugin.Text = "Plugin";
+            this.checkBoxActivityPlugin.UseVisualStyleBackColor = true;
+            this.checkBoxActivityPlugin.CheckedChanged += new System.EventHandler(this.checkBoxActivityPlugin_CheckedChanged);
             // 
-            // checkBox4
+            // checkBoxActivityGlobally
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(6, 19);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(82, 17);
-            this.checkBox4.TabIndex = 0;
-            this.checkBox4.Text = "MediaPortal";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBoxActivityGlobally.AutoSize = true;
+            this.checkBoxActivityGlobally.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxActivityGlobally.Name = "checkBoxActivityGlobally";
+            this.checkBoxActivityGlobally.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxActivityGlobally.TabIndex = 0;
+            this.checkBoxActivityGlobally.Text = "MediaPortal";
+            this.checkBoxActivityGlobally.UseVisualStyleBackColor = true;
+            this.checkBoxActivityGlobally.CheckedChanged += new System.EventHandler(this.checkBoxActivityGlobally_CheckedChanged);
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.checkBox5);
-            this.groupBox8.Controls.Add(this.checkBox6);
-            this.groupBox8.Location = new System.Drawing.Point(461, 3);
+            this.groupBox8.Controls.Add(this.checkBoxMoodPlugin);
+            this.groupBox8.Controls.Add(this.checkBoxMoodGlobally);
+            this.groupBox8.Location = new System.Drawing.Point(467, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(156, 65);
+            this.groupBox8.Size = new System.Drawing.Size(146, 65);
             this.groupBox8.TabIndex = 4;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "On Contact Mood Update";
             // 
-            // checkBox5
+            // checkBoxMoodPlugin
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(6, 42);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(55, 17);
-            this.checkBox5.TabIndex = 1;
-            this.checkBox5.Text = "Plugin";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBoxMoodPlugin.AutoSize = true;
+            this.checkBoxMoodPlugin.Location = new System.Drawing.Point(6, 42);
+            this.checkBoxMoodPlugin.Name = "checkBoxMoodPlugin";
+            this.checkBoxMoodPlugin.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxMoodPlugin.TabIndex = 1;
+            this.checkBoxMoodPlugin.Text = "Plugin";
+            this.checkBoxMoodPlugin.UseVisualStyleBackColor = true;
+            this.checkBoxMoodPlugin.CheckedChanged += new System.EventHandler(this.checkBoxMoodPlugin_CheckedChanged);
             // 
-            // checkBox6
+            // checkBoxMoodGlobally
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(6, 19);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(82, 17);
-            this.checkBox6.TabIndex = 0;
-            this.checkBox6.Text = "MediaPortal";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBoxMoodGlobally.AutoSize = true;
+            this.checkBoxMoodGlobally.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxMoodGlobally.Name = "checkBoxMoodGlobally";
+            this.checkBoxMoodGlobally.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxMoodGlobally.TabIndex = 0;
+            this.checkBoxMoodGlobally.Text = "MediaPortal";
+            this.checkBoxMoodGlobally.UseVisualStyleBackColor = true;
+            this.checkBoxMoodGlobally.CheckedChanged += new System.EventHandler(this.checkBoxMoodGlobally_CheckedChanged);
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.checkBoxTunePlugin);
+            this.groupBox11.Controls.Add(this.checkBoxTuneGlobally);
+            this.groupBox11.Location = new System.Drawing.Point(3, 74);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(146, 65);
+            this.groupBox11.TabIndex = 3;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "On Contact Tune Update";
+            // 
+            // checkBoxTunePlugin
+            // 
+            this.checkBoxTunePlugin.AutoSize = true;
+            this.checkBoxTunePlugin.Location = new System.Drawing.Point(6, 42);
+            this.checkBoxTunePlugin.Name = "checkBoxTunePlugin";
+            this.checkBoxTunePlugin.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxTunePlugin.TabIndex = 1;
+            this.checkBoxTunePlugin.Text = "Plugin";
+            this.checkBoxTunePlugin.UseVisualStyleBackColor = true;
+            this.checkBoxTunePlugin.CheckedChanged += new System.EventHandler(this.checkBoxTunePlugin_CheckedChanged);
+            // 
+            // checkBoxTuneGlobally
+            // 
+            this.checkBoxTuneGlobally.AutoSize = true;
+            this.checkBoxTuneGlobally.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxTuneGlobally.Name = "checkBoxTuneGlobally";
+            this.checkBoxTuneGlobally.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxTuneGlobally.TabIndex = 0;
+            this.checkBoxTuneGlobally.Text = "MediaPortal";
+            this.checkBoxTuneGlobally.UseVisualStyleBackColor = true;
+            this.checkBoxTuneGlobally.CheckedChanged += new System.EventHandler(this.checkBoxTuneGlobally_CheckedChanged);
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.checkBoxErrorPlugin);
+            this.groupBox10.Controls.Add(this.checkBoxErrorGlobally);
+            this.groupBox10.Location = new System.Drawing.Point(155, 74);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(150, 65);
+            this.groupBox10.TabIndex = 2;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "On Error Occured";
+            // 
+            // checkBoxErrorPlugin
+            // 
+            this.checkBoxErrorPlugin.AutoSize = true;
+            this.checkBoxErrorPlugin.Location = new System.Drawing.Point(6, 42);
+            this.checkBoxErrorPlugin.Name = "checkBoxErrorPlugin";
+            this.checkBoxErrorPlugin.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxErrorPlugin.TabIndex = 1;
+            this.checkBoxErrorPlugin.Text = "Plugin";
+            this.checkBoxErrorPlugin.UseVisualStyleBackColor = true;
+            this.checkBoxErrorPlugin.CheckedChanged += new System.EventHandler(this.checkBoxErrorPlugin_CheckedChanged);
+            // 
+            // checkBoxErrorGlobally
+            // 
+            this.checkBoxErrorGlobally.AutoSize = true;
+            this.checkBoxErrorGlobally.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxErrorGlobally.Name = "checkBoxErrorGlobally";
+            this.checkBoxErrorGlobally.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxErrorGlobally.TabIndex = 0;
+            this.checkBoxErrorGlobally.Text = "MediaPortal";
+            this.checkBoxErrorGlobally.UseVisualStyleBackColor = true;
+            this.checkBoxErrorGlobally.CheckedChanged += new System.EventHandler(this.checkBoxErrorGlobally_CheckedChanged);
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.comboBoxWindowSize);
+            this.groupBox9.Location = new System.Drawing.Point(311, 74);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(302, 65);
+            this.groupBox9.TabIndex = 6;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Default Notify Dialog Type";
             // 
             // comboBoxWindowSize
             // 
             this.comboBoxWindowSize.FormattingEnabled = true;
             this.comboBoxWindowSize.Location = new System.Drawing.Point(6, 27);
             this.comboBoxWindowSize.Name = "comboBoxWindowSize";
-            this.comboBoxWindowSize.Size = new System.Drawing.Size(456, 21);
+            this.comboBoxWindowSize.Size = new System.Drawing.Size(290, 21);
             this.comboBoxWindowSize.TabIndex = 5;
             // 
             // statusTypeBindingSource
             // 
             this.statusTypeBindingSource.DataSource = typeof(nJim.Enums.StatusType);
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.comboBoxWindowSize);
-            this.groupBox9.Location = new System.Drawing.Point(149, 74);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(468, 65);
-            this.groupBox9.TabIndex = 6;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Default Notify Dialog Type";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(303, 47);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(38, 13);
-            this.label14.TabIndex = 19;
-            this.label14.Text = "Server";
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.Controls.Add(this.checkBox7);
-            this.groupBox10.Controls.Add(this.checkBox8);
-            this.groupBox10.Location = new System.Drawing.Point(3, 74);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(140, 65);
-            this.groupBox10.TabIndex = 2;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "On Error Occured";
-            // 
-            // checkBox7
-            // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Location = new System.Drawing.Point(6, 42);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(55, 17);
-            this.checkBox7.TabIndex = 1;
-            this.checkBox7.Text = "Plugin";
-            this.checkBox7.UseVisualStyleBackColor = true;
-            // 
-            // checkBox8
-            // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.Location = new System.Drawing.Point(6, 19);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(82, 17);
-            this.checkBox8.TabIndex = 0;
-            this.checkBox8.Text = "MediaPortal";
-            this.checkBox8.UseVisualStyleBackColor = true;
-            // 
-            // checkBox9
-            // 
-            this.checkBox9.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.checkBox9.Location = new System.Drawing.Point(9, 65);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(69, 45);
-            this.checkBox9.TabIndex = 4;
-            this.checkBox9.Text = "Select on Startup";
-            this.checkBox9.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.checkBox9.UseVisualStyleBackColor = true;
             // 
             // Config
             // 
@@ -771,11 +827,13 @@ namespace MyChitChat.Plugin
             this.groupBox7.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.activityTypeBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.statusTypeBindingSource)).EndInit();
-            this.groupBox9.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.activityTypeBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusTypeBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -829,20 +887,23 @@ namespace MyChitChat.Plugin
         private System.Windows.Forms.CheckBox checkBoxMessagePlugin;
         private System.Windows.Forms.CheckBox checkBoxMessageGlobally;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBoxStatusPlugin;
+        private System.Windows.Forms.CheckBox checkBoxStatusGlobally;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBoxActivityPlugin;
+        private System.Windows.Forms.CheckBox checkBoxActivityGlobally;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBoxMoodPlugin;
+        private System.Windows.Forms.CheckBox checkBoxMoodGlobally;
         private System.Windows.Forms.ComboBox comboBoxWindowSize;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.GroupBox groupBox10;
-        private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.CheckBox checkBox8;
-        private System.Windows.Forms.CheckBox checkBox9;
+        private System.Windows.Forms.CheckBox checkBoxErrorPlugin;
+        private System.Windows.Forms.CheckBox checkBoxErrorGlobally;
+        private System.Windows.Forms.CheckBox checkBoxSelectOnStartup;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.CheckBox checkBoxTunePlugin;
+        private System.Windows.Forms.CheckBox checkBoxTuneGlobally;
     }
 }

@@ -10,74 +10,79 @@ using nJim;
 
 namespace MyChitChat.Plugin {
 
-    public delegate void OnChatSessionUpdatedEventHandler();
+    public delegate void OnChatSessionUpdatedEventHandler(Session session, Message msg);
 
-    class Session {
+    public class Session {
 
+        private Jid _chatPartnerJID;
         private Client _chatClient;
-        private Identity _chatPartner;
-        private List<Message> _listMessageHistory;
+        private Contact _chatPartner;
+        private Dictionary<Guid, Message> _dicMessageHistory;
         private DateTime _dateTimeSessionStarted;
 
-        public Session(Identity chatPartner, Client chatClient) {
+        public Session(Contact chatPartner, Client chatClient) {
             this._chatClient = chatClient;
             this._chatPartner = chatPartner;
-            this._listMessageHistory = new List<Message>();
+            this._chatPartnerJID = new Jid(chatPartner.identity.jabberID.full) ;
+            this._dicMessageHistory = new Dictionary<Guid, Message> ();
             this._dateTimeSessionStarted = DateTime.Now;
-            this._chatClient.MessageGrabber.Add(new Jid(this._chatPartner.jabberID.full) , new BareJidComparer(), new MessageCB(CurrentChatListener), null);
+            this._chatClient.MessageGrabber.Add(this._chatPartnerJID, new BareJidComparer(), new MessageCB(CurrentChatListener), null);
         }
         
         ~Session() {
-            this._chatClient.MessageGrabber.Remove(new Jid(this._chatPartner.jabberID.full));
+            this._chatClient.MessageGrabber.Remove(_chatPartnerJID);
 			this._chatClient = null;		
         }
 
         public event OnChatSessionUpdatedEventHandler OnChatSessionUpdated;
 
-        public JabberID ChatPartnerJID { get { return this._chatPartner.jabberID; } }
-        public String ChatPartnerNickname { get { return this._chatPartner.nickname; } }
+        public Jid PartnerJID { get { return this._chatPartnerJID; } }
+        public String PartnerNickname { get { return this._chatPartner.identity.nickname; } }
+        public Contact Contact { get { return this._chatPartner; } }
+        public Identity Identity { get { return this._chatPartner.identity; } }
         public DateTime DateTimeLastActive {
             get {
-                return (_listMessageHistory.Count > 0)
+                return (_dicMessageHistory.Count > 0)
                     ?
-                    _listMessageHistory[_listMessageHistory.Count - 1].DateTimeReceived
+                    _dicMessageHistory.Last().Value.DateTimeReceived
                     :
                     _dateTimeSessionStarted;
             }
             set {this.DateTimeLastActive = value;}
         }
 
-        public List<Message> ListMessages {
-            get { return this._listMessageHistory; }
+        public Dictionary<Guid, Message> Messages {
+            get { return this._dicMessageHistory; }
         }
 
         public void Reply(string replyMessage) {
-            Message sentMsg = this._chatClient.SendMessage(replyMessage, new Jid(this.ChatPartnerJID.full));
-            AddMessageHistory(sentMsg);            
+            Message sentMsg = this._chatClient.SendMessage(replyMessage, this._chatPartnerJID);
+            AddMessageHistory(sentMsg);
+            OnChatSessionUpdated(this, sentMsg);
         }
 
         private void CurrentChatListener(object sender, agsXMPP.protocol.client.Message msg, object data) {
             if (msg.Body != null) {
-                AddMessageHistory(new Message(msg, MessageTypes.Incoming, DateTime.Now));
+                AddMessageHistory(new Message(msg, DirectionTypes.Incoming, DateTime.Now));
             }
         }
 
         private void AddMessageHistory(Message msg) {
-            _listMessageHistory.Add(msg);
-            //OnChatSessionUpdated();
+            _dicMessageHistory.Add(msg.MessageID, msg);
+            OnChatSessionUpdated(this, msg);
         }
 
        
-        public void SortMessagesAsc() {
-            this._listMessageHistory.Sort(new MessageComparerDateAsc());
-        }
+        //public void SortMessagesAsc() {
+        //    this._dicMessageHistory.Sort(new MessageComparerDateAsc());
+        //}
 
-        public void SortMessagesDesc() {
-            this._listMessageHistory.Sort(new MessageComparerDateDesc());
-        }
+        //public void SortMessagesDesc() {
+        //    this._dicMessageHistory.Sort(new MessageComparerDateDesc());
+        //}
 
         public void ClearHistory() {
-            this._listMessageHistory.Clear();
+            this._dicMessageHistory.Clear();
             this.DateTimeLastActive = DateTime.Now;
         }
     }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -50,7 +50,6 @@
     <Reference Include="WindowPlugins, Version=1.0.5.32072, Culture=neutral, processorArchitecture=x86" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gui\Contact.cs" />
     <Compile Include="Gui\Details.cs" />
     <Compile Include="Gui\Dialog.cs" />
     <Compile Include="Gui\Main.cs" />
@@ -104,16 +103,42 @@
     <Content Include="Resources\xmpp\agsXMPP.dll" />
     <Content Include="Resources\xmpp\agsXMPP.ui.dll" />
     <Content Include="Resources\xmpp\agsXMPP.xml" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat\contacts.png" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat\icon_error.png" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat\icon_message.png" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat\icon_presence.png" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat\inbox_empty.png" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat\inbox_full.png" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat\incoming_message.png" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat\notify_error.png" />
-    <Content Include="Skin\Blue3wide\Media\MyChitChat\read_message.png" />
     <Content Include="RegionsSnippet.txt" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\coding.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\cooking.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\default_activity.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\gaming.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\having_appointment.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\reading.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\sleeping.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\socializing.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\studying.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\watching_a_movie.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\watching_tv.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\working.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\writing.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\mood\default_mood.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\contacts.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\default.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_default.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_error.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_incoming_message.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_message.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_outgoing_message.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_presence.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\inbox_empty.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\inbox_full.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\notify_error.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\read_message.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\Away.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\default_status.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\DoNotDisturb.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\ExtendedAway.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\Invisible.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\Normal.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\ReadyToChat.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\Unavailable.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\tune\default_tune.png" />
     <Content Include="Skin\Blue3wide\MyChitChat_Chat.xml" />
     <Content Include="Skin\Blue3wide\MyChitChat_Contact.xml" />
     <Content Include="Skin\Blue3wide\MyChitChat_Main.xml" />
@@ -127,9 +152,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
-    <Folder Include="Skin\Blue3wide\Media\MyChitChat\activity\" />
-    <Folder Include="Skin\Blue3wide\Media\MyChitChat\mood\" />
-    <Folder Include="Skin\Blue3wide\Media\MyChitChat\status\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -141,7 +163,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>REM xcopy "$(TargetPath)" "..\..\..\MpiRelease" /Y
-xcopy "$(TargetPath)" "C:\Programme\Team MediaPortal\MediaPortal\plugins\Windows" /Y
+REM xcopy "$(TargetPath)" "C:\Programme\Team MediaPortal\MediaPortal\plugins\Windows" /Y
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -11,28 +11,28 @@ namespace MyChitChat.Plugin {
         /// <summary>
         /// The jabber account information
         /// </summary>       
-        public static string username = String.Empty;       
+        public static string username = String.Empty;
         public static string server = String.Empty;
         public static string resource = "MediaPortal";
-        public static string password = String.Empty;  
-  
+        public static string password = String.Empty;
 
-        public static int notifyTimeOut = 10;        
+
+        public static int notifyTimeOut = 10;
         public static bool autoConnectStartup = true;
-        public static bool notifyOnMessage = true;
-        public static bool notifyOnMessageGlobally = true;
-        public static bool notifyOnPresenceUpdate = true;
-        public static bool notifyOnPresenceGlobally = true;
-        public static bool notifyOnMoodUpdate = true;
-        public static bool notifyOnMoodGlobally = true;
-        public static bool notifyOnActivityUpdate = true;
-        public static bool notifyOnActivityGlobally = true;
-        public static bool notifyOnTuneUpdate = true;
-        public static bool notifyOnTuneGlobally = true;
-        
-        public static bool notifyOnError = true;
-        public static bool notifyOnGlobally = true;   
-        public static bool selectPresenceOnStartup = true;
+        public static bool notifyOnMessagePlugin = true;
+        public static bool notifyOnMessageGlobally = false;
+        public static bool notifyOnStatusPlugin = true;
+        public static bool notifyOnStatusGlobally = false;
+        public static bool notifyOnMoodPlugin = true;
+        public static bool notifyOnMoodGlobally = false;
+        public static bool notifyOnActivityPlugin = true;
+        public static bool notifyOnActivityGlobally = false;
+        public static bool notifyOnTunePlugin = true;
+        public static bool notifyOnTuneGlobally = false;
+
+        public static bool notifyOnErrorPlugin = true;
+        public static bool notifyOnErrorGlobally = true;
+        public static bool selectStatusOnStartup = false;
 
         public static int autoIdleTimeOut = 5;
         public static Enums.StatusType autoIdleStatusType = Enums.StatusType.Away;
@@ -47,9 +47,8 @@ namespace MyChitChat.Plugin {
         public static Enums.ActivityType defaultActivityType = Enums.ActivityType.relaxing;
         public static string defaultActivityMessage = Translations.defaultActivityMessage;
 
-        public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypeMessage = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_AUTO;
-        public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowTypePresence = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_AUTO;
-        
+        public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_AUTO;
+
         #endregion
 
         /// <summary>
@@ -60,9 +59,34 @@ namespace MyChitChat.Plugin {
                 username = reader.GetValue(Helper.PLUGIN_NAME, "username");
                 server = reader.GetValue(Helper.PLUGIN_NAME, "server");
                 resource = reader.GetValue(Helper.PLUGIN_NAME, "resource");
-
                 string encryptedPassword = reader.GetValue(Helper.PLUGIN_NAME, "password");
                 password = decryptString(encryptedPassword);
+                autoConnectStartup = reader.GetValueAsBool(Helper.PLUGIN_NAME, "autoConnectStartup", autoConnectStartup);
+                notifyOnMessagePlugin = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnMessagePlugin", notifyOnMessagePlugin);
+                notifyOnMessageGlobally = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnMessageGlobally", notifyOnMessageGlobally);
+                notifyOnStatusPlugin = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnStatusPlugin", notifyOnStatusPlugin);
+                notifyOnStatusGlobally = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnStatusGlobally", notifyOnStatusGlobally);
+                notifyOnMoodPlugin = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnMoodPlugin", notifyOnMoodPlugin);
+                notifyOnMoodGlobally = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnMoodGlobally", notifyOnMoodGlobally);
+                notifyOnActivityPlugin = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnActivityPlugin", notifyOnActivityPlugin);
+                notifyOnActivityGlobally = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnActivityGlobally", notifyOnActivityGlobally);
+                notifyOnTunePlugin = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnTunePlugin", notifyOnTunePlugin);
+                notifyOnTuneGlobally = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnTuneGlobally", notifyOnTuneGlobally);
+                notifyOnErrorPlugin = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnErrorPlugin", notifyOnErrorPlugin);
+                notifyOnErrorGlobally = reader.GetValueAsBool(Helper.PLUGIN_NAME, "notifyOnErrorGlobally", notifyOnErrorGlobally);
+                selectStatusOnStartup = reader.GetValueAsBool(Helper.PLUGIN_NAME, "selectStatusOnStartup", selectStatusOnStartup);
+                notifyTimeOut = reader.GetValueAsInt(Helper.PLUGIN_NAME, "notifyTimeOut", notifyTimeOut);
+                autoIdleTimeOut = reader.GetValueAsInt(Helper.PLUGIN_NAME, "autoIdleTimeOut", autoIdleTimeOut);
+                autoIdleStatusType = (Enums.StatusType)reader.GetValueAsInt(Helper.PLUGIN_NAME, "autoIdleStatusType", (int)autoIdleStatusType);
+                autoIdleStatusMessage = reader.GetValue(Helper.PLUGIN_NAME, "autoIdleStatusMessage");
+                defaultStatusType = (Enums.StatusType)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultStatusType", (int)defaultStatusType);
+                defaultStatusMessage = reader.GetValue(Helper.PLUGIN_NAME, "defaultStatusMessage");
+                defaultMoodType = (Enums.MoodType)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultMoodType", (int)defaultMoodType);
+                defaultMoodMessage = reader.GetValue(Helper.PLUGIN_NAME, "defaultMoodMessage");
+                defaultActivityType = (Enums.ActivityType)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultActivityType", (int)defaultActivityType);
+                defaultActivityMessage = reader.GetValue(Helper.PLUGIN_NAME, "defaultActivityMessage");
+                notifyWindowType = (Helper.PLUGIN_NOTIFY_WINDOWS)reader.GetValueAsInt(Helper.PLUGIN_NAME, "notifyWindowType", (int)notifyWindowType);
+
             }
         }
 
@@ -78,6 +102,32 @@ namespace MyChitChat.Plugin {
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "server", server);
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "password", encryptedPassword);
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "resource", resource);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "autoConnectStartup", autoConnectStartup);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnMessagePlugin", notifyOnMessagePlugin);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnMessageGlobally", notifyOnMessageGlobally);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnStatusPlugin", notifyOnStatusPlugin);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnStatusGlobally", notifyOnStatusGlobally);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnMoodPlugin", notifyOnMoodPlugin);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnMoodGlobally", notifyOnMoodGlobally);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnActivityPlugin", notifyOnActivityPlugin);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnActivityGlobally", notifyOnActivityGlobally);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnTunePlugin", notifyOnTunePlugin);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnTuneGlobally", notifyOnTuneGlobally);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnErrorPlugin", notifyOnErrorPlugin);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "notifyOnErrorGlobally", notifyOnErrorGlobally);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "selectStatusOnStartup", selectStatusOnStartup);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "notifyTimeOut", notifyTimeOut);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "autoIdleTimeOut", autoIdleTimeOut);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "autoIdleStatusType", (int)autoIdleStatusType);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "autoIdleStatusMessage", autoIdleStatusMessage);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultStatusType", (int)defaultStatusType);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultStatusMessage", defaultStatusMessage);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultMoodType", (int)defaultMoodType);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultMoodMessage", defaultMoodMessage);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultActivityType", (int)defaultActivityType);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultActivityMessage", defaultActivityMessage);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "notifyWindowType", (int)notifyWindowType);
+
             }
         }
 
