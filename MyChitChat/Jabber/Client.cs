@@ -119,14 +119,7 @@ namespace MyChitChat.Jabber {
             _jabberConnection.RosterEndUpdate += new NeutralHandler(_jabberConnection_RosterEndUpdate);
             _jabberConnection.connect();
            
-        }
-
-        void JabberClient_OnMessage(object sender, agsXMPP.protocol.client.Message msg) {
-            Log.Debug(String.Format("New jabber message from {0}: {1}", msg.From.ToString(), msg.Body));
-            if (msg.Type == MessageType.chat && msg.From != null && msg.From != new Jid(_jabberConnection.identity.jabberID.full)) {
-                OnMessage(new Message(msg, MessageTypes.Incoming, DateTime.Now));
-            }
-        }
+        }      
 
         /// <summary>
         /// Disconnect from the server
@@ -161,7 +154,7 @@ namespace MyChitChat.Jabber {
         public Message SendMessage(string Message, Jid To, MessageType Type) {
             agsXMPP.protocol.client.Message tmpMsg = new agsXMPP.protocol.client.Message(To, Type, Message);
             _jabberConnection.XMPPConnection.Send(tmpMsg);
-            return new Message(tmpMsg, MessageTypes.Outgoing, DateTime.Now);
+            return new Message(tmpMsg, DirectionTypes.Outgoing, DateTime.Now);
         }
 
         #endregion
@@ -179,6 +172,7 @@ namespace MyChitChat.Jabber {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+              
         void _jabberConnection_Connected(object sender) {
             _reconnectCounter = 0;
             _jabberConnection.roster.autoAcceptSubscribtion = false;
@@ -207,7 +201,12 @@ namespace MyChitChat.Jabber {
             OnRosterEnd();
         }
 
-
+        void JabberClient_OnMessage(object sender, agsXMPP.protocol.client.Message msg) {
+            Log.Debug(String.Format("New jabber message from {0}: {1}", msg.From.ToString(), msg.Body));
+            if (msg.Type == MessageType.chat && msg.From != null && msg.From != new Jid(_jabberConnection.identity.jabberID.full)) {
+                OnMessage(new Message(msg, DirectionTypes.Incoming, DateTime.Now));
+            }
+        }
 
         void _jabberConnection_ErrorRaised(Enums.ErrorType type, string message) {
             Log.Error(String.Format("Jabber error: {0} {1}", type.ToString(), message));

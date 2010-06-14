@@ -20,7 +20,7 @@ namespace MyChitChat.Plugin
             this.Load += new EventHandler(MyChitChatConfig_Load);             
         }
 
-        void MyChitChatConfig_Load(object sender, EventArgs e) {           
+        void MyChitChatConfig_Load(object sender, EventArgs e) {
 
             Settings.Load();
 
@@ -45,9 +45,33 @@ namespace MyChitChat.Plugin
             textBoxStartupMood.Text = Settings.defaultMoodMessage;
 
             comboBoxWindowSize.DataSource = Translations.EnumToList<Helper.PLUGIN_NOTIFY_WINDOWS>();
+            comboBoxWindowSize.SelectionChangeCommitted += new EventHandler(comboBoxWindowSize_SelectionChangeCommitted);
+            comboBoxWindowSize.SelectedIndex = (int)Settings.notifyWindowType;
+
             numericUpDownIdleTimeOut.Value = Settings.autoIdleTimeOut;
+            numericUpDownIdleTimeOut.Leave += new EventHandler(numericUpDownIdleTimeOut_Leave);
 
+            checkBoxSelectOnStartup.Checked = Settings.selectStatusOnStartup;
+            checkBoxMessageGlobally.Checked = Settings.notifyOnMessageGlobally;
+            checkBoxMessagePlugin.Checked = Settings.notifyOnMessagePlugin;
+            checkBoxStatusGlobally.Checked = Settings.notifyOnStatusGlobally ;
+            checkBoxStatusPlugin.Checked = Settings.notifyOnStatusPlugin;
+            checkBoxActivityGlobally.Checked = Settings.notifyOnActivityGlobally;
+            checkBoxActivityPlugin.Checked = Settings.notifyOnActivityPlugin;
+            checkBoxMoodGlobally.Checked = Settings.notifyOnMoodGlobally ;
+            checkBoxMoodPlugin.Checked = Settings.notifyOnMoodPlugin ;
+            checkBoxErrorGlobally.Checked = Settings.notifyOnErrorGlobally ;
+            checkBoxErrorPlugin.Checked = Settings.notifyOnErrorPlugin;
+            checkBoxTuneGlobally.Checked = Settings.notifyOnTuneGlobally ;
+            checkBoxTunePlugin.Checked = Settings.notifyOnTunePlugin;
+        }
+       
+        void numericUpDownIdleTimeOut_Leave(object sender, EventArgs e) {
+            Settings.autoIdleTimeOut = (int)((NumericUpDown)sender).Value;
+        }
 
+        void comboBoxWindowSize_SelectionChangeCommitted(object sender, EventArgs e) {
+            Settings.notifyWindowType = ((KeyValuePair<string, Helper.PLUGIN_NOTIFY_WINDOWS>)((ComboBox)sender).SelectedItem).Value;            
         }
 
         void comboBoxStartupStatus_SelectionChangeCommitted(object sender, EventArgs e) {
@@ -233,11 +257,60 @@ namespace MyChitChat.Plugin
         private void textBoxStartupMood_TextChanged(object sender, EventArgs e) {
             Settings.defaultMoodMessage = textBoxStartupMood.Text;
         }
+               
+        private void checkBoxSelectOnStartup_CheckedChanged(object sender, EventArgs e) {
+            Settings.selectStatusOnStartup = checkBoxSelectOnStartup.Checked;
+        }
 
-        private void numericUpDownIdleTimeOut_ValueChanged(object sender, EventArgs e) {
-            Settings.autoIdleTimeOut = (int)numericUpDownIdleTimeOut.Value;
-        }             
+        private void checkBoxMessageGlobally_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnMessageGlobally = checkBoxMessageGlobally.Checked;
+        }
 
+        private void checkBoxMessagePlugin_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnMessagePlugin = checkBoxMessagePlugin.Checked;
+        }
+
+        private void checkBoxStatusGlobally_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnStatusGlobally = checkBoxStatusGlobally.Checked;
+        }
+
+        private void checkBoxStatusPlugin_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnStatusPlugin = checkBoxStatusPlugin.Checked;
+        }
+
+        private void checkBoxActivityGlobally_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnActivityGlobally = checkBoxActivityGlobally.Checked;
+        }
+
+        private void checkBoxActivityPlugin_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnActivityPlugin = checkBoxActivityPlugin.Checked;
+        }
+
+        private void checkBoxMoodGlobally_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnMoodGlobally = checkBoxMoodGlobally.Checked;
+        }
+
+        private void checkBoxMoodPlugin_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnMoodPlugin = checkBoxMoodPlugin.Checked;
+        }
+
+        private void checkBoxErrorGlobally_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnErrorGlobally = checkBoxErrorGlobally.Checked;
+        }
+
+        private void checkBoxErrorPlugin_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnErrorPlugin = checkBoxErrorPlugin.Checked;
+        }
+
+        private void checkBoxTuneGlobally_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnTuneGlobally = checkBoxTuneGlobally.Checked;
+        }
+
+        private void checkBoxTunePlugin_CheckedChanged(object sender, EventArgs e) {
+            Settings.notifyOnTunePlugin = checkBoxTunePlugin.Checked;
+        }
+               
+       
     }
         /// <summary>
         /// Event args for the test event

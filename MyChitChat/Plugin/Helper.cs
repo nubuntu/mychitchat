@@ -34,6 +34,8 @@ namespace MyChitChat.Plugin {
         public static readonly string MEDIA_ICON_ERROR = SKIN_PATH_MEDIA + @"\plugin\icon_error.png";
         public static readonly string MEDIA_ICON_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_message.png";
         public static readonly string MEDIA_ICON_PRESENCE = SKIN_PATH_MEDIA + @"\plugin\icon_presence.png";
+        public static readonly string MEDIA_ICON_INCOMING_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_incoming_message.png";
+        public static readonly string MEDIA_ICON_OUTGOING_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_outgoing_message.png";
                
 
         public static string GetStatusIcon(string status) {
