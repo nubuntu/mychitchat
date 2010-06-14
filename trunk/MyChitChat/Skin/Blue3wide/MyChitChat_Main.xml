@@ -151,7 +151,7 @@
     <control>
       <description>Message History</description>
       <type>textbox</type>
-      <id>600</id>
+      <id>700</id>
       <posX>220</posX>
       <posY>220</posY>
       <width>410</width>

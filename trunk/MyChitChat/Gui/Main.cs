@@ -16,6 +16,9 @@ namespace MyChitChat.Gui {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         private Dictionary<Jid, Session> _dicChatSessions;
+        private Session current;
+        Chat guiWindowChat;
+                
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,7 +37,7 @@ namespace MyChitChat.Gui {
         [SkinControlAttribute(502)]
         protected GUIButtonControl btnRoster = null;
 
-        [SkinControlAttribute(600)]
+        [SkinControlAttribute(700)]
         protected GUITextControl ctrlTextboxMessageHistory = null;
 
         #endregion
@@ -91,6 +94,10 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public override bool Init() {
+            guiWindowChat = new Chat();
+            GUIWindow window = (GUIWindow)guiWindowChat;
+            GUIWindowManager.Add(ref window);
+            guiWindowChat.Init();
             if (Settings.autoConnectStartup) {
                 Helper.JABBER_CLIENT.Login();
             }
@@ -102,21 +109,18 @@ namespace MyChitChat.Gui {
                 Helper.JABBER_CLIENT.Login();
             }
             base.OnPageLoad();
+            
         }
 
 
         protected override void OnShowContextMenu() {
-            Helper.JABBER_CLIENT.Presence.setMood(Enums.MoodType.cold, "very");
-            Helper.JABBER_CLIENT.Presence.setActivity(Enums.ActivityType.cooking, "plenty");
-            Dialog.Instance.SelectAndSetStatus();
-            Dialog.Instance.SelectAndSetActivity();
-            Dialog.Instance.SelectAndSetMood();
-            Helper.JABBER_CLIENT.Presence.setTune("Test song", "Anthrax", 200);
+            
             base.OnShowContextMenu();
         }
 
-        protected override void OnWindowLoaded() {
+        protected override void OnWindowLoaded() {            
             base.OnWindowLoaded();
+            UpdateContactsFacade();
         }
 
         protected override void OnPreviousWindow() {
@@ -130,10 +134,11 @@ namespace MyChitChat.Gui {
                 Dialog.Instance.SelectAndSetMood();
             if (control == btnSetActivity)
                 Dialog.Instance.SelectAndSetActivity();
-            if (control == btnRoster)
-                UpdateContactsFacade();
             if (control == ctrlFacadeContactList && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
-                ShowChatWindow(this._dicChatSessions[new Jid(ctrlFacadeContactList.SelectedListItem.Path)]);
+                try {
+                    ShowChatWindow(this._dicChatSessions[new Jid(ctrlFacadeContactList.SelectedListItem.Path)]);
+                } catch {
+                }
             }
             base.OnClicked(controlId, control, actionType);
         }
@@ -149,12 +154,11 @@ namespace MyChitChat.Gui {
 
         private void ShowChatWindow(Session currentChatSession) {
             // do not show info if no contact selected
-            if (currentChatSession != null) {
-                Chat guiWindowChat = (Chat)GUIWindowManager.GetWindow((int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_CHAT);
-                guiWindowChat.CurrentChatSession = currentChatSession;
-                if (guiWindowChat != null && guiWindowChat.CurrentChatSession.Equals(currentChatSession)) {
+            if (currentChatSession != null) {                 
+                if (guiWindowChat != null) {
                     GUIWindowManager.ActivateWindow(guiWindowChat.GetID);
-                }
+                    guiWindowChat.CurrentChatSession = currentChatSession;
+                }              
             }
         }
 
@@ -217,10 +221,14 @@ namespace MyChitChat.Gui {
         }
 
         private void UpdateContactsFacade() {
-            foreach (KeyValuePair<Jid, Session> currentSession in this._dicChatSessions) {
-                ctrlFacadeContactList.Add(new ContactListItem(currentSession.Value));
+            if (ctrlFacadeContactList != null) {
+                ctrlFacadeContactList.Clear();
+                try {
+                    foreach (KeyValuePair<Jid, Session> currentSession in this._dicChatSessions) {
+                        ctrlFacadeContactList.Add(new SessionListItem(currentSession.Value));
+                    }
+                } catch { }
             }
-
         }
 
 
@@ -244,7 +252,7 @@ namespace MyChitChat.Gui {
             //ShowNotifyDialog("MyChitChat loaded...");   
             Helper.JABBER_CLIENT.Roster.ResourceAdded += new ResourceHandler(Roster_ResourceAdded);
             Helper.JABBER_CLIENT.Roster.ResourceRemoved += new ResourceHandler(Roster_ResourceRemoved);
-            //Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
+            Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
             Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(Roster_PresenceUpdated);
             Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
             Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
@@ -255,14 +263,19 @@ namespace MyChitChat.Gui {
         void Roster_ResourceAdded(nJim.Contact contact) {
             Session newSession = new Session(contact, Helper.JABBER_CLIENT);
             newSession.OnChatSessionUpdated += new OnChatSessionUpdatedEventHandler(newSession_OnChatSessionUpdated);
+            current = newSession;
             this._dicChatSessions.Add(newSession.PartnerJID, newSession);
+            UpdateContactsFacade();
         }
 
         void newSession_OnChatSessionUpdated(Session session, Message msg) {
             if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
                 NotifyMessage(msg);
             }
-            ctrlTextboxMessageHistory.AddSubItem(msg.ToString());
+            if (this.ctrlTextboxMessageHistory != null) {
+                ctrlTextboxMessageHistory.AddSubItem(msg.ToString());
+            }
+            UpdateContactsFacade();
         }
 
         void Roster_ResourceRemoved(nJim.Contact contact) {
@@ -285,16 +298,16 @@ namespace MyChitChat.Gui {
             if (Settings.selectStatusOnStartup) {
                 Dialog.Instance.SelectAndSetStatus();
             }
-            UpdateContactsFacade();
+            
         }
 
 
-        //void JABBER_CLIENT_OnMessage(Message msg) {
-        //    if ((Settings.notifyOnMessage && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
-        //        NotifyMessage(msg);
-        //    }
+        void JABBER_CLIENT_OnMessage(Message msg) {
+            if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
+                NotifyMessage(msg);
+            }
 
-        //}
+        }
 
         void Roster_PresenceUpdated(nJim.Contact contact) {
             if (((Settings.notifyOnStatusPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnStatusGlobally) && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full) {
@@ -338,25 +351,7 @@ namespace MyChitChat.Gui {
 
     }
 
-    public class ContactListItem : GUIListItem {
-
-        private Session _jabberSession = null;
-
-        public ContactListItem(Session session) {
-            this._jabberSession = session;
-            this.Path = session.PartnerJID.ToString();
-            this.Label = session.PartnerNickname;
-            this.Label2 = Translations.GetByName(session.Contact.status.type.ToString());
-            //this.Label3 = Translations.GetByName(session.Contact.activity.type.ToString());
-            this.Label3 = String.Format("[{0} unread]", session.Messages.Count(x => x.Value.Unread));
-            this.IconImage = this.IconImageBig = Helper.GetStatusIcon(session.Contact.status.type.ToString());
-        }
-
-        public Jid JID {
-            get { return this._jabberSession.PartnerJID; }
-        }
-
-    }
+    
 
 
 }
