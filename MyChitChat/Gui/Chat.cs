@@ -67,8 +67,8 @@ namespace MyChitChat.Gui {
         private void UpdateChatHistory() {
             if (this.ctrlFacadeMessageList != null || this._currentChatSession != null) {
                 this.ctrlFacadeMessageList.Clear();
-                foreach (KeyValuePair<Guid, Message> currentMessage in this._currentChatSession.Messages) {
-                    this.ctrlFacadeMessageList.Add(new MessageListItem(currentMessage.Value));
+                foreach (MessageListItem currentMessageItem in _currentChatSession.MessageListItems) {
+                    this.ctrlFacadeMessageList.Add(currentMessageItem);
                 }
                 this.ctrlFacadeMessageList.Sort(new MessageComparerDateDesc());
             }

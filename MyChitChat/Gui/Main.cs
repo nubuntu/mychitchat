@@ -16,8 +16,7 @@ namespace MyChitChat.Gui {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         private Dictionary<Jid, Session> _dicChatSessions;
-        private Session current;
-        Chat guiWindowChat;
+        private Chat guiWindowChat;
                 
         #endregion
 
@@ -49,7 +48,6 @@ namespace MyChitChat.Gui {
             Helper.JABBER_CLIENT.OnError += new OnErrorEventHandler(JABBER_CLIENT_OnError);
             Helper.JABBER_CLIENT.OnRosterEnd += new OnRosterEndEventHandler(JABBER_CLIENT_OnRosterEnd);
             Helper.JABBER_CLIENT.OnRosterStart += new OnRosterStartEventHandler(JABBER_CLIENT_OnRosterStart);
-
             GUIPropertyManager.OnPropertyChanged += new GUIPropertyManager.OnPropertyChangedHandler(GUIPropertyManager_OnPropertyChanged);
             this._dicChatSessions = new Dictionary<Jid, Session>();
         }
@@ -113,8 +111,7 @@ namespace MyChitChat.Gui {
         }
 
 
-        protected override void OnShowContextMenu() {
-            
+        protected override void OnShowContextMenu() {            
             base.OnShowContextMenu();
         }
 
@@ -225,7 +222,7 @@ namespace MyChitChat.Gui {
                 ctrlFacadeContactList.Clear();
                 try {
                     foreach (KeyValuePair<Jid, Session> currentSession in this._dicChatSessions) {
-                        ctrlFacadeContactList.Add(new SessionListItem(currentSession.Value));
+                        ctrlFacadeContactListdd();
                     }
                 } catch { }
             }
@@ -234,7 +231,7 @@ namespace MyChitChat.Gui {
 
         #endregion
 
-        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Business Logic Methods ~~~~~~~~~~~~~~~~~~~~
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Business Logic Methods ~~~~~~~~~~~~~~~~~~~~
 
 
 
@@ -250,9 +247,9 @@ namespace MyChitChat.Gui {
         void JABBER_CLIENT_OnLogin(object sender) {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
             //ShowNotifyDialog("MyChitChat loaded...");   
+            Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
             Helper.JABBER_CLIENT.Roster.ResourceAdded += new ResourceHandler(Roster_ResourceAdded);
             Helper.JABBER_CLIENT.Roster.ResourceRemoved += new ResourceHandler(Roster_ResourceRemoved);
-            Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
             Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(Roster_PresenceUpdated);
             Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
             Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
@@ -261,10 +258,9 @@ namespace MyChitChat.Gui {
         }
 
         void Roster_ResourceAdded(nJim.Contact contact) {
-            Session newSession = new Session(contact, Helper.JABBER_CLIENT);
+            Session newSession = new Session(contact);
             newSession.OnChatSessionUpdated += new OnChatSessionUpdatedEventHandler(newSession_OnChatSessionUpdated);
-            current = newSession;
-            this._dicChatSessions.Add(newSession.PartnerJID, newSession);
+            this._dicChatSessions.Add(newSession.ContactJID, newSession);
             UpdateContactsFacade();
         }
 

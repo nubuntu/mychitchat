@@ -15,96 +15,112 @@ namespace MyChitChat.Plugin {
 
     public class Session {
 
-        private Jid _chatPartnerJID;
-        private Contact _chatPartner;
-        private Dictionary<Guid, Message> _dicMessageHistory;
-        private DateTime _dateTimeSessionStarted;
 
-        public Session(Contact chatPartner, Client chatClient) {
-            this._chatPartner = chatPartner;
-            this._chatPartnerJID = new Jid(chatPartner.identity.jabberID.full);
-            this._dicMessageHistory = new Dictionary<Guid, Message>();
-            this._dateTimeSessionStarted = DateTime.Now;
-            Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        public Dictionary<Guid, Message> Messages { get; private set; }
+        public Contact Contact { get; private set; }
+        public Jid ContactJID { get; private set; }
+        public Identity ContactDetails { get { return Contact.identity; } }
+        public String ContactNickname { get { return ContactDetails.nickname; } }
+        
+        public DateTime DateTimeLastActive {
+            get {
+                return (Messages.Count > 0)
+                    ?
+                    Messages.Last().Value.DateTimeReceived
+                    :
+                    DateTimeSessionStarted;
+            }
+            set { DateTimeLastActive = value; }
+        }
+        private DateTime DateTimeSessionStarted { get; set; }
+
+        public IEnumerable<MessageListItem> MessageListItems {
+            get {
+                foreach (KeyValuePair<Guid, Message> currentMessage in Messages) {
+                    yield return new MessageListItem(currentMessage.Value);
+                }
+            }
+        }
+
+        #endregion     
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
+
+        public Session(Contact chatPartner) {
+            Contact = chatPartner;
+            ContactJID = new Jid(chatPartner.identity.jabberID.full);
+            DateTimeSessionStarted = DateTime.Now;
         }
 
         ~Session() {
+            ClearHistory();
+            Messages = null;
         }
 
-        public event OnChatSessionUpdatedEventHandler OnChatSessionUpdated;
+        #endregion
 
-        public Jid PartnerJID { get { return this._chatPartnerJID; } }
-        public String PartnerNickname { get { return this._chatPartner.identity.nickname; } }
-        public Contact Contact { get { return this._chatPartner; } }
-        public Identity Identity { get { return this._chatPartner.identity; } }
-        public DateTime DateTimeLastActive {
-            get {
-                return (_dicMessageHistory.Count > 0)
-                    ?
-                    _dicMessageHistory.Last().Value.DateTimeReceived
-                    :
-                    _dateTimeSessionStarted;
-            }
-            set { this.DateTimeLastActive = value; }
-        }
 
-        public Dictionary<Guid, Message> Messages {
-            get { return this._dicMessageHistory; }
-        }
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public void Reply(string replyMessage) {
-            Message sentMsg = Helper.JABBER_CLIENT.SendMessage(replyMessage, this._chatPartnerJID);
-            AddMessageHistory(sentMsg);
-            OnChatSessionUpdated(this, sentMsg);
+            Message sentMsg = Helper.JABBER_CLIENT.SendMessage(replyMessage, ContactJID);
+            AddMessageHistory(sentMsg);            
         }
 
-        void JABBER_CLIENT_OnMessage(Message msg) {
-            if (msg.Body != null && String.Compare(this._chatPartnerJID.Bare, msg.FromJID.Bare, true) == 0) {
+        public void AddMessage(Message msg) {
+            if (msg.Body != null && String.Compare(ContactJID.Bare, msg.FromJID.Bare, true) == 0) {
                 AddMessageHistory(msg);
             }
+        }        
+
+        public void ClearHistory() {
+            Messages.Clear();
+            DateTimeLastActive = DateTime.Now;
         }
 
+        #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         private void AddMessageHistory(Message msg) {
-            _dicMessageHistory.Add(msg.MessageID, msg);
+            essages.Add(msg.MessageID, msg);
             OnChatSessionUpdated(this, msg);
         }
 
+        #endregion
 
-        //public void SortMessagesAsc() {
-        //    this._dicMessageHistory.Sort(new MessageComparerDateAsc());
-        //}
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Events & Delegates ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        //public void SortMessagesDesc() {
-        //    this._dicMessageHistory.Sort(new MessageComparerDateDesc());
-        //}
+        public event OnChatSessionUpdatedEventHandler OnChatSessionUpdated;
 
-        public void ClearHistory() {
-            this._dicMessageHistory.Clear();
-            this.DateTimeLastActive = DateTime.Now;
-        }
+        #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public override string ToString() {
-            return String.Format("[{0}] {1}: \"{2}\" {3}", new string[] { this.DateTimeLastActive.ToShortTimeString(), this.PartnerNickname,Translations.GetByName(this.Contact.status.type.ToString()), String.Format("[{0} unread]", this.Messages.Count(x => x.Value.Unread).ToString())});
+            return String.Format("[{0}] {1}: \"{2}\" {3}", new string[] { DateTimeLastActive.ToShortTimeString(), ContactNickname, Translations.GetByName(Contact.status.type.ToString()), String.Format("[{0} unread]", Messages.Count(x => x.Value.Unread).ToString()) });
         }
+
+        #endregion
+
     }
 
     public class SessionListItem : GUIListItem {
-
-        private Session _jabberSession = null;
-
+       
         public SessionListItem(Session session) {
-            this._jabberSession = session;
-            this.Path = session.PartnerJID.ToString();
-            this.Label = session.ToString() ;
-            //this.Label2 = Translations.GetByName(session.Contact.status.type.ToString());
-            ////this.Label3 = Translations.GetByName(session.Contact.activity.type.ToString());
-            //this.Label3 = String.Format("[{0} unread]", session.Messages.Count(x => x.Value.Unread));
+            this.Path = session.ContactJID.ToString();
+            this.Label = session.ToString();
             this.IconImage = this.IconImageBig = Helper.GetStatusIcon(session.Contact.status.type.ToString());
         }
-
-        public Jid JID {
-            get { return this._jabberSession.PartnerJID; }
-        }
-
     }
 }
