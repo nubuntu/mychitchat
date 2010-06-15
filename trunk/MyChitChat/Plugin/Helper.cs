@@ -16,6 +16,11 @@ namespace MyChitChat.Plugin {
     public static class Helper {
         #region Constants
 
+        static Helper() {
+            JABBER_CLIENT.OnError +=new OnErrorEventHandler(JABBER_CLIENT_OnError);
+        }
+
+        
         /// <summary>
         /// Section in the MediaPortal config for this plugin
         /// </summary>
@@ -106,6 +111,12 @@ namespace MyChitChat.Plugin {
             }
         }
 
+        static void JABBER_CLIENT_OnError(nJim.Enums.ErrorType type, string message) {
+            if ((Settings.notifyOnErrorPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnErrorGlobally) {
+                Dialog.Instance.ShowErrorDialog(type, message);
+            }
+        }   
+
         public static Roster JABBER_CONTACTS {
             get { return _client.Roster; }
         }
@@ -138,6 +149,8 @@ namespace MyChitChat.Plugin {
 
         private static Presence myCurrentPresence = JABBER_PRESENCE_DEFAULT;
 
+            
+
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GUI Helper Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -165,9 +178,7 @@ namespace MyChitChat.Plugin {
             }
             return tmp;
         }
-
-
-
+             
         #endregion
 
         public static void SetDefaultPresence() {

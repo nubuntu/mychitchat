@@ -12,9 +12,9 @@ namespace MyChitChat.Gui {
         static readonly Dialog _instance = new Dialog();
 
         private GUIDialogMenu _dlgSelect;
-        private List<GUIListItem> _lstSelectStatus;
-        private List<GUIListItem> _lstSelectMood;
-        private List<GUIListItem> _lstSelectActivity;
+        private IEnumerable<GUIListItem> _lstSelectStatus;
+        private IEnumerable<GUIListItem> _lstSelectMood;
+        private IEnumerable<GUIListItem> _lstSelectActivity;
 
         private Dialog() {
             _dlgSelect = new GUIDialogMenu();
@@ -27,10 +27,10 @@ namespace MyChitChat.Gui {
             get {
                 return _instance;
             }
-        }    
-              
+        }
 
-        private GUIDialogMenu BuildDialogSelect(List<GUIListItem> list) {
+
+        private GUIDialogMenu BuildDialogSelect(IEnumerable<GUIListItem> list) {
             _dlgSelect = GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_MENU) as GUIDialogMenu;
             _dlgSelect.ResetAllControls();
             _dlgSelect.Reset();
@@ -45,11 +45,9 @@ namespace MyChitChat.Gui {
             return _dlgSelect;
         }
 
-        private List<GUIListItem> BuildDialogSelectList(Type enumType) {
-            List<GUIListItem> tmpList = new List<GUIListItem>();
+        private IEnumerable<GUIListItem> BuildDialogSelectList(Type enumType) {
             foreach (string type in Enum.GetNames(enumType)) {
-                tmpList.Add(
-                   Helper.CreateGuiListItem(type,
+                yield return Helper.CreateGuiListItem(type,
                         Translations.GetByName(type.ToString()),
                         String.Empty,
                         String.Empty,
@@ -57,15 +55,13 @@ namespace MyChitChat.Gui {
                         type == Enums.StatusType.Invisible.ToString(),
                         null,
                         false
-                        )
-                     );
+                        );
             }
-            return tmpList;
         }
 
 
 
-        public DialogResult ShowDialogSelect(List<GUIListItem> listLabels, bool addCustomButton) {
+        public DialogResult ShowDialogSelect(IEnumerable<GUIListItem> listLabels, bool addCustomButton) {
             _dlgSelect = BuildDialogSelect(listLabels);
             GUIListItem customButton = new GUIListItem("Set Custom Status...");
             if (addCustomButton) {
@@ -190,6 +186,15 @@ namespace MyChitChat.Gui {
         }
         public void ShowNotifyDialog(string text) {
             ShowNotifyDialog(Settings.notifyTimeOut, Helper.PLUGIN_NAME, Helper.MEDIA_ICON_DEFAULT, text, Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY);
+        }
+
+        public void ShowErrorDialog(nJim.Enums.ErrorType type, string message) {
+            Dialog.Instance.ShowNotifyDialog(3 * Settings.notifyTimeOut,
+                Helper.PLUGIN_NAME + " Error!",
+                Helper.MEDIA_ICON_ERROR,
+                type.ToString() + "\n" + message,
+                Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY
+            );
         }
 
         private string GetKeyBoardInput(string defaultText) {
