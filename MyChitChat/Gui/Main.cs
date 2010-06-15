@@ -14,13 +14,13 @@ using MediaPortal.TagReader;
 namespace MyChitChat.Gui {
     public class Main : GUIWindow {
 
-        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        private Dictionary<Jid, Session> _dicChatSessions;
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        
         private Chat guiWindowChat;
                 
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         [SkinControlAttribute(50)]
         GUIFacadeControl ctrlFacadeContactList = null;
 
@@ -41,26 +41,49 @@ namespace MyChitChat.Gui {
 
         #endregion
 
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Properties ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+        private const string TAG_USER_STATUS_TYPE = "#MyChitChat.User.Status.Type";
+        private const string TAG_USER_STATUS_MESSAGE = "#MyChitChat.User.Status.Message";
+        private const string TAG_USER_MOOD_TYPE = "#MyChitChat.User.Mood.Type";
+        private const string TAG_USER_MOOD_MESSAGE = "#MyChitChat.User.Mood.Message";
+        private const string TAG_USER_ACTIVITY_TYPE = "#MyChitChat.User.Activity.Type";
+        private const string TAG_USER_ACTIVITY_MESSAGE = "#MyChitChat.User.Activity.Message";
+        private const string TAG_USER_TUNE_TITLE = "#MyChitChat.User.Tune.Title";
+        private const string TAG_USER_TUNE_MESSAGE = "#MyChitChat.User.Tune.Artist";     
+        private const string TAG_CALL_STATUS = "#MyChitChat.Call.Status";
+        private const string TAG_CALL_DURATION = "#MyChitChat.Call.Duration";
+        private const string TAG_CONTACT_NAME = "#MyChitChat.Contact.Name";
+        private const string TAG_CONTACT_STATUS = "#MyChitChat.Contact.Status";
+        private const string TAG_CONTACT_COUNT = "#MyChitChat.Contact.Count";
+        private const string TAG_MISSED_CALLS = "#MyChitChat.Call.Missed";
+        private const string TAG_MISSED_CALLS2 = "#MyChitChat.Call.2Missed";
+        private const string TAG_MyChitChat_CREDIT = "#MyChitChat.Credit";
+        private const string TAG_IMG_STATUS = "#MyChitChat.Image.MyStatus";
+        private const string TAG_IMG_AVATAR = "#MyChitChat.Image.Avatar";
+        private const string TAG_CONTACT_MOODTEXT = "#MyChitChat.Contact.MoodText";
+
+        #endregion
+
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
 
         public Main() {
-            Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JABBER_CLIENT_OnLogin);
-            Helper.JABBER_CLIENT.OnError += new OnErrorEventHandler(JABBER_CLIENT_OnError);
-            Helper.JABBER_CLIENT.OnRosterEnd += new OnRosterEndEventHandler(JABBER_CLIENT_OnRosterEnd);
-            Helper.JABBER_CLIENT.OnRosterStart += new OnRosterStartEventHandler(JABBER_CLIENT_OnRosterStart);
-            GUIPropertyManager.OnPropertyChanged += new GUIPropertyManager.OnPropertyChangedHandler(GUIPropertyManager_OnPropertyChanged);
-            this._dicChatSessions = new Dictionary<Jid, Session>();
+            AddRosterEventHandlers();
+            
         }
-
-        void GUIPropertyManager_OnPropertyChanged(string tag, string tagValue) {
-            if (tag == "#Play.Current.Title") {
-                //Helper.SetTune(GUIPropertyManager.GetProperty("#Play.Current.File"), GUIPropertyManager.GetProperty("#Play.Current.Artist"), 1);
-                Helper.SetTune("Hey Joe", "Jimi Hendrix", 1);
+       
+        ~Main() {
+            try {
+                RemoveEventHandlers();
+            } catch (Exception ex) {
+                Log.Error(ex);
             }
-
         }
+      
+        #endregion
 
 
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         //public override void OnAction(MediaPortal.GUI.Library.Action action) {
         //    switch ((MediaPortal.GUI.Library.Action.ActionType)action.wID) {
         //        case MediaPortal.GUI.Library.Action.ActionType.ACTION_MUSIC_PLAY:
@@ -75,22 +98,6 @@ namespace MyChitChat.Gui {
         //    base.OnAction(action);
 
         //}
-        ~Main() {
-            try {
-                Helper.JABBER_CLIENT.Close();
-                Helper.JABBER_CLIENT.Roster.PresenceUpdated -= new ResourceHandler(Roster_PresenceUpdated);
-                Helper.JABBER_CLIENT.Roster.MoodUpdated -= new ResourceMoodHandler(Roster_MoodUpdated);
-                Helper.JABBER_CLIENT.Roster.ActivityUpdated -= new ResourceActivityHandler(Roster_ActivityUpdated);
-                Helper.JABBER_CLIENT.Roster.TuneUpdated -= new ResourceTuneHandler(Roster_TuneUpdated);
-            } catch (Exception ex) {
-                Log.Error(ex);
-            }
-        }
-
-        #endregion
-
-        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
         public override bool Init() {
             guiWindowChat = new Chat();
             GUIWindow window = (GUIWindow)guiWindowChat;
@@ -117,6 +124,7 @@ namespace MyChitChat.Gui {
 
         protected override void OnWindowLoaded() {            
             base.OnWindowLoaded();
+            AddItemSelectionEventHandlers();
             UpdateContactsFacade();
         }
 
@@ -133,7 +141,7 @@ namespace MyChitChat.Gui {
                 Dialog.Instance.SelectAndSetActivity();
             if (control == ctrlFacadeContactList && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
                 try {
-                    ShowChatWindow(this._dicChatSessions[new Jid(ctrlFacadeContactList.SelectedListItem.Path)]);
+                    ShowChatWindow(History.Instance.GetSession(ctrlFacadeContactList.SelectedListItem.Path));
                 } catch {
                 }
             }
@@ -157,76 +165,23 @@ namespace MyChitChat.Gui {
                     guiWindowChat.CurrentChatSession = currentChatSession;
                 }              
             }
-        }
-
-        private void NotifyError(nJim.Enums.ErrorType type, string message) {
-            Dialog.Instance.ShowNotifyDialog(3 * Settings.notifyTimeOut,
-                Helper.PLUGIN_NAME + " Error!",
-                Helper.MEDIA_ICON_ERROR,
-                type.ToString() + "\n" + message,
-                Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY
-            );
-        }
-
-        private void NotifyPresMooActTun(nJim.Contact contact, Mood? mood, Activity? activity, Tune? tune) {
-            string message = String.Empty;
-            Helper.PresMooActNotifyInfo notifyInfo = new Helper.PresMooActNotifyInfo();
-            if (contact.identity.nickname != String.Empty) {
-                notifyInfo.nickname = contact.identity.nickname;
-            } else {
-                notifyInfo.nickname = contact.identity.jabberID.user;
-            }
-            message = notifyInfo.nickname;
-
-            notifyInfo.resource = contact.identity.jabberID.resource;
-            notifyInfo.stamp = contact.lastUpdated;
-            notifyInfo.status = Translations.GetByName(contact.status.type.ToString());
-            notifyInfo.message = contact.status.message;
-            notifyInfo.icon = Helper.GetStatusIcon(contact.status.type.ToString());
-
-            if (mood.HasValue) {
-                notifyInfo.mood = mood.Value.type.ToString().ToUpperInvariant();
-                notifyInfo.message = notifyInfo.mood;
-                if (!String.IsNullOrEmpty(mood.Value.text)) {
-                    notifyInfo.message += "\n'" + mood.Value.text + "'";
-                }
-                notifyInfo.icon = Helper.GetMoodIcon(mood.Value.type.ToString());
-            }
-            if (activity.HasValue) {
-                notifyInfo.activity = activity.Value.type.ToString().ToUpperInvariant();
-                notifyInfo.message = notifyInfo.activity;
-                if (!String.IsNullOrEmpty(activity.Value.text)) {
-                    notifyInfo.message += "\n'" + activity.Value.text + "'";
-                }
-                notifyInfo.icon = Helper.GetActivityIcon(activity.Value.type.ToString());
-            }
-            if (tune.HasValue) {
-                notifyInfo.tune = string.Format("{0}\n{1}\n{2}", tune.Value.artist, tune.Value.title, tune.Value.length);
-                notifyInfo.message = notifyInfo.tune;
-                notifyInfo.icon = Helper.GetTuneIcon(tune.Value);
-            }
-            if (!String.IsNullOrEmpty(notifyInfo.message)) {
-                message += "\n" + notifyInfo.message;
-            }
-            notifyInfo.header = string.Format("[{0}] {1} @ {2} ", notifyInfo.stamp.ToShortTimeString(), notifyInfo.status, notifyInfo.resource);
-
-            Dialog.Instance.ShowNotifyDialog(notifyInfo.header, notifyInfo.icon, message, Settings.notifyWindowType);
-        }
-
-        private void NotifyMessage(Message msg) {
-            Dialog.Instance.ShowNotifyDialog(Settings.notifyTimeOut, msg.FromJID.User, Helper.MEDIA_ICON_MESSAGE, msg.Body, Settings.notifyWindowType);
-        }
+        }        
 
         private void UpdateContactsFacade() {
             if (ctrlFacadeContactList != null) {
                 ctrlFacadeContactList.Clear();
                 try {
-                    foreach (KeyValuePair<Jid, Session> currentSession in this._dicChatSessions) {
-                        ctrlFacadeContactListdd();
+                    foreach (SessionListItem currentItem in History.Instance.SessionListItems ) {
+                        ctrlFacadeContactList.Add(currentItem);
                     }
                 } catch { }
             }
         }
+
+        private void UpdateGuiProperties(Session selectedSession) {
+            UIPropertyManager.SetProperty("#"+Helper.PLUGIN_NAME+".Session.");
+        }
+
 
 
         #endregion
@@ -239,101 +194,74 @@ namespace MyChitChat.Gui {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Events & Delegates ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        private void AddRosterEventHandlers() {
+            Helper.JABBER_CLIENT.OnRosterStart += new OnRosterStartEventHandler(JABBER_CLIENT_OnRosterStart);
+            Helper.JABBER_CLIENT.OnRosterEnd += new OnRosterEndEventHandler(JABBER_CLIENT_OnRosterEnd);
+        }
+        
+        private void AddHistoryEventHandlers() {
+            History.Instance.OnUpdatedRoster += new OnUpdatedRosterEventHandler(History_OnRosterUpdated);
+            History.Instance.OnUpdatedPresence += new OnUpdatedPresenceEventHandler(History_OnContactUpdated);
+            History.Instance.OnUpdatedSession += new OnUpdatedSessionEventHandler(History_OnUpdatedSession);
+        }
+
+        private void AddItemSelectionEventHandlers() {
+            History.Instance.OnSessionItemSelected += new OnSessionItemSelectedEventHandler(History_OnSessionItemSelected);
+        }
+              
+        private void RemoveEventHandlers() {
+            Helper.JABBER_CLIENT.OnRosterStart -= new OnRosterStartEventHandler(JABBER_CLIENT_OnRosterStart);
+            Helper.JABBER_CLIENT.OnRosterEnd -= new OnRosterEndEventHandler(JABBER_CLIENT_OnRosterEnd);
+            History.Instance.OnUpdatedRoster -= new OnUpdatedRosterEventHandler(History_OnRosterUpdated);
+            History.Instance.OnUpdatedPresence -= new OnUpdatedPresenceEventHandler(History_OnContactUpdated);
+            History.Instance.OnUpdatedSession -= new OnUpdatedSessionEventHandler(History_OnUpdatedSession);
+            History.Instance.OnSessionItemSelected -= new OnSessionItemSelectedEventHandler(History_OnSessionItemSelected);
+        }
+
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-        void JABBER_CLIENT_OnLogin(object sender) {
-            // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
-            //ShowNotifyDialog("MyChitChat loaded...");   
-            Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
-            Helper.JABBER_CLIENT.Roster.ResourceAdded += new ResourceHandler(Roster_ResourceAdded);
-            Helper.JABBER_CLIENT.Roster.ResourceRemoved += new ResourceHandler(Roster_ResourceRemoved);
-            Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(Roster_PresenceUpdated);
-            Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
-            Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
-            Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
-
-        }
-
-        void Roster_ResourceAdded(nJim.Contact contact) {
-            Session newSession = new Session(contact);
-            newSession.OnChatSessionUpdated += new OnChatSessionUpdatedEventHandler(newSession_OnChatSessionUpdated);
-            this._dicChatSessions.Add(newSession.ContactJID, newSession);
-            UpdateContactsFacade();
-        }
-
-        void newSession_OnChatSessionUpdated(Session session, Message msg) {
-            if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
-                NotifyMessage(msg);
-            }
-            if (this.ctrlTextboxMessageHistory != null) {
-                ctrlTextboxMessageHistory.AddSubItem(msg.ToString());
-            }
-            UpdateContactsFacade();
-        }
-
-        void Roster_ResourceRemoved(nJim.Contact contact) {
-            this._dicChatSessions.Remove(new Jid(contact.identity.jabberID.full));
-        }
-
-        void JABBER_CLIENT_OnError(nJim.Enums.ErrorType type, string message) {
-            if ((Settings.notifyOnErrorPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnErrorGlobally) {
-                NotifyError(type, message);
-            }
-        }
-
+        
         void JABBER_CLIENT_OnRosterStart() {
             GUIWaitCursor.Show();
         }
 
         void JABBER_CLIENT_OnRosterEnd() {
+            AddHistoryEventHandlers();
             GUIWaitCursor.Hide();
             Helper.SetDefaultPresence();
             if (Settings.selectStatusOnStartup) {
                 Dialog.Instance.SelectAndSetStatus();
             }
             
+        }      
+
+        void History_OnRosterUpdated(Contact changedContact) {
+            UpdateContactsFacade();
         }
 
 
-        void JABBER_CLIENT_OnMessage(Message msg) {
-            if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
-                NotifyMessage(msg);
+        void History_OnContactUpdated(Contact updatedContact) {
+            UpdateContactsFacade();
+        }
+
+
+        void History_OnUpdatedSession(Session updatedSession, Message msg) {
+            if (this.ctrlTextboxMessageHistory != null) {
+                ctrlTextboxMessageHistory.AddSubItem(msg.ToString());
             }
-
+            UpdateContactsFacade();
         }
 
-        void Roster_PresenceUpdated(nJim.Contact contact) {
-            if (((Settings.notifyOnStatusPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnStatusGlobally) && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full) {
-                NotifyPresMooActTun(contact, null, null, null);
-                UpdateContactsFacade();
-            }
-        }
-
-        void Roster_MoodUpdated(nJim.Contact contact, Mood mood) {
-            if ((Settings.notifyOnMoodPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMoodGlobally) {
-                NotifyPresMooActTun(contact, mood, null, null);
-                UpdateContactsFacade();
-            }
-        }
-
-        void Roster_ActivityUpdated(nJim.Contact contact, Activity activity) {
-            if ((Settings.notifyOnActivityPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnActivityGlobally) {
-                NotifyPresMooActTun(contact, null, activity, null);
-                UpdateContactsFacade();
+        void History_OnSessionItemSelected(Session selectedSession, GUIControl parentControl) {
+            if (parentControl == ctrlFacadeContactList) {
+                UpdateGuiProperties(selectedSession);
             }
         }
-
-        void Roster_TuneUpdated(nJim.Contact contact, Tune tune) {
-            if ((Settings.notifyOnTunePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnTuneGlobally) {
-                NotifyPresMooActTun(contact, null, null, tune);
-                UpdateContactsFacade();
-            }
-        }
-
-
+        
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

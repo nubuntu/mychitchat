@@ -59,10 +59,8 @@
     <Compile Include="Plugin\Cache.cs" />
     <Compile Include="Plugin\History.cs" />
     <Compile Include="Plugin\Plugin.cs" />
-    <Compile Include="Jabber\Roster.cs">
-    </Compile>
     <Compile Include="Plugin\Helper.cs" />
-    <Compile Include="Plugin\Session.cs" />
+    <Compile Include="Jabber\Session.cs" />
     <Compile Include="Plugin\Translations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

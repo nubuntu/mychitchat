@@ -7,9 +7,10 @@ using agsXMPP;
 using agsXMPP.Collections;
 using nJim;
 using MediaPortal.GUI.Library;
+using MyChitChat.Plugin;
 
 
-namespace MyChitChat.Plugin {
+namespace MyChitChat.Jabber {
 
     public delegate void OnChatSessionUpdatedEventHandler(Session session, Message msg);
 
@@ -89,7 +90,7 @@ namespace MyChitChat.Plugin {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         private void AddMessageHistory(Message msg) {
-            essages.Add(msg.MessageID, msg);
+            Messages.Add(msg.MessageID, msg);
             OnChatSessionUpdated(this, msg);
         }
 
@@ -116,11 +117,14 @@ namespace MyChitChat.Plugin {
     }
 
     public class SessionListItem : GUIListItem {
-       
-        public SessionListItem(Session session) {
+
+        public SessionListItem(Session session, GUIListItem.ItemSelectedHandler callBackItemSelected) {
             this.Path = session.ContactJID.ToString();
             this.Label = session.ToString();
             this.IconImage = this.IconImageBig = Helper.GetStatusIcon(session.Contact.status.type.ToString());
+            this.OnItemSelected += callBackItemSelected;
         }
+
+        
     }
 }
