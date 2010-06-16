@@ -129,9 +129,6 @@ namespace MyChitChat.Plugin {
             }
         }
 
-        public static Mood PRESENCE_CURRENT_MOOD {
-            get { return myCurrentPresence.mood; }
-        }
 
         //public static void SetMyCurrentPresence(Enums.StatusType showType, string statusMessage) {
         //    myCurrentPresence = new Presence((ShowType)showType, statusMessage);
@@ -145,12 +142,7 @@ namespace MyChitChat.Plugin {
         //    JABBER_CLIENT.SendyMyPresence(new Presence(myCurrentPresence.Show, myCurrentPresence.Status + String.Format(" [MediaPortal {0} disabled]", PLUGIN_NAME))); 
         //    JABBER_CLIENT.SendyMyPresence(myCurrentPresence);
         //}
-
-
-        private static Presence myCurrentPresence = JABBER_PRESENCE_DEFAULT;
-
-            
-
+        
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GUI Helper Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -182,7 +174,7 @@ namespace MyChitChat.Plugin {
         #endregion
 
         public static void SetDefaultPresence() {
-        SetStatus(Settings.defaultStatusType, Settings.defaultStatusMessage);
+            SetStatus(Settings.defaultStatusType, Settings.defaultStatusMessage);
             SetActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
             SetMood(Settings.defaultMoodType, Settings.defaultMoodMessage);
             Log.Info("Default Presence info set.");
