@@ -57,11 +57,7 @@ namespace MyChitChat.Jabber {
             Contact = chatPartner;
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
             DateTimeSessionStarted = DateTime.Now;
-        }
-
-        ~Session() {
-            ClearHistory();
-            Messages = null;
+            Messages = new Dictionary<Guid, Message>();
         }
 
         #endregion
@@ -81,7 +77,9 @@ namespace MyChitChat.Jabber {
         }        
 
         public void ClearHistory() {
-            Messages.Clear();
+            if (Messages != null) {                 
+                Messages.Clear();           
+            }
             DateTimeLastActive = DateTime.Now;
         }
 

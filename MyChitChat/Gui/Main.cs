@@ -14,9 +14,8 @@ using MediaPortal.TagReader;
 namespace MyChitChat.Gui {
     public class Main : GUIWindow {
 
-        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        
-        private Chat guiWindowChat;
-                
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        private Chat guiWindowChat = new Chat();
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,8 +66,8 @@ namespace MyChitChat.Gui {
         private const string TAG_CONTACT_ACTIVITY_IMAGE = "#MyChitChat.Contact.Activity.Image";
         private const string TAG_CONTACT_ACTIVITY_MESSAGE = "#MyChitChat.Contact.Activity.Message";
         private const string TAG_CONTACT_TUNE_TITLE = "#MyChitChat.Contact.Tune.Title";
-        private const string TAG_CONTACT_TUNE_MESSAGE = "#MyChitChat.Contact.Tune.Artist";     
-     
+        private const string TAG_CONTACT_TUNE_MESSAGE = "#MyChitChat.Contact.Tune.Artist";
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
@@ -77,7 +76,7 @@ namespace MyChitChat.Gui {
             AddRosterEventHandlers();
             Title = Helper.PLUGIN_NAME;
         }
-       
+
         ~Main() {
             try {
                 RemoveEventHandlers();
@@ -85,7 +84,7 @@ namespace MyChitChat.Gui {
                 Log.Error(ex);
             }
         }
-      
+
         #endregion
 
 
@@ -105,7 +104,7 @@ namespace MyChitChat.Gui {
 
         //}
         public override bool Init() {
-            guiWindowChat = new Chat();
+            History.Instance.ToString();
             GUIWindow window = (GUIWindow)guiWindowChat;
             GUIWindowManager.Add(ref window);
             guiWindowChat.Init();
@@ -120,15 +119,15 @@ namespace MyChitChat.Gui {
                 Helper.JABBER_CLIENT.Login();
             }
             base.OnPageLoad();
-            
+
         }
 
 
-        protected override void OnShowContextMenu() {            
+        protected override void OnShowContextMenu() {
             base.OnShowContextMenu();
         }
 
-        protected override void OnWindowLoaded() {            
+        protected override void OnWindowLoaded() {
             base.OnWindowLoaded();
             AddItemSelectionEventHandlers();
             UpdateContactsFacade();
@@ -154,7 +153,8 @@ namespace MyChitChat.Gui {
             if (control == ctrlFacadeContactList && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
                 try {
                     ShowChatWindow(History.Instance.GetSession(ctrlFacadeContactList.SelectedListItem.Path));
-                } catch {
+                } catch (Exception e) {
+                    Log.Error(e);
                 }
             }
             base.OnClicked(controlId, control, actionType);
@@ -171,22 +171,24 @@ namespace MyChitChat.Gui {
 
         private void ShowChatWindow(Session currentChatSession) {
             // do not show info if no contact selected
-            if (currentChatSession != null) {                 
+            if (currentChatSession != null) {
                 if (guiWindowChat != null) {
                     GUIWindowManager.ActivateWindow(guiWindowChat.GetID);
                     guiWindowChat.CurrentChatSession = currentChatSession;
-                }              
+                }
             }
-        }        
+        }
 
         private void UpdateContactsFacade() {
             if (ctrlFacadeContactList != null) {
                 ctrlFacadeContactList.Clear();
-                try {
-                    foreach (SessionListItem currentItem in History.Instance.SessionListItems ) {
-                        ctrlFacadeContactList.Add(currentItem);
+                
+                    foreach (SessionListItem currentItem in History.Instance.SessionListItems) {
+                        try { ctrlFacadeContactList.Add(currentItem); } catch (Exception e) {
+                            Log.Error(e);
+                        }
                     }
-                } catch { }
+                
             }
         }
         private void UpdateGuiUserProperties() {
@@ -194,9 +196,9 @@ namespace MyChitChat.Gui {
 
             GUIPropertyManager.SetProperty(TAG_USER_STATUS_TYPE, Translations.GetByName(tmpUserPresence.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_USER_STATUS_IMAGE, Helper.GetStatusIcon(tmpUserPresence.status.type.ToString()));
-            GUIPropertyManager.SetProperty(TAG_USER_STATUS_MESSAGE,tmpUserPresence.status.message);
+            GUIPropertyManager.SetProperty(TAG_USER_STATUS_MESSAGE, tmpUserPresence.status.message);
             GUIPropertyManager.SetProperty(TAG_USER_MOOD_TYPE, Translations.GetByName(tmpUserPresence.mood.type.ToString()));
-            GUIPropertyManager.SetProperty(TAG_USER_MOOD_IMAGE, Helper.GetMoodIcon(tmpUserPresence.mood.type.ToString()));            
+            GUIPropertyManager.SetProperty(TAG_USER_MOOD_IMAGE, Helper.GetMoodIcon(tmpUserPresence.mood.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_USER_MOOD_MESSAGE, tmpUserPresence.mood.text);
             GUIPropertyManager.SetProperty(TAG_USER_ACTIVITY_TYPE, Translations.GetByName(tmpUserPresence.activity.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_USER_ACTIVITY_IMAGE, Helper.GetActivityIcon(tmpUserPresence.activity.type.ToString()));
@@ -236,22 +238,22 @@ namespace MyChitChat.Gui {
             Helper.JABBER_CLIENT.OnRosterStart += new OnRosterStartEventHandler(JABBER_CLIENT_OnRosterStart);
             Helper.JABBER_CLIENT.OnRosterEnd += new OnRosterEndEventHandler(JABBER_CLIENT_OnRosterEnd);
         }
-        
+
         private void AddHistoryEventHandlers() {
             History.Instance.OnUpdatedRoster += new OnUpdatedRosterEventHandler(History_OnRosterUpdated);
-            History.Instance.OnUpdatedPresence += new OnUpdatedPresenceEventHandler(History_OnContactUpdated);
+            History.Instance.OnUpdatedPresence += new OnUpdatedPresenceEventHandler(History_OnContactPresence);
             History.Instance.OnUpdatedSession += new OnUpdatedSessionEventHandler(History_OnUpdatedSession);
         }
 
         private void AddItemSelectionEventHandlers() {
             History.Instance.OnSessionItemSelected += new OnSessionItemSelectedEventHandler(History_OnSessionItemSelected);
         }
-              
+
         private void RemoveEventHandlers() {
             Helper.JABBER_CLIENT.OnRosterStart -= new OnRosterStartEventHandler(JABBER_CLIENT_OnRosterStart);
             Helper.JABBER_CLIENT.OnRosterEnd -= new OnRosterEndEventHandler(JABBER_CLIENT_OnRosterEnd);
             History.Instance.OnUpdatedRoster -= new OnUpdatedRosterEventHandler(History_OnRosterUpdated);
-            History.Instance.OnUpdatedPresence -= new OnUpdatedPresenceEventHandler(History_OnContactUpdated);
+            History.Instance.OnUpdatedPresence -= new OnUpdatedPresenceEventHandler(History_OnContactPresence);
             History.Instance.OnUpdatedSession -= new OnUpdatedSessionEventHandler(History_OnUpdatedSession);
             History.Instance.OnSessionItemSelected -= new OnSessionItemSelectedEventHandler(History_OnSessionItemSelected);
         }
@@ -261,7 +263,7 @@ namespace MyChitChat.Gui {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        
+
         void JABBER_CLIENT_OnRosterStart() {
             GUIWaitCursor.Show();
         }
@@ -273,15 +275,15 @@ namespace MyChitChat.Gui {
             if (Settings.selectStatusOnStartup) {
                 Dialog.Instance.SelectAndSetStatus();
             }
-            
-        }      
+
+        }
 
         void History_OnRosterUpdated(Contact changedContact) {
             UpdateContactsFacade();
         }
 
 
-        void History_OnContactUpdated(Contact updatedContact) {
+        void History_OnContactPresence(Contact updatedContact) {
             UpdateContactsFacade();
         }
 
@@ -298,7 +300,7 @@ namespace MyChitChat.Gui {
                 UpdateGuiContactProperties(selectedSession);
             }
         }
-        
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -312,7 +314,7 @@ namespace MyChitChat.Gui {
 
     }
 
-    
+
 
 
 }

@@ -7,6 +7,7 @@ using MyChitChat.Jabber;
 using nJim;
 using MyChitChat.Gui;
 using agsXMPP;
+using agsXMPP.Collections;
 
 namespace MyChitChat.Plugin {
 
@@ -28,6 +29,7 @@ namespace MyChitChat.Plugin {
 
         History() {
             Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JABBER_CLIENT_OnLogin);
+            ChatSessions = new Dictionary<Jid, Session>();
             GUIPropertyManager.OnPropertyChanged += new GUIPropertyManager.OnPropertyChangedHandler(GUIPropertyManager_OnPropertyChanged);
         }
 
@@ -68,7 +70,7 @@ namespace MyChitChat.Plugin {
                     yield return currentSession.Value;
                 }
             }
-        }      
+        }
 
         #endregion
 
@@ -78,16 +80,17 @@ namespace MyChitChat.Plugin {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        public Session GetSession (Jid chatPartner) { 
-            if(ChatSessions.ContainsKey(chatPartner)){
-                return ChatSessions[chatPartner];
+        public Session GetSession(Jid chatPartner) {
+            if (chatPartner.User != null) {
+                chatPartner.User = chatPartner.User.ToLower();
+                if (ChatSessions.ContainsKey(chatPartner)) {
+                    return ChatSessions[chatPartner];
+                }
             }
-            else{
-                return null;
-            }
+            return null;
         }
 
-        public Session GetSession(string fullJid) { 
+        public Session GetSession(string fullJid) {
             return GetSession(new Jid(fullJid));
         }
 
@@ -159,12 +162,17 @@ namespace MyChitChat.Plugin {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
             //ShowNotifyDialog("MyChitChat loaded...");   
             Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
+            Helper.JABBER_CLIENT.Roster.ContactAdded += new ContactHandler(Roster_ContactAdded);
             Helper.JABBER_CLIENT.Roster.ResourceAdded += new ResourceHandler(Roster_ResourceAdded);
             Helper.JABBER_CLIENT.Roster.ResourceRemoved += new ResourceHandler(Roster_ResourceRemoved);
             Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(Roster_PresenceUpdated);
             Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
             Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
             Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
+        }
+
+        void Roster_ContactAdded(string bare) {
+            Roster_ResourceAdded(new Contact(new Jid(bare), null, null));
         }
 
         void Roster_ResourceAdded(nJim.Contact contact) {
@@ -187,7 +195,14 @@ namespace MyChitChat.Plugin {
             if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
                 NotifyMessage(msg);
             }
-
+            try {
+                if (msg.FromJID.User != null) {
+                    GetSession(msg.FromJID).AddMessage(msg);
+                }
+            }catch(Exception e){
+                Log.Error(e);
+            }
+            
         }
 
         void Roster_PresenceUpdated(nJim.Contact contact) {
@@ -232,7 +247,7 @@ namespace MyChitChat.Plugin {
             if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
                 NotifyMessage(msg);
             }
-            OnUpdatedSession(session, msg);           
+            OnUpdatedSession(session, msg);
         }
 
         private void OnSessionListItemSelected(GUIListItem item, GUIControl parent) {

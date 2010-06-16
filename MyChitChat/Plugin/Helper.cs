@@ -45,23 +45,23 @@ namespace MyChitChat.Plugin {
 
         public static string GetStatusIcon(string status) {
             string tmpPath = String.Format(@"{0}\status\{1}.png", SKIN_PATH_MEDIA, status);
-            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\status\default_status.png", SKIN_PATH_MEDIA);
+            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}status\default_status.png", SKIN_PATH_MEDIA);
         }
 
         public static string GetMoodIcon(string mood) {
             string tmpPath = String.Format(@"{0}\mood\{1}.png", SKIN_PATH_MEDIA, mood);
-            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\mood\default_mood.png", SKIN_PATH_MEDIA);
+            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}mood\default_mood.png", SKIN_PATH_MEDIA);
         }
 
         public static string GetActivityIcon(string activity) {
             string tmpPath = String.Format(@"{0}\activity\{1}.png", SKIN_PATH_MEDIA, activity);
-            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}\activity\default_activity.png", SKIN_PATH_MEDIA);
+            return File.Exists(tmpPath) ? tmpPath : String.Format(@"{0}activity\default_activity.png", SKIN_PATH_MEDIA);
         }
 
         public static string GetTuneIcon(Tune tune) {
             //TODO: FanArt yeah!!!
             //return String.Format(@"{0}\tune\{1}", SKIN_PATH_MEDIA, tune.artist);
-            string tmpPath = String.Format(@"{0}\tune\default.png", SKIN_PATH_MEDIA);
+            string tmpPath = String.Format(@"{0}tune\default.png", SKIN_PATH_MEDIA);
             return File.Exists(tmpPath) ? tmpPath : MEDIA_ICON_DEFAULT;
         }
 
