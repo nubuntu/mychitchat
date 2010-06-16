@@ -42,34 +42,40 @@ namespace MyChitChat.Gui {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Properties ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        
+
+        private const string TAG_USER_AVATAR_IMAGE = "#MyChitChat.User.Avatar.Image";
         private const string TAG_USER_STATUS_TYPE = "#MyChitChat.User.Status.Type";
+        private const string TAG_USER_STATUS_IMAGE = "#MyChitChat.User.Status.Image";
         private const string TAG_USER_STATUS_MESSAGE = "#MyChitChat.User.Status.Message";
         private const string TAG_USER_MOOD_TYPE = "#MyChitChat.User.Mood.Type";
+        private const string TAG_USER_MOOD_IMAGE = "#MyChitChat.User.Mood.Image";
         private const string TAG_USER_MOOD_MESSAGE = "#MyChitChat.User.Mood.Message";
         private const string TAG_USER_ACTIVITY_TYPE = "#MyChitChat.User.Activity.Type";
+        private const string TAG_USER_ACTIVITY_IMAGE = "#MyChitChat.User.Activity.Image";
         private const string TAG_USER_ACTIVITY_MESSAGE = "#MyChitChat.User.Activity.Message";
         private const string TAG_USER_TUNE_TITLE = "#MyChitChat.User.Tune.Title";
-        private const string TAG_USER_TUNE_MESSAGE = "#MyChitChat.User.Tune.Artist";     
-        private const string TAG_CALL_STATUS = "#MyChitChat.Call.Status";
-        private const string TAG_CALL_DURATION = "#MyChitChat.Call.Duration";
-        private const string TAG_CONTACT_NAME = "#MyChitChat.Contact.Name";
-        private const string TAG_CONTACT_STATUS = "#MyChitChat.Contact.Status";
-        private const string TAG_CONTACT_COUNT = "#MyChitChat.Contact.Count";
-        private const string TAG_MISSED_CALLS = "#MyChitChat.Call.Missed";
-        private const string TAG_MISSED_CALLS2 = "#MyChitChat.Call.2Missed";
-        private const string TAG_MyChitChat_CREDIT = "#MyChitChat.Credit";
-        private const string TAG_IMG_STATUS = "#MyChitChat.Image.MyStatus";
-        private const string TAG_IMG_AVATAR = "#MyChitChat.Image.Avatar";
-        private const string TAG_CONTACT_MOODTEXT = "#MyChitChat.Contact.MoodText";
+        private const string TAG_USER_TUNE_MESSAGE = "#MyChitChat.User.Tune.Artist";
 
+        private const string TAG_CONTACT_AVATAR_IMAGE = "#MyChitChat.Contact.Avatar.Image";
+        private const string TAG_CONTACT_STATUS_TYPE = "#MyChitChat.Contact.Status.Type";
+        private const string TAG_CONTACT_STATUS_IMAGE = "#MyChitChat.Contact.Status.Image";
+        private const string TAG_CONTACT_STATUS_MESSAGE = "#MyChitChat.Contact.Status.Message";
+        private const string TAG_CONTACT_MOOD_TYPE = "#MyChitChat.Contact.Mood.Type";
+        private const string TAG_CONTACT_MOOD_IMAGE = "#MyChitChat.Contact.Mood.Image";
+        private const string TAG_CONTACT_MOOD_MESSAGE = "#MyChitChat.Contact.Mood.Message";
+        private const string TAG_CONTACT_ACTIVITY_TYPE = "#MyChitChat.Contact.Activity.Type";
+        private const string TAG_CONTACT_ACTIVITY_IMAGE = "#MyChitChat.Contact.Activity.Image";
+        private const string TAG_CONTACT_ACTIVITY_MESSAGE = "#MyChitChat.Contact.Activity.Message";
+        private const string TAG_CONTACT_TUNE_TITLE = "#MyChitChat.Contact.Tune.Title";
+        private const string TAG_CONTACT_TUNE_MESSAGE = "#MyChitChat.Contact.Tune.Artist";     
+     
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
 
         public Main() {
             AddRosterEventHandlers();
-            
+            Title = Helper.PLUGIN_NAME;
         }
        
         ~Main() {
@@ -133,12 +139,18 @@ namespace MyChitChat.Gui {
         }
 
         protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType) {
-            if (control == btnSetStatus)
+            if (control == btnSetStatus) {
                 Dialog.Instance.SelectAndSetStatus();
-            if (control == btnSetMood)
+                UpdateGuiUserProperties();
+            }
+            if (control == btnSetMood) {
                 Dialog.Instance.SelectAndSetMood();
-            if (control == btnSetActivity)
+                UpdateGuiUserProperties();
+            }
+            if (control == btnSetActivity) {
                 Dialog.Instance.SelectAndSetActivity();
+                UpdateGuiUserProperties();
+            }
             if (control == ctrlFacadeContactList && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
                 try {
                     ShowChatWindow(History.Instance.GetSession(ctrlFacadeContactList.SelectedListItem.Path));
@@ -177,9 +189,34 @@ namespace MyChitChat.Gui {
                 } catch { }
             }
         }
+        private void UpdateGuiUserProperties() {
+            Presence tmpUserPresence = Helper.JABBER_CLIENT.Presence;
 
-        private void UpdateGuiProperties(Session selectedSession) {
-            UIPropertyManager.SetProperty("#"+Helper.PLUGIN_NAME+".Session.");
+            GUIPropertyManager.SetProperty(TAG_USER_STATUS_TYPE, Translations.GetByName(tmpUserPresence.status.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_USER_STATUS_IMAGE, Helper.GetStatusIcon(tmpUserPresence.status.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_USER_STATUS_MESSAGE,tmpUserPresence.status.message);
+            GUIPropertyManager.SetProperty(TAG_USER_MOOD_TYPE, Translations.GetByName(tmpUserPresence.mood.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_USER_MOOD_IMAGE, Helper.GetMoodIcon(tmpUserPresence.mood.type.ToString()));            
+            GUIPropertyManager.SetProperty(TAG_USER_MOOD_MESSAGE, tmpUserPresence.mood.text);
+            GUIPropertyManager.SetProperty(TAG_USER_ACTIVITY_TYPE, Translations.GetByName(tmpUserPresence.activity.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_USER_ACTIVITY_IMAGE, Helper.GetActivityIcon(tmpUserPresence.activity.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_USER_ACTIVITY_MESSAGE, tmpUserPresence.activity.text);
+            GUIPropertyManager.SetProperty(TAG_USER_TUNE_TITLE, tmpUserPresence.tune.title);
+            GUIPropertyManager.SetProperty(TAG_USER_TUNE_MESSAGE, tmpUserPresence.tune.artist);
+        }
+
+        private void UpdateGuiContactProperties(Session selectedSession) {
+            GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_TYPE, Translations.GetByName(selectedSession.Contact.status.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_IMAGE, Helper.GetStatusIcon(selectedSession.Contact.status.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_MESSAGE, selectedSession.Contact.status.message);
+            GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_TYPE, Translations.GetByName(selectedSession.Contact.mood.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_IMAGE, Helper.GetMoodIcon(selectedSession.Contact.mood.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_MESSAGE, selectedSession.Contact.mood.text);
+            GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_TYPE, Translations.GetByName(selectedSession.Contact.activity.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_IMAGE, Helper.GetActivityIcon(selectedSession.Contact.activity.type.ToString()));
+            GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_MESSAGE, selectedSession.Contact.activity.text);
+            GUIPropertyManager.SetProperty(TAG_CONTACT_TUNE_TITLE, selectedSession.Contact.tune.title);
+            GUIPropertyManager.SetProperty(TAG_CONTACT_TUNE_MESSAGE, selectedSession.Contact.tune.artist);
         }
 
 
@@ -258,7 +295,7 @@ namespace MyChitChat.Gui {
 
         void History_OnSessionItemSelected(Session selectedSession, GUIControl parentControl) {
             if (parentControl == ctrlFacadeContactList) {
-                UpdateGuiProperties(selectedSession);
+                UpdateGuiContactProperties(selectedSession);
             }
         }
         
