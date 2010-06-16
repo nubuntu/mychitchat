@@ -17,8 +17,7 @@ namespace MyChitChat.Gui {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
-        public Chat() {
-            GetID = (int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_CHAT;
+        public Chat() {          
         }
         #endregion
 
@@ -32,6 +31,13 @@ namespace MyChitChat.Gui {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+        // With GetID it will be an window-plugin / otherwise a process-plugin
+        // Enter the id number here again
+        public override int GetID {
+            get { return (int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_CHAT; }
+        }
+        
         /// <summary>
         /// Loads the XML for the window
         /// </summary>
@@ -52,7 +58,8 @@ namespace MyChitChat.Gui {
 
         protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType) {
             if (control == ctrlFacadeMessageList && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
-               Dialog.Instance.ShowNotifyDialog(_currentChatSession.Messages[new Guid(ctrlFacadeMessageList.SelectedListItem.Path)].ToString());
+               //Dialog.Instance.ShowNotifyDialog(_currentChatSession.Messages[new Guid(ctrlFacadeMessageList.SelectedListItem.Path)].ToString());
+                _currentChatSession.Reply("Copy That: \n" + _currentChatSession.Messages[new Guid(ctrlFacadeMessageList.SelectedListItem.Path)].ToString());
                _currentChatSession.Messages[new Guid(ctrlFacadeMessageList.SelectedListItem.Path)].Unread = false;
             }
         }
@@ -83,14 +90,7 @@ namespace MyChitChat.Gui {
 
         void _currentChatSession_OnChatSessionUpdated(Session session, Message msg) {
             if (this._currentChatSession.Equals(session)) {
-                UpdateChatHistory();
-                //if (this.ctrlFacadeMessageList != null) {
-                //    this.ctrlFacadeMessageList.Add(new MessageListItem(msg));
-                //}
-                //if (this.ctrlTextboxCurrentMessage != null) {
-                //    this.ctrlTextboxCurrentMessage.Visible = true;
-                //    this.ctrlTextboxCurrentMessage.Label = msg.ToString();
-                //}
+                UpdateChatHistory();               
             } else {
                 Log.Error("Grabbed message from different Chat Session!");
             }

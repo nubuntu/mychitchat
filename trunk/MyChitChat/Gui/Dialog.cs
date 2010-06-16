@@ -37,7 +37,6 @@ namespace MyChitChat.Gui {
             _dlgSelect.Init();
             _dlgSelect.InitControls();
             _dlgSelect.Process();
-            _dlgSelect.ShowQuickNumbers = false;
             _dlgSelect.SetHeading("I'm currently ...");
             foreach (GUIListItem item in list) {
                 _dlgSelect.Add(item);
