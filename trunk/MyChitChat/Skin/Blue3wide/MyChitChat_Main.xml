@@ -1,174 +1,169 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window>
-  <id>90000</id>
-  <defaultcontrol>50</defaultcontrol>
-  <allowoverlay>yes</allowoverlay>
-  <disabletopbar>yes</disabletopbar>
-  <controls>
-<import>common.window.xml</import>
-<import>common.facade.pictures.xml</import> 
-    <control>
-      <description>action menu</description>
-      <type>actiongroup</type>
-      <visible>!Control.HasFocus(200)</visible>
-      <onexit>50</onexit>
-      <buttonX>0</buttonX>
-      <buttonY>0</buttonY>
-      <buttonwidth>100</buttonwidth>
-      <buttonheight>720</buttonheight>
-      <textureFocus>Action_focus.png</textureFocus>
-      <textureNoFocus>Action_nofocus.png</textureNoFocus>
-      <width>720</width>
-      <height>900</height>
-      <dimColor>00ffffff</dimColor>
-      <defaultcontrol>500</defaultcontrol>
-      <animation effect="Slide" reversible="FALSE" start="-300,0" time="450">Visible</animation>
-      <control>
-        <description>Default Background</description>
-        <type>image</type>
-        <id>401</id>
-        <posX>0</posX>
-        <posY>0</posY>
-        <width>1366</width>
-        <height>768</height>
-        <texture></texture>
-      </control>
-      <control>
-        <type>image</type>
-        <posX>15</posX>
-        <posY>63</posY>
-        <width>600</width>
-        <height>430</height>
-        <texture>Backslide.png</texture>
-        <colorDiffuse>fffffffff</colorDiffuse>
-      </control>
-      <control>
-        <description>group element</description>
-        <type>group</type>
-        <visible>!Control.HasFocus(200)</visible>
-        <posX>40</posX>
-        <posY>97</posY>
-        <layout>StackLayout</layout>
-        <animation effect="Slide" reversible="FALSE" start="-300,0" time="450">Visible</animation>
-        <animation effect="Slide" end="-300,0" reversible="FALSE" time="450">Hidden</animation>
+    <id>90000</id>
+    <defaultcontrol>50</defaultcontrol>
+    <allowoverlay>yes</allowoverlay>
+    <disabletopbar>yes</disabletopbar>
+    <controls>
+        <import>common.window.xml</import>
+        <import>common.facade.pictures.xml</import>
         <control>
-          <id>499</id>
-          <width>510</width>         
-          <description>Update my Status</description>
-          <type>button</type>
-          <onup>506</onup>
-          <ondown>500</ondown>
-          <label>Update my Status</label>
+            <description>action menu</description>
+            <type>actiongroup</type>
+            <visible>!Control.HasFocus(200)</visible>
+            <dimColor>00ffffff</dimColor>
+            <width>1366</width>
+            <height>768</height>
+            <buttonX>0</buttonX>
+            <buttonY>0</buttonY>
+            <buttonwidth>100</buttonwidth>
+            <buttonheight>720</buttonheight>
+            <onexit>50</onexit>
+            <defaultcontrol>500</defaultcontrol>
+            <textureFocus>Action_focus.png</textureFocus>
+            <textureNoFocus>Action_nofocus.png</textureNoFocus>
+            <animation effect="Slide" reversible="FALSE" start="-300,0" time="450">Visible</animation>
+            <control>
+                <id>401</id>
+                <description>Default Background</description>
+                <type>image</type>
+                <posX>1</posX>
+                <posY>0</posY>
+                <width>1366</width>
+                <height>768</height>
+                <texture/>
+            </control>
+            <control>
+                <type>image</type>
+                <posX>15</posX>
+                <posY>63</posY>
+                <width>381</width>
+                <height>430</height>
+                <texture>Backslide.png</texture>
+                <colorDiffuse>fffffffff</colorDiffuse>
+            </control>
+            <control>
+                <description>group element</description>
+                <type>group</type>
+                <visible>!Control.HasFocus(200)</visible>
+                <posX>40</posX>
+                <posY>97</posY>
+                <layout>StackLayout</layout>
+                <animation effect="Slide" reversible="FALSE" start="-300,0" time="450">Visible</animation>
+                <animation effect="Slide" end="-300,0" reversible="FALSE" time="450">Hidden</animation>
+                <control>
+                    <id>499</id>
+                    <description>Update my Status</description>
+                    <type>button</type>
+                    <onup>506</onup>
+                    <ondown>500</ondown>
+                    <posX>685</posX>
+                    <posY>247</posY>
+                    <width>260</width>
+                    <label>Update my Status</label>
+                </control>
+                <control>
+                    <id>500</id>
+                    <description>Update my Mood</description>
+                    <type>button</type>
+                    <onup>499</onup>
+                    <ondown>501</ondown>
+                    <label>Update my Mood</label>
+                </control>
+                <control>
+                    <id>501</id>
+                    <description>Update my Activity</description>
+                    <type>button</type>
+                    <onup>500</onup>
+                    <ondown>502</ondown>
+                    <label>Update my Activity</label>
+                </control>
+                <control>
+                    <id>502</id>
+                    <description>BrowseLocalCheez</description>
+                    <type>button</type>
+                    <onup>501</onup>
+                    <ondown>503</ondown>
+                    <label>Browse locally available Cheez..</label>
+                </control>
+                <control>
+                    <id>503</id>
+                    <description>ShowSlideShowCurrent</description>
+                    <type>button</type>
+                    <onup>502</onup>
+                    <ondown>504</ondown>
+                    <label>Start Slideshow (current items)</label>
+                </control>
+                <control>
+                    <id>504</id>
+                    <description>ShowSlideShowAllLocal</description>
+                    <type>button</type>
+                    <onup>503</onup>
+                    <ondown>504</ondown>
+                    <label>Start Slideshow (all local items)</label>
+                </control>
+                <control>
+                    <id>505</id>
+                    <description>CancelAllDownloads</description>
+                    <type>button</type>
+                    <onup>504</onup>
+                    <ondown>506</ondown>
+                    <label>Cancel Cheez Download</label>
+                    <enabled>false</enabled>
+                </control>
+                <control>
+                    <id>506</id>
+                    <description>DeleteLocalCheez</description>
+                    <type>button</type>
+                    <onup>505</onup>
+                    <ondown>499</ondown>
+                    <visible>no</visible>
+                    <label>Delete local Cheez</label>
+                </control>
+            </control>
         </control>
         <control>
-          <id>500</id>
-          <description>Update my Mood</description>
-          <type>button</type>
-          <onup>499</onup>
-          <ondown>501</ondown>
-          <label>Update my Mood</label>
+            <id>700</id>
+            <description>Message History</description>
+            <type>textbox</type>
+            <colordiffuse>ffffffff</colordiffuse>
+            <posX>16</posX>
+            <posY>320</posY>
+            <width>366</width>
+            <height>366</height>
+            <textcolor>ffffffff</textcolor>
+            <spinColor>ffffffff</spinColor>
+            <spinPosX>610</spinPosX>
+            <spinPosY>530</spinPosY>
+            <spinHeight>16</spinHeight>
+            <spinWidth>16</spinWidth>
+            <font>font13</font>
+            <textureDownFocus>page_down_focus.png</textureDownFocus>
+            <textureDown>page_down_nofocus.png</textureDown>
+            <textureUpFocus>page_up_focus.png</textureUpFocus>
+            <textureUp>page_up_nofocus.png</textureUp>
+            <image>icon-folder.png</image>
         </control>
         <control>
-          <id>501</id>
-          <description>Update my Activity</description>
-          <type>button</type>
-          <onup>500</onup>
-          <ondown>502</ondown>
-          <label>Update my Activity</label>
+            <type>label</type>
+            <posX>540</posX>
+            <posY>11</posY>
+            <label>#MyChitChat.User.Status.Type</label>
         </control>
         <control>
-          <id>502</id>
-          <description>BrowseLocalCheez</description>
-          <type>button</type>
-          <onup>501</onup>
-          <ondown>503</ondown>
-          <label>Browse locally available Cheez..</label>
+            <type>fadelabel</type>
+            <posX>537</posX>
+            <posY>39</posY>
+            <width>247</width>
+            <label>#MyChitChat.User.Status.Message</label>
         </control>
         <control>
-          <id>503</id>
-          <description>ShowSlideShowCurrent</description>
-          <type>button</type>
-          <onup>502</onup>
-          <ondown>504</ondown>
-          <label>Start Slideshow (current items)</label>
+            <type>image</type>
+            <posX>428</posX>
+            <posY>10</posY>
+            <width>92</width>
+            <height>79</height>
+            <texture>#MyChitChat.User.Status.Image</texture>
         </control>
-        <control>
-          <id>504</id>
-          <description>ShowSlideShowAllLocal</description>
-          <type>button</type>
-          <onup>503</onup>
-          <ondown>504</ondown>
-          <label>Start Slideshow (all local items)</label>
-        </control>
-        <control>
-          <id>505</id>
-          <description>CancelAllDownloads</description>
-          <type>button</type>
-          <onup>504</onup>
-          <ondown>506</ondown>
-          <enabled>false</enabled>
-          <label>Cancel Cheez Download</label>          
-        </control>
-        <control>
-          <id>506</id>          
-          <description>DeleteLocalCheez</description>
-          <type>button</type>
-          <onup>505</onup>
-          <ondown>499</ondown>          
-          <visible>no</visible>
-          <label>Delete local Cheez</label>
-        </control>
-      </control>
-    </control>
-    <control>
-      <id>600</id>
-      <description>BackGround</description>
-      <type>image</type>
-      <posX>0</posX>
-      <posY>0</posY>
-      <texture>vEndlessCheez/Background.png</texture>
-    </control>
-    <control>
-      <id>403</id>
-      <description>text label</description>
-      <type>label</type>
-      <posX>720</posX>
-      <posY>680</posY>
-      <font>font11</font>
-      <align>RIGHT</align>
-      <textcolor>ffffffff</textcolor>
-      <visible>no</visible>
-      <label>#EndlessCheez.CurrentItem</label>
-    </control>
-    <control>
-      <id>402</id>
-      <type>progress</type>
-      <visible>no</visible>
-      <posX>720</posX>
-      <posY>680</posY>
-      <width>500</width>
-    </control>
-    <control>
-      <description>Message History</description>
-      <type>textbox</type>
-      <id>700</id>
-      <posX>220</posX>
-      <posY>220</posY>
-      <width>410</width>
-      <height>300</height>
-      <spinWidth>16</spinWidth>
-      <spinHeight>16</spinHeight>
-      <spinPosX>610</spinPosX>
-      <spinPosY>530</spinPosY>
-      <spinColor>ffffffff</spinColor>
-      <textureUp>page_up_nofocus.png</textureUp>
-      <textureDown>page_down_nofocus.png</textureDown>
-      <textureUpFocus>page_up_focus.png</textureUpFocus>
-      <textureDownFocus>page_down_focus.png</textureDownFocus>
-      <image>icon-folder.png</image>
-      <font>font13</font>
-      <textcolor>ffffffff</textcolor>
-      <colordiffuse>ffffffff</colordiffuse>
-    </control>
-  </controls>
+    </controls>
 </window>
