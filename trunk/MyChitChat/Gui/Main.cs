@@ -16,24 +16,13 @@ namespace MyChitChat.Gui {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         private Chat guiWindowChat = new Chat();
+        private bool? statusFilter = null;
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        [SkinControlAttribute(50)]
-        GUIFacadeControl ctrlFacadeContactList = null;
-
-        [SkinControlAttribute(499)]
-        protected GUIButtonControl btnSetStatus = null;
-
-        [SkinControlAttribute(500)]
-        protected GUIButtonControl btnSetMood = null;
-
-        [SkinControlAttribute(501)]
-        protected GUIButtonControl btnSetActivity = null;
-
-        [SkinControlAttribute(502)]
-        protected GUIButtonControl btnRoster = null;
+        [SkinControlAttribute(100)]
+        GUIListControl ctrlListControlContacts = null;
 
         [SkinControlAttribute(700)]
         protected GUITextControl ctrlTextboxMessageHistory = null;
@@ -124,7 +113,44 @@ namespace MyChitChat.Gui {
 
 
         protected override void OnShowContextMenu() {
-            base.OnShowContextMenu();
+            switch (Dialog.Instance.ShowContextMenu(new List<Dialog.ContextMenuButtons>())) {
+                case Dialog.ContextMenuButtons.BtnSelectStatus:
+                    Dialog.Instance.SelectAndSetStatus();
+                    UpdateGuiUserProperties();
+                    break;
+                case Dialog.ContextMenuButtons.BtnSelectMood:
+                    Dialog.Instance.SelectAndSetMood();
+                    UpdateGuiUserProperties();
+                    break;
+
+                case Dialog.ContextMenuButtons.BtnSelectActivity:
+                    Dialog.Instance.SelectAndSetActivity();
+                    UpdateGuiUserProperties();
+                    break;
+                case Dialog.ContextMenuButtons.BtnFilterOnline:
+                    this.statusFilter = true;
+                    UpdateContactsFacade();
+                    break;
+                case Dialog.ContextMenuButtons.BtnFilterOffline:
+                    this.statusFilter = false;
+                    UpdateContactsFacade();
+                    break;
+                case Dialog.ContextMenuButtons.BtnFilterNone:
+                    this.statusFilter = null;
+                    UpdateContactsFacade();
+                    break;
+                case Dialog.ContextMenuButtons.BtnJabberDisconnect:
+                    Helper.JABBER_CLIENT.Close();
+                    History.Instance.ResetHistory();
+                    break;
+                case Dialog.ContextMenuButtons.BtnJabberReconnect:
+                    Helper.JABBER_CLIENT.Reconnect();                    
+                    break;               
+                case Dialog.ContextMenuButtons.NothingSelected:
+                default:
+                    //throw new ArgumentOutOfRangeException();
+                    return;
+            }
         }
 
         protected override void OnWindowLoaded() {
@@ -138,21 +164,10 @@ namespace MyChitChat.Gui {
         }
 
         protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType) {
-            if (control == btnSetStatus) {
-                Dialog.Instance.SelectAndSetStatus();
-                UpdateGuiUserProperties();
-            }
-            if (control == btnSetMood) {
-                Dialog.Instance.SelectAndSetMood();
-                UpdateGuiUserProperties();
-            }
-            if (control == btnSetActivity) {
-                Dialog.Instance.SelectAndSetActivity();
-                UpdateGuiUserProperties();
-            }
-            if (control == ctrlFacadeContactList && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
+
+            if (control == ctrlListControlContacts && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
                 try {
-                    ShowChatWindow(History.Instance.GetSession(ctrlFacadeContactList.SelectedListItem.Path));
+                    ShowChatWindow(History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path));
                 } catch (Exception e) {
                     Log.Error(e);
                 }
@@ -180,15 +195,24 @@ namespace MyChitChat.Gui {
         }
 
         private void UpdateContactsFacade() {
-            if (ctrlFacadeContactList != null) {
-                ctrlFacadeContactList.Clear();
-                
-                    foreach (SessionListItem currentItem in History.Instance.SessionListItems) {
-                        try { ctrlFacadeContactList.Add(currentItem); } catch (Exception e) {
-                            Log.Error(e);
+            if (ctrlListControlContacts != null) {
+                ctrlListControlContacts.Clear();
+
+                foreach (SessionListItem currentItem in History.Instance.SessionListItems) {
+                    try {
+                        if (statusFilter.HasValue) {
+                            if (statusFilter.Value == currentItem.IsActiveSession) {
+                                ctrlListControlContacts.Add(currentItem);
+                            }
+                        } else {
+                            ctrlListControlContacts.Add(currentItem);
                         }
+
+                    } catch (Exception e) {
+                        Log.Error(e);
                     }
-                
+                }
+
             }
         }
         private void UpdateGuiUserProperties() {
@@ -296,7 +320,7 @@ namespace MyChitChat.Gui {
         }
 
         void History_OnSessionItemSelected(Session selectedSession, GUIControl parentControl) {
-            if (parentControl == ctrlFacadeContactList) {
+            if (parentControl == ctrlListControlContacts) {
                 UpdateGuiContactProperties(selectedSession);
             }
         }

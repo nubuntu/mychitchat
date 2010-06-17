@@ -94,6 +94,10 @@ namespace MyChitChat.Plugin {
             return GetSession(new Jid(fullJid));
         }
 
+        public void ResetHistory() {
+            ChatSessions = new Dictionary<Jid, Session>();
+        }
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -162,7 +166,6 @@ namespace MyChitChat.Plugin {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
             //ShowNotifyDialog("MyChitChat loaded...");   
             Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
-            Helper.JABBER_CLIENT.Roster.ContactAdded += new ContactHandler(Roster_ContactAdded);
             Helper.JABBER_CLIENT.Roster.ResourceAdded += new ResourceHandler(Roster_ResourceAdded);
             Helper.JABBER_CLIENT.Roster.ResourceRemoved += new ResourceHandler(Roster_ResourceRemoved);
             Helper.JABBER_CLIENT.Roster.PresenceUpdated += new ResourceHandler(Roster_PresenceUpdated);
@@ -170,11 +173,7 @@ namespace MyChitChat.Plugin {
             Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
             Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
         }
-
-        void Roster_ContactAdded(string bare) {
-            Roster_ResourceAdded(new Contact(new Jid(bare), null, null));
-        }
-
+                
         void Roster_ResourceAdded(nJim.Contact contact) {
             Session newSession = new Session(contact);
             newSession.OnChatSessionUpdated += new OnChatSessionUpdatedEventHandler(newSession_OnChatSessionUpdated);

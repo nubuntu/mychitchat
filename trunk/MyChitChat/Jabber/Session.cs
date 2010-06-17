@@ -61,8 +61,7 @@ namespace MyChitChat.Jabber {
         }
 
         #endregion
-
-
+        
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public void Reply(string replyMessage) {
@@ -116,10 +115,13 @@ namespace MyChitChat.Jabber {
 
     public class SessionListItem : GUIListItem {
 
+        public bool IsActiveSession { get; set; }
+
         public SessionListItem(Session session, GUIListItem.ItemSelectedHandler callBackItemSelected) {
             this.Path = session.ContactJID.ToString();
             this.Label = session.ToString();
-            this.IconImage = this.IconImageBig = Helper.GetStatusIcon(session.Contact.status.type.ToString());
+            this.IsActiveSession = session.Contact.status.type != Enums.StatusType.Unvailable;
+            this.IconImage = this.IconImageBig = Helper.GetStatusIcon(session.Contact.status.type.ToString());            
             this.OnItemSelected += callBackItemSelected;
         }
 
