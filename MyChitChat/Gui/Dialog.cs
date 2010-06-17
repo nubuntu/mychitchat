@@ -29,6 +29,26 @@ namespace MyChitChat.Gui {
             }
         }
 
+        public enum ContextMenuButtons {
+            BtnSelectStatus,
+            BtnSelectActivity,
+            BtnSelectMood,
+            BtnSendNewMessage,
+            BtnFilterOnline,
+            BtnFilterOffline,
+            BtnFilterNone,
+            BtnJabberReconnect,
+            BtnJabberDisconnect,
+            NothingSelected
+        }   
+
+        public ContextMenuButtons ShowContextMenu(List<ContextMenuButtons> buttonCollection) {
+            List<GUIListItem> tmpItemList = new List<GUIListItem>();            
+            foreach (ContextMenuButtons currentButton in buttonCollection) {
+              tmpItemList.Add(new GUIListItem(Translations.GetByName(currentButton.ToString())));
+            }
+            return buttonCollection[ShowDialogSelect(tmpItemList, false).selectedIndex];
+        }
 
         private GUIDialogMenu BuildDialogSelect(IEnumerable<GUIListItem> list) {
             _dlgSelect = GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_DIALOG_MENU) as GUIDialogMenu;
@@ -56,9 +76,7 @@ namespace MyChitChat.Gui {
                         false
                         );
             }
-        }
-
-
+        }        
 
         public DialogResult ShowDialogSelect(IEnumerable<GUIListItem> listLabels, bool addCustomButton) {
             _dlgSelect = BuildDialogSelect(listLabels);
@@ -77,7 +95,6 @@ namespace MyChitChat.Gui {
             }
             return result;
         }
-
 
         public Status SelectAndSetStatus() {
             DialogResult tmpResult = ShowDialogSelect(_lstSelectStatus, true);
@@ -208,12 +225,9 @@ namespace MyChitChat.Gui {
             } else {
                 return String.Empty;
             }
-        }
-
-        internal void Init() {
-
-        }
+        }       
     }
+
     public struct DialogResult {
         internal int selectedIndex;
         internal string selectedLabelText;
@@ -225,4 +239,9 @@ namespace MyChitChat.Gui {
             this.message = message;
         }
     }
+
+    
+
+    
+
 }

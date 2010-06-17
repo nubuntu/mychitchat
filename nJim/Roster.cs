@@ -401,7 +401,7 @@ namespace nJim
 			{
 				string bare = item.Jid.Bare.Trim();
                 
-				string resource = (item.Jid.Resource != null) ? item.Jid.Resource.Trim() : string.Empty;
+				string resource = (item.Jid.Resource != null) ? item.Jid.Resource.Trim() : "?";
 				if (item.Subscription == agsXMPP.protocol.iq.roster.SubscriptionType.remove)
 				{
 					// si le contact existe

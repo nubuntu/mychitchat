@@ -176,6 +176,8 @@ namespace MyChitChat.Plugin {
         public static string WINDOW_DIALOG_OK = "Dialog Window (small) (centered)";
         public static string WINDOW_DIALOG_TEXT = "Dialog Window (large) (centered)";
 
+
+
         public static string none = "";
 
         /* Jabber / XMPP Status Types */
