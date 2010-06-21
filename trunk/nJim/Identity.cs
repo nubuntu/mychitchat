@@ -319,7 +319,7 @@ namespace nJim {
             set {
                 // si c'est la fiche d'identité d'un contact, alors on ne peut pas la modifier
                 if (Jabber.xmpp.MyJID.ToString() != jabberID.full) {
-                    return;
+                    //return;
                 }
                 // Formats acceptés: BMP, PNG, GIG, JPG, et ICON
                 if (value == null) {
@@ -804,7 +804,7 @@ namespace nJim {
             string iqID = data as string;
             // si on a une erreur alors on en informe la librairie
             if (iq.Type == agsXMPP.protocol.client.IqType.error) {
-                throw new Exception(iq.Error.Code.ToString() + " - " + iq.Error.Message);
+                //throw new Exception(iq.Error.Code.ToString() + " - " + iq.Error.Message);
             }
                 // sinon et seulement si c'est le résultat, on lance le traitement
             else if (iq.Type == agsXMPP.protocol.client.IqType.result) {
