@@ -93,6 +93,11 @@ namespace MyChitChat.Plugin
             this.checkBoxErrorGlobally = new System.Windows.Forms.CheckBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.comboBoxWindowSize = new System.Windows.Forms.ComboBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.comboBoxKeyboardType = new System.Windows.Forms.ComboBox();
             this.activityTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.statusTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
@@ -113,6 +118,9 @@ namespace MyChitChat.Plugin
             this.groupBox11.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
+            this.groupBox12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.activityTypeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusTypeBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -132,6 +140,7 @@ namespace MyChitChat.Plugin
             this.tabControl1.Controls.Add(this.tabPageJabber);
             this.tabControl1.Controls.Add(this.tabPageDefault);
             this.tabControl1.Controls.Add(this.tabPageNotification);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tabControl1.Location = new System.Drawing.Point(0, 77);
             this.tabControl1.Multiline = true;
@@ -783,6 +792,54 @@ namespace MyChitChat.Plugin
             this.comboBoxWindowSize.Size = new System.Drawing.Size(290, 21);
             this.comboBoxWindowSize.TabIndex = 5;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.flowLayoutPanel3);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(626, 238);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Misc";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.groupBox12);
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(620, 232);
+            this.flowLayoutPanel3.TabIndex = 0;
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.label15);
+            this.groupBox12.Controls.Add(this.comboBoxKeyboardType);
+            this.groupBox12.Location = new System.Drawing.Point(3, 3);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(242, 48);
+            this.groupBox12.TabIndex = 0;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Default Input Type";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(7, 20);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(52, 13);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Keyboard";
+            // 
+            // comboBoxKeyboardType
+            // 
+            this.comboBoxKeyboardType.FormattingEnabled = true;
+            this.comboBoxKeyboardType.Location = new System.Drawing.Point(65, 17);
+            this.comboBoxKeyboardType.Name = "comboBoxKeyboardType";
+            this.comboBoxKeyboardType.Size = new System.Drawing.Size(171, 21);
+            this.comboBoxKeyboardType.TabIndex = 0;
+            // 
             // statusTypeBindingSource
             // 
             this.statusTypeBindingSource.DataSource = typeof(nJim.Enums.StatusType);
@@ -832,6 +889,10 @@ namespace MyChitChat.Plugin
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.groupBox9.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.activityTypeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusTypeBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -905,5 +966,10 @@ namespace MyChitChat.Plugin
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.CheckBox checkBoxTunePlugin;
         private System.Windows.Forms.CheckBox checkBoxTuneGlobally;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox comboBoxKeyboardType;
     }
 }

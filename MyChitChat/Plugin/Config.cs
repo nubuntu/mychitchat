@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MyChitChat.Jabber;
 using MediaPortal.UserInterface.Controls;
 using nJim;
+using MyChitChat.Gui;
 
 namespace MyChitChat.Plugin
 {
@@ -64,6 +65,15 @@ namespace MyChitChat.Plugin
             checkBoxErrorPlugin.Checked = Settings.notifyOnErrorPlugin;
             checkBoxTuneGlobally.Checked = Settings.notifyOnTuneGlobally ;
             checkBoxTunePlugin.Checked = Settings.notifyOnTunePlugin;
+
+            comboBoxKeyboardType.DataSource = Translations.EnumToList<Dialog.KeyBoardTypes>();
+            comboBoxKeyboardType.SelectionChangeCommitted += new EventHandler(comboBoxKeyboardType_SelectionChangeCommitted);
+            comboBoxKeyboardType.SelectedIndex = (int)Dialog.KeyBoardTypes.Normal;
+
+        }
+
+        void comboBoxKeyboardType_SelectionChangeCommitted(object sender, EventArgs e) {
+            Settings.defaultKeyboardType = ((KeyValuePair<string, Dialog.KeyBoardTypes>)((ComboBox)sender).SelectedItem).Value;
         }
        
         void numericUpDownIdleTimeOut_Leave(object sender, EventArgs e) {
