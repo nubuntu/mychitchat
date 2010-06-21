@@ -39,13 +39,20 @@ namespace MyChitChat.Gui {
             BtnFilterNone,
             BtnJabberReconnect,
             BtnJabberDisconnect,
+            BtnSelectKeyboard,
             NothingSelected
-        }   
+        }
+
+        public enum KeyBoardTypes {
+            Normal,
+            Web,
+            SMS
+        }
 
         public ContextMenuButtons ShowContextMenu(List<ContextMenuButtons> buttonCollection) {
-            List<GUIListItem> tmpItemList = new List<GUIListItem>();            
+            List<GUIListItem> tmpItemList = new List<GUIListItem>();
             foreach (ContextMenuButtons currentButton in buttonCollection) {
-              tmpItemList.Add(new GUIListItem(Translations.GetByName(currentButton.ToString())));
+                tmpItemList.Add(new GUIListItem(Translations.GetByName(currentButton.ToString())));
             }
             return buttonCollection[ShowDialogSelect(tmpItemList, false).selectedIndex];
         }
@@ -76,7 +83,7 @@ namespace MyChitChat.Gui {
                         false
                         );
             }
-        }        
+        }
 
         public DialogResult ShowDialogSelect(IEnumerable<GUIListItem> listLabels, bool addCustomButton) {
             _dlgSelect = BuildDialogSelect(listLabels);
@@ -91,9 +98,14 @@ namespace MyChitChat.Gui {
             _dlgSelect.Reset();
             if (result.selectedLabelText == "Set Custom Status...") {
                 result = ShowDialogSelect(listLabels, false);
-                result.message = GetKeyBoardInput(result.selectedLabelText);
+                result.message = GetKeyBoardInput(result.selectedLabelText, Helper.CurrentKeyboardType);
             }
             return result;
+        }
+
+        public void SelectAndSetKeyboardType() {
+            DialogResult tmpResult = ShowDialogSelect(BuildDialogSelectList(typeof(Dialog.KeyBoardTypes)), false);
+            Helper.CurrentKeyboardType = (Dialog.KeyBoardTypes)tmpResult.selectedIndex;            
         }
 
         public Status SelectAndSetStatus() {
@@ -211,13 +223,27 @@ namespace MyChitChat.Gui {
                 type.ToString() + "\n" + message,
                 Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY
             );
-        }
+        }       
 
-        private string GetKeyBoardInput(string defaultText) {
-            VirtualKeyboard keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
-            if (null == keyboard)
-                return string.Empty;
+        public string GetKeyBoardInput(string defaultText, KeyBoardTypes keyboardType) {
+            VirtualKeyboard keyboard;
+            switch (keyboardType) {                
+                case  KeyBoardTypes.SMS:
+                    keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_SMS_KEYBOARD);
+                    break;
+                case  KeyBoardTypes.Web:                    
+                    keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_WEB_KEYBOARD);
+                    break;
+                default:
+                case KeyBoardTypes.Normal:
+                    keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
+                    break;
+            }
+            if (keyboard == null) {
+                return String.Empty;
+            }
             keyboard.Reset();
+            keyboard.IsSearchKeyboard = true;
             keyboard.Text = defaultText;
             keyboard.DoModal(GUIWindowManager.ActiveWindow);
             if (keyboard.IsConfirmed) {
@@ -225,7 +251,7 @@ namespace MyChitChat.Gui {
             } else {
                 return String.Empty;
             }
-        }       
+        }
     }
 
     public struct DialogResult {
@@ -240,8 +266,8 @@ namespace MyChitChat.Gui {
         }
     }
 
-    
 
-    
+
+
 
 }

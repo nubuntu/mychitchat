@@ -33,7 +33,7 @@ namespace MyChitChat.Jabber {
             get {
                 return (Messages.Count > 0)
                     ?
-                    Messages.Last().Value.DateTimeReceived
+                    Messages.Values.Last().DateTimeReceived
                     :
                     DateTimeSessionStarted;
             }
@@ -106,7 +106,7 @@ namespace MyChitChat.Jabber {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public override string ToString() {
-            return String.Format("[{0}] {1}: \"{2}\" {3}", new string[] { DateTimeLastActive.ToShortTimeString(), ContactNickname, Translations.GetByName(Contact.status.type.ToString()), String.Format("[{0} unread]", Messages.Count(x => x.Value.Unread).ToString()) });
+            return String.Format("{0} [{1}/{2}]", ContactNickname, Messages.Count(x => x.Value.Unread).ToString(), Messages.Count);
         }
 
         #endregion

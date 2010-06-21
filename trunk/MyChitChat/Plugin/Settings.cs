@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MediaPortal;
 using nJim;
+using MyChitChat.Gui;
 
 namespace MyChitChat.Plugin {
     class Settings {
@@ -49,6 +50,8 @@ namespace MyChitChat.Plugin {
 
         public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_AUTO;
 
+        public static Dialog.KeyBoardTypes defaultKeyboardType = Dialog.KeyBoardTypes.Normal;
+
         #endregion
 
         /// <summary>
@@ -86,6 +89,7 @@ namespace MyChitChat.Plugin {
                 defaultActivityType = (Enums.ActivityType)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultActivityType", (int)defaultActivityType);
                 defaultActivityMessage = reader.GetValue(Helper.PLUGIN_NAME, "defaultActivityMessage");
                 notifyWindowType = (Helper.PLUGIN_NOTIFY_WINDOWS)reader.GetValueAsInt(Helper.PLUGIN_NAME, "notifyWindowType", (int)notifyWindowType);
+                defaultKeyboardType = (Dialog.KeyBoardTypes)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultKeyboardType", (int)Dialog.KeyBoardTypes.Normal);
 
             }
         }
@@ -127,6 +131,7 @@ namespace MyChitChat.Plugin {
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultActivityType", (int)defaultActivityType);
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultActivityMessage", defaultActivityMessage);
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "notifyWindowType", (int)notifyWindowType);
+                xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultKeyboardType", (int)defaultKeyboardType);
 
             }
         }

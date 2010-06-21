@@ -18,6 +18,7 @@ namespace MyChitChat.Plugin {
 
         static Helper() {
             JABBER_CLIENT.OnError +=new OnErrorEventHandler(JABBER_CLIENT_OnError);
+            CurrentKeyboardType = Settings.defaultKeyboardType;
         }
 
         
@@ -95,6 +96,7 @@ namespace MyChitChat.Plugin {
             public string icon;
         }
 
+        public static Dialog.KeyBoardTypes CurrentKeyboardType { get; set; }
 
         #endregion
 
@@ -111,7 +113,7 @@ namespace MyChitChat.Plugin {
             }
         }
 
-        static void JABBER_CLIENT_OnError(nJim.Enums.ErrorType type, string message) {
+        public static void JABBER_CLIENT_OnError(nJim.Enums.ErrorType type, string message) {
             if ((Settings.notifyOnErrorPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnErrorGlobally) {
                 Dialog.Instance.ShowErrorDialog(type, message);
             }

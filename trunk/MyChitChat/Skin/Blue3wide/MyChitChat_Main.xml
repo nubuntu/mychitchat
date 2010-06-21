@@ -3,200 +3,166 @@
     <controls>
         <import>common.window.default.xml</import>
         <control>
+            <id>100</id>
             <description>ContactList</description>
             <type>listcontrol</type>
-            <posX>480</posX>
-            <posY>128</posY>
-            <width>713</width>
-            <height>529</height>
+            <posX>960</posX>
+            <posY>136</posY>
+            <width>289</width>
+            <height>521</height>
         </control>
         <control>
             <type>image</type>
-            <posX>100</posX>
-            <posY>156</posY>
-            <width>55</width>
-            <height>55</height>
+            <posX>32</posX>
+            <posY>152</posY>
+            <width>64</width>
+            <height>64</height>
             <texture>#MyChitChat.User.Status.Image</texture>
         </control>
         <control>
             <type>label</type>
-            <posX>22</posX>
-            <posY>154</posY>
-            <label>Status</label>
-        </control>
-        <control>
-            <type>label</type>
-            <posX>169</posX>
-            <posY>155</posY>
+            <posX>112</posX>
+            <posY>152</posY>
+            <font>font16</font>
             <label>#MyChitChat.User.Status.Type</label>
         </control>
         <control>
             <type>fadelabel</type>
-            <posX>173</posX>
-            <posY>180</posY>
-            <width>281</width>
+            <posX>112</posX>
+            <posY>194</posY>
+            <width>345</width>
             <label>#MyChitChat.User.Status.Message</label>
         </control>
         <control>
-            <type>label</type>
-            <posX>23</posX>
-            <posY>225</posY>
-            <label>Mood</label>
-        </control>
-        <control>
             <type>image</type>
-            <posX>101</posX>
-            <posY>227</posY>
-            <width>55</width>
-            <height>55</height>
+            <posX>32</posX>
+            <posY>224</posY>
+            <width>64</width>
+            <height>64</height>
             <texture>#MyChitChat.User.Mood.Image</texture>
         </control>
         <control>
             <type>label</type>
-            <posX>167</posX>
-            <posY>226</posY>
+            <posX>112</posX>
+            <posY>224</posY>
+            <font>font16</font>
             <label>#MyChitChat.User.Mood.Type</label>
         </control>
         <control>
             <type>fadelabel</type>
-            <posX>172</posX>
-            <posY>258</posY>
-            <width>282</width>
+            <posX>112</posX>
+            <posY>266</posY>
+            <width>345</width>
             <label>#MyChitChat.User.Mood.Message</label>
         </control>
         <control>
             <type>label</type>
-            <posX>24</posX>
-            <posY>298</posY>
-            <label>Activity</label>
+            <posX>32</posX>
+            <posY>114</posY>
+            <label>My Current Presence</label>
         </control>
         <control>
             <type>image</type>
-            <posX>16</posX>
-            <posY>133</posY>
-            <height>14</height>
-            <texture>bar_hor.png</texture>
-        </control>
-        <control>
-            <type>label</type>
-            <posX>18</posX>
-            <posY>108</posY>
-            <label>My Current Jabber Presence</label>
-        </control>
-        <control>
-            <type>image</type>
-            <posX>99</posX>
-            <posY>301</posY>
-            <width>55</width>
-            <height>55</height>
+            <posX>32</posX>
+            <posY>296</posY>
+            <width>64</width>
+            <height>64</height>
             <texture>#MyChitChat.User.Activity.Image</texture>
         </control>
         <control>
             <type>label</type>
-            <posX>167</posX>
-            <posY>297</posY>
+            <posX>112</posX>
+            <posY>296</posY>
+            <font>font16</font>
             <label>#MyChitChat.User.Activity.Type</label>
         </control>
         <control>
             <type>fadelabel</type>
-            <posX>169</posX>
-            <posY>329</posY>
-            <width>282</width>
+            <posX>112</posX>
+            <posY>338</posY>
+            <width>346</width>
             <label>#MyChitChat.User.Activity.Message</label>
         </control>
         <control>
             <type>label</type>
-            <posX>15</posX>
-            <posY>373</posY>
-            <label>Selected Contact's Jabber Presence</label>
+            <posX>32</posX>
+            <posY>376</posY>
+            <label>Selected Contact</label>
         </control>
         <control>
             <type>image</type>
-            <posX>15</posX>
-            <posY>400</posY>
-            <height>14</height>
+            <posX>32</posX>
+            <posY>399</posY>
+            <width>425</width>
+            <height>10</height>
             <texture>bar_hor.png</texture>
         </control>
         <control>
-            <type>label</type>
-            <posX>19</posX>
-            <posY>427</posY>
-            <label>Status</label>
-        </control>
-        <control>
-            <type>label</type>
-            <posX>21</posX>
-            <posY>499</posY>
-            <label>Mood</label>
-        </control>
-        <control>
-            <type>label</type>
-            <posX>25</posX>
-            <posY>575</posY>
-            <label>Activity</label>
-        </control>
-        <control>
             <type>image</type>
-            <posX>99</posX>
-            <posY>425</posY>
-            <width>55</width>
-            <height>55</height>
+            <posX>32</posX>
+            <posY>416</posY>
+            <width>64</width>
+            <height>64</height>
             <texture>#MyChitChat.Contact.Status.Image</texture>
         </control>
         <control>
             <type>image</type>
-            <posX>101</posX>
-            <posY>500</posY>
-            <width>55</width>
-            <height>55</height>
-            <texture>#MyChitChat.Contact.Mood.Image</texture>
-        </control>
-        <control>
-            <type>image</type>
-            <posX>102</posX>
-            <posY>569</posY>
-            <width>55</width>
-            <height>55</height>
-            <texture>#MyChitChat.Contact.Activity.Image</texture>
+            <posX>32</posX>
+            <posY>416</posY>
+            <width>64</width>
+            <height>64</height>
+            <texture>#MyChitChat.User.Avatar.Image</texture>
         </control>
         <control>
             <type>label</type>
-            <posX>168</posX>
-            <posY>425</posY>
+            <posX>113</posX>
+            <posY>416</posY>
+            <font>font16</font>
             <label>#MyChitChat.Contact.Status.Type</label>
         </control>
         <control>
             <type>fadelabel</type>
-            <posX>165</posX>
-            <posY>456</posY>
-            <width>281</width>
+            <posX>112</posX>
+            <posY>458</posY>
+            <width>346</width>
             <label>#MyChitChat.Contact.Status.Message</label>
         </control>
         <control>
-            <type>label</type>
-            <posX>163</posX>
-            <posY>503</posY>
-            <label>#MyChitChat.Contact.Mood.Type</label>
+            <type>image</type>
+            <posX>32</posX>
+            <posY>136</posY>
+            <width>425</width>
+            <height>10</height>
+            <texture>bar_hor.png</texture>
         </control>
         <control>
-            <type>fadelabel</type>
-            <posX>167</posX>
-            <posY>533</posY>
-            <width>282</width>
-            <label>#MyChitChat.Contact.Mood.Message</label>
+            <id>300</id>
+            <description>Contacts Last Message</description>
+            <type>textbox</type>
+            <posX>32</posX>
+            <posY>488</posY>
+            <width>425</width>
+            <height>169</height>
         </control>
         <control>
-            <type>label</type>
-            <posX>168</posX>
-            <posY>572</posY>
-            <label>#MyChitChat.Contact.Activity.Type</label>
+            <id>400</id>
+            <type>button</type>
+            <posX>184</posX>
+            <posY>376</posY>
+            <width>79</width>
+            <height>23</height>
+            <label>Details...</label>
+            <textalign>CENTER</textalign>
+            <textYOff>0</textYOff>
         </control>
         <control>
-            <type>fadelabel</type>
-            <posX>166</posX>
-            <posY>601</posY>
-            <width>282</width>
-            <label>#MyChitChat.Contact.Activity.Message</label>
+            <id>200</id>
+            <description>History Log</description>
+            <type>textboxscrollup</type>
+            <posX>488</posX>
+            <posY>136</posY>
+            <width>441</width>
+            <height>521</height>
         </control>
     </controls>
 </window>
