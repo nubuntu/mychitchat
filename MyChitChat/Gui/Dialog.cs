@@ -252,6 +252,9 @@ namespace MyChitChat.Gui {
                 return String.Empty;
             }
         }
+        public string GetKeyBoardInput() {
+            return GetKeyBoardInput(String.Empty, Helper.CurrentKeyboardType );
+        }
     }
 
     public struct DialogResult {

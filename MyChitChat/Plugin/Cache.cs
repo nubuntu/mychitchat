@@ -20,6 +20,9 @@ namespace MyChitChat.Plugin {
         }
 
         public static string GetAvatarImagePath(Identity contactIdentity) {
+            if (contactIdentity == null || contactIdentity.photo == null) {
+                return string.Empty;
+            }
             string tmpFileName = String.Format(thumbDir + "avatar_{0}.png", contactIdentity.jabberID.GetHashCode());
             SaveAvatarImage(contactIdentity, tmpFileName);
             if (File.Exists(tmpFileName)) {

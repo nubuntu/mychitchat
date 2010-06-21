@@ -8,6 +8,7 @@ using agsXMPP.Collections;
 using nJim;
 using MediaPortal.GUI.Library;
 using MyChitChat.Plugin;
+using MyChitChat.Gui;
 
 
 namespace MyChitChat.Jabber {
@@ -65,8 +66,15 @@ namespace MyChitChat.Jabber {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public void Reply(string replyMessage) {
+            if (String.IsNullOrEmpty(replyMessage)) {
+                replyMessage = Dialog.Instance.GetKeyBoardInput();
+            }
             Message sentMsg = Helper.JABBER_CLIENT.SendMessage(replyMessage, ContactJID);
             AddMessageHistory(sentMsg);            
+        }
+
+        public void Reply() {
+            Reply(String.Empty);
         }
 
         public void AddMessage(Message msg) {

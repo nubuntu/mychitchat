@@ -196,7 +196,7 @@ namespace MyChitChat.Plugin {
             Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
         }
                 
-        void Roster_ResourceAdded(nJim.Contact contact) {
+        void Roster_ResourceAdded(nJim.Contact contact) {            
             Session newSession = new Session(contact);
             newSession.OnChatSessionUpdated += new OnChatSessionUpdatedEventHandler(newSession_OnChatSessionUpdated);
             if (!ChatSessions.ContainsKey(newSession.ContactJID)) {
@@ -232,8 +232,7 @@ namespace MyChitChat.Plugin {
         void Roster_PresenceUpdated(nJim.Contact contact) {
             if (((Settings.notifyOnStatusPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnStatusGlobally) && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full) {
                 NotifyPresMooActTun(contact, null, null, null);
-
-            }
+            }            
             OnUpdatedPresence(contact);
             AppendLogEvent(contact.lastUpdated, "Presence Updated", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));        
         }
