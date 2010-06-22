@@ -17,11 +17,6 @@ namespace MyChitChat.Jabber {
 
     public class Session : GUIListItem, IEquatable<Session>{
 
-
-        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-        #endregion
-
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public bool IsActiveSession { 
@@ -56,14 +51,18 @@ namespace MyChitChat.Jabber {
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
             DateTimeSessionStarted = DateTime.Now;
             Messages = new List<Message>();
-            this.Path = ContactJID.ToString();
             this.Label = ToString();
+            this.Path = ContactJID.ToString();
             this.IconImage = this.IconImageBig = Helper.GetStatusIcon(Contact.status.type.ToString());
         }
 
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        public void UpdateItemImage() {
+            this.IconImage = this.IconImageBig = Helper.GetStatusIcon(Contact.status.type.ToString());
+        }
 
         public void Reply(string replyMessage) {
             if (String.IsNullOrEmpty(replyMessage)) {
@@ -95,6 +94,7 @@ namespace MyChitChat.Jabber {
 
         private void AddMessageHistory(Message msg) {
             Messages.Add(msg);
+            this.Label = ToString();
             OnChatSessionUpdated(this, msg);
         }
 
@@ -122,7 +122,7 @@ namespace MyChitChat.Jabber {
         #region IEquatable<Session> Member
 
         public bool Equals(Session other) {
-            return this.ContactJID.Equals(other.ContactJID);
+            return String.Equals( this.ContactJID.ToString(), other.ContactJID.ToString(), StringComparison.CurrentCultureIgnoreCase);
         }
 
         #endregion

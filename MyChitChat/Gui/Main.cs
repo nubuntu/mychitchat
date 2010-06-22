@@ -17,7 +17,6 @@ namespace MyChitChat.Gui {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         private Chat guiWindowChat;
-        private bool? statusFilter;
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -69,7 +68,7 @@ namespace MyChitChat.Gui {
             base.Title = Helper.PLUGIN_NAME;
 
             guiWindowChat = new Chat();
-            statusFilter = true;
+            StatusFilter = true;
         }
 
         ~Main() {
@@ -112,7 +111,7 @@ namespace MyChitChat.Gui {
             if (!Helper.JABBER_CLIENT.LoggedIn) {
                 Helper.JABBER_CLIENT.Login();
             }
-
+            
             GUIPropertyManager.SetProperty("#header.text", "TEST");
             GUIPropertyManager.SetProperty("#header.label", "Main Window");
             base.OnPageLoad();
@@ -140,15 +139,15 @@ namespace MyChitChat.Gui {
                     UpdateGuiUserProperties();
                     break;
                 case Dialog.ContextMenuButtons.BtnFilterOnline:
-                    this.statusFilter = true;
+                    StatusFilter = true;
                     UpdateContactsFacade();
                     break;
                 case Dialog.ContextMenuButtons.BtnFilterOffline:
-                    this.statusFilter = false;
+                    StatusFilter = false;
                     UpdateContactsFacade();
                     break;
                 case Dialog.ContextMenuButtons.BtnFilterNone:
-                    this.statusFilter = null;
+                    StatusFilter = null;
                     UpdateContactsFacade();
                     break;
                 case Dialog.ContextMenuButtons.BtnJabberDisconnect:
@@ -181,12 +180,14 @@ namespace MyChitChat.Gui {
 
         public override void OnAction(MediaPortal.GUI.Library.Action action) {
             switch (action.wID) {
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED:
-                    if (action.m_key.KeyChar != 13 && action.m_key.KeyChar != 27 && ctrlListControlContacts != null && ctrlListControlContacts.IsFocused) {
-                        History.Instance.GetSession(ctrlListControlContacts.SelectedListItemIndex).Reply(Dialog.Instance.GetKeyBoardInput(((char)action.m_key.KeyChar).ToString(), Helper.CurrentKeyboardType));
+                case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED :
+                    if (ctrlListControlContacts.IsFocused && ctrlListControlContacts.SelectedListItem != null) {
+                        if (action.m_key.KeyChar != 13 && action.m_key.KeyChar != 27 && ctrlListControlContacts != null) {
+                            History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path).Reply(Dialog.Instance.GetKeyBoardInput(((char)action.m_key.KeyChar).ToString(), Helper.CurrentKeyboardType));
+                            return;
+                        }
                     }
                     break;
-
             }
             base.OnAction(action);
         }
@@ -195,7 +196,7 @@ namespace MyChitChat.Gui {
 
             if (control == ctrlListControlContacts && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
                 try {
-                    ShowChatWindow(History.Instance.GetSession(ctrlListControlContacts.SelectedListItemIndex));                    
+                    ShowChatWindow(History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path));
                 } catch (Exception e) {
                     Log.Error(e);
                 }
@@ -226,11 +227,12 @@ namespace MyChitChat.Gui {
             if (ctrlListControlContacts != null) {
                 ctrlListControlContacts.Clear();
                 foreach (Session currentSession in History.Instance.ChatSessions) {
+                    currentSession.UpdateItemImage();
                     currentSession.OnItemSelected -= new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
                     currentSession.OnItemSelected += new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
                     try {
-                        if (statusFilter.HasValue) {
-                            if (statusFilter.Value == currentSession.IsActiveSession) {
+                        if (StatusFilter.HasValue) {
+                            if (StatusFilter.Value == currentSession.IsActiveSession) {
                                 ctrlListControlContacts.Add(currentSession);
                             }
                         } else {
@@ -333,24 +335,27 @@ namespace MyChitChat.Gui {
 
         void History_OnRosterUpdated(Contact changedContact) {
             UpdateContactsFacade();
+            
         }
 
 
         void History_OnContactPresence(Contact updatedContact) {
             UpdateContactsFacade();
+            UpdateGuiContactProperties(History.Instance.GetSession(updatedContact.identity.jabberID.full));
         }
 
 
         void History_OnUpdatedSession(Session updatedSession, Message msg) {
             UpdateContactsFacade();
-            if (ctrlListControlContacts != null && !ctrlListControlContacts.IsFocused) {
+            if (ctrlListControlContacts != null){// && !ctrlListControlContacts.IsFocused) {
                 ctrlListControlContacts.SelectedListItemIndex = History.Instance.GetSessionIndex(updatedSession);
             }
+            UpdateGuiContactProperties(updatedSession);
         }
 
         void OnSessionItemSelected(GUIListItem sessionItem, GUIControl parentControl) {
             if (sessionItem != null && parentControl == ctrlListControlContacts) {
-                UpdateGuiContactProperties(History.Instance.GetSession(sessionItem.Path));
+                UpdateGuiContactProperties(History.Instance.GetSession(sessionItem.Path));                
             }
         }
 
@@ -363,6 +368,9 @@ namespace MyChitChat.Gui {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        public static bool? StatusFilter { get; private set; }
+        
 
         // With GetID it will be an window-plugin / otherwise a process-plugin
         // Enter the id number here again

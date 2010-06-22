@@ -76,8 +76,7 @@ namespace MyChitChat.Gui {
 
         protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType) {
             if (control == ctrlFacadeMessageList && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
-               //Dialog.Instance.ShowNotifyDialog(_currentChatSession.Messages[new Guid(ctrlFacadeMessageList.SelectedListItem.Path)].ToString());
-                _currentChatSession.Reply("Copy That: \n" + _currentChatSession.Messages[ctrlFacadeMessageList.SelectedListItemIndex].ToString());
+               _currentChatSession.Reply();
                _currentChatSession.Messages[ctrlFacadeMessageList.SelectedListItemIndex].Unread = false;
             }
         }

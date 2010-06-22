@@ -24,6 +24,7 @@ namespace MyChitChat.Jabber {
         public Client() {
             this._jabberConnection = new nJim.Jabber();            
         }
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
