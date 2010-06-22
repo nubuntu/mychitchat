@@ -58,7 +58,7 @@ namespace MyChitChat.Gui {
 
         private const string TAG_CONTACT_STATUS_TYPE = "#MyChitChat.Contact.Status.Type";
         private const string TAG_CONTACT_STATUS_IMAGE = "#MyChitChat.Contact.Status.Image";
-        private const string TAG_CONTACT_STATUS_MESSAGE = "#MyChitChat.Contact.Status.Message";   
+        private const string TAG_CONTACT_STATUS_MESSAGE = "#MyChitChat.Contact.Status.Message";
 
         #endregion
 
@@ -67,7 +67,7 @@ namespace MyChitChat.Gui {
         public Main() {
             AddRosterEventHandlers();
             base.Title = Helper.PLUGIN_NAME;
-            
+
             guiWindowChat = new Chat();
             statusFilter = true;
         }
@@ -81,7 +81,6 @@ namespace MyChitChat.Gui {
         }
 
         #endregion
-
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         //public override void OnAction(MediaPortal.GUI.Library.Action action) {
@@ -112,7 +111,8 @@ namespace MyChitChat.Gui {
         protected override void OnPageLoad() {
             if (!Helper.JABBER_CLIENT.LoggedIn) {
                 Helper.JABBER_CLIENT.Login();
-            }           
+            }
+
             GUIPropertyManager.SetProperty("#header.text", "TEST");
             GUIPropertyManager.SetProperty("#header.label", "Main Window");
             base.OnPageLoad();
@@ -122,10 +122,10 @@ namespace MyChitChat.Gui {
 
         protected override void OnShowContextMenu() {
             List<Dialog.ContextMenuButtons> tmpList = new List<Dialog.ContextMenuButtons>();
-            foreach(Dialog.ContextMenuButtons tmp in Enum.GetValues(typeof(Dialog.ContextMenuButtons))){
+            foreach (Dialog.ContextMenuButtons tmp in Enum.GetValues(typeof(Dialog.ContextMenuButtons))) {
                 tmpList.Add(tmp);
             }
-            switch (Dialog.Instance.ShowContextMenu(tmpList) ){
+            switch (Dialog.Instance.ShowContextMenu(tmpList)) {
                 case Dialog.ContextMenuButtons.BtnSelectStatus:
                     Dialog.Instance.SelectAndSetStatus();
                     UpdateGuiUserProperties();
@@ -172,7 +172,6 @@ namespace MyChitChat.Gui {
             base.OnWindowLoaded();
             GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.label", "Main Window");
-            AddItemSelectionEventHandlers();
             UpdateContactsFacade();
         }
 
@@ -184,7 +183,7 @@ namespace MyChitChat.Gui {
             switch (action.wID) {
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED:
                     if (action.m_key.KeyChar != 13 && action.m_key.KeyChar != 27 && ctrlListControlContacts != null && ctrlListControlContacts.IsFocused) {
-                        History.Instance.CurrentSession.Reply(Dialog.Instance.GetKeyBoardInput(((char)action.m_key.KeyChar).ToString(), Helper.CurrentKeyboardType));
+                        History.Instance.GetSession(ctrlListControlContacts.SelectedListItemIndex).Reply(Dialog.Instance.GetKeyBoardInput(((char)action.m_key.KeyChar).ToString(), Helper.CurrentKeyboardType));
                     }
                     break;
 
@@ -196,8 +195,7 @@ namespace MyChitChat.Gui {
 
             if (control == ctrlListControlContacts && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
                 try {
-                    //ShowChatWindow(History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path));
-                    History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path).Reply();
+                    ShowChatWindow(History.Instance.GetSession(ctrlListControlContacts.SelectedListItemIndex));                    
                 } catch (Exception e) {
                     Log.Error(e);
                 }
@@ -227,15 +225,16 @@ namespace MyChitChat.Gui {
         private void UpdateContactsFacade() {
             if (ctrlListControlContacts != null) {
                 ctrlListControlContacts.Clear();
-
-                foreach (SessionListItem currentItem in History.Instance.SessionListItems) {
+                foreach (Session currentSession in History.Instance.ChatSessions) {
+                    currentSession.OnItemSelected -= new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
+                    currentSession.OnItemSelected += new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
                     try {
                         if (statusFilter.HasValue) {
-                            if (statusFilter.Value == currentItem.IsActiveSession) {
-                                ctrlListControlContacts.Add(currentItem);
+                            if (statusFilter.Value == currentSession.IsActiveSession) {
+                                ctrlListControlContacts.Add(currentSession);
                             }
                         } else {
-                            ctrlListControlContacts.Add(currentItem);
+                            ctrlListControlContacts.Add(currentSession);
                         }
 
                     } catch (Exception e) {
@@ -262,15 +261,19 @@ namespace MyChitChat.Gui {
         }
 
         private void UpdateGuiContactProperties(Session selectedSession) {
+            if (selectedSession == null) {
+                return;
+            }
             GUIPropertyManager.SetProperty(TAG_CONTACT_AVATAR_IMAGE, Cache.GetAvatarImagePath(selectedSession.ContactDetails));
             GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, selectedSession.ContactDetails.nickname);
-            GUIPropertyManager.SetProperty(TAG_CONTACT_LAST_ACTIVE, selectedSession.DateTimeLastActive.ToShortTimeString());            
+            GUIPropertyManager.SetProperty(TAG_CONTACT_LAST_ACTIVE, selectedSession.DateTimeLastActive.ToShortTimeString());
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_TYPE, Translations.GetByName(selectedSession.Contact.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_IMAGE, Helper.GetStatusIcon(selectedSession.Contact.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_MESSAGE, selectedSession.Contact.status.message);
-            try {
-                ctrlTextboxLastMessage.Label = selectedSession.Messages.Values.Last().ToString();
-            } catch { }
+            ctrlTextboxLastMessage.Clear();
+            if (selectedSession.Messages.Count > 0) {
+                ctrlTextboxLastMessage.Label = selectedSession.Messages.Last().ToString();
+            }
         }
 
 
@@ -298,17 +301,12 @@ namespace MyChitChat.Gui {
             History.Instance.OnUpdatedLog += new OnUpdatedLogEventhandler(History_OnUpdatedLog);
         }
 
-        private void AddItemSelectionEventHandlers() {
-            History.Instance.OnSessionItemSelected += new OnSessionItemSelectedEventHandler(History_OnSessionItemSelected);
-        }
-
         private void RemoveEventHandlers() {
             Helper.JABBER_CLIENT.OnRosterStart -= new OnRosterStartEventHandler(JABBER_CLIENT_OnRosterStart);
             Helper.JABBER_CLIENT.OnRosterEnd -= new OnRosterEndEventHandler(JABBER_CLIENT_OnRosterEnd);
             History.Instance.OnUpdatedRoster -= new OnUpdatedRosterEventHandler(History_OnRosterUpdated);
             History.Instance.OnUpdatedPresence -= new OnUpdatedPresenceEventHandler(History_OnContactPresence);
             History.Instance.OnUpdatedSession -= new OnUpdatedSessionEventHandler(History_OnUpdatedSession);
-            History.Instance.OnSessionItemSelected -= new OnSessionItemSelectedEventHandler(History_OnSessionItemSelected);
             History.Instance.OnUpdatedLog -= new OnUpdatedLogEventhandler(History_OnUpdatedLog);
         }
 
@@ -326,7 +324,7 @@ namespace MyChitChat.Gui {
             AddHistoryEventHandlers();
             GUIWaitCursor.Hide();
             Helper.SetDefaultPresence();
-            
+
             if (Settings.selectStatusOnStartup) {
                 Dialog.Instance.SelectAndSetStatus();
             }
@@ -335,7 +333,6 @@ namespace MyChitChat.Gui {
 
         void History_OnRosterUpdated(Contact changedContact) {
             UpdateContactsFacade();
-
         }
 
 
@@ -344,17 +341,16 @@ namespace MyChitChat.Gui {
         }
 
 
-        void History_OnUpdatedSession(Session updatedSession, Message msg) {            
+        void History_OnUpdatedSession(Session updatedSession, Message msg) {
             UpdateContactsFacade();
             if (ctrlListControlContacts != null && !ctrlListControlContacts.IsFocused) {
-                //ctrlListControlContacts.SelectedListItemIndex = History.Instance.GetSessionIndex(updatedSession);
+                ctrlListControlContacts.SelectedListItemIndex = History.Instance.GetSessionIndex(updatedSession);
             }
         }
 
-        void History_OnSessionItemSelected(Session selectedSession, GUIControl parentControl) {
-            if (parentControl == ctrlListControlContacts && selectedSession != null) {
-                UpdateGuiContactProperties(selectedSession);
-
+        void OnSessionItemSelected(GUIListItem sessionItem, GUIControl parentControl) {
+            if (sessionItem != null && parentControl == ctrlListControlContacts) {
+                UpdateGuiContactProperties(History.Instance.GetSession(sessionItem.Path));
             }
         }
 

@@ -14,8 +14,7 @@ namespace MyChitChat.Plugin {
     public delegate void OnUpdatedRosterEventHandler(Contact changedContact);
     public delegate void OnUpdatedPresenceEventHandler(Contact updatedContact);
     public delegate void OnUpdatedSessionEventHandler(Session updatedSession, Message updatedMessage);
-    public delegate void OnUpdatedLogEventhandler(string logText);
-    public delegate void OnSessionItemSelectedEventHandler(Session selectedSession, GUIControl parent);
+    public delegate void OnUpdatedLogEventhandler(string logText);   
 
     public sealed class History {
 
@@ -30,7 +29,7 @@ namespace MyChitChat.Plugin {
 
         History() {
             Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JABBER_CLIENT_OnLogin);
-            ChatSessions = new Dictionary<Jid, Session>();            
+            ChatSessions = new List<Session>();            
             LogHistory = new StringBuilder();
             GUIPropertyManager.OnPropertyChanged += new GUIPropertyManager.OnPropertyChangedHandler(GUIPropertyManager_OnPropertyChanged);
         }
@@ -56,24 +55,23 @@ namespace MyChitChat.Plugin {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        private Dictionary<Jid, Session> ChatSessions { get; set; }
-        public Session CurrentSession { get; private set; }
-
-        public IEnumerable<SessionListItem> SessionListItems {
-            get {
-                foreach (Session currentSession in Sessions) {
-                    yield return new SessionListItem(currentSession, new GUIListItem.ItemSelectedHandler(OnSessionListItemSelected));
-                }
-            }
-        }
+        public List<Session> ChatSessions { get; private set; }
+        
+        //public IEnumerable<SessionListItem> SessionListItems {
+        //    get {
+        //        foreach (Session currentSession in Sessions) {
+        //            yield return new SessionListItem(currentSession, new GUIListItem.ItemSelectedHandler(OnSessionListItemSelected));
+        //        }
+        //    }
+        //}
        
-        private IEnumerable<Session> Sessions {
-            get {
-                foreach (KeyValuePair<Jid, Session> currentSession in ChatSessions) {
-                    yield return currentSession.Value;
-                }
-            }
-        }
+        //private IEnumerable<Session> Sessions {
+        //    get {
+        //        foreach (KeyValuePair<Jid, Session> currentSession in ChatSessions) {
+        //            yield return currentSession.Value;
+        //        }
+        //    }
+        //}
 
         private StringBuilder LogHistory {get; set;}
         
@@ -88,27 +86,24 @@ namespace MyChitChat.Plugin {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        public Session GetSession(Jid chatPartner) {
-            if (chatPartner.User != null) {
-                chatPartner.User = chatPartner.User.ToLower();
-                if (ChatSessions.ContainsKey(chatPartner)) {
-                    return ChatSessions[chatPartner];
-                }
-            }
-            return null;
+        public Session GetSession(Jid chatPartner) {            
+            return ChatSessions.Find(session => session.ContactJID == chatPartner);            
         }
-
-        public int GetSessionIndex(Session session) {
-            return 4;//Instance.ChatSessions.ToList<Session>().FindIndex(session);
-        }
-
 
         public Session GetSession(string fullJid) {
             return GetSession(new Jid(fullJid));
         }
 
+        public Session GetSession(int sessionIndex) {
+            return ChatSessions[sessionIndex];
+        }
+
+        public int GetSessionIndex(Session session) {
+            return ChatSessions.IndexOf(session);
+        }       
+
         public void ResetHistory() {
-            ChatSessions = new Dictionary<Jid, Session>();
+            ChatSessions.Clear();            
         }
 
         #endregion
@@ -178,7 +173,6 @@ namespace MyChitChat.Plugin {
         public event OnUpdatedRosterEventHandler OnUpdatedRoster;
         public event OnUpdatedPresenceEventHandler OnUpdatedPresence;
         public event OnUpdatedSessionEventHandler OnUpdatedSession;
-        public event OnSessionItemSelectedEventHandler OnSessionItemSelected;
         public event OnUpdatedLogEventhandler OnUpdatedLog;
         #endregion
 
@@ -199,8 +193,8 @@ namespace MyChitChat.Plugin {
         void Roster_ResourceAdded(nJim.Contact contact) {            
             Session newSession = new Session(contact);
             newSession.OnChatSessionUpdated += new OnChatSessionUpdatedEventHandler(newSession_OnChatSessionUpdated);
-            if (!ChatSessions.ContainsKey(newSession.ContactJID)) {
-                ChatSessions.Add(newSession.ContactJID, newSession);
+            if (!ChatSessions.Contains(newSession)) {
+                ChatSessions.Add(newSession);
             }
             OnUpdatedRoster(contact);
             AppendLogEvent(contact.lastUpdated, "Contact Added", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
@@ -209,7 +203,7 @@ namespace MyChitChat.Plugin {
 
 
         void Roster_ResourceRemoved(nJim.Contact contact) {
-            ChatSessions.Remove(new Jid(contact.identity.jabberID.full));
+            ChatSessions.Remove(new Session(contact));
             OnUpdatedRoster(contact);
             AppendLogEvent(contact.lastUpdated, "Contact Removed", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));        
         }
@@ -275,12 +269,7 @@ namespace MyChitChat.Plugin {
                 NotifyMessage(msg);
             }
             OnUpdatedSession(session, msg);
-        }
-
-        private void OnSessionListItemSelected(GUIListItem item, GUIControl parent) {
-            CurrentSession = History.Instance.GetSession(item.Path);
-            OnSessionItemSelected(CurrentSession , parent);
-        }
+        }               
 
         #endregion
 
