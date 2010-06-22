@@ -14,7 +14,7 @@ namespace MyChitChat.Plugin {
     public delegate void OnUpdatedRosterEventHandler(Contact changedContact);
     public delegate void OnUpdatedPresenceEventHandler(Contact updatedContact);
     public delegate void OnUpdatedSessionEventHandler(Session updatedSession, Message updatedMessage);
-    public delegate void OnUpdatedLogEventhandler(string logText);   
+    public delegate void OnUpdatedLogEventhandler(string logText);
 
     public sealed class History {
 
@@ -29,7 +29,7 @@ namespace MyChitChat.Plugin {
 
         History() {
             Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JABBER_CLIENT_OnLogin);
-            ChatSessions = new List<Session>();            
+            ChatSessions = new List<Session>();
             LogHistory = new StringBuilder();
             GUIPropertyManager.OnPropertyChanged += new GUIPropertyManager.OnPropertyChangedHandler(GUIPropertyManager_OnPropertyChanged);
         }
@@ -56,7 +56,7 @@ namespace MyChitChat.Plugin {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         public List<Session> ChatSessions { get; private set; }
-        
+
         //public IEnumerable<SessionListItem> SessionListItems {
         //    get {
         //        foreach (Session currentSession in Sessions) {
@@ -64,7 +64,7 @@ namespace MyChitChat.Plugin {
         //        }
         //    }
         //}
-       
+
         //private IEnumerable<Session> Sessions {
         //    get {
         //        foreach (KeyValuePair<Jid, Session> currentSession in ChatSessions) {
@@ -73,10 +73,10 @@ namespace MyChitChat.Plugin {
         //    }
         //}
 
-        private StringBuilder LogHistory {get; set;}
-        
-        
-        
+        private StringBuilder LogHistory { get; set; }
+
+
+
 
         #endregion
 
@@ -86,24 +86,28 @@ namespace MyChitChat.Plugin {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        public Session GetSession(Jid chatPartner) {            
-            return ChatSessions.Find(session => session.ContactJID == chatPartner);            
+        public Session GetSession(Jid chatPartner) {
+            return ChatSessions.Find(session => session.ContactJID.ToString().ToLower() == chatPartner.ToString().ToLower());
         }
 
         public Session GetSession(string fullJid) {
             return GetSession(new Jid(fullJid));
         }
 
-        public Session GetSession(int sessionIndex) {
-            return ChatSessions[sessionIndex];
+        public int GetSessionIndex(Session session) {
+            if (Main.StatusFilter.HasValue) {
+                if (Main.StatusFilter.Value) {
+                    return ChatSessions.FindAll(x => (x.IsActiveSession)).IndexOf(session);
+                } else {
+                    return ChatSessions.FindAll(x => (!x.IsActiveSession)).IndexOf(session);
+                }
+            } else {
+                return ChatSessions.IndexOf(session);
+            }
         }
 
-        public int GetSessionIndex(Session session) {
-            return ChatSessions.IndexOf(session);
-        }       
-
         public void ResetHistory() {
-            ChatSessions.Clear();            
+            ChatSessions.Clear();
         }
 
         #endregion
@@ -160,12 +164,12 @@ namespace MyChitChat.Plugin {
         }
 
         private void AppendLogEvent(DateTime when, string why, string who, string what) {
-            string tmp = String.Format("[{0}] {1}: {2} (\"{3}\")", new string[]{when.ToShortTimeString(), why, who, what});
+            string tmp = String.Format("[{0}] {1}: {2} (\"{3}\")", new string[] { when.ToShortTimeString(), why, who, what });
             LogHistory.AppendLine(tmp);
             Log.Info(tmp);
             OnUpdatedLog(LogHistory.ToString());
         }
-        
+
 
         #endregion
 
@@ -189,8 +193,8 @@ namespace MyChitChat.Plugin {
             Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
             Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
         }
-                
-        void Roster_ResourceAdded(nJim.Contact contact) {            
+
+        void Roster_ResourceAdded(nJim.Contact contact) {
             Session newSession = new Session(contact);
             newSession.OnChatSessionUpdated += new OnChatSessionUpdatedEventHandler(newSession_OnChatSessionUpdated);
             if (!ChatSessions.Contains(newSession)) {
@@ -205,30 +209,30 @@ namespace MyChitChat.Plugin {
         void Roster_ResourceRemoved(nJim.Contact contact) {
             ChatSessions.Remove(new Session(contact));
             OnUpdatedRoster(contact);
-            AppendLogEvent(contact.lastUpdated, "Contact Removed", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));        
+            AppendLogEvent(contact.lastUpdated, "Contact Removed", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
         }
 
         void JABBER_CLIENT_OnMessage(Message msg) {
             if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
                 NotifyMessage(msg);
-                AppendLogEvent(msg.DateTimeReceived, "Incoming Message", msg.FromJID.User, msg.Subject);        
+                AppendLogEvent(msg.DateTimeReceived, "Incoming Message", msg.FromJID.User, msg.Subject);
             }
             try {
                 if (msg.FromJID.User != null) {
                     GetSession(msg.FromJID).AddMessage(msg);
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 Log.Error(e);
             }
-            
+
         }
 
         void Roster_PresenceUpdated(nJim.Contact contact) {
             if (((Settings.notifyOnStatusPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnStatusGlobally) && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full) {
                 NotifyPresMooActTun(contact, null, null, null);
-            }            
-            OnUpdatedPresence(contact);
-            AppendLogEvent(contact.lastUpdated, "Presence Updated", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));        
+            }
+            OnUpdatedPresence(contact);            
+            AppendLogEvent(contact.lastUpdated, "Presence Updated", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
         }
 
         void Roster_MoodUpdated(nJim.Contact contact, Mood mood) {
@@ -269,7 +273,8 @@ namespace MyChitChat.Plugin {
                 NotifyMessage(msg);
             }
             OnUpdatedSession(session, msg);
-        }               
+            AppendLogEvent(msg.DateTimeReceived, "new Message", msg.ToJID.ToString(), msg.Subject);
+        }
 
         #endregion
 

@@ -54,7 +54,11 @@ namespace MyChitChat.Gui {
             foreach (ContextMenuButtons currentButton in buttonCollection) {
                 tmpItemList.Add(new GUIListItem(Translations.GetByName(currentButton.ToString())));
             }
-            return buttonCollection[ShowDialogSelect(tmpItemList, false).selectedIndex];
+            try {
+                return buttonCollection[ShowDialogSelect(tmpItemList, false).selectedIndex];
+            } catch {
+                return ContextMenuButtons.NothingSelected;
+            }
         }
 
         private GUIDialogMenu BuildDialogSelect(IEnumerable<GUIListItem> list) {
@@ -108,22 +112,25 @@ namespace MyChitChat.Gui {
             Helper.CurrentKeyboardType = (Dialog.KeyBoardTypes)tmpResult.selectedIndex;            
         }
 
-        public Status SelectAndSetStatus() {
+        public void SelectAndSetStatus() {
             DialogResult tmpResult = ShowDialogSelect(_lstSelectStatus, true);
-            Helper.SetStatus((Enums.StatusType)tmpResult.selectedIndex, tmpResult.message);
-            return Helper.JABBER_CLIENT.Presence.status;
+            if (tmpResult.selectedIndex > -1) {
+                Helper.SetStatus((Enums.StatusType)tmpResult.selectedIndex, tmpResult.message);
+            }
         }
 
-        public Mood SelectAndSetMood() {
+        public void SelectAndSetMood() {
             DialogResult tmpResult = ShowDialogSelect(_lstSelectMood, true);
-            Helper.SetMood((Enums.MoodType)tmpResult.selectedIndex, tmpResult.message);
-            return Helper.JABBER_CLIENT.Presence.mood;
+            if (tmpResult.selectedIndex > -1) {
+                Helper.SetMood((Enums.MoodType)tmpResult.selectedIndex, tmpResult.message);
+            }
         }
 
-        public Activity SelectAndSetActivity() {
+        public void SelectAndSetActivity() {
             DialogResult tmpResult = ShowDialogSelect(_lstSelectActivity, true);
-            Helper.JABBER_CLIENT.Presence.setActivity((Enums.ActivityType)tmpResult.selectedIndex, tmpResult.message);
-            return Helper.JABBER_CLIENT.Presence.activity;
+            if (tmpResult.selectedIndex > -1) {
+                Helper.JABBER_CLIENT.Presence.setActivity((Enums.ActivityType)tmpResult.selectedIndex, tmpResult.message);
+            }
         }
 
         /// <summary>

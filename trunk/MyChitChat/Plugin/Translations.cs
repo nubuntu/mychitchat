@@ -192,18 +192,18 @@ namespace MyChitChat.Plugin {
 
         /* Jabber / XMPP Mood Types */
 
-        public static string afraid = "";
-        public static string amazed = "";
-        public static string angry = "";
-        public static string annoyed = "";
-        public static string anxious = "";
-        public static string aroused = "";
-        public static string ashamed = "";
-        public static string bored = "";
-        public static string brave = "";
-        public static string calm = "";
-        public static string cold = "";
-        public static string confused = "";
+        public static string afraid = "afraid";
+        public static string amazed = "amazed";
+        public static string angry = "angry";
+        public static string annoyed = "annoyed";
+        public static string anxious = "anxious";
+        public static string aroused = "aroused";
+        public static string ashamed = "ashamed";
+        public static string bored = "bored";
+        public static string brave = "brave";
+        public static string calm = "calm";
+        public static string cold = "cold";
+        public static string confused = "confused";
         public static string contented = "";
         public static string cranky = "";
         public static string curious = "";
@@ -256,11 +256,11 @@ namespace MyChitChat.Plugin {
 
         /* Jabber / XMPP Activity Types */
 
-        public static string doing_chores = "Test";
-        public static string buying_groceries = "";
-        public static string cleaning = "";
-        public static string cooking = "";
-        public static string doing_maintenance = "";
+        public static string doing_chores = "doing_chores";
+        public static string buying_groceries = "buying_groceries";
+        public static string cleaning = "cleaning";
+        public static string cooking = "cooking";
+        public static string doing_maintenance = "doing_maintenance";
         public static string doing_the_dishes = "";
         public static string doing_the_laundry = "";
         public static string gardening = "";

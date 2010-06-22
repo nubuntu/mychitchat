@@ -332,8 +332,8 @@ namespace nJim {
         private void xmppOnRosterItem(object sender, agsXMPP.protocol.iq.roster.RosterItem item) {
             if (item.Jid != null) {
                 string bare = item.Jid.Bare.Trim();
-               
-                string resource = (item.Jid.Resource != null) ? item.Jid.Resource.Trim() : "?";
+
+                string resource = item.Jid.Resource;//(item.Jid.Resource != null) ? item.Jid.Resource.Trim() : "?";
                 if (item.Subscription == agsXMPP.protocol.iq.roster.SubscriptionType.remove) {
                     // si le contact existe
                     if (contacts.ContainsKey(bare)) {
@@ -351,7 +351,7 @@ namespace nJim {
                         OnContactAdded(bare);
                     }
                     // si on a une resource disponible sur ce contact
-                    if (resource != string.Empty) {
+                    if (!String.IsNullOrEmpty(resource)) {
                         // si elle n'existe pas encore
                         if (!contacts[bare].ContainsKey(resource)) {
                             contacts[bare].Add(resource, new Contact(item.Jid, ((item.Name != null) ? item.Name : string.Empty), item.GetGroups()));
@@ -375,7 +375,7 @@ namespace nJim {
         private void xmppOnPresence(object sender, agsXMPP.protocol.client.Presence presence) {
             if (presence.From != null && presence.To.Bare == Jabber.xmpp.MyJID.Bare) {
                 string bare = presence.From.Bare;
-                string resource = (presence.From.Resource != null) ? presence.From.Resource.Trim() : "?";
+                string resource = presence.From.Resource;//(presence.From.Resource != null) ? presence.From.Resource.Trim() : "?";
                 if (presence.Error == null) {
                     switch (presence.Type) {
                         case agsXMPP.protocol.client.PresenceType.subscribe:
