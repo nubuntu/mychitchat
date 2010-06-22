@@ -77,8 +77,8 @@ namespace MyChitChat.Gui {
         protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType) {
             if (control == ctrlFacadeMessageList && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
                //Dialog.Instance.ShowNotifyDialog(_currentChatSession.Messages[new Guid(ctrlFacadeMessageList.SelectedListItem.Path)].ToString());
-                _currentChatSession.Reply("Copy That: \n" + _currentChatSession.Messages[new Guid(ctrlFacadeMessageList.SelectedListItem.Path)].ToString());
-               _currentChatSession.Messages[new Guid(ctrlFacadeMessageList.SelectedListItem.Path)].Unread = false;
+                _currentChatSession.Reply("Copy That: \n" + _currentChatSession.Messages[ctrlFacadeMessageList.SelectedListItemIndex].ToString());
+               _currentChatSession.Messages[ctrlFacadeMessageList.SelectedListItemIndex].Unread = false;
             }
         }
 
@@ -92,7 +92,7 @@ namespace MyChitChat.Gui {
         private void UpdateChatHistory() {
             if (this.ctrlFacadeMessageList != null || this._currentChatSession != null) {
                 this.ctrlFacadeMessageList.Clear();
-                foreach (MessageListItem currentMessageItem in _currentChatSession.MessageListItems) {
+                foreach (Message currentMessageItem in _currentChatSession.Messages) {
                     this.ctrlFacadeMessageList.Add(currentMessageItem);
                 }
                 this.ctrlFacadeMessageList.Sort(new MessageComparerDateDesc());

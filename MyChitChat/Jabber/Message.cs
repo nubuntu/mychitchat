@@ -9,7 +9,7 @@ using MediaPortal.GUI.Library;
 namespace MyChitChat.Jabber {
 
 
-    public class Message {
+    public class Message : GUIListItem {
         private agsXMPP.protocol.client.Message _internalMessage;
         private DateTime _dateTimeReceived;
         private DirectionTypes _directionType;
@@ -22,6 +22,17 @@ namespace MyChitChat.Jabber {
             this._directionType = directionType;
             this._unread = (directionType == DirectionTypes.Incoming);
             this._messagID = Guid.NewGuid();
+            this._internalMessage = msg;
+            base.Path = MessageID.ToString();
+            base.Label = ToString();
+            base.FileInfo = new MediaPortal.Util.FileInformation();
+            base.FileInfo.CreationTime = DateTimeReceived;
+
+            //this.Label2 = msg.ChatState.ToString();
+            //this.Label3 = msg.DateTimeReceived.ToShortTimeString();
+            base.Shaded = !Unread;
+            base.DimColor = 4;
+            base.IconImage = base.IconImageBig = (DirectionType == DirectionTypes.Incoming) ? Helper.MEDIA_ICON_INCOMING_MESSAGE : Helper.MEDIA_ICON_OUTGOING_MESSAGE;
         }
         public Jid FromJID { get { return this._internalMessage.From; } }
         public Jid ToJID { get { return this._internalMessage.To; } }
@@ -48,37 +59,12 @@ namespace MyChitChat.Jabber {
             return String.Format("[{0}] {1}",this.DateTimeReceived.ToShortTimeString(), this.Subject);
         }
 
-    }
-
-    public class MessageListItem : GUIListItem {
-
-        private Message _internalMessage = null;
-
-        public MessageListItem(Message msg) {
-            this._internalMessage = msg;
-            this.Path = msg.MessageID.ToString();
-            this.Label = msg.ToString();
-            this.FileInfo = new MediaPortal.Util.FileInformation();
-            this.FileInfo.CreationTime = msg.DateTimeReceived;
-            
-            //this.Label2 = msg.ChatState.ToString();
-            //this.Label3 = msg.DateTimeReceived.ToShortTimeString();
-            this.Shaded = !msg.Unread;
-            this.DimColor = 4;
-            this.IconImage = this.IconImageBig = (msg.DirectionType == DirectionTypes.Incoming) ? Helper.MEDIA_ICON_INCOMING_MESSAGE : Helper.MEDIA_ICON_OUTGOING_MESSAGE;
-        }
-
-        public Jid JID {
-            get { return this._internalMessage.FromJID; }
-        }
-
-    }
+    }    
 
     public enum DirectionTypes {
         Incoming,
         Outgoing
-    }
-   
+    }  
     
 
     /// <summary>Implements ascending sort algorithm</summary>
