@@ -8,64 +8,84 @@ using MediaPortal.GUI.Library;
 
 namespace MyChitChat.Jabber {
 
+    public enum DirectionTypes {
+        Incoming,
+        Outgoing
+    }
 
     public class Message : GUIListItem {
-        private agsXMPP.protocol.client.Message _internalMessage;
-        private DateTime _dateTimeReceived;
-        private DirectionTypes _directionType;
-        private bool _unread;
-        private Guid _messagID;
+
+
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
 
         public Message(agsXMPP.protocol.client.Message msg, DirectionTypes directionType, DateTime receivedTime) {
-            this._internalMessage = msg;
-            this._dateTimeReceived = receivedTime;
-            this._directionType = directionType;
-            this._unread = (directionType == DirectionTypes.Incoming);
-            this._messagID = Guid.NewGuid();
-            this._internalMessage = msg;
+            this.InternalMessage = msg;
+            this.DateTimeReceived = receivedTime;
+            this.DirectionType = directionType;
+            this.Unread = (directionType == DirectionTypes.Incoming);
+            this.MessageID = Guid.NewGuid();
+            this.InternalMessage = msg;
+            this.Replied = false;           
             base.Path = MessageID.ToString();
+            UpdateItemInfo();
+        }
+
+        #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        private agsXMPP.protocol.client.Message InternalMessage { get; set; }
+        public Jid FromJID { get { return this.InternalMessage.From; } }
+        public Jid ToJID { get { return this.InternalMessage.To; } }
+        public String Subject { get { return this.InternalMessage.Subject; } }
+        public String Body { get { return this.InternalMessage.Body; } }
+        public String Error { get { return this.InternalMessage.Error.Message; } }
+        public MessageType MessageType { get { return this.InternalMessage.Type; } }
+        public DirectionTypes DirectionType { get; private set; }
+        public Chatstate ChatState { get { return this.InternalMessage.Chatstate; } }
+        public DateTime DateTimeReceived { get; private set; }
+        public Guid MessageID { get; private set; }
+        public bool Unread { get; set; }
+        public bool Replied { get; set; }
+
+        #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        private void UpdateItemInfo() {
             base.Label = ToString();
             base.FileInfo = new MediaPortal.Util.FileInformation();
             base.FileInfo.CreationTime = DateTimeReceived;
-
-            //this.Label2 = msg.ChatState.ToString();
-            //this.Label3 = msg.DateTimeReceived.ToShortTimeString();
-            base.Shaded = !Unread;
-            base.DimColor = 4;
             base.IconImage = base.IconImageBig = (DirectionType == DirectionTypes.Incoming) ? Helper.MEDIA_ICON_INCOMING_MESSAGE : Helper.MEDIA_ICON_OUTGOING_MESSAGE;
+            this.Label = ToString();
+            this.IsPlayed = !this.Unread;
+            this.IsRemote = this.Unread;      
         }
-        public Jid FromJID { get { return this._internalMessage.From; } }
-        public Jid ToJID { get { return this._internalMessage.To; } }
-        public String Subject { get { return (!String.IsNullOrEmpty( this._internalMessage.Subject)) ?  this._internalMessage.Subject : this._internalMessage.Body; } }
-        public String Body { get { return this._internalMessage.Body; } }
-        public String Error { get { return this._internalMessage.Error.Message; } }       
-        public MessageType MessageType { get { return this._internalMessage.Type; } }
-        public DirectionTypes DirectionType { get { return this._directionType; } }
-        public Chatstate ChatState { get { return this._internalMessage.Chatstate; } }
-        public DateTime DateTimeReceived { get { return this._dateTimeReceived; } }
-        public Guid MessageID { get { return this._messagID; } }
-        public bool Unread {
-            get { return this._unread; }
-            set { this._unread = value; }
+
+        #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        public override string ToString() {
+            return String.Format("[{0}] {1}", this.DateTimeReceived.ToShortTimeString(), this.Subject);
         }
+
+        #endregion
+
+
 
         #region IComparable Member
         public int CompareTo(object obj) {
             return DateTime.Compare(this.DateTimeReceived, ((Message)obj).DateTimeReceived);
         }
         #endregion
+    }
 
-        public override string ToString() {
-            return String.Format("[{0}] {1}",this.DateTimeReceived.ToShortTimeString(), this.Subject);
-        }
-
-    }    
-
-    public enum DirectionTypes {
-        Incoming,
-        Outgoing
-    }  
-    
+    #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Helper Classes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     /// <summary>Implements ascending sort algorithm</summary>
     class MessageComparerDateAsc : IComparer<GUIListItem> {
@@ -87,4 +107,6 @@ namespace MyChitChat.Jabber {
 
         #endregion
     }
+
+    #endregion
 }

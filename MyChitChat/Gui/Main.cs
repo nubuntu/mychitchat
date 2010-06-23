@@ -25,19 +25,16 @@ namespace MyChitChat.Gui {
         GUIListControl ctrlListControlContacts = null;
 
         [SkinControlAttribute(200)]
-        protected GUITextScrollUpControl ctrlTextboxLogHistory = null;
+        protected GUITextControl ctrlTextboxEventLog = null;
 
         [SkinControlAttribute(300)]
         protected GUITextControl ctrlTextboxLastMessage = null;
-
-        [SkinControlAttribute(400)]
-        protected GUIButtonControl btnContactDetails = null;
-
-
+        
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Properties ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+        private const string TAG_USER_NAME_NICK = "#MyChitChat.User.Name.Nick";              
         private const string TAG_USER_AVATAR_IMAGE = "#MyChitChat.User.Avatar.Image";
         private const string TAG_USER_STATUS_TYPE = "#MyChitChat.User.Status.Type";
         private const string TAG_USER_STATUS_IMAGE = "#MyChitChat.User.Status.Image";
@@ -110,10 +107,7 @@ namespace MyChitChat.Gui {
         protected override void OnPageLoad() {
             if (!Helper.JABBER_CLIENT.LoggedIn) {
                 Helper.JABBER_CLIENT.Login();
-            }
-            
-            GUIPropertyManager.SetProperty("#header.text", "TEST");
-            GUIPropertyManager.SetProperty("#header.label", "Main Window");
+            }           
             base.OnPageLoad();
 
         }
@@ -168,9 +162,8 @@ namespace MyChitChat.Gui {
         }
 
         protected override void OnWindowLoaded() {
-            base.OnWindowLoaded();
-            GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
-            GUIPropertyManager.SetProperty("#header.label", "Main Window");
+            base.OnWindowLoaded();           
+            SetupGuiControls();
             UpdateContactsFacade();
         }
 
@@ -213,6 +206,21 @@ namespace MyChitChat.Gui {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private GUI Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+        private void SetupGuiControls() {
+            GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
+            GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
+            GUIPropertyManager.SetProperty("#header.label", "Main Window");
+            GUIPropertyManager.SetProperty(TAG_USER_NAME_NICK, Helper.JABBER_CLIENT.Identity.nickname);
+
+            this.ctrlTextboxEventLog.EnableUpDown = true;            
+            this.ctrlListControlContacts.RemoteColor = 0xFFFF6347;
+            this.ctrlListControlContacts.PlayedColor = 0x2090EE90;
+            this.ctrlListControlContacts.DownloadColor = 0xFF90EE90;
+            this.ctrlListControlContacts.ShadedColor = 0xffff00000;
+            UpdateGuiUserProperties();
+        }
+
         private void ShowChatWindow(Session currentChatSession) {
             // do not show info if no contact selected
             if (currentChatSession != null) {
@@ -227,7 +235,6 @@ namespace MyChitChat.Gui {
             if (ctrlListControlContacts != null) {
                 ctrlListControlContacts.Clear();
                 foreach (Session currentSession in History.Instance.ChatSessions) {
-                    currentSession.UpdateItemImage();
                     currentSession.OnItemSelected -= new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
                     currentSession.OnItemSelected += new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
                     try {
@@ -323,10 +330,11 @@ namespace MyChitChat.Gui {
         }
 
         void JABBER_CLIENT_OnRosterEnd() {
-            AddHistoryEventHandlers();
             GUIWaitCursor.Hide();
+            History_OnUpdatedLog(History.Instance.LogHistory.ToString());
+            AddHistoryEventHandlers();            
             Helper.SetDefaultPresence();
-
+            History_OnUpdatedLog(History.Instance.LogHistory.ToString());
             if (Settings.selectStatusOnStartup) {
                 Dialog.Instance.SelectAndSetStatus();
             }
@@ -360,8 +368,8 @@ namespace MyChitChat.Gui {
         }
 
         void History_OnUpdatedLog(string logText) {
-            if (ctrlTextboxLogHistory != null) {
-                ctrlTextboxLogHistory.Label = logText;
+            if (ctrlTextboxEventLog != null) {
+                ctrlTextboxEventLog.Label = logText;
             }
         }
 

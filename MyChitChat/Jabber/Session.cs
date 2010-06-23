@@ -50,29 +50,28 @@ namespace MyChitChat.Jabber {
             Contact = chatPartner;
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
             DateTimeSessionStarted = DateTime.Now;
-            Messages = new List<Message>();
-            this.Label = ToString();
+            Messages = new List<Message>();            
             this.Path = ContactJID.ToString();
-            this.IconImage = this.IconImageBig = Helper.GetStatusIcon(Contact.status.type.ToString());
+            UpdateItemInfo();
         }
 
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        public void UpdateItemImage() {
-            this.IconImage = this.IconImageBig = Helper.GetStatusIcon(Contact.status.type.ToString());
-        }
-
-        public void Reply(string replyMessage) {
+        public bool Reply(string replyMessage) {
             if (String.IsNullOrEmpty(replyMessage)) {
                 replyMessage = Dialog.Instance.GetKeyBoardInput();
-            }            
-            AddMessageHistory(Helper.JABBER_CLIENT.SendMessage(replyMessage, ContactJID));
+            }
+            if (String.IsNullOrEmpty(replyMessage)) {
+                AddMessageHistory(Helper.JABBER_CLIENT.SendMessage(replyMessage, ContactJID));
+                return true;
+            }
+            return false;
         }
 
-        public void Reply() {
-            Reply(String.Empty);
+        public bool Reply() {
+            return Reply(String.Empty);
         }
 
         public void AddMessage(Message msg) {
@@ -92,9 +91,17 @@ namespace MyChitChat.Jabber {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+        private void UpdateItemInfo() {
+            this.IconImage = this.IconImageBig = Helper.GetStatusIcon(Contact.status.type.ToString());
+            this.Label = ToString();
+            this.IsPlayed = this.IsActiveSession;
+            this.IsRemote = !this.IsActiveSession;
+            this.IsDownloading = Messages.Count > 0;
+        }
+        
         private void AddMessageHistory(Message msg) {
             Messages.Add(msg);
-            this.Label = ToString();
+            UpdateItemInfo();
             OnChatSessionUpdated(this, msg);
         }
 
