@@ -147,5 +147,29 @@
             <font>font13</font>
             <label>Message</label>
         </control>
+        <control>
+            <type>image</type>
+            <posX>784</posX>
+            <posY>624</posY>
+            <width>65</width>
+            <height>65</height>
+            <texture>MyChitChat\plugin\icon_error.png</texture>
+        </control>
+        <control>
+            <type>image</type>
+            <posX>1184</posX>
+            <posY>624</posY>
+            <width>65</width>
+            <height>65</height>
+            <texture>MyChitChat\plugin\inbox_full.png</texture>
+        </control>
+        <control>
+            <type>image</type>
+            <posX>392</posX>
+            <posY>624</posY>
+            <width>65</width>
+            <height>65</height>
+            <texture>MyChitChat\plugin\read_message.png</texture>
+        </control>
     </controls>
 </window>
