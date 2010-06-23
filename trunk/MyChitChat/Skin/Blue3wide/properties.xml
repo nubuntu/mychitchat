@@ -18,5 +18,7 @@
     <property name="#MyChitChat.Contact.Activity.Type">#MyChitChat.Contact.Activity.Type</property>
     <property name="#MyChitChat.Contact.Activity.Message">#MyChitChat.Contact.Activity.Message</property>
     <property name="#MyChitChat.Contact.Mood.Message">#MyChitChat.Contact.Mood.Message</property>
-    <property name=""/>
+    <property name="#MyChitChat.Contact.Avatar.Image">#MyChitChat.Contact.Avatar.Image</property>
+    <property name="#MyChitChat.User.Name.Nick">#MyChitChat.User.Name.Nick</property>
+    <property name="#MyChitChat.Contact.Name.Nick">#MyChitChat.Contact.Name.Nick</property>
 </properties>

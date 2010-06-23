@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <window>
-    <id>90000</id>
+    <id>91001</id>
     <defaultcontrol>50</defaultcontrol>
     <allowoverlay>yes</allowoverlay>
     <disabletopbar>yes</disabletopbar>
@@ -8,64 +8,34 @@
         <import>common.window.default.xml</import>
         <control>
             <id>100</id>
-            <description>Contact List</description>
+            <description>Message List</description>
             <type>listcontrol</type>
-            <posX>952</posX>
-            <posY>128</posY>
-            <width>289</width>
+            <posX>880</posX>
+            <posY>136</posY>
+            <width>369</width>
             <height>521</height>
         </control>
         <control>
             <type>image</type>
             <posX>32</posX>
-            <posY>176</posY>
-            <width>64</width>
-            <height>64</height>
-            <texture>#MyChitChat.User.Status.Image</texture>
-        </control>
-        <control>
-            <type>label</type>
-            <posX>112</posX>
-            <posY>176</posY>
-            <font>font16</font>
-            <label>#MyChitChat.User.Status.Type</label>
-        </control>
-        <control>
-            <type>fadelabel</type>
-            <posX>112</posX>
-            <posY>216</posY>
-            <width>345</width>
-            <label>#MyChitChat.User.Status.Message</label>
-        </control>
-        <control>
-            <type>image</type>
-            <posX>32</posX>
             <posY>248</posY>
             <width>64</width>
             <height>64</height>
-            <texture>#MyChitChat.User.Mood.Image</texture>
+            <texture>#MyChitChat.Contact.Mood.Image</texture>
         </control>
         <control>
             <type>label</type>
             <posX>112</posX>
             <posY>248</posY>
             <font>font16</font>
-            <label>#MyChitChat.User.Mood.Type</label>
+            <label>#MyChitChat.Contact.Mood.Type</label>
         </control>
         <control>
             <type>fadelabel</type>
             <posX>112</posX>
             <posY>288</posY>
             <width>345</width>
-            <label>#MyChitChat.User.Mood.Message</label>
-        </control>
-        <control>
-            <type>label</type>
-            <posX>112</posX>
-            <posY>136</posY>
-            <font>font13</font>
-            <textcolor>ffffcc00</textcolor>
-            <label>#MyChitChat.User.Name.Nick</label>
+            <label>#MyChitChat.Contact.Mood.Message</label>
         </control>
         <control>
             <type>image</type>
@@ -73,26 +43,26 @@
             <posY>320</posY>
             <width>64</width>
             <height>64</height>
-            <texture>#MyChitChat.User.Activity.Image</texture>
+            <texture>#MyChitChat.Contact.Activity.Image</texture>
         </control>
         <control>
             <type>label</type>
             <posX>112</posX>
             <posY>320</posY>
             <font>font16</font>
-            <label>#MyChitChat.User.Activity.Type</label>
+            <label>#MyChitChat.Contact.Activity.Type</label>
         </control>
         <control>
             <type>fadelabel</type>
             <posX>112</posX>
             <posY>360</posY>
             <width>346</width>
-            <label>#MyChitChat.User.Activity.Message</label>
+            <label>#MyChitChat.Contact.Activity.Message</label>
         </control>
         <control>
             <type>label</type>
             <posX>112</posX>
-            <posY>408</posY>
+            <posY>136</posY>
             <font>font13</font>
             <textcolor>ffffcc00</textcolor>
             <label>#MyChitChat.Contact.Name.Nick</label>
@@ -108,7 +78,7 @@
         <control>
             <type>image</type>
             <posX>32</posX>
-            <posY>448</posY>
+            <posY>176</posY>
             <width>64</width>
             <height>64</height>
             <texture>#MyChitChat.Contact.Status.Image</texture>
@@ -116,7 +86,7 @@
         <control>
             <type>image</type>
             <posX>32</posX>
-            <posY>448</posY>
+            <posY>176</posY>
             <width>64</width>
             <height>64</height>
             <texture>#MyChitChat.Contact.Avatar.Image</texture>
@@ -124,14 +94,14 @@
         <control>
             <type>label</type>
             <posX>112</posX>
-            <posY>448</posY>
+            <posY>176</posY>
             <font>font16</font>
             <label>#MyChitChat.Contact.Status.Type</label>
         </control>
         <control>
             <type>fadelabel</type>
             <posX>112</posX>
-            <posY>488</posY>
+            <posY>216</posY>
             <width>346</width>
             <label>#MyChitChat.Contact.Status.Message</label>
         </control>
@@ -145,21 +115,21 @@
         </control>
         <control>
             <id>300</id>
-            <description>Contacts Last Message</description>
+            <description>Last Message</description>
             <type>textbox</type>
             <posX>32</posX>
-            <posY>520</posY>
+            <posY>448</posY>
             <width>425</width>
-            <height>137</height>
+            <height>209</height>
             <font>fontSVT</font>
         </control>
         <control>
             <id>200</id>
-            <description>History Log</description>
+            <description>Message Log</description>
             <type>textbox</type>
-            <posX>488</posX>
-            <posY>128</posY>
-            <width>441</width>
+            <posX>480</posX>
+            <posY>136</posY>
+            <width>369</width>
             <height>521</height>
             <font>fontSVT</font>
         </control>
@@ -168,14 +138,14 @@
             <posX>32</posX>
             <posY>136</posY>
             <font>font13</font>
-            <label>Myself</label>
+            <label>Contact</label>
         </control>
         <control>
             <type>label</type>
             <posX>32</posX>
             <posY>408</posY>
             <font>font13</font>
-            <label>Selected</label>
+            <label>Message</label>
         </control>
     </controls>
 </window>

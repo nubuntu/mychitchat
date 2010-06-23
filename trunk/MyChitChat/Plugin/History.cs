@@ -73,7 +73,7 @@ namespace MyChitChat.Plugin {
         //    }
         //}
 
-        private StringBuilder LogHistory { get; set; }
+        public StringBuilder LogHistory { get; private set; }
 
 
 

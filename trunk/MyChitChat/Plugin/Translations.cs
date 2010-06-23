@@ -56,7 +56,7 @@ namespace MyChitChat.Plugin {
                     Type transType = typeof(Translations);
                     FieldInfo[] fields = transType.GetFields(BindingFlags.Public | BindingFlags.Static);
                     foreach (FieldInfo field in fields) {
-                        localizedStrings.Add(field.Name, field.GetValue(transType).ToString());
+                        localizedStrings.Add(field.Name, !String.IsNullOrEmpty(field.GetValue(transType).ToString()) ? field.GetValue(transType).ToString() : field.Name);
                     }
                 }
                 return localizedStrings;
