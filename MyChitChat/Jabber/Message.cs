@@ -15,8 +15,6 @@ namespace MyChitChat.Jabber {
 
     public class Message : GUIListItem {
 
-
-
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
 
         public Message(agsXMPP.protocol.client.Message msg, DirectionTypes directionType, DateTime receivedTime) {
@@ -59,11 +57,25 @@ namespace MyChitChat.Jabber {
         private void UpdateItemInfo() {
             base.Label = ToString();
             base.FileInfo = new MediaPortal.Util.FileInformation();
-            base.FileInfo.CreationTime = DateTimeReceived;
-            base.IconImage = base.IconImageBig = (DirectionType == DirectionTypes.Incoming) ? Helper.MEDIA_ICON_INCOMING_MESSAGE : Helper.MEDIA_ICON_OUTGOING_MESSAGE;
+            base.FileInfo.CreationTime = DateTimeReceived;            
             this.Label = ToString();
             this.IsPlayed = !this.Unread;
-            this.IsRemote = this.Unread;      
+            this.IsRemote = this.Unread;
+            UpdateMessageIcon(); 
+        }
+
+        private void UpdateMessageIcon() {
+            string iconPath = String.Empty;
+            if (DirectionType == DirectionTypes.Outgoing) {
+                iconPath = Helper.MEDIA_ICON_MESSAGE_OUT;
+            } else if(Replied){
+                iconPath = Helper.MEDIA_ICON_MESSAGE_IN_REPLIED;
+            } else if (Unread) {
+                iconPath = Helper.MEDIA_ICON_MESSAGE_IN_UNREAD;
+            } else {
+                iconPath = Helper.MEDIA_ICON_MESSAGE_IN_READ;
+            }
+            base.IconImage = base.IconImageBig = iconPath;
         }
 
         #endregion

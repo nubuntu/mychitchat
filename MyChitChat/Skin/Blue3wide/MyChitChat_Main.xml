@@ -11,9 +11,9 @@
             <description>Contact List</description>
             <type>listcontrol</type>
             <posX>952</posX>
-            <posY>128</posY>
+            <posY>136</posY>
             <width>289</width>
-            <height>521</height>
+            <height>513</height>
         </control>
         <control>
             <type>image</type>
@@ -158,9 +158,9 @@
             <description>History Log</description>
             <type>textbox</type>
             <posX>488</posX>
-            <posY>128</posY>
+            <posY>136</posY>
             <width>441</width>
-            <height>521</height>
+            <height>513</height>
             <font>fontSVT</font>
         </control>
         <control>
@@ -176,6 +176,30 @@
             <posY>408</posY>
             <font>font13</font>
             <label>Selected</label>
+        </control>
+        <control>
+            <type>image</type>
+            <posX>864</posX>
+            <posY>616</posY>
+            <width>65</width>
+            <height>65</height>
+            <texture>MyChitChat\plugin\icon_error.png</texture>
+        </control>
+        <control>
+            <type>image</type>
+            <posX>1176</posX>
+            <posY>616</posY>
+            <width>65</width>
+            <height>65</height>
+            <texture>MyChitChat\plugin\contacts.png</texture>
+        </control>
+        <control>
+            <type>image</type>
+            <posX>392</posX>
+            <posY>624</posY>
+            <width>65</width>
+            <height>65</height>
+            <texture>MyChitChat\plugin\read_message.png</texture>
         </control>
     </controls>
 </window>

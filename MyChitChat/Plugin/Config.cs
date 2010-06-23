@@ -318,9 +318,7 @@ namespace MyChitChat.Plugin
 
         private void checkBoxTunePlugin_CheckedChanged(object sender, EventArgs e) {
             Settings.notifyOnTunePlugin = checkBoxTunePlugin.Checked;
-        }
-               
-       
+        }      
     }
         /// <summary>
         /// Event args for the test event

@@ -99,6 +99,7 @@
     <EmbeddedResource Include="Resources\img\MyChitChat_icon_disabled.png" />
     <EmbeddedResource Include="Resources\img\MyChitChat_icon_enabled.png" />
     <Content Include="Resources\img\Config_Stripes.png" />
+    <Content Include="Resources\img\jabber.png" />
     <Content Include="Resources\xmpp\agsXMPP.dll" />
     <Content Include="Resources\xmpp\agsXMPP.ui.dll" />
     <Content Include="Resources\xmpp\agsXMPP.xml" />

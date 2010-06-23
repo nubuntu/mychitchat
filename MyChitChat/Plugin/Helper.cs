@@ -40,9 +40,10 @@ namespace MyChitChat.Plugin {
         public static readonly string MEDIA_ICON_ERROR = SKIN_PATH_MEDIA + @"\plugin\icon_error.png";
         public static readonly string MEDIA_ICON_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_message.png";
         public static readonly string MEDIA_ICON_PRESENCE = SKIN_PATH_MEDIA + @"\plugin\icon_presence.png";
-        public static readonly string MEDIA_ICON_INCOMING_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_incoming_message.png";
-        public static readonly string MEDIA_ICON_OUTGOING_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_outgoing_message.png";
-
+        public static readonly string MEDIA_ICON_MESSAGE_IN_READ = SKIN_PATH_MEDIA + @"\plugin\icon_message_in_read.png";
+        public static readonly string MEDIA_ICON_MESSAGE_IN_UNREAD = SKIN_PATH_MEDIA + @"\plugin\icon_message_in_unread.png";
+        public static readonly string MEDIA_ICON_MESSAGE_IN_REPLIED = SKIN_PATH_MEDIA + @"\plugin\icon_message_in_replied.png";
+        public static readonly string MEDIA_ICON_MESSAGE_OUT = SKIN_PATH_MEDIA + @"\plugin\icon_message_out.png";        
 
         public static string GetStatusIcon(string status) {
             string tmpPath = String.Format(@"{0}\status\{1}.png", SKIN_PATH_MEDIA, status);

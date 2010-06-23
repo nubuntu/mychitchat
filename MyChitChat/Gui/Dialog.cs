@@ -77,11 +77,19 @@ namespace MyChitChat.Gui {
 
         private IEnumerable<GUIListItem> BuildDialogSelectList(Type enumType) {
             foreach (string type in Enum.GetNames(enumType)) {
+                string iconPath = Helper.MEDIA_ICON_DEFAULT;
+                if (enumType == typeof(Enums.StatusType)) {
+                    iconPath = Helper.GetStatusIcon(type);
+                } else if (enumType  == typeof(Enums.MoodType)) {
+                    iconPath = Helper.GetMoodIcon(type);
+                } else if (enumType  == typeof(Enums.ActivityType)) {
+                    iconPath = Helper.GetActivityIcon(type);
+                }
                 yield return Helper.CreateGuiListItem(type,
                         Translations.GetByName(type.ToString()),
                         String.Empty,
                         String.Empty,
-                        Helper.GetStatusIcon(type),
+                        iconPath,
                         type == Enums.StatusType.Invisible.ToString(),
                         null,
                         false
@@ -109,7 +117,7 @@ namespace MyChitChat.Gui {
 
         public void SelectAndSetKeyboardType() {
             DialogResult tmpResult = ShowDialogSelect(BuildDialogSelectList(typeof(Dialog.KeyBoardTypes)), false);
-            Helper.CurrentKeyboardType = (Dialog.KeyBoardTypes)tmpResult.selectedIndex;            
+            Helper.CurrentKeyboardType = (Dialog.KeyBoardTypes)tmpResult.selectedIndex;
         }
 
         public void SelectAndSetStatus() {
@@ -230,15 +238,15 @@ namespace MyChitChat.Gui {
                 type.ToString() + "\n" + message,
                 Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_NOTIFY
             );
-        }       
+        }
 
         public string GetKeyBoardInput(string defaultText, KeyBoardTypes keyboardType) {
             VirtualKeyboard keyboard;
-            switch (keyboardType) {                
-                case  KeyBoardTypes.SMS:
+            switch (keyboardType) {
+                case KeyBoardTypes.SMS:
                     keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_SMS_KEYBOARD);
                     break;
-                case  KeyBoardTypes.Web:                    
+                case KeyBoardTypes.Web:
                     keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_WEB_KEYBOARD);
                     break;
                 default:
@@ -260,7 +268,7 @@ namespace MyChitChat.Gui {
             }
         }
         public string GetKeyBoardInput() {
-            return GetKeyBoardInput(String.Empty, Helper.CurrentKeyboardType );
+            return GetKeyBoardInput(String.Empty, Helper.CurrentKeyboardType);
         }
     }
 
