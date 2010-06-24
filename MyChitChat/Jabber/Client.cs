@@ -103,6 +103,7 @@ namespace MyChitChat.Jabber {
             _jabberConnection.keepAliveInterval = 55;
             _jabberConnection.priority = 5;
             _jabberConnection.socketConnectionType = Enums.SocketConnectionType.Normal;
+            _jabberConnection.XMPPConnection.IqGrabber.SynchronousTimeout = 20000;
 
             _jabberConnection.ssl = false;
             _jabberConnection.tls = true;

@@ -10,6 +10,7 @@ using nJim;
 using MediaPortal.GUI.Library;
 using MediaPortal.TagReader;
 using System.Text;
+using System.Windows.Forms;
 
 
 namespace MyChitChat.Gui {
@@ -25,7 +26,7 @@ namespace MyChitChat.Gui {
         [SkinControlAttribute(100)]
         GUIListControl ctrlListControlContacts = null;
 
-        [SkinControlAttribute(200)]
+        [SkinControlAttribute(700)]
         protected GUITextControl ctrlTextboxEventLog = null;
 
         [SkinControlAttribute(300)]
@@ -111,15 +112,10 @@ namespace MyChitChat.Gui {
         protected override void OnPageLoad() {
             if (!Helper.JABBER_CLIENT.LoggedIn) {
                 Helper.JABBER_CLIENT.Login();
-            }           
-            base.OnPageLoad();
-
-        }
-
-        protected override void OnWindowLoaded() {
-            base.OnWindowLoaded();
+            } 
             SetupGuiControls();
             UpdateContactsFacade();
+            base.OnPageLoad();
         }
 
         protected override void OnPreviousWindow() {
@@ -152,6 +148,7 @@ namespace MyChitChat.Gui {
             }
             if (control == btnNewMessage && CurrentSession != null) {
                 CurrentSession.Reply();
+            
             }
             base.OnClicked(controlId, control, actionType);           
         }
@@ -213,22 +210,26 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private GUI Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+        /// <summary>
+        /// Setups the GUI controls.
+        /// </summary>
         private void SetupGuiControls() {
-            GUIPropertyManager.SetProperty("#currentmodule", Helper.PLUGIN_NAME);
-            GUIPropertyManager.SetProperty("#title", Helper.PLUGIN_NAME); 
-            GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
-            GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
+            //GUIPropertyManager.SetProperty("#title", Helper.PLUGIN_NAME); 
+            //GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
+            //GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.label", "Main Window");
-            GUIPropertyManager.SetProperty(TAG_USER_NAME_NICK, Helper.JABBER_CLIENT.Identity.nickname);
-
-            this.ctrlTextboxEventLog.EnableUpDown = true;            
+            GUIPropertyManager.SetProperty("#currentmodule", Helper.PLUGIN_NAME);
+            
             this.ctrlListControlContacts.RemoteColor = 0xFFFF6347;
             this.ctrlListControlContacts.PlayedColor = 0x2090EE90;
             this.ctrlListControlContacts.DownloadColor = 0xFF90EE90;
             this.ctrlListControlContacts.ShadedColor = 0xffff00000;
-            UpdateGuiUserProperties();
         }
 
+        /// <summary>
+        /// Shows the chat window.
+        /// </summary>
+        /// <param name="currentChatSession">The current chat session.</param>
         private void ShowChatWindow(Session currentChatSession) {
             // do not show info if no contact selected
             if (currentChatSession != null) {
@@ -239,10 +240,14 @@ namespace MyChitChat.Gui {
             }
         }
 
+        /// <summary>
+        /// Updates the contacts facade.
+        /// </summary>
         private void UpdateContactsFacade() {
             if (ctrlListControlContacts != null) {
                 ctrlListControlContacts.Clear();
                 foreach (Session currentSession in History.Instance.ChatSessions) {
+                    currentSession.UpdateItemInfo();
                     currentSession.OnItemSelected -= new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
                     currentSession.OnItemSelected += new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
                     try {
@@ -258,12 +263,13 @@ namespace MyChitChat.Gui {
                         Log.Error(e);
                     }
                 }
-
+                ctrlListControlContacts.DoUpdate();
             }
         }
         private void UpdateGuiUserProperties() {
             Presence myPres = Helper.JABBER_CLIENT.Presence;
-
+            GUIPropertyManager.SetProperty(TAG_USER_NAME_NICK, Helper.JABBER_CLIENT.Identity.nickname);
+            
             GUIPropertyManager.SetProperty(TAG_USER_STATUS_TYPE, Translations.GetByName(myPres.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_USER_STATUS_IMAGE, Helper.GetStatusIcon(myPres.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_USER_STATUS_MESSAGE, myPres.status.message);
@@ -282,7 +288,7 @@ namespace MyChitChat.Gui {
                 return;
             }
             GUIPropertyManager.SetProperty(TAG_CONTACT_AVATAR_IMAGE, Cache.GetAvatarImagePath(selectedSession.ContactDetails));
-            GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, selectedSession.ContactDetails.nickname);
+            GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, selectedSession.ContactNickname);
             GUIPropertyManager.SetProperty(TAG_CONTACT_LAST_ACTIVE, selectedSession.DateTimeLastActive.ToShortTimeString());
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_TYPE, Translations.GetByName(selectedSession.Contact.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_IMAGE, Helper.GetStatusIcon(selectedSession.Contact.status.type.ToString()));
@@ -334,6 +340,7 @@ namespace MyChitChat.Gui {
 
 
         void JABBER_CLIENT_OnRosterStart() {
+            GUIWaitCursor.Init();
             GUIWaitCursor.Show();
         }
 
@@ -361,7 +368,7 @@ namespace MyChitChat.Gui {
         }
 
 
-        void History_OnUpdatedSession(Session updatedSession, Message msg) {
+        void History_OnUpdatedSession(Session updatedSession, MyChitChat.Jabber.Message msg) {
             UpdateContactsFacade();
             if (ctrlListControlContacts != null){// && !ctrlListControlContacts.IsFocused) {
                 ctrlListControlContacts.SelectedListItemIndex = History.Instance.GetSessionIndex(updatedSession);

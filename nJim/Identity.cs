@@ -433,7 +433,7 @@ namespace nJim {
             _organization = new Organization();
             _organization.name = string.Empty;
             _organization.unit = string.Empty;            
-            //Load();
+            Load();
             Jabber.xmpp.OnIq += new agsXMPP.protocol.client.IqHandler(iqManager);
         }
 

@@ -75,9 +75,11 @@ namespace MyChitChat.Gui {
         protected override void OnWindowLoaded() {
             if (this._currentChatSession == null) {
                 Log.Error(new Exception(Helper.PLUGIN_NAME + " - Error: Chat.OnWindowLoaded() - CurrentChatSeesion empty!"));
+            } else {
+                SetupGuiControls();
             }
             base.OnWindowLoaded();
-            SetupGuiControls();
+            
         }
 
         protected override void OnShowContextMenu() {
