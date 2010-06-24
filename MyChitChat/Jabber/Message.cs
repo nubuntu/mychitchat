@@ -27,6 +27,7 @@ namespace MyChitChat.Jabber {
             this.Replied = false;           
             base.Path = MessageID.ToString();
             UpdateItemInfo();
+            base.OnItemSelected += new ItemSelectedHandler(Message_OnItemSelected);
         }
 
         #endregion
@@ -57,8 +58,9 @@ namespace MyChitChat.Jabber {
         private void UpdateItemInfo() {
             base.Label = ToString();
             base.FileInfo = new MediaPortal.Util.FileInformation();
-            base.FileInfo.CreationTime = DateTimeReceived;            
-            this.Label = ToString();
+            base.FileInfo.CreationTime = DateTimeReceived;
+            this.Label = this.Subject;
+            this.Label2 = this.DateTimeReceived.ToShortTimeString();
             this.IsPlayed = !this.Unread;
             this.IsRemote = this.Unread;
             UpdateMessageIcon(); 
@@ -83,7 +85,7 @@ namespace MyChitChat.Jabber {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public override string ToString() {
-            return String.Format("[{0}] {1}", this.DateTimeReceived.ToShortTimeString(), this.Subject);
+            return String.Format("[{0}] {1}", this.DateTimeReceived.ToShortTimeString(), this.Body);
         }
 
         #endregion
@@ -95,7 +97,18 @@ namespace MyChitChat.Jabber {
             return DateTime.Compare(this.DateTimeReceived, ((Message)obj).DateTimeReceived);
         }
         #endregion
+
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        void Message_OnItemSelected(GUIListItem item, GUIControl parent) {
+            if (item.Path == this.Path) {
+                this.Unread = false;
+            }
+        }
+
+        #endregion
     }
+
 
     #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Helper Classes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

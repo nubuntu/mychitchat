@@ -324,7 +324,7 @@ namespace nJim {
                 // Formats acceptés: BMP, PNG, GIG, JPG, et ICON
                 if (value == null) {
                     _photo = null;
-                }else if (value.RawFormat.ToString().Contains(ImageFormat.Bmp.Guid.ToString()) ||
+                } else if (value.RawFormat.ToString().Contains(ImageFormat.Bmp.Guid.ToString()) ||
                     value.RawFormat.ToString().Contains(ImageFormat.Gif.Guid.ToString()) ||
                     value.RawFormat.ToString().Contains(ImageFormat.Icon.Guid.ToString()) ||
                     value.RawFormat.ToString().Contains(ImageFormat.Jpeg.Guid.ToString()) ||
@@ -432,8 +432,8 @@ namespace nJim {
             _name.middle = string.Empty;
             _organization = new Organization();
             _organization.name = string.Empty;
-            _organization.unit = string.Empty;
-            load();
+            _organization.unit = string.Empty;            
+            //Load();
             Jabber.xmpp.OnIq += new agsXMPP.protocol.client.IqHandler(iqManager);
         }
 
@@ -475,15 +475,17 @@ namespace nJim {
         /// <summary>
         /// Charge la fiche d'identité locale
         /// </summary>
-        public void load() {
-            string filename = Regex.Replace(jabberID.full, @"[^\w\.@-]", "_") + ".xml";
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase.Replace("file:///", ""));
-            if (!path.EndsWith(Path.DirectorySeparatorChar.ToString())) { path += Path.DirectorySeparatorChar.ToString(); }
-            path += filename;
-            if (File.Exists(path)) {
+        public void Load(string vCardFilePath) {
+            if (!Directory.Exists(Path.GetDirectoryName(vCardFilePath))) {
+                try {
+                    Directory.CreateDirectory(vCardFilePath);
+                } catch (Exception ee) {                    
+                }
+            }
+            if (File.Exists(vCardFilePath)) {
                 try {
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(path);
+                    xDoc.Load(vCardFilePath);
                     XmlElement vcard = xDoc["vcard"];
                     XmlElement xAddresses = vcard["addresses"];
                     if (xAddresses.HasChildNodes) {
@@ -610,7 +612,11 @@ namespace nJim {
                     _title = (vcard["title"].InnerText != null) ? vcard["title"].InnerText : string.Empty;
                     _url = (vcard["url"].InnerText != null) ? vcard["url"].InnerText : string.Empty;
                     onIdentityRetrieved();
-                } catch { }
+                } catch {
+
+                }
+            } else {
+                this.retrieve();
             }
         }
 
@@ -635,11 +641,14 @@ namespace nJim {
         /// <summary>
         /// Sauvegarde locale de la fiche d'identité
         /// </summary>
-        public void save() {
-            string filename = Regex.Replace(jabberID.full, @"[^\w\.@-]", "_") + ".xml";
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase.Replace("file:///", ""));
-            if (!path.EndsWith(Path.DirectorySeparatorChar.ToString())) { path += Path.DirectorySeparatorChar.ToString(); }
-            path += filename;
+        public void Save(string vCardFilePath) {
+            if (!Directory.Exists(Path.GetDirectoryName(vCardFilePath))) {
+                try {
+                    Directory.CreateDirectory(vCardFilePath);
+                } catch (Exception e) {
+                   
+                }
+            }
             XmlDocument xDoc = new XmlDocument();
             xDoc.AppendChild(xDoc.CreateXmlDeclaration("1.0", null, null));
             XmlElement vcard = xDoc.CreateElement("vcard");
@@ -748,7 +757,7 @@ namespace nJim {
             xUrl.AppendChild(xDoc.CreateTextNode(url));
             vcard.AppendChild(xUrl);
             xDoc.AppendChild(vcard);
-            xDoc.Save(path);
+            xDoc.Save(vCardFilePath);
         }
 
         /// <summary>

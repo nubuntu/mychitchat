@@ -87,6 +87,7 @@ namespace nJim
 		public Identity identity
 		{
 			get { return _identity; }
+            set { _identity = value; }
 		}
 
 		private List<string> _groups = new List<string>();
