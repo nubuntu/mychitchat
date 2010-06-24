@@ -34,6 +34,9 @@ namespace MyChitChat.Gui {
         [SkinControlAttribute(300)]
         protected GUITextControl ctrlTextboxSelectedMessage = null;
 
+        [SkinControlAttribute(401)]
+        protected GUIButtonControl btnNewMessage = null;
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Properties ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,6 +88,10 @@ namespace MyChitChat.Gui {
             if (control == ctrlListMessages && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
                 HandleChatMessage(_currentChatSession.Messages[ctrlListMessages.SelectedListItemIndex]);
             }
+            if (control == btnNewMessage && _currentChatSession != null) {
+                _currentChatSession.Reply();
+            }
+            base.OnClicked(controlId, control, actionType);           
         }
 
         private void HandleChatMessage(Message selectedMessage) {
@@ -106,13 +113,15 @@ namespace MyChitChat.Gui {
             GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.label", "Chat Window");
-            GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, _currentChatSession.ContactDetails.nickname);
-
-            this.ctrlTextboxMessageHistory.EnableUpDown = true;
-            this.ctrlListMessages.RemoteColor = 0xFFFF6347;
-            this.ctrlListMessages.PlayedColor = 0x2090EE90;
-            this.ctrlListMessages.DownloadColor = 0xFF90EE90;
-            this.ctrlListMessages.ShadedColor = 0xffff00000;
+            if (this.ctrlTextboxMessageHistory != null) {
+                this.ctrlTextboxMessageHistory.EnableUpDown = true;
+            }
+            if (this.ctrlListMessages != null) {
+                this.ctrlListMessages.RemoteColor = 0xFFFF6347;
+                this.ctrlListMessages.PlayedColor = 0x2090EE90;
+                this.ctrlListMessages.DownloadColor = 0xFF90EE90;
+                this.ctrlListMessages.ShadedColor = 0xffff00000;
+            }
             UpdateGuiContactProperties();
         }
 
@@ -120,7 +129,9 @@ namespace MyChitChat.Gui {
             string tmp = String.Format("[{0}] {1}: {2} (\"{3}\")", new string[] { when.ToShortTimeString(), why, who, what });
             LogMessages.AppendLine(tmp);
             Log.Info(tmp);
-            this.ctrlTextboxMessageHistory.Label = LogMessages.ToString();
+            if (this.ctrlListMessages != null) {
+                this.ctrlTextboxMessageHistory.Label = LogMessages.ToString();
+            }
         }
 
         private void UpdateChatHistory() {
@@ -135,6 +146,7 @@ namespace MyChitChat.Gui {
         }
 
         private void UpdateGuiContactProperties() {
+            GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, _currentChatSession.ContactDetails.nickname);
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_TYPE, Translations.GetByName(_currentChatSession.Contact.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_IMAGE, Helper.GetStatusIcon(_currentChatSession.Contact.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_MESSAGE, _currentChatSession.Contact.status.message);

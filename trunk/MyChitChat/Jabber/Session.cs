@@ -15,11 +15,13 @@ namespace MyChitChat.Jabber {
 
     public delegate void OnChatSessionUpdatedEventHandler(Session session, Message msg);
 
-    public class Session : GUIListItem, IEquatable<Session>{
+    public class Session : GUIListItem, IEquatable<Session> {
+
+        private static string vCardDir = MediaPortal.Configuration.Config.Dir.Database + @"\" + Helper.PLUGIN_NAME + @"\";
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        public bool IsActiveSession { 
+        public bool IsActiveSession {
             get {
                 return Contact.status.type != Enums.StatusType.Unvailable;
             }
@@ -27,8 +29,22 @@ namespace MyChitChat.Jabber {
         public List<Message> Messages { get; private set; }
         public Contact Contact { get; private set; }
         public Jid ContactJID { get; private set; }
-        public Identity ContactDetails { get { return Contact.identity; } }
-        public String ContactNickname { get { return ContactDetails.nickname; } }
+        public Identity ContactDetails {
+            get {
+                return Contact.identity;
+            }
+            private set {
+                Contact.identity = value;
+            }
+        }
+        public String ContactNickname {
+            get {
+                return (ContactDetails != null) ? ContactDetails.nickname : ContactJID.User;
+            }
+            private set {
+                if (ContactDetails != null) { ContactDetails.nickname = value; }
+            }
+        }
 
         public DateTime DateTimeLastActive {
             get {
@@ -40,7 +56,7 @@ namespace MyChitChat.Jabber {
             }
             set { DateTimeLastActive = value; }
         }
-        private DateTime DateTimeSessionStarted { get; set; }        
+        private DateTime DateTimeSessionStarted { get; set; }
 
         #endregion
 
@@ -49,8 +65,11 @@ namespace MyChitChat.Jabber {
         public Session(Contact chatPartner) {
             Contact = chatPartner;
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
+            ContactDetails.identityRetrieved += new IdentityHandler(OnIdentityRetrieved);
+            ContactDetails.NicknameUpdated += new IdentityHandler(OnIdentityRetrieved);
+            ContactDetails.Load(GetVCardFilePath());
             DateTimeSessionStarted = DateTime.Now;
-            Messages = new List<Message>();            
+            Messages = new List<Message>();
             this.Path = ContactJID.ToString();
             UpdateItemInfo();
         }
@@ -93,16 +112,21 @@ namespace MyChitChat.Jabber {
 
         private void UpdateItemInfo() {
             this.IconImage = this.IconImageBig = Helper.GetStatusIcon(Contact.status.type.ToString());
-            this.Label = ToString();
+            this.Label = ContactNickname;
+            this.Label2 =  String.Format("[{0}/{1}]", Messages.Count(msg => msg.Unread).ToString(), Messages.Count);
             this.IsPlayed = this.IsActiveSession;
             this.IsRemote = !this.IsActiveSession;
             this.IsDownloading = Messages.Count > 0;
         }
-        
+
         private void AddMessageHistory(Message msg) {
             Messages.Add(msg);
             UpdateItemInfo();
             OnChatSessionUpdated(this, msg);
+        }
+
+        private string GetVCardFilePath() {
+            return String.Format(@"{0}vCard_{1}.xml", vCardDir, this.ContactJID.GetHashCode());
         }
 
         #endregion
@@ -114,6 +138,11 @@ namespace MyChitChat.Jabber {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        void OnIdentityRetrieved(Identity sender) {
+            this.ContactDetails = sender;
+            this.ContactDetails.Save(GetVCardFilePath());
+        }
 
         #endregion
 
@@ -129,9 +158,9 @@ namespace MyChitChat.Jabber {
         #region IEquatable<Session> Member
 
         public bool Equals(Session other) {
-            return String.Equals( this.ContactJID.ToString(), other.ContactJID.ToString(), StringComparison.CurrentCultureIgnoreCase);
+            return String.Equals(this.ContactJID.ToString(), other.ContactJID.ToString(), StringComparison.CurrentCultureIgnoreCase);
         }
 
         #endregion
-    }  
+    }
 }

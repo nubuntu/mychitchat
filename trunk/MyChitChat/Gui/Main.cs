@@ -17,6 +17,7 @@ namespace MyChitChat.Gui {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Member Fields ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         private Chat guiWindowChat;
+        
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Controls ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -29,6 +30,9 @@ namespace MyChitChat.Gui {
 
         [SkinControlAttribute(300)]
         protected GUITextControl ctrlTextboxLastMessage = null;
+
+        [SkinControlAttribute(401)]
+        protected GUIButtonControl btnNewMessage = null;
         
         #endregion
 
@@ -112,7 +116,46 @@ namespace MyChitChat.Gui {
 
         }
 
+        protected override void OnWindowLoaded() {
+            base.OnWindowLoaded();
+            SetupGuiControls();
+            UpdateContactsFacade();
+        }
 
+        protected override void OnPreviousWindow() {
+            base.OnPreviousWindow();
+        }
+
+        public override void OnAction(MediaPortal.GUI.Library.Action action) {
+            switch (action.wID) {
+                case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED:
+                    if (ctrlListControlContacts.IsFocused && ctrlListControlContacts.SelectedListItem != null) {
+                        if (action.m_key.KeyChar != 13 && action.m_key.KeyChar != 27 && ctrlListControlContacts != null) {
+                            History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path).Reply(Dialog.Instance.GetKeyBoardInput(((char)action.m_key.KeyChar).ToString(), Helper.CurrentKeyboardType));
+                            return;
+                        }
+                    }
+                    break;
+            }
+            base.OnAction(action);
+        }
+
+        protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType) {
+
+            if (control == ctrlListControlContacts && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
+                try {
+                    CurrentSession = History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path);
+                    ShowChatWindow(CurrentSession);
+                } catch (Exception e) {
+                    Log.Error(e);
+                }
+            }
+            if (control == btnNewMessage && CurrentSession != null) {
+                CurrentSession.Reply();
+            }
+            base.OnClicked(controlId, control, actionType);           
+        }
+       
         protected override void OnShowContextMenu() {
             List<Dialog.ContextMenuButtons> tmpList = new List<Dialog.ContextMenuButtons>();
             foreach (Dialog.ContextMenuButtons tmp in Enum.GetValues(typeof(Dialog.ContextMenuButtons))) {
@@ -161,43 +204,6 @@ namespace MyChitChat.Gui {
             }
         }
 
-        protected override void OnWindowLoaded() {
-            base.OnWindowLoaded();           
-            SetupGuiControls();
-            UpdateContactsFacade();
-        }
-
-        protected override void OnPreviousWindow() {
-            base.OnPreviousWindow();
-        }
-
-        public override void OnAction(MediaPortal.GUI.Library.Action action) {
-            switch (action.wID) {
-                case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED :
-                    if (ctrlListControlContacts.IsFocused && ctrlListControlContacts.SelectedListItem != null) {
-                        if (action.m_key.KeyChar != 13 && action.m_key.KeyChar != 27 && ctrlListControlContacts != null) {
-                            History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path).Reply(Dialog.Instance.GetKeyBoardInput(((char)action.m_key.KeyChar).ToString(), Helper.CurrentKeyboardType));
-                            return;
-                        }
-                    }
-                    break;
-            }
-            base.OnAction(action);
-        }
-
-        protected override void OnClicked(int controlId, GUIControl control, MediaPortal.GUI.Library.Action.ActionType actionType) {
-
-            if (control == ctrlListControlContacts && actionType == MediaPortal.GUI.Library.Action.ActionType.ACTION_SELECT_ITEM) {
-                try {
-                    ShowChatWindow(History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path));
-                } catch (Exception e) {
-                    Log.Error(e);
-                }
-            }
-            base.OnClicked(controlId, control, actionType);
-        }
-
-
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -208,6 +214,8 @@ namespace MyChitChat.Gui {
 
 
         private void SetupGuiControls() {
+            GUIPropertyManager.SetProperty("#currentmodule", Helper.PLUGIN_NAME);
+            GUIPropertyManager.SetProperty("#title", Helper.PLUGIN_NAME); 
             GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.label", "Main Window");
@@ -281,8 +289,8 @@ namespace MyChitChat.Gui {
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_MESSAGE, selectedSession.Contact.status.message);
             ctrlTextboxLastMessage.Clear();
             if (selectedSession.Messages.Count > 0) {
-                ctrlTextboxLastMessage.Label = selectedSession.Messages.Last().ToString();
-            }
+                ctrlTextboxLastMessage.Label = selectedSession.Messages.Last().ToString();               
+            } 
         }
 
 
@@ -363,7 +371,9 @@ namespace MyChitChat.Gui {
 
         void OnSessionItemSelected(GUIListItem sessionItem, GUIControl parentControl) {
             if (sessionItem != null && parentControl == ctrlListControlContacts) {
-                UpdateGuiContactProperties(History.Instance.GetSession(sessionItem.Path));                
+                CurrentSession = History.Instance.GetSession(sessionItem.Path);
+                UpdateGuiContactProperties(CurrentSession);                
+               
             }
         }
 
@@ -378,7 +388,8 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public static bool? StatusFilter { get; private set; }
-        
+
+        private static Session CurrentSession { get; set; }
 
         // With GetID it will be an window-plugin / otherwise a process-plugin
         // Enter the id number here again
