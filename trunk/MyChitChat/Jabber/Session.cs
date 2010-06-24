@@ -65,13 +65,17 @@ namespace MyChitChat.Jabber {
         public Session(Contact chatPartner) {
             Contact = chatPartner;
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
-            ContactDetails.identityRetrieved += new IdentityHandler(OnIdentityRetrieved);
-            ContactDetails.NicknameUpdated += new IdentityHandler(OnIdentityRetrieved);
-            ContactDetails.Load(GetVCardFilePath());
+            chatPartner.identity.identityRetrieved += new IdentityHandler(identity_identityRetrieved);
+            ContactDetails.retrieve();
             DateTimeSessionStarted = DateTime.Now;
             Messages = new List<Message>();
             this.Path = ContactJID.ToString();
             UpdateItemInfo();
+        }
+
+        void identity_identityRetrieved(Identity sender) {
+            ContactDetails = sender;
+
         }
 
         #endregion
@@ -110,7 +114,7 @@ namespace MyChitChat.Jabber {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        private void UpdateItemInfo() {
+        public void UpdateItemInfo() {
             this.IconImage = this.IconImageBig = Helper.GetStatusIcon(Contact.status.type.ToString());
             this.Label = ContactNickname;
             this.Label2 =  String.Format("[{0}/{1}]", Messages.Count(msg => msg.Unread).ToString(), Messages.Count);
@@ -138,11 +142,7 @@ namespace MyChitChat.Jabber {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-        void OnIdentityRetrieved(Identity sender) {
-            this.ContactDetails = sender;
-            this.ContactDetails.Save(GetVCardFilePath());
-        }
+             
 
         #endregion
 

@@ -185,6 +185,7 @@ namespace MyChitChat.Plugin {
         void JABBER_CLIENT_OnLogin(object sender) {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
             //ShowNotifyDialog("MyChitChat loaded...");   
+            Helper.JABBER_CLIENT.Identity.retrieve();
             Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
             Helper.JABBER_CLIENT.Roster.ResourceAdded += new ResourceHandler(Roster_ResourceAdded);
             Helper.JABBER_CLIENT.Roster.ResourceRemoved += new ResourceHandler(Roster_ResourceRemoved);
