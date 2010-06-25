@@ -7,6 +7,15 @@
     <controls>
         <import>common.window.default.xml</import>
         <control>
+            <type>image</type>
+            <colordiffuse>60ffffff</colordiffuse>
+            <posX>104</posX>
+            <posY>0</posY>
+            <width>300</width>
+            <height>132</height>
+            <texture>MyChitChat\plugin\hover_3Monkeys.png</texture>
+        </control>
+        <control>
             <id>100</id>
             <description>Contact List</description>
             <type>listcontrol</type>
@@ -247,6 +256,17 @@
             <posY>136</posY>
             <font>font13</font>
             <label>Contact List</label>
+        </control>
+        <control>
+            <id>1</id>
+            <type>label</type>
+            <posX>106</posX>
+            <posY>25</posY>
+            <font>font48</font>
+            <textcolor>33ffffff</textcolor>
+            <label>#header.text</label>
+            <animation effect="Fade" time="250">WindowOpen</animation>
+            <animation effect="Fade" time="250">WindowClose</animation>
         </control>
     </controls>
 </window>

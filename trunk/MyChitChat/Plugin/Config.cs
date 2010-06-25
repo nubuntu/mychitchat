@@ -70,6 +70,9 @@ namespace MyChitChat.Plugin
             comboBoxKeyboardType.SelectionChangeCommitted += new EventHandler(comboBoxKeyboardType_SelectionChangeCommitted);
             comboBoxKeyboardType.SelectedIndex = (int)Dialog.KeyBoardTypes.Normal;
 
+            comboBoxLanguage.DataSource = Translations.GetCultureLanguages();
+            comboBoxLanguage.SelectedText = Translations.GetCurrentCultureLanguage();
+
         }
 
         void comboBoxKeyboardType_SelectionChangeCommitted(object sender, EventArgs e) {
@@ -318,7 +321,18 @@ namespace MyChitChat.Plugin
 
         private void checkBoxTunePlugin_CheckedChanged(object sender, EventArgs e) {
             Settings.notifyOnTunePlugin = checkBoxTunePlugin.Checked;
-        }      
+        }
+
+        private void button1_Click(object sender, EventArgs e) {
+            string file = Translations.CreateTranslationTemplate(comboBoxLanguage.Text);
+            MessageBox.Show(String.Format("Opening a new Issue for '{0}' on Google Code... \nPlease remember to attach the new language file ('{1}'). KKTHXBY", Helper.PLUGIN_NAME, file));
+            System.Diagnostics.Process.Start("http://code.google.com/p/mychitchat/issues/entry");
+        }
+        
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start("http://code.google.com/p/mychitchat/issues/entry");
+        }
+       
     }
         /// <summary>
         /// Event args for the test event

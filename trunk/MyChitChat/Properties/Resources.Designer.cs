@@ -67,6 +67,20 @@ namespace MyChitChat.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap icon_thinking {
+            get {
+                object obj = ResourceManager.GetObject("icon_thinking", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap icon_thinking1 {
+            get {
+                object obj = ResourceManager.GetObject("icon_thinking1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap jabber {
             get {
                 object obj = ResourceManager.GetObject("jabber", resourceCulture);
@@ -74,9 +88,9 @@ namespace MyChitChat.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap Jabber_banner {
+        internal static System.Drawing.Bitmap MyChitChat_3Monkeys {
             get {
-                object obj = ResourceManager.GetObject("Jabber_banner", resourceCulture);
+                object obj = ResourceManager.GetObject("MyChitChat_3Monkeys", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

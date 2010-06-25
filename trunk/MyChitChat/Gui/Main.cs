@@ -67,8 +67,6 @@ namespace MyChitChat.Gui {
 
         public Main() {
             AddRosterEventHandlers();
-            base.Title = Helper.PLUGIN_NAME;
-
             guiWindowChat = new Chat();
             StatusFilter = true;
         }
@@ -112,13 +110,18 @@ namespace MyChitChat.Gui {
         protected override void OnPageLoad() {
             if (!Helper.JABBER_CLIENT.LoggedIn) {
                 Helper.JABBER_CLIENT.Login();
-            } 
+            } else {
+                Helper.SetPluginEnterPresence();
+            }
             SetupGuiControls();
             UpdateContactsFacade();
             base.OnPageLoad();
         }
 
         protected override void OnPreviousWindow() {
+            if (Helper.JABBER_CLIENT.LoggedIn) {            
+                Helper.SetPluginLeavePresence();
+            }
             base.OnPreviousWindow();
         }
 
@@ -214,10 +217,11 @@ namespace MyChitChat.Gui {
         /// Setups the GUI controls.
         /// </summary>
         private void SetupGuiControls() {
-            //GUIPropertyManager.SetProperty("#title", Helper.PLUGIN_NAME); 
-            //GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
-            //GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
+            GUIPropertyManager.SetProperty("#title", Helper.PLUGIN_NAME);
+            GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
+            GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.label", "Main Window");
+            GUIPropertyManager.SetProperty("#header.image", Helper.MEDIA_HOVER_HOME);
             GUIPropertyManager.SetProperty("#currentmodule", Helper.PLUGIN_NAME);
             
             this.ctrlListControlContacts.RemoteColor = 0xFFFF6347;
@@ -347,8 +351,8 @@ namespace MyChitChat.Gui {
         void JABBER_CLIENT_OnRosterEnd() {
             GUIWaitCursor.Hide();
             History_OnUpdatedLog(History.Instance.LogHistory.ToString());
-            AddHistoryEventHandlers();            
-            Helper.SetDefaultPresence();
+            AddHistoryEventHandlers();
+            Helper.SetPluginEnterPresence();
             History_OnUpdatedLog(History.Instance.LogHistory.ToString());
             if (Settings.selectStatusOnStartup) {
                 Dialog.Instance.SelectAndSetStatus();
