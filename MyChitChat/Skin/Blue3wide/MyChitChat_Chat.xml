@@ -7,6 +7,15 @@
     <controls>
         <import>common.window.default.xml</import>
         <control>
+            <type>image</type>
+            <colordiffuse>60ffffff</colordiffuse>
+            <posX>104</posX>
+            <posY>0</posY>
+            <width>300</width>
+            <height>132</height>
+            <texture>MyChitChat\plugin\hover_3Monkeys.png</texture>
+        </control>
+        <control>
             <id>100</id>
             <description>Message List</description>
             <type>listcontrol</type>

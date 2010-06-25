@@ -15,6 +15,11 @@ namespace MyChitChat.Plugin {
 
         #endregion
 
+        [STAThread]
+        static void Main() {
+            new Plugin().ShowPlugin();           
+        }
+
         public Plugin() {
             Log.Debug("MyChitChat started");
             Settings.Load();
@@ -76,10 +81,10 @@ namespace MyChitChat.Plugin {
         /// <returns>true : plugin needs it's own button on home
         /// false : plugin does not need it's own button on home</returns>
         public bool GetHome(out string strButtonText, out string strButtonImage, out string strButtonImageFocus, out string strPictureImage) {
-            strButtonText = PluginName();
+            strButtonText = Helper.PLUGIN_NAME;
             strButtonImage = String.Empty;
             strButtonImageFocus = String.Empty;
-            strPictureImage = String.Empty;
+            strPictureImage = Helper.MEDIA_HOVER_HOME;
             return true;
         }
 

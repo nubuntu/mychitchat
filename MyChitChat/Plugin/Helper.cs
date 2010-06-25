@@ -17,17 +17,17 @@ namespace MyChitChat.Plugin {
         #region Constants
 
         static Helper() {
-            JABBER_CLIENT.OnError +=new OnErrorEventHandler(JABBER_CLIENT_OnError);
+            JABBER_CLIENT.OnError += new OnErrorEventHandler(JABBER_CLIENT_OnError);
             CurrentKeyboardType = Settings.defaultKeyboardType;
         }
 
-        
+
         /// <summary>
         /// Section in the MediaPortal config for this plugin
         /// </summary>
         public const string PLUGIN_NAME = "MyChitChat";
         public const string PLUGIN_AUTHOR = "Anthrax";
-        public const string PLUGIN_VERSION = "0.1.0";
+        public const string PLUGIN_VERSION = "0.9.0";
         public const string PLUGIN_DESCRIPTION = "TODO";
 
         public static readonly string SKIN_PATH_XML = GUIGraphicsContext.Skin + @"\";
@@ -36,6 +36,8 @@ namespace MyChitChat.Plugin {
         public static readonly string SKIN_FILE_CHAT = SKIN_PATH_XML + PLUGIN_NAME + "_Chat.xml";
         public static readonly string SKIN_FILE_CONTACT = SKIN_PATH_XML + PLUGIN_NAME + "_Contact.xml";
 
+        public static readonly string MEDIA_HOVER_HOME = SKIN_PATH_MEDIA + @"\plugin\hover_3Monkeys.png";
+
         public static readonly string MEDIA_ICON_DEFAULT = SKIN_PATH_MEDIA + @"\plugin\icon_default.png";
         public static readonly string MEDIA_ICON_ERROR = SKIN_PATH_MEDIA + @"\plugin\icon_error.png";
         public static readonly string MEDIA_ICON_MESSAGE = SKIN_PATH_MEDIA + @"\plugin\icon_message.png";
@@ -43,7 +45,7 @@ namespace MyChitChat.Plugin {
         public static readonly string MEDIA_ICON_MESSAGE_IN_READ = SKIN_PATH_MEDIA + @"\plugin\icon_message_in_read.png";
         public static readonly string MEDIA_ICON_MESSAGE_IN_UNREAD = SKIN_PATH_MEDIA + @"\plugin\icon_message_in_unread.png";
         public static readonly string MEDIA_ICON_MESSAGE_IN_REPLIED = SKIN_PATH_MEDIA + @"\plugin\icon_message_in_replied.png";
-        public static readonly string MEDIA_ICON_MESSAGE_OUT = SKIN_PATH_MEDIA + @"\plugin\icon_message_out.png";        
+        public static readonly string MEDIA_ICON_MESSAGE_OUT = SKIN_PATH_MEDIA + @"\plugin\icon_message_out.png";
 
         public static string GetStatusIcon(string status) {
             string tmpPath = String.Format(@"{0}\status\{1}.png", SKIN_PATH_MEDIA, status);
@@ -103,11 +105,6 @@ namespace MyChitChat.Plugin {
 
         static readonly Client _client = new Client();
 
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
-
-
-
         public static Client JABBER_CLIENT {
             get {
                 return _client;
@@ -118,34 +115,27 @@ namespace MyChitChat.Plugin {
             if ((Settings.notifyOnErrorPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnErrorGlobally) {
                 Dialog.Instance.ShowErrorDialog(type, message);
             }
-        }   
+        }
 
         public static Roster JABBER_CONTACTS {
             get { return _client.Roster; }
         }
 
-        public static Presence JABBER_PRESENCE_DEFAULT {
-            get {
-                Presence currentPresence = new Presence();
+        public static Presence JABBER_LAST_PRESENCE { get; set; }
 
-                return currentPresence;
-            }
+        public static void SetPluginEnterPresence() {
+            if (JABBER_LAST_PRESENCE == null) {
+                JABBER_LAST_PRESENCE = SetDefaultPresence();                
+            } else {
+                SetStatus(JABBER_LAST_PRESENCE.status.type, JABBER_LAST_PRESENCE.status.message);
+            }            
         }
 
+        public static void SetPluginLeavePresence() {
+            JABBER_LAST_PRESENCE = JABBER_CLIENT.Presence;
+            SetStatus(JABBER_CLIENT.Presence.autoIdleStatus.type, JABBER_CLIENT.Presence.autoIdleStatus.message);
+        }
 
-        //public static void SetMyCurrentPresence(Enums.StatusType showType, string statusMessage) {
-        //    myCurrentPresence = new Presence((ShowType)showType, statusMessage);
-        //    myCurrentPresence.Type = PresenceType.invisible;
-        //}
-
-        //public static void SetMyCurrentPresencePluginEnabled() {
-        //    JABBER_CLIENT.SendyMyPresence(new Presence(myCurrentPresence.Show, myCurrentPresence.Status + String.Format(" [MediaPortal {0} enabled]", PLUGIN_NAME )));
-        //}
-        //public static void SetMyCurrentPresencePluginDisabled() {
-        //    JABBER_CLIENT.SendyMyPresence(new Presence(myCurrentPresence.Show, myCurrentPresence.Status + String.Format(" [MediaPortal {0} disabled]", PLUGIN_NAME))); 
-        //    JABBER_CLIENT.SendyMyPresence(myCurrentPresence);
-        //}
-        
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GUI Helper Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -173,14 +163,15 @@ namespace MyChitChat.Plugin {
             }
             return tmp;
         }
-             
+
         #endregion
 
-        public static void SetDefaultPresence() {
+        public static Presence SetDefaultPresence() {
             SetStatus(Settings.defaultStatusType, Settings.defaultStatusMessage);
             SetActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
             SetMood(Settings.defaultMoodType, Settings.defaultMoodMessage);
             Log.Info("Default Presence info set.");
+            return Helper.JABBER_CLIENT.Presence;
         }
 
         public static void SetStatus(Enums.StatusType type, string message) {

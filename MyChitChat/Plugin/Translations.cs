@@ -35,11 +35,15 @@ namespace MyChitChat.Plugin {
 
             Log.Info("Using language " + lang);
 
-            path = MediaPortal.Configuration.Config.GetSubFolder(MediaPortal.Configuration.Config.Dir.Language, Helper.PLUGIN_NAME);
+            path = GetPluginLanguagesPath();
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
 
             LoadTranslations(lang);
+        }
+
+        private static string GetPluginLanguagesPath() {
+            return MediaPortal.Configuration.Config.GetSubFolder(MediaPortal.Configuration.Config.Dir.Language, Helper.PLUGIN_NAME);
         }
 
         #endregion
@@ -146,6 +150,41 @@ namespace MyChitChat.Plugin {
             return enumValList;
         }
 
+        public static string CreateTranslationTemplate(string language) {
+            LoadTranslations(language);
+            string languageFilePath = Path.Combine(GetPluginLanguagesPath(), language + "_"+ Guid.NewGuid().ToString()+ ".xml");
+            using (XmlWriter writer = XmlWriter.Create(languageFilePath)) {
+                writer.WriteStartDocument();
+                writer.WriteComment("MyChitChat translation file");
+                writer.WriteComment("Language: " + GUILocalizeStrings.GetCultureName(language));
+                writer.WriteComment("Note: English is the fallback for any strings not found in other languages");
+                writer.WriteComment("Contributed by [Your Name]");
+                writer.WriteStartElement("strings"); // <-- Important root element
+                foreach (KeyValuePair<string, string> currentField in LocalizedStrings) {
+                    writer.WriteString("<string Field=\"" + currentField.Key + "\">" + currentField.Value + "</string>");
+                }
+                writer.WriteEndElement();              // <-- Closes it
+                writer.WriteEndDocument();
+            }
+            return languageFilePath;
+        }
+
+        public static List<string> GetCultureLanguages() {
+            CultureInfo[] cultureList = CultureInfo.GetCultures(CultureTypes.AllCultures);
+            List<string> languages = new List<string>();
+
+            foreach (CultureInfo current in cultureList) {
+                languages.Add(current.Name);
+            }
+            return languages;
+        }
+
+
+        public static string GetCurrentCultureLanguage() {
+            return GUILocalizeStrings.GetCultureName(GUILocalizeStrings.CurrentLanguage());
+        }
+
+
         /// <summary>
         /// Takes an input string and replaces all ${named} variables with the proper translation if available
         /// </summary>
@@ -176,6 +215,17 @@ namespace MyChitChat.Plugin {
         public static string WINDOW_DIALOG_OK = "Dialog Window (small) (centered)";
         public static string WINDOW_DIALOG_TEXT = "Dialog Window (large) (centered)";
 
+        public static string BtnSelectStatus = "";
+        public static string BtnSelectActivity = "";
+        public static string BtnSelectMood = "";
+        public static string BtnSendNewMessage = "";
+        public static string BtnFilterOnline = "";
+        public static string BtnFilterOffline = "";
+        public static string BtnFilterNone = "";
+        public static string BtnJabberReconnect = "";
+        public static string BtnJabberDisconnect = "";
+        public static string BtnSelectKeyboard = "";
+        public static string NothingSelected = "";
 
 
         public static string none = "";
@@ -192,18 +242,18 @@ namespace MyChitChat.Plugin {
 
         /* Jabber / XMPP Mood Types */
 
-        public static string afraid = "afraid";
-        public static string amazed = "amazed";
-        public static string angry = "angry";
-        public static string annoyed = "annoyed";
-        public static string anxious = "anxious";
-        public static string aroused = "aroused";
-        public static string ashamed = "ashamed";
-        public static string bored = "bored";
-        public static string brave = "brave";
-        public static string calm = "calm";
-        public static string cold = "cold";
-        public static string confused = "confused";
+        public static string afraid = "";
+        public static string amazed = "";
+        public static string angry = "";
+        public static string annoyed = "";
+        public static string anxious = "";
+        public static string aroused = "";
+        public static string ashamed = "";
+        public static string bored = "";
+        public static string brave = "";
+        public static string calm = "";
+        public static string cold = "";
+        public static string confused = "";
         public static string contented = "";
         public static string cranky = "";
         public static string curious = "";
@@ -256,11 +306,11 @@ namespace MyChitChat.Plugin {
 
         /* Jabber / XMPP Activity Types */
 
-        public static string doing_chores = "doing_chores";
-        public static string buying_groceries = "buying_groceries";
-        public static string cleaning = "cleaning";
-        public static string cooking = "cooking";
-        public static string doing_maintenance = "doing_maintenance";
+        public static string doing_chores = "";
+        public static string buying_groceries = "";
+        public static string cleaning = "";
+        public static string cooking = "";
+        public static string doing_maintenance = "";
         public static string doing_the_dishes = "";
         public static string doing_the_laundry = "";
         public static string gardening = "";
