@@ -154,7 +154,7 @@ namespace MyChitChat.Jabber {
         }
 
         public Message SendMessage(string Message, Jid To, MessageType Type) {
-            agsXMPP.protocol.client.Message tmpMsg = new agsXMPP.protocol.client.Message(To, Type, Message);
+            agsXMPP.protocol.client.Message tmpMsg = new agsXMPP.protocol.client.Message(To, MyJID , Type, Message);
             _jabberConnection.XMPPConnection.Send(tmpMsg);
             return new Message(tmpMsg, DirectionTypes.Outgoing, DateTime.Now);
         }

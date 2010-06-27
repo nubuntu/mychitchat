@@ -152,19 +152,26 @@ namespace MyChitChat.Plugin {
 
         public static string CreateTranslationTemplate(string language) {
             LoadTranslations(language);
-            string languageFilePath = Path.Combine(GetPluginLanguagesPath(), language + "_"+ Guid.NewGuid().ToString()+ ".xml");
-            using (XmlWriter writer = XmlWriter.Create(languageFilePath)) {
+            string languageFilePath = Path.Combine(GetPluginLanguagesPath(), language + ".xml");
+            using (XmlTextWriter writer = new XmlTextWriter( languageFilePath, System.Text.Encoding.UTF8) ){
+                writer.Formatting = Formatting.Indented;
                 writer.WriteStartDocument();
                 writer.WriteComment("MyChitChat translation file");
-                writer.WriteComment("Language: " + GUILocalizeStrings.GetCultureName(language));
+                writer.WriteComment("Language: " + language);
                 writer.WriteComment("Note: English is the fallback for any strings not found in other languages");
                 writer.WriteComment("Contributed by [Your Name]");
+                writer.WriteComment("=========================================================================");
                 writer.WriteStartElement("strings"); // <-- Important root element
                 foreach (KeyValuePair<string, string> currentField in LocalizedStrings) {
-                    writer.WriteString("<string Field=\"" + currentField.Key + "\">" + currentField.Value + "</string>");
+                    writer.WriteStartElement("string");                    
+                    writer.WriteAttributeString("Field", currentField.Key);
+                    writer.WriteValue(currentField.Value);
+                    writer.WriteEndElement();
                 }
                 writer.WriteEndElement();              // <-- Closes it
                 writer.WriteEndDocument();
+                writer.Flush();
+                writer.Close();
             }
             return languageFilePath;
         }
@@ -215,8 +222,8 @@ namespace MyChitChat.Plugin {
         public static string WINDOW_DIALOG_OK = "Dialog Window (small) (centered)";
         public static string WINDOW_DIALOG_TEXT = "Dialog Window (large) (centered)";
 
-        public static string BtnSelectStatus = "";
-        public static string BtnSelectActivity = "";
+        public static string BtnSelectStatus = "Select Status Type";
+        public static string BtnSelectActivity = "Set";
         public static string BtnSelectMood = "";
         public static string BtnSendNewMessage = "";
         public static string BtnFilterOnline = "";

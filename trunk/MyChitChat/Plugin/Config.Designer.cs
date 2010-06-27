@@ -44,7 +44,6 @@ namespace MyChitChat.Plugin
             this.textBoxServer = new System.Windows.Forms.TextBox();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.linkFAQ = new System.Windows.Forms.LinkLabel();
-            this.buttonTest = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -105,7 +104,10 @@ namespace MyChitChat.Plugin
             this.label17 = new System.Windows.Forms.Label();
             this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.activityTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label16 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -135,6 +137,7 @@ namespace MyChitChat.Plugin
             this.groupBox12.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.groupBox14.SuspendLayout();
+            this.groupBox15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.activityTypeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusTypeBindingSource)).BeginInit();
@@ -176,7 +179,6 @@ namespace MyChitChat.Plugin
             this.tabPageJabber.Controls.Add(this.textBoxServer);
             this.tabPageJabber.Controls.Add(this.textBoxUsername);
             this.tabPageJabber.Controls.Add(this.linkFAQ);
-            this.tabPageJabber.Controls.Add(this.buttonTest);
             this.tabPageJabber.Controls.Add(this.label3);
             this.tabPageJabber.Controls.Add(this.label2);
             this.tabPageJabber.Controls.Add(this.label1);
@@ -191,7 +193,7 @@ namespace MyChitChat.Plugin
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox3.Image = global::MyChitChat.Properties.Resources.icon_thinking;
-            this.pictureBox3.Location = new System.Drawing.Point(515, 47);
+            this.pictureBox3.Location = new System.Drawing.Point(515, 57);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(82, 91);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -201,7 +203,7 @@ namespace MyChitChat.Plugin
             // pictureBox1
             // 
             this.pictureBox1.Image = global::MyChitChat.Properties.Resources.jabber;
-            this.pictureBox1.Location = new System.Drawing.Point(37, 45);
+            this.pictureBox1.Location = new System.Drawing.Point(37, 55);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(82, 128);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -211,7 +213,7 @@ namespace MyChitChat.Plugin
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(328, 45);
+            this.label14.Location = new System.Drawing.Point(328, 55);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(38, 13);
             this.label14.TabIndex = 19;
@@ -221,7 +223,7 @@ namespace MyChitChat.Plugin
             // 
             this.linkLabelCreateAccount.AutoSize = true;
             this.linkLabelCreateAccount.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.linkLabelCreateAccount.Location = new System.Drawing.Point(522, 160);
+            this.linkLabelCreateAccount.Location = new System.Drawing.Point(522, 170);
             this.linkLabelCreateAccount.Name = "linkLabelCreateAccount";
             this.linkLabelCreateAccount.Size = new System.Drawing.Size(81, 13);
             this.linkLabelCreateAccount.TabIndex = 18;
@@ -232,7 +234,7 @@ namespace MyChitChat.Plugin
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(137, 137);
+            this.label4.Location = new System.Drawing.Point(328, 101);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 11;
@@ -240,7 +242,7 @@ namespace MyChitChat.Plugin
             // 
             // textBoxResource
             // 
-            this.textBoxResource.Location = new System.Drawing.Point(137, 153);
+            this.textBoxResource.Location = new System.Drawing.Point(327, 118);
             this.textBoxResource.Name = "textBoxResource";
             this.textBoxResource.Size = new System.Drawing.Size(160, 20);
             this.textBoxResource.TabIndex = 15;
@@ -249,7 +251,7 @@ namespace MyChitChat.Plugin
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(137, 108);
+            this.textBoxPassword.Location = new System.Drawing.Point(137, 118);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(160, 20);
             this.textBoxPassword.TabIndex = 14;
@@ -258,7 +260,7 @@ namespace MyChitChat.Plugin
             // 
             // textBoxServer
             // 
-            this.textBoxServer.Location = new System.Drawing.Point(327, 62);
+            this.textBoxServer.Location = new System.Drawing.Point(327, 72);
             this.textBoxServer.Name = "textBoxServer";
             this.textBoxServer.Size = new System.Drawing.Size(160, 20);
             this.textBoxServer.TabIndex = 13;
@@ -266,7 +268,7 @@ namespace MyChitChat.Plugin
             // 
             // textBoxUsername
             // 
-            this.textBoxUsername.Location = new System.Drawing.Point(137, 62);
+            this.textBoxUsername.Location = new System.Drawing.Point(137, 72);
             this.textBoxUsername.Name = "textBoxUsername";
             this.textBoxUsername.Size = new System.Drawing.Size(160, 20);
             this.textBoxUsername.TabIndex = 12;
@@ -276,7 +278,7 @@ namespace MyChitChat.Plugin
             // 
             this.linkFAQ.AutoSize = true;
             this.linkFAQ.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.linkFAQ.Location = new System.Drawing.Point(522, 136);
+            this.linkFAQ.Location = new System.Drawing.Point(522, 146);
             this.linkFAQ.Name = "linkFAQ";
             this.linkFAQ.Size = new System.Drawing.Size(63, 13);
             this.linkFAQ.TabIndex = 17;
@@ -284,20 +286,10 @@ namespace MyChitChat.Plugin
             this.linkFAQ.Text = "Jabber FAQ";
             this.linkFAQ.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkFAQ_LinkClicked);
             // 
-            // buttonTest
-            // 
-            this.buttonTest.Location = new System.Drawing.Point(327, 136);
-            this.buttonTest.Name = "buttonTest";
-            this.buttonTest.Size = new System.Drawing.Size(160, 37);
-            this.buttonTest.TabIndex = 16;
-            this.buttonTest.Text = "Test";
-            this.buttonTest.UseVisualStyleBackColor = true;
-            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(136, 91);
+            this.label3.Location = new System.Drawing.Point(136, 101);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 13);
             this.label3.TabIndex = 10;
@@ -306,7 +298,7 @@ namespace MyChitChat.Plugin
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(303, 65);
+            this.label2.Location = new System.Drawing.Point(303, 75);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(18, 13);
             this.label2.TabIndex = 9;
@@ -315,7 +307,7 @@ namespace MyChitChat.Plugin
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(136, 45);
+            this.label1.Location = new System.Drawing.Point(136, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(161, 13);
             this.label1.TabIndex = 8;
@@ -845,6 +837,7 @@ namespace MyChitChat.Plugin
             this.flowLayoutPanel3.Controls.Add(this.groupBox12);
             this.flowLayoutPanel3.Controls.Add(this.groupBox13);
             this.flowLayoutPanel3.Controls.Add(this.groupBox14);
+            this.flowLayoutPanel3.Controls.Add(this.groupBox15);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
@@ -920,25 +913,60 @@ namespace MyChitChat.Plugin
             // 
             // groupBox14
             // 
+            this.groupBox14.Controls.Add(this.linkLabel2);
             this.groupBox14.Controls.Add(this.linkLabel1);
             this.groupBox14.Location = new System.Drawing.Point(3, 57);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(481, 48);
+            this.groupBox14.Size = new System.Drawing.Size(481, 82);
             this.groupBox14.TabIndex = 3;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Found a Bug? Got a suggestion? Want to rant?";
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel2.Location = new System.Drawing.Point(6, 51);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(432, 20);
+            this.linkLabel2.TabIndex = 1;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "MyChitChat Discussion Thread @ MediaPortal Forum";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.Location = new System.Drawing.Point(30, 19);
+            this.linkLabel1.Location = new System.Drawing.Point(6, 18);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(420, 20);
             this.linkLabel1.TabIndex = 0;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "File a new Issue @ the project\'s Google Code page";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.textBox1);
+            this.groupBox15.Location = new System.Drawing.Point(3, 145);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(481, 34);
+            this.groupBox15.TabIndex = 4;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Subversion Repository (Source Code)";
+            // 
+            // textBox1
+            // 
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox1.Location = new System.Drawing.Point(3, 16);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(475, 13);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "http://mychitchat.googlecode.com/svn/trunk/";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label16
             // 
@@ -983,7 +1011,7 @@ namespace MyChitChat.Plugin
             this.Name = "Config";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = String.Format("{0} - Configuration ({1})",Helper.PLUGIN_NAME , Helper.PLUGIN_VERSION);
+            this.Text = "MyChitChat - Configuration (0.9.0)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SetupForm_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabPageJabber.ResumeLayout(false);
@@ -1024,6 +1052,8 @@ namespace MyChitChat.Plugin
             this.groupBox13.PerformLayout();
             this.groupBox14.ResumeLayout(false);
             this.groupBox14.PerformLayout();
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox15.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.activityTypeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusTypeBindingSource)).EndInit();
@@ -1044,7 +1074,6 @@ namespace MyChitChat.Plugin
         private System.Windows.Forms.TextBox textBoxServer;
         private System.Windows.Forms.TextBox textBoxUsername;
         private System.Windows.Forms.LinkLabel linkFAQ;
-        private System.Windows.Forms.Button buttonTest;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
@@ -1113,5 +1142,8 @@ namespace MyChitChat.Plugin
         private System.Windows.Forms.ComboBox comboBoxLanguage;
         private System.Windows.Forms.GroupBox groupBox14;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

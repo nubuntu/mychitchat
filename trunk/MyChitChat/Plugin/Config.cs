@@ -7,18 +7,17 @@ using MyChitChat.Jabber;
 using MediaPortal.UserInterface.Controls;
 using nJim;
 using MyChitChat.Gui;
+using System.Diagnostics;
+using System.Text;
 
-namespace MyChitChat.Plugin
-{
-    public partial class Config : MPConfigForm
-    {
+namespace MyChitChat.Plugin {
+    public partial class Config : MPConfigForm {
         private Client _testClient = null;
         private Thread backgroundWorker = null;
 
-        public Config()
-        {
+        public Config() {
             InitializeComponent();
-            this.Load += new EventHandler(MyChitChatConfig_Load);             
+            this.Load += new EventHandler(MyChitChatConfig_Load);
         }
 
         void MyChitChatConfig_Load(object sender, EventArgs e) {
@@ -31,20 +30,25 @@ namespace MyChitChat.Plugin
             textBoxPassword.Text = Settings.password;
 
             comboBoxStartupStatus.DataSource = Translations.EnumToList<Enums.StatusType>();
-            comboBoxStartupStatus.SelectionChangeCommitted += new EventHandler(comboBoxStartupStatus_SelectionChangeCommitted);
-            comboBoxStartupStatus.SelectedIndex = (int)Settings.defaultStatusType;
             textBoxStartupStatus.Text = Settings.defaultStatusMessage;
-
+            comboBoxStartupStatus.SelectedIndex = (int)Settings.defaultStatusType;            
+            comboBoxStartupStatus.SelectionChangeCommitted += new EventHandler(comboBoxStartupStatus_SelectionChangeCommitted);
+            
+            comboBoxAutoIdleStatus.DataSource = Translations.EnumToList<Enums.StatusType>();
+            textBoxAutoIdleStatus.Text = Settings.autoIdleStatusMessage;
+            comboBoxAutoIdleStatus.SelectedIndex = (int)Settings.autoIdleStatusType;
+            comboBoxAutoIdleStatus.SelectedIndexChanged += new EventHandler(comboBoxAutoIdleStatus_SelectedIndexChanged);
+            
             comboBoxStartupActivity.DataSource = Translations.EnumToList<Enums.ActivityType>();
-            comboBoxStartupActivity.SelectionChangeCommitted += new EventHandler(comboBoxStartupActivity_SelectionChangeCommitted);
-            comboBoxStartupActivity.SelectedIndex = (int)Settings.defaultActivityType;
             textBoxStartupActivity.Text = Settings.defaultActivityMessage;
-
+            comboBoxStartupActivity.SelectedIndex = (int)Settings.defaultActivityType;
+            comboBoxStartupActivity.SelectionChangeCommitted += new EventHandler(comboBoxStartupActivity_SelectionChangeCommitted);
+            
             comboBoxStartupMood.DataSource = Translations.EnumToList<Enums.MoodType>();
-            comboBoxStartupMood.SelectionChangeCommitted += new EventHandler(comboBoxStartupMood_SelectionChangeCommitted);
-            comboBoxStartupMood.SelectedIndex = (int)Settings.defaultMoodType;
             textBoxStartupMood.Text = Settings.defaultMoodMessage;
-
+            comboBoxStartupMood.SelectedIndex = (int)Settings.defaultMoodType;
+            comboBoxStartupMood.SelectionChangeCommitted += new EventHandler(comboBoxStartupMood_SelectionChangeCommitted);
+            
             comboBoxWindowSize.DataSource = Translations.EnumToList<Helper.PLUGIN_NOTIFY_WINDOWS>();
             comboBoxWindowSize.SelectionChangeCommitted += new EventHandler(comboBoxWindowSize_SelectionChangeCommitted);
             comboBoxWindowSize.SelectedIndex = (int)Settings.notifyWindowType;
@@ -55,36 +59,41 @@ namespace MyChitChat.Plugin
             checkBoxSelectOnStartup.Checked = Settings.selectStatusOnStartup;
             checkBoxMessageGlobally.Checked = Settings.notifyOnMessageGlobally;
             checkBoxMessagePlugin.Checked = Settings.notifyOnMessagePlugin;
-            checkBoxStatusGlobally.Checked = Settings.notifyOnStatusGlobally ;
+            checkBoxStatusGlobally.Checked = Settings.notifyOnStatusGlobally;
             checkBoxStatusPlugin.Checked = Settings.notifyOnStatusPlugin;
             checkBoxActivityGlobally.Checked = Settings.notifyOnActivityGlobally;
             checkBoxActivityPlugin.Checked = Settings.notifyOnActivityPlugin;
-            checkBoxMoodGlobally.Checked = Settings.notifyOnMoodGlobally ;
-            checkBoxMoodPlugin.Checked = Settings.notifyOnMoodPlugin ;
-            checkBoxErrorGlobally.Checked = Settings.notifyOnErrorGlobally ;
+            checkBoxMoodGlobally.Checked = Settings.notifyOnMoodGlobally;
+            checkBoxMoodPlugin.Checked = Settings.notifyOnMoodPlugin;
+            checkBoxErrorGlobally.Checked = Settings.notifyOnErrorGlobally;
             checkBoxErrorPlugin.Checked = Settings.notifyOnErrorPlugin;
-            checkBoxTuneGlobally.Checked = Settings.notifyOnTuneGlobally ;
+            checkBoxTuneGlobally.Checked = Settings.notifyOnTuneGlobally;
             checkBoxTunePlugin.Checked = Settings.notifyOnTunePlugin;
 
             comboBoxKeyboardType.DataSource = Translations.EnumToList<Dialog.KeyBoardTypes>();
             comboBoxKeyboardType.SelectionChangeCommitted += new EventHandler(comboBoxKeyboardType_SelectionChangeCommitted);
-            comboBoxKeyboardType.SelectedIndex = (int)Dialog.KeyBoardTypes.Normal;
+            comboBoxKeyboardType.SelectedIndex = (int)Dialog.KeyBoardTypes.Default;
 
             comboBoxLanguage.DataSource = Translations.GetCultureLanguages();
-            comboBoxLanguage.SelectedText = Translations.GetCurrentCultureLanguage();
+            comboBoxLanguage.SelectedItem = Translations.GetCurrentCultureLanguage();
 
+        }
+
+        void comboBoxAutoIdleStatus_SelectedIndexChanged(object sender, EventArgs e) {
+            Settings.autoIdleStatusType = ((KeyValuePair<string, Enums.StatusType>)((ComboBox)sender).SelectedItem).Value;
+            textBoxAutoIdleStatus.Text = ((KeyValuePair<string, Enums.StatusType>)((ComboBox)sender).SelectedItem).Key;
         }
 
         void comboBoxKeyboardType_SelectionChangeCommitted(object sender, EventArgs e) {
             Settings.defaultKeyboardType = ((KeyValuePair<string, Dialog.KeyBoardTypes>)((ComboBox)sender).SelectedItem).Value;
         }
-       
+
         void numericUpDownIdleTimeOut_Leave(object sender, EventArgs e) {
             Settings.autoIdleTimeOut = (int)((NumericUpDown)sender).Value;
         }
 
         void comboBoxWindowSize_SelectionChangeCommitted(object sender, EventArgs e) {
-            Settings.notifyWindowType = ((KeyValuePair<string, Helper.PLUGIN_NOTIFY_WINDOWS>)((ComboBox)sender).SelectedItem).Value;            
+            Settings.notifyWindowType = ((KeyValuePair<string, Helper.PLUGIN_NOTIFY_WINDOWS>)((ComboBox)sender).SelectedItem).Value;
         }
 
         void comboBoxStartupStatus_SelectionChangeCommitted(object sender, EventArgs e) {
@@ -107,9 +116,8 @@ namespace MyChitChat.Plugin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void linkFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://www.jabber.org/index.php/faq/");
+        private void linkFAQ_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start(new UriBuilder("http://www.jabber.org/index.php/faq/").ToString());
         }
 
         /// <summary>
@@ -118,100 +126,23 @@ namespace MyChitChat.Plugin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void linkLabelCreateAccount_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://register.jabber.org/");
+        private void linkLabelCreateAccount_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start(new UriBuilder("http://register.jabber.org/").ToString());
         }
 
-        /// <summary>
-        /// Test the settings
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonTest_Click(object sender, EventArgs e)
-        {
-            buttonTest.Text = "Testing ...";
-            buttonTest.Enabled = false;
-            labelStatus.Visible = false;
-
-            try
-            {
-                // Test the jabber credentials in a background thread
-                if (backgroundWorker != null && backgroundWorker.IsAlive)
-                {
-                    backgroundWorker.Abort();
-                }
-                backgroundWorker = new Thread(TestJabber);
-                backgroundWorker.IsBackground = true;
-                backgroundWorker.Start();
-            }
-            catch (Exception ex) 
-            {
-                MediaPortal.GUI.Library.Log.Error(String.Format("Error spawning test thread: {0}", ex.Message));
-            }
-        }
-
-        /// <summary>
-        /// Method to do the jabber testing
-        /// </summary>
-        private void TestJabber()
-        {
-            _testClient = new Client();
-            _testClient.OnError += new OnErrorEventHandler(_testClient_OnError);
-            _testClient.OnLogin += new OnLoginEventHandler(_testClient_OnLogin);
-            _testClient.Login();
-        }
-
-        void _testClient_OnLogin(object sender) {
-            SetTestResponse(new TestEventArgs(true));
-        }
-
-        void _testClient_OnError(nJim.Enums.ErrorType type, string message) {
-            SetTestResponse(new TestEventArgs(false, type, message));
-        }
-
-        delegate void RefreshGuiComponentsCallBack(TestEventArgs response);
-        /// <summary>
-        /// Display the test response in the setup form
-        /// </summary>
-        /// <param name="response"></param>  
         
-        private void SetTestResponse(TestEventArgs response)
-        {
-            // Update the GUI thread-safe
-            if (labelStatus.InvokeRequired || buttonTest.InvokeRequired) {
-                RefreshGuiComponentsCallBack refreshGuiComponentsCallBack = new RefreshGuiComponentsCallBack(SetTestResponse);
-                this.Invoke(refreshGuiComponentsCallBack, new object[] { });
-            }
-            if (response.Success)
-            {
-                labelStatus.ForeColor = Color.Green;
-                labelStatus.Text = "Everything OK!";
-            }
-            else
-            {
-                labelStatus.ForeColor = Color.Red;
 
-                // Auth error
-                if (response.ErrorType.HasValue)
-                {
-                    labelStatus.Text = "An error occured! Login may be ok ... " +response.ErrorMessage;
-                }               
-            }
-
-            labelStatus.Visible = true;
-            buttonTest.Text = "Test";
-            buttonTest.Enabled = true;
-         }
        
+        delegate void RefreshGuiComponentsCallBack(TestEventArgs response);
+        
+
 
         /// <summary>
         /// Form is closing, save data to mediaportal config
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SetupForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
+        private void SetupForm_FormClosing(object sender, FormClosingEventArgs e) {
             Settings.Save();
         }
 
@@ -220,8 +151,7 @@ namespace MyChitChat.Plugin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void textBoxUsername_Leave(object sender, EventArgs e)
-        {
+        private void textBoxUsername_Leave(object sender, EventArgs e) {
             Settings.username = textBoxUsername.Text;
         }
 
@@ -230,8 +160,7 @@ namespace MyChitChat.Plugin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void textBoxServer_Leave(object sender, EventArgs e)
-        {
+        private void textBoxServer_Leave(object sender, EventArgs e) {
             Settings.server = textBoxServer.Text;
         }
 
@@ -240,8 +169,7 @@ namespace MyChitChat.Plugin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void textBoxPassword_Leave(object sender, EventArgs e)
-        {
+        private void textBoxPassword_Leave(object sender, EventArgs e) {
             Settings.password = textBoxPassword.Text;
         }
 
@@ -250,8 +178,7 @@ namespace MyChitChat.Plugin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void textBoxResource_Leave(object sender, EventArgs e)
-        {
+        private void textBoxResource_Leave(object sender, EventArgs e) {
             Settings.resource = textBoxResource.Text;
         }
 
@@ -270,7 +197,7 @@ namespace MyChitChat.Plugin
         private void textBoxStartupMood_TextChanged(object sender, EventArgs e) {
             Settings.defaultMoodMessage = textBoxStartupMood.Text;
         }
-               
+
         private void checkBoxSelectOnStartup_CheckedChanged(object sender, EventArgs e) {
             Settings.selectStatusOnStartup = checkBoxSelectOnStartup.Checked;
         }
@@ -325,49 +252,63 @@ namespace MyChitChat.Plugin
 
         private void button1_Click(object sender, EventArgs e) {
             string file = Translations.CreateTranslationTemplate(comboBoxLanguage.Text);
-            MessageBox.Show(String.Format("Opening a new Issue for '{0}' on Google Code... \nPlease remember to attach the new language file ('{1}'). KKTHXBY", Helper.PLUGIN_NAME, file));
-            System.Diagnostics.Process.Start("http://code.google.com/p/mychitchat/issues/entry");
+            StringBuilder infoMessage = new StringBuilder();
+            infoMessage.AppendFormat("Creating new '{0}' language file: \n({1})", comboBoxLanguage.Text, file);
+            infoMessage.Append(Environment.NewLine);
+            infoMessage.Append(Environment.NewLine);
+            infoMessage.AppendFormat("A new Issue for '{0}' on Google Code will be opened \nPlease remember to attach the new language file. \n\nKKTHXBY, \n{1}", Helper.PLUGIN_NAME, Helper.PLUGIN_AUTHOR);
+            MessageBox.Show(infoMessage.ToString(), Helper.PLUGIN_NAME + " - Language file creation");
+
+            System.Diagnostics.Process.Start(file);
+            System.Diagnostics.Process.Start("iexplore",Helper.PLUGIN_LINK_NEW_ISSUE);
         }
-        
+
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            System.Diagnostics.Process.Start("http://code.google.com/p/mychitchat/issues/entry");
+            System.Diagnostics.Process.Start("iexplore", Helper.PLUGIN_LINK_NEW_ISSUE);
+
+
         }
-       
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            System.Diagnostics.Process.Start("iexplore", Helper.PLUGIN_LINK_FORUM);
+        }
+
     }
+    /// <summary>
+    /// Event args for the test event
+    /// </summary>
+    public class TestEventArgs : EventArgs {
         /// <summary>
-        /// Event args for the test event
+        /// Was the test successful?
         /// </summary>
-        public class TestEventArgs : EventArgs {
-            /// <summary>
-            /// Was the test successful?
-            /// </summary>
-            public bool Success {
-                get { return _success; }
-                set { _success = value; }
-            }
-            private bool _success;
-
-            public nJim.Enums.ErrorType? ErrorType {
-                get { return _errorType; }
-                set { _errorType = value; }
-            }
-
-            private nJim.Enums.ErrorType? _errorType = null;
-
-            public string ErrorMessage {
-                get { return _errorMessage; }
-                set { _errorMessage = value; }
-            }
-
-            private string _errorMessage = String.Empty;
-
-            public TestEventArgs(bool successful) : this(successful, null, String.Empty){                 
-            }
-            
-            public TestEventArgs(bool successful, nJim.Enums.ErrorType? errorType, string ErrorMessage ) {
-                _success = successful;
-                _errorType = errorType;
-                _errorMessage = ErrorMessage;
-            }
+        public bool Success {
+            get { return _success; }
+            set { _success = value; }
         }
+        private bool _success;
+
+        public nJim.Enums.ErrorType? ErrorType {
+            get { return _errorType; }
+            set { _errorType = value; }
+        }
+
+        private nJim.Enums.ErrorType? _errorType = null;
+
+        public string ErrorMessage {
+            get { return _errorMessage; }
+            set { _errorMessage = value; }
+        }
+
+        private string _errorMessage = String.Empty;
+
+        public TestEventArgs(bool successful)
+            : this(successful, null, String.Empty) {
+        }
+
+        public TestEventArgs(bool successful, nJim.Enums.ErrorType? errorType, string ErrorMessage) {
+            _success = successful;
+            _errorType = errorType;
+            _errorMessage = ErrorMessage;
+        }
+    }
 }
