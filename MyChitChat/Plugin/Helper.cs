@@ -30,13 +30,18 @@ namespace MyChitChat.Plugin {
         public const string PLUGIN_VERSION = "0.9.0";
         public const string PLUGIN_DESCRIPTION = "TODO";
 
+        public static readonly string PLUGIN_LINK_PROJECT_HOME = new UriBuilder("http://mychitchat.googlecode.com").ToString();
+        public static readonly string PLUGIN_LINK_NEW_ISSUE = new UriBuilder("http://code.google.com/p/mychitchat/issues/entry").ToString();
+        public static readonly string PLUGIN_LINK_FORUM = new UriBuilder("http://forum.team-mediaportal.com/mediaportal-plugins-47/upcoming-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-83953/#post632708").ToString();
+
         public static readonly string SKIN_PATH_XML = GUIGraphicsContext.Skin + @"\";
         public static readonly string SKIN_PATH_MEDIA = GUIGraphicsContext.Skin + @"\Media\" + PLUGIN_NAME + @"\";
         public static readonly string SKIN_FILE_MAIN = SKIN_PATH_XML + PLUGIN_NAME + "_Main.xml";
         public static readonly string SKIN_FILE_CHAT = SKIN_PATH_XML + PLUGIN_NAME + "_Chat.xml";
         public static readonly string SKIN_FILE_CONTACT = SKIN_PATH_XML + PLUGIN_NAME + "_Contact.xml";
 
-        public static readonly string MEDIA_HOVER_HOME = SKIN_PATH_MEDIA + @"\plugin\hover_3Monkeys.png";
+
+        public static readonly string MEDIA_HOVER_HOME = @"hover_MyChitChat.png";
 
         public static readonly string MEDIA_ICON_DEFAULT = SKIN_PATH_MEDIA + @"\plugin\icon_default.png";
         public static readonly string MEDIA_ICON_ERROR = SKIN_PATH_MEDIA + @"\plugin\icon_error.png";

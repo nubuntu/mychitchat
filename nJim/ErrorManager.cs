@@ -103,7 +103,7 @@ namespace nJim
 		/// <param name="ex">Exception</param>
 		private void Error(object sender, Exception ex)
 		{
-			OnErrorRaised(Enums.ErrorType.Client, ex.Message.Trim() + ex.StackTrace.Trim());
+			OnErrorRaised(Enums.ErrorType.Client, ex.Message.Trim());
 		}
 
 		/// <summary>

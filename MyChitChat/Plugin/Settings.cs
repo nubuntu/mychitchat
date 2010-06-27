@@ -50,7 +50,7 @@ namespace MyChitChat.Plugin {
 
         public static Helper.PLUGIN_NOTIFY_WINDOWS notifyWindowType = Helper.PLUGIN_NOTIFY_WINDOWS.WINDOW_DIALOG_AUTO;
 
-        public static Dialog.KeyBoardTypes defaultKeyboardType = Dialog.KeyBoardTypes.Normal;
+        public static Dialog.KeyBoardTypes defaultKeyboardType = Dialog.KeyBoardTypes.Default;
 
         #endregion
 
@@ -61,7 +61,10 @@ namespace MyChitChat.Plugin {
             using (MediaPortal.Profile.Settings reader = new MediaPortal.Profile.Settings(MediaPortal.Configuration.Config.GetFile(MediaPortal.Configuration.Config.Dir.Config, "MediaPortal.xml"))) {
                 username = reader.GetValue(Helper.PLUGIN_NAME, "username");
                 server = reader.GetValue(Helper.PLUGIN_NAME, "server");
-                resource = reader.GetValue(Helper.PLUGIN_NAME, "resource");
+                string tmpSettingsString = reader.GetValue(Helper.PLUGIN_NAME, "resource");
+                if (!String.IsNullOrEmpty(tmpSettingsString)) {
+                    resource = tmpSettingsString;
+                } 
                 string encryptedPassword = reader.GetValue(Helper.PLUGIN_NAME, "password");
                 password = decryptString(encryptedPassword);
                 autoConnectStartup = reader.GetValueAsBool(Helper.PLUGIN_NAME, "autoConnectStartup", autoConnectStartup);
@@ -81,15 +84,27 @@ namespace MyChitChat.Plugin {
                 notifyTimeOut = reader.GetValueAsInt(Helper.PLUGIN_NAME, "notifyTimeOut", notifyTimeOut);
                 autoIdleTimeOut = reader.GetValueAsInt(Helper.PLUGIN_NAME, "autoIdleTimeOut", autoIdleTimeOut);
                 autoIdleStatusType = (Enums.StatusType)reader.GetValueAsInt(Helper.PLUGIN_NAME, "autoIdleStatusType", (int)autoIdleStatusType);
-                autoIdleStatusMessage = reader.GetValue(Helper.PLUGIN_NAME, "autoIdleStatusMessage");
+                tmpSettingsString = reader.GetValue(Helper.PLUGIN_NAME, "autoIdleStatusMessage");
+                if (!String.IsNullOrEmpty(tmpSettingsString)) {
+                    autoIdleStatusMessage = tmpSettingsString;
+                }              
                 defaultStatusType = (Enums.StatusType)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultStatusType", (int)defaultStatusType);
-                defaultStatusMessage = reader.GetValue(Helper.PLUGIN_NAME, "defaultStatusMessage");
+                tmpSettingsString = reader.GetValue(Helper.PLUGIN_NAME, "defaultStatusMessage");
+                if (!String.IsNullOrEmpty(tmpSettingsString)) {
+                    defaultStatusMessage = tmpSettingsString;
+                } 
                 defaultMoodType = (Enums.MoodType)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultMoodType", (int)defaultMoodType);
-                defaultMoodMessage = reader.GetValue(Helper.PLUGIN_NAME, "defaultMoodMessage");
+                tmpSettingsString = reader.GetValue(Helper.PLUGIN_NAME, "defaultMoodMessage");
+                if (!String.IsNullOrEmpty(tmpSettingsString)) {
+                    defaultMoodMessage = tmpSettingsString;
+                }  
                 defaultActivityType = (Enums.ActivityType)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultActivityType", (int)defaultActivityType);
-                defaultActivityMessage = reader.GetValue(Helper.PLUGIN_NAME, "defaultActivityMessage");
+                tmpSettingsString = reader.GetValue(Helper.PLUGIN_NAME, "defaultActivityMessage");
+                if (!String.IsNullOrEmpty(tmpSettingsString)) {
+                    defaultActivityMessage = tmpSettingsString;
+                }  
                 notifyWindowType = (Helper.PLUGIN_NOTIFY_WINDOWS)reader.GetValueAsInt(Helper.PLUGIN_NAME, "notifyWindowType", (int)notifyWindowType);
-                defaultKeyboardType = (Dialog.KeyBoardTypes)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultKeyboardType", (int)Dialog.KeyBoardTypes.Normal);
+                defaultKeyboardType = (Dialog.KeyBoardTypes)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultKeyboardType", (int)Dialog.KeyBoardTypes.Default);
 
             }
         }

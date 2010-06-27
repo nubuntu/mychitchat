@@ -66,17 +66,12 @@ namespace MyChitChat.Jabber {
             Contact = chatPartner;
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
             chatPartner.identity.identityRetrieved += new IdentityHandler(identity_identityRetrieved);
-            ContactDetails.retrieve();
+            ContactDetails.Load(GetVCardFilePath());
             DateTimeSessionStarted = DateTime.Now;
             Messages = new List<Message>();
             this.Path = ContactJID.ToString();
             UpdateItemInfo();
-        }
-
-        void identity_identityRetrieved(Identity sender) {
-            ContactDetails = sender;
-
-        }
+        }     
 
         #endregion
 
@@ -86,7 +81,7 @@ namespace MyChitChat.Jabber {
             if (String.IsNullOrEmpty(replyMessage)) {
                 replyMessage = Dialog.Instance.GetKeyBoardInput();
             }
-            if (String.IsNullOrEmpty(replyMessage)) {
+            if (!String.IsNullOrEmpty(replyMessage)) {
                 AddMessageHistory(Helper.JABBER_CLIENT.SendMessage(replyMessage, ContactJID));
                 return true;
             }
@@ -142,7 +137,12 @@ namespace MyChitChat.Jabber {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-             
+
+        void identity_identityRetrieved(Identity sender) {
+            ContactDetails = sender;
+            ContactDetails.Save(GetVCardFilePath());
+            Cache.GetAvatarImagePath(sender);
+        }
 
         #endregion
 

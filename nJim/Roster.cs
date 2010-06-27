@@ -155,9 +155,9 @@ namespace nJim {
         /// </summary>
         public event ResourceMoodHandler MoodUpdated;
         private void OnMoodUpdated(Contact contact, Mood mood) {
-            try {
+            //try {
                 MoodUpdated(contact, mood);
-            } catch { }
+           // } catch { }
         }
 
         /// <summary>
@@ -165,9 +165,9 @@ namespace nJim {
         /// </summary>
         public event ResourceActivityHandler ActivityUpdated;
         private void OnActivityUpdated(Contact contact, Activity activity) {
-            try {
+            //try {
                 ActivityUpdated(contact, activity);
-            } catch { }
+            //} catch { }
         }
 
         /// <summary>
@@ -185,9 +185,9 @@ namespace nJim {
         /// </summary>
         public event ResourceTuneHandler TuneUpdated;
         private void OnTuneUpdated(Contact contact, Tune tune) {
-            try {
+           // try {
                 TuneUpdated(contact, tune);
-            } catch { }
+           // } catch { }
         }
 
         #endregion

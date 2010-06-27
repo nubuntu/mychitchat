@@ -44,7 +44,7 @@ namespace MyChitChat.Gui {
         }
 
         public enum KeyBoardTypes {
-            Normal,
+            Default,
             Web,
             SMS
         }
@@ -250,7 +250,7 @@ namespace MyChitChat.Gui {
                     keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_WEB_KEYBOARD);
                     break;
                 default:
-                case KeyBoardTypes.Normal:
+                case KeyBoardTypes.Default:
                     keyboard = (VirtualKeyboard)GUIWindowManager.GetWindow((int)GUIWindow.Window.WINDOW_VIRTUAL_KEYBOARD);
                     break;
             }

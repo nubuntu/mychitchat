@@ -26,7 +26,7 @@ namespace MyChitChat.Gui {
         [SkinControlAttribute(100)]
         GUIListControl ctrlListControlContacts = null;
 
-        [SkinControlAttribute(700)]
+        [SkinControlAttribute(200)]
         protected GUITextControl ctrlTextboxEventLog = null;
 
         [SkinControlAttribute(300)]
@@ -115,6 +115,9 @@ namespace MyChitChat.Gui {
             }
             SetupGuiControls();
             UpdateContactsFacade();
+            if (ctrlTextboxEventLog != null) {
+                ctrlTextboxEventLog.Label = History.Instance.LogHistory.ToString();
+            }
             base.OnPageLoad();
         }
 
@@ -297,10 +300,12 @@ namespace MyChitChat.Gui {
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_TYPE, Translations.GetByName(selectedSession.Contact.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_IMAGE, Helper.GetStatusIcon(selectedSession.Contact.status.type.ToString()));
             GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_MESSAGE, selectedSession.Contact.status.message);
-            ctrlTextboxLastMessage.Clear();
-            if (selectedSession.Messages.Count > 0) {
-                ctrlTextboxLastMessage.Label = selectedSession.Messages.Last().ToString();               
-            } 
+            if (ctrlTextboxLastMessage != null) {
+                ctrlTextboxLastMessage.Clear();
+                if (selectedSession.Messages.Count > 0) {
+                    ctrlTextboxLastMessage.Label = selectedSession.Messages.Last().ToString();
+                }
+            }
         }
 
 
@@ -344,14 +349,14 @@ namespace MyChitChat.Gui {
 
 
         void JABBER_CLIENT_OnRosterStart() {
+            AddHistoryEventHandlers();
             GUIWaitCursor.Init();
             GUIWaitCursor.Show();
         }
 
         void JABBER_CLIENT_OnRosterEnd() {
             GUIWaitCursor.Hide();
-            History_OnUpdatedLog(History.Instance.LogHistory.ToString());
-            AddHistoryEventHandlers();
+            History_OnUpdatedLog(History.Instance.LogHistory.ToString());            
             Helper.SetPluginEnterPresence();
             History_OnUpdatedLog(History.Instance.LogHistory.ToString());
             if (Settings.selectStatusOnStartup) {
@@ -369,6 +374,9 @@ namespace MyChitChat.Gui {
         void History_OnContactPresence(Contact updatedContact) {
             UpdateContactsFacade();
             UpdateGuiContactProperties(History.Instance.GetSession(updatedContact.identity.jabberID.full));
+            if (guiWindowChat.CurrentChatSession != null && updatedContact.identity.jabberID.bare.ToLower() == guiWindowChat.CurrentChatSession.ContactJID.Bare.ToLower()) {
+                guiWindowChat.UpdateGuiContactProperties();
+            }
         }
 
 
@@ -389,9 +397,11 @@ namespace MyChitChat.Gui {
         }
 
         void History_OnUpdatedLog(string logText) {
-            if (ctrlTextboxEventLog != null) {
-                ctrlTextboxEventLog.Label = logText;
-            }
+            try {
+                if (ctrlTextboxEventLog != null) {
+                    ctrlTextboxEventLog.Label = logText;
+                }
+            } catch { }
         }
 
         #endregion

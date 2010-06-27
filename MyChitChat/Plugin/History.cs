@@ -193,6 +193,7 @@ namespace MyChitChat.Plugin {
             Helper.JABBER_CLIENT.Roster.MoodUpdated += new ResourceMoodHandler(Roster_MoodUpdated);
             Helper.JABBER_CLIENT.Roster.ActivityUpdated += new ResourceActivityHandler(Roster_ActivityUpdated);
             Helper.JABBER_CLIENT.Roster.TuneUpdated += new ResourceTuneHandler(Roster_TuneUpdated);
+            AppendLogEvent(DateTime.Now, "MyChitChat started!",  Settings.username , "Jabber connected...");
         }
 
         void Roster_ResourceAdded(nJim.Contact contact) {
@@ -229,11 +230,11 @@ namespace MyChitChat.Plugin {
         }
 
         void Roster_PresenceUpdated(nJim.Contact contact) {
-            if (((Settings.notifyOnStatusPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnStatusGlobally) && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full) {
+            if (((Settings.notifyOnStatusPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnStatusGlobally) && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full && contact.status.type != Enums.StatusType.Unvailable) {
                 NotifyPresMooActTun(contact, null, null, null);
             }
-            OnUpdatedPresence(contact);            
             AppendLogEvent(contact.lastUpdated, "Presence Updated", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
+            OnUpdatedPresence(contact);      
         }
 
         void Roster_MoodUpdated(nJim.Contact contact, Mood mood) {
@@ -270,7 +271,7 @@ namespace MyChitChat.Plugin {
 
         }
         void newSession_OnChatSessionUpdated(Session session, Message msg) {
-            if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
+            if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally &&msg.DirectionType != DirectionTypes.Outgoing ) {
                 NotifyMessage(msg);
             }
             OnUpdatedSession(session, msg);

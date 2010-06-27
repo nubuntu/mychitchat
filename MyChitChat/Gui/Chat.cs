@@ -147,19 +147,21 @@ namespace MyChitChat.Gui {
             }
         }
 
-        private void UpdateGuiContactProperties() {
-            GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, _currentChatSession.ContactDetails.nickname);
-            GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_TYPE, Translations.GetByName(_currentChatSession.Contact.status.type.ToString()));
-            GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_IMAGE, Helper.GetStatusIcon(_currentChatSession.Contact.status.type.ToString()));
-            GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_MESSAGE, _currentChatSession.Contact.status.message);
-            GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_TYPE, Translations.GetByName(_currentChatSession.Contact.mood.type.ToString()));
-            GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_IMAGE, Helper.GetMoodIcon(_currentChatSession.Contact.mood.type.ToString()));
-            GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_MESSAGE, _currentChatSession.Contact.mood.text);
-            GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_TYPE, Translations.GetByName(_currentChatSession.Contact.activity.type.ToString()));
-            GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_IMAGE, Helper.GetActivityIcon(_currentChatSession.Contact.activity.type.ToString()));
-            GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_MESSAGE, _currentChatSession.Contact.activity.text);
-            GUIPropertyManager.SetProperty(TAG_CONTACT_TUNE_TITLE, _currentChatSession.Contact.tune.title);
-            GUIPropertyManager.SetProperty(TAG_CONTACT_TUNE_MESSAGE, _currentChatSession.Contact.tune.artist);
+        public void UpdateGuiContactProperties() {
+            if (_currentChatSession != null) {
+                GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, _currentChatSession.ContactDetails.nickname);
+                GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_TYPE, Translations.GetByName(_currentChatSession.Contact.status.type.ToString()));
+                GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_IMAGE, Helper.GetStatusIcon(_currentChatSession.Contact.status.type.ToString()));
+                GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_MESSAGE, _currentChatSession.Contact.status.message);
+                GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_TYPE, Translations.GetByName(_currentChatSession.Contact.mood.type.ToString()));
+                GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_IMAGE, Helper.GetMoodIcon(_currentChatSession.Contact.mood.type.ToString()));
+                GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_MESSAGE, _currentChatSession.Contact.mood.text);
+                GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_TYPE, Translations.GetByName(_currentChatSession.Contact.activity.type.ToString()));
+                GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_IMAGE, Helper.GetActivityIcon(_currentChatSession.Contact.activity.type.ToString()));
+                GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_MESSAGE, _currentChatSession.Contact.activity.text);
+                GUIPropertyManager.SetProperty(TAG_CONTACT_TUNE_TITLE, _currentChatSession.Contact.tune.title);
+                GUIPropertyManager.SetProperty(TAG_CONTACT_TUNE_MESSAGE, _currentChatSession.Contact.tune.artist);
+            }
         }
 
         #endregion
@@ -183,6 +185,7 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties Gets/Sets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public Session CurrentChatSession {
+            get { return this._currentChatSession; }
             set {
                 if (this._currentChatSession != null) {
                     this._currentChatSession.OnChatSessionUpdated -= new OnChatSessionUpdatedEventHandler(_currentChatSession_OnChatSessionUpdated);
