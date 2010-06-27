@@ -39,6 +39,7 @@ namespace MyChitChat.Gui {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Skin Properties ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+        private const string TAG_PLUGIN_NAME = "#MyChitChat.Plugin.Name";              
         private const string TAG_USER_NAME_NICK = "#MyChitChat.User.Name.Nick";              
         private const string TAG_USER_AVATAR_IMAGE = "#MyChitChat.User.Avatar.Image";
         private const string TAG_USER_STATUS_TYPE = "#MyChitChat.User.Status.Type";
@@ -222,7 +223,7 @@ namespace MyChitChat.Gui {
         private void SetupGuiControls() {
             GUIPropertyManager.SetProperty("#title", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
-            GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
+            GUIPropertyManager.SetProperty(TAG_PLUGIN_NAME, Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.label", "Main Window");
             GUIPropertyManager.SetProperty("#header.image", Helper.MEDIA_HOVER_HOME);
             GUIPropertyManager.SetProperty("#currentmodule", Helper.PLUGIN_NAME);
