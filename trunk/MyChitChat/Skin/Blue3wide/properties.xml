@@ -21,4 +21,5 @@
     <property name="#MyChitChat.Contact.Avatar.Image">Contact's Avatar</property>
     <property name="#MyChitChat.User.Name.Nick">My Nick</property>
     <property name="#MyChitChat.Contact.Name.Nick">Contact's Nick</property>
+    <property name="#MyChitChat.Plugin.Name">MyChitChat</property>
 </properties>
