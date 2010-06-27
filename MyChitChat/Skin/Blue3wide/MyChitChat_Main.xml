@@ -5,7 +5,15 @@
     <allowoverlay>yes</allowoverlay>
     <disabletopbar>yes</disabletopbar>
     <controls>
-        <import>common.window.default.xml</import>
+        <control>
+            <id>1</id>
+            <description>BG</description>
+            <type>image</type>
+            <posX>0</posX>
+            <posY>0</posY>
+            <width>1280</width>
+            <height>720</height>
+        </control>
         <control>
             <type>image</type>
             <colordiffuse>60ffffff</colordiffuse>
@@ -175,6 +183,7 @@
             <posY>176</posY>
             <width>441</width>
             <height>473</height>
+            <spinPosX>800</spinPosX>
             <font>font9</font>
         </control>
         <control>
@@ -193,6 +202,7 @@
         </control>
         <control>
             <type>image</type>
+            <colordiffuse>50ffffff</colordiffuse>
             <posX>864</posX>
             <posY>616</posY>
             <width>65</width>
@@ -201,6 +211,7 @@
         </control>
         <control>
             <type>image</type>
+            <colordiffuse>50ffffff</colordiffuse>
             <posX>1176</posX>
             <posY>616</posY>
             <width>65</width>
@@ -221,6 +232,7 @@
         </control>
         <control>
             <type>image</type>
+            <colordiffuse>50ffffff</colordiffuse>
             <posX>392</posX>
             <posY>624</posY>
             <width>65</width>
@@ -258,13 +270,58 @@
             <label>Contact List</label>
         </control>
         <control>
+            <type>label</type>
+            <posX>336</posX>
+            <posY>264</posY>
+            <label>MyChitChat</label>
+        </control>
+        <control>
+            <id>1</id>
+            <description>Date</description>
+            <type>label</type>
+            <posX>1084</posX>
+            <posY>37</posY>
+            <font>font14</font>
+            <textcolor>ffa9d0f7</textcolor>
+            <align>RIGHT</align>
+            <label>#date</label>
+            <animation effect="Fade" time="250">WindowOpen</animation>
+            <animation effect="Fade" time="250">WindowClose</animation>
+        </control>
+        <control>
+            <id>1</id>
+            <description>Time</description>
+            <type>label</type>
+            <posX>1208</posX>
+            <posY>37</posY>
+            <font>font14</font>
+            <textcolor>ffa9d0f7</textcolor>
+            <align>RIGHT</align>
+            <label>#time</label>
+            <animation effect="Fade" time="250">WindowOpen</animation>
+            <animation effect="Fade" time="250">WindowClose</animation>
+        </control>
+        <control>
             <id>1</id>
             <type>label</type>
-            <posX>106</posX>
-            <posY>25</posY>
-            <font>font48</font>
-            <textcolor>33ffffff</textcolor>
-            <label>#header.text</label>
+            <posX>136</posX>
+            <posY>48</posY>
+            <font>font32</font>
+            <textcolor>50ffffff</textcolor>
+            <label>#MyChitChat.Plugin.Name</label>
+            <animation effect="Fade" time="250">Visible</animation>
+            <animation effect="Fade" time="250">Visible</animation>
+        </control>
+        <control>
+            <id>1</id>
+            <description>Page text label</description>
+            <type>label</type>
+            <posX>444</posX>
+            <posY>87</posY>
+            <font>font16</font>
+            <textcolor>ffffffff</textcolor>
+            <align>RIGHT</align>
+            <label>#header.label</label>
             <animation effect="Fade" time="250">WindowOpen</animation>
             <animation effect="Fade" time="250">WindowClose</animation>
         </control>

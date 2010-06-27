@@ -161,6 +161,7 @@
         </control>
         <control>
             <type>image</type>
+            <colordiffuse>50ffffff</colordiffuse>
             <posX>880</posX>
             <posY>624</posY>
             <width>65</width>
@@ -169,6 +170,7 @@
         </control>
         <control>
             <type>image</type>
+            <colordiffuse>50ffffff</colordiffuse>
             <posX>1184</posX>
             <posY>624</posY>
             <width>65</width>
@@ -177,6 +179,7 @@
         </control>
         <control>
             <type>image</type>
+            <colordiffuse>50ffffff</colordiffuse>
             <posX>392</posX>
             <posY>624</posY>
             <width>65</width>
