@@ -30,17 +30,17 @@ namespace MyChitChat.Plugin {
         History() {
             Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JABBER_CLIENT_OnLogin);
             ChatSessions = new List<Session>();
-            LogHistory = new StringBuilder();
+            LogHistory = new StringBuilder();            
             GUIPropertyManager.OnPropertyChanged += new GUIPropertyManager.OnPropertyChangedHandler(GUIPropertyManager_OnPropertyChanged);
         }
 
         ~History() {
             try {
-                Helper.JABBER_CLIENT.Close();
                 Helper.JABBER_CLIENT.Roster.PresenceUpdated -= new ResourceHandler(Roster_PresenceUpdated);
                 Helper.JABBER_CLIENT.Roster.MoodUpdated -= new ResourceMoodHandler(Roster_MoodUpdated);
                 Helper.JABBER_CLIENT.Roster.ActivityUpdated -= new ResourceActivityHandler(Roster_ActivityUpdated);
                 Helper.JABBER_CLIENT.Roster.TuneUpdated -= new ResourceTuneHandler(Roster_TuneUpdated);
+                Helper.JABBER_CLIENT.Close();
             } catch (Exception ex) {
                 Log.Error(ex);
             }
@@ -75,7 +75,9 @@ namespace MyChitChat.Plugin {
 
         public StringBuilder LogHistory { get; private set; }
 
-
+        private Tune currentTune = new Tune();
+       
+            
 
 
         #endregion
@@ -164,8 +166,8 @@ namespace MyChitChat.Plugin {
         }
 
         private void AppendLogEvent(DateTime when, string why, string who, string what) {
-            string tmp = String.Format("[{0}] {1}: {2} (\"{3}\")", new string[] { when.ToShortTimeString(), why, who, what });
-            LogHistory.AppendLine(tmp);
+            string tmp = String.Format("[{0}] {1} {2}: \n      '{3}'", new string[] { when.ToShortTimeString(), why, who, what });
+            LogHistory.Insert(0,tmp + Environment.NewLine);
             Log.Info(tmp);
             OnUpdatedLog(LogHistory.ToString());
         }
@@ -184,8 +186,6 @@ namespace MyChitChat.Plugin {
 
         void JABBER_CLIENT_OnLogin(object sender) {
             // Once Connected to Jabber keep 'em Messages/Presences pumpin'!
-            //ShowNotifyDialog("MyChitChat loaded...");   
-            Helper.JABBER_CLIENT.Identity.retrieve();
             Helper.JABBER_CLIENT.OnMessage += new OnMessageEventHandler(JABBER_CLIENT_OnMessage);
             Helper.JABBER_CLIENT.Roster.ResourceAdded += new ResourceHandler(Roster_ResourceAdded);
             Helper.JABBER_CLIENT.Roster.ResourceRemoved += new ResourceHandler(Roster_ResourceRemoved);
@@ -203,7 +203,7 @@ namespace MyChitChat.Plugin {
                 ChatSessions.Add(newSession);
             }
             OnUpdatedRoster(contact);
-            AppendLogEvent(contact.lastUpdated, "Contact Added", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
+            AppendLogEvent(contact.lastUpdated, "Added", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
         }
 
 
@@ -211,13 +211,13 @@ namespace MyChitChat.Plugin {
         void Roster_ResourceRemoved(nJim.Contact contact) {
             ChatSessions.Remove(new Session(contact));
             OnUpdatedRoster(contact);
-            AppendLogEvent(contact.lastUpdated, "Contact Removed", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
+            AppendLogEvent(contact.lastUpdated, "Removed", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
         }
 
         void JABBER_CLIENT_OnMessage(Message msg) {
-            if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally) {
+            if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally && !Helper.PLUGIN_WINDOW_ACTIVE) {
                 NotifyMessage(msg);
-                AppendLogEvent(msg.DateTimeReceived, "Incoming Message", msg.FromJID.User, msg.Subject);
+                AppendLogEvent(msg.DateTimeReceived, "Msg", msg.FromJID.User, msg.Subject);
             }
             try {
                 if (msg.FromJID.User != null) {
@@ -230,51 +230,60 @@ namespace MyChitChat.Plugin {
         }
 
         void Roster_PresenceUpdated(nJim.Contact contact) {
-            if (((Settings.notifyOnStatusPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnStatusGlobally) && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full && contact.status.type != Enums.StatusType.Unvailable) {
+            if (((Settings.notifyOnStatusPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnStatusGlobally && !Helper.PLUGIN_WINDOW_ACTIVE) && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full && contact.status.type != Enums.StatusType.Unavailable) {
                 NotifyPresMooActTun(contact, null, null, null);
             }
-            AppendLogEvent(contact.lastUpdated, "Presence Updated", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
+            AppendLogEvent(contact.lastUpdated, "Status", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
             OnUpdatedPresence(contact);      
         }
 
         void Roster_MoodUpdated(nJim.Contact contact, Mood mood) {
-            if ((Settings.notifyOnMoodPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMoodGlobally) {
+            if ((Settings.notifyOnMoodPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMoodGlobally && !Helper.PLUGIN_WINDOW_ACTIVE) {
                 NotifyPresMooActTun(contact, mood, null, null);
             }
             OnUpdatedPresence(contact);
-            AppendLogEvent(contact.lastUpdated, "Mood Updated", contact.identity.nickname, Translations.GetByName(mood.type.ToString()));
+            AppendLogEvent(contact.lastUpdated, "Mood", contact.identity.nickname, Translations.GetByName(mood.type.ToString()));
         }
 
         void Roster_ActivityUpdated(nJim.Contact contact, Activity activity) {
-            if ((Settings.notifyOnActivityPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnActivityGlobally) {
+            if ((Settings.notifyOnActivityPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnActivityGlobally && !Helper.PLUGIN_WINDOW_ACTIVE) {
                 NotifyPresMooActTun(contact, null, activity, null);
 
             }
             OnUpdatedPresence(contact);
-            AppendLogEvent(contact.lastUpdated, "Activity Updated", contact.identity.nickname, Translations.GetByName(activity.type.ToString()));
+            AppendLogEvent(contact.lastUpdated, "Activity", contact.identity.nickname, Translations.GetByName(activity.type.ToString()));
         }
 
         void Roster_TuneUpdated(nJim.Contact contact, Tune tune) {
-            if ((Settings.notifyOnTunePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnTuneGlobally) {
+            if ((Settings.notifyOnTunePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnTuneGlobally && !Helper.PLUGIN_WINDOW_ACTIVE) {
                 NotifyPresMooActTun(contact, null, null, tune);
 
             }
             OnUpdatedPresence(contact);
-            AppendLogEvent(contact.lastUpdated, "Tune Updated", contact.identity.nickname, tune.artist + " - " + tune.title);
+            AppendLogEvent(contact.lastUpdated, "Tune", contact.identity.nickname, tune.artist + " - " + tune.title);
         }
 
         void GUIPropertyManager_OnPropertyChanged(string tag, string tagValue) {
             if (tag == "#Play.Current.Title") {
-                Helper.SetTune(GUIPropertyManager.GetProperty("#Play.Current.File"), GUIPropertyManager.GetProperty("#Play.Current.Artist"), 1);               
+               currentTune.title = tagValue;            
+            }
+            if (tag == "#Play.Current.Album") {
+                currentTune.source = tagValue;
+            }           
+            if (tag == "#Play.Current.Artist"){
+                if (currentTune.artist != tagValue) {
+                    currentTune.artist = tagValue;
+                    Helper.SetTune(currentTune);
+                }
             }
 
         }
         void newSession_OnChatSessionUpdated(Session session, Message msg) {
-            if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally &&msg.DirectionType != DirectionTypes.Outgoing ) {
+            if (((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally && !Helper.PLUGIN_WINDOW_ACTIVE )&& msg.DirectionType != DirectionTypes.Outgoing) {
                 NotifyMessage(msg);
             }
             OnUpdatedSession(session, msg);
-            AppendLogEvent(msg.DateTimeReceived, "new Message", msg.ToJID.ToString(), msg.Subject);
+            AppendLogEvent(msg.DateTimeReceived, "Msg", session.ContactNickname, msg.Subject);
         }
 
         #endregion

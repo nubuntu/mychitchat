@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--MyChitChat translation file-->
 <!--Language: de-->
 <!--Note: English is the fallback for any strings not found in other languages-->
@@ -30,7 +30,7 @@
   <string Field="Away">Abwesend</string>
   <string Field="ExtendedAway">Länger abwesend</string>
   <string Field="DoNotDisturb">Beschäftigt</string>
-  <string Field="Unvailable">Offline</string>
+  <string Field="Unavailable">Offline</string>
   <string Field="Invisible">Unsichtbar</string>
   <string Field="afraid">afraid</string>
   <string Field="amazed">amazed</string>

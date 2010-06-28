@@ -448,8 +448,8 @@ namespace nJim {
                             }
                             st.type = Enums.StatusTypeConverter(presence.Show);
                         }
-                        if (st.type == Enums.StatusType.Unvailable) {
-                            if (contacts[bare][resource].status.type != Enums.StatusType.Unvailable) {
+                        if (st.type == Enums.StatusType.Unavailable) {
+                            if (contacts[bare][resource].status.type != Enums.StatusType.Unavailable) {
 
                                 if (initialUserPEP.ContainsKey(bare)) {
                                     initialUserPEP.Remove(bare);

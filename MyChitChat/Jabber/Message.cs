@@ -37,11 +37,15 @@ namespace MyChitChat.Jabber {
         private agsXMPP.protocol.client.Message InternalMessage { get; set; }
         public Jid FromJID { get { return this.InternalMessage.From; } }
         public Jid ToJID { get { return this.InternalMessage.To; } }
-        public String Subject { get { return this.InternalMessage.Subject; } }
+        public String Subject { get { return (this.InternalMessage.Subject != null) ? this.InternalMessage.Subject : this.InternalMessage.Body; } }
         public String Body { get { return this.InternalMessage.Body; } }
         public String Error { get { return this.InternalMessage.Error.Message; } }
         public MessageType MessageType { get { return this.InternalMessage.Type; } }
         public DirectionTypes DirectionType { get; private set; }
+        public string DirectionTypeSymbol {
+            get { return (DirectionType == DirectionTypes.Incoming) ? "=>" : "<="; }
+        }
+        
         public Chatstate ChatState { get { return this.InternalMessage.Chatstate; } }
         public DateTime DateTimeReceived { get; private set; }
         public Guid MessageID { get; private set; }
@@ -84,7 +88,7 @@ namespace MyChitChat.Jabber {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public override string ToString() {
-            return String.Format("[{0}] {1}", this.DateTimeReceived.ToShortTimeString(), this.Body);
+            return String.Format("[{0}] {1}", this.DateTimeReceived.ToShortTimeString(), this.Subject);
         }
 
         #endregion

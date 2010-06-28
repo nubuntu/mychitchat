@@ -68,7 +68,7 @@ namespace MyChitChat.Gui {
             _dlgSelect.Init();
             _dlgSelect.InitControls();
             _dlgSelect.Process();
-            _dlgSelect.SetHeading("I'm currently ...");
+            _dlgSelect.SetHeading("Context Menu");
             foreach (GUIListItem item in list) {
                 _dlgSelect.Add(item);
             }
