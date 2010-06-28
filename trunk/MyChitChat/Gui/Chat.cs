@@ -18,7 +18,7 @@ namespace MyChitChat.Gui {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
-        public Chat() {
+        public Chat(string skinFile) :base (skinFile){
             LogMessages = new StringBuilder();
         }
         #endregion
@@ -65,12 +65,12 @@ namespace MyChitChat.Gui {
             get { return (int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_CHAT; }
         }
 
-        /// <summary>
-        /// Loads the XML for the window
-        /// </summary>
-        public override bool Init() {
-            return Load(Helper.SKIN_FILE_CHAT);
-        }
+        ///// <summary>
+        ///// Loads the XML for the window
+        ///// </summary>
+        //public override bool Init() {
+        //    return Load(Helper.SKIN_FILE_CHAT);
+        //}
 
         protected override void OnWindowLoaded() {
             if (this._currentChatSession == null) {

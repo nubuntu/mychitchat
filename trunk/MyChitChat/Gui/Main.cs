@@ -68,7 +68,7 @@ namespace MyChitChat.Gui {
 
         public Main() {
             AddRosterEventHandlers();
-            guiWindowChat = new Chat();
+            guiWindowChat = new Chat(Helper.SKIN_FILE_CHAT);
             StatusFilter = true;
         }
 
@@ -364,6 +364,7 @@ namespace MyChitChat.Gui {
                 Dialog.Instance.SelectAndSetStatus();
             }
             UpdateGuiUserProperties();
+           
         }
 
         void History_OnRosterUpdated(Contact changedContact) {
