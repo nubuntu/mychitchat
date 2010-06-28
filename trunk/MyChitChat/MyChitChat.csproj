@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MyChitChatConfiguration|AnyCPU' ">
+    <OutputPath>bin\MyChitChatConfiguration\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL" />
     <Reference Include="agsXMPP.ui, Version=1.0.3800.21063, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL" />

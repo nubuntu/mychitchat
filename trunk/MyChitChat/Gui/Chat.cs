@@ -18,7 +18,8 @@ namespace MyChitChat.Gui {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
-        public Chat(string skinFile) :base (skinFile){
+        public Chat(string skinFile)
+            : base(skinFile) {
             LogMessages = new StringBuilder();
         }
         #endregion
@@ -79,7 +80,7 @@ namespace MyChitChat.Gui {
                 SetupGuiControls();
             }
             base.OnWindowLoaded();
-            
+
         }
 
         protected override void OnShowContextMenu() {
@@ -93,7 +94,7 @@ namespace MyChitChat.Gui {
             if (control == btnNewMessage && _currentChatSession != null) {
                 _currentChatSession.Reply();
             }
-            base.OnClicked(controlId, control, actionType);           
+            base.OnClicked(controlId, control, actionType);
         }
 
         private void HandleChatMessage(Message selectedMessage) {
@@ -115,9 +116,6 @@ namespace MyChitChat.Gui {
             GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.label", "Chat Window");
-            if (this.ctrlTextboxMessageHistory != null) {
-                this.ctrlTextboxMessageHistory.EnableUpDown = true;
-            }
             if (this.ctrlListMessages != null) {
                 this.ctrlListMessages.RemoteColor = 0xFFFF6347;
                 this.ctrlListMessages.PlayedColor = 0x2090EE90;
@@ -131,16 +129,27 @@ namespace MyChitChat.Gui {
             string tmp = String.Format("[{0}] {1}: {2} (\"{3}\")", new string[] { when.ToShortTimeString(), why, who, what });
             LogMessages.AppendLine(tmp);
             Log.Info(tmp);
-            if (this.ctrlListMessages != null) {
-                this.ctrlTextboxMessageHistory.Label = LogMessages.ToString();
+            try {
+                if (Helper.PLUGIN_WINDOW_ACTIVE) {
+                    if (this.ctrlListMessages != null) {
+                        ctrlTextboxMessageHistory.VerifyAccess();
+                        if (ctrlTextboxMessageHistory.CheckAccess()) {
+                            this.ctrlTextboxMessageHistory.Clear();
+                            this.ctrlTextboxMessageHistory.Label = LogMessages.ToString();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                Log.Error(e);
             }
         }
 
         private void UpdateChatHistory() {
             if (this.ctrlListMessages != null || this._currentChatSession != null) {
                 this.ctrlListMessages.Clear();
+                this.LogMessages = new StringBuilder();
                 foreach (Message currentMessageItem in _currentChatSession.Messages) {
-                    AppendLogEvent(currentMessageItem.DateTimeReceived, currentMessageItem.DirectionType.ToString(), (currentMessageItem.DirectionType == DirectionTypes.Incoming) ? _currentChatSession.ContactNickname : Helper.JABBER_CLIENT.Identity.nickname, currentMessageItem.Body);
+                    AppendLogEvent(currentMessageItem.DateTimeReceived, currentMessageItem.DirectionTypeSymbol , (currentMessageItem.DirectionType == DirectionTypes.Incoming) ? _currentChatSession.ContactNickname : Helper.JABBER_CLIENT.Identity.nickname, currentMessageItem.Body);
                     this.ctrlListMessages.Add(currentMessageItem);
                 }
                 this.ctrlListMessages.Sort(new MessageComparerDateDesc());

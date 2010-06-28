@@ -244,7 +244,7 @@ namespace MyChitChat.Plugin {
         public static string Away = "Away";
         public static string ExtendedAway = "Extended away";
         public static string DoNotDisturb = "Do not disturb";
-        public static string Unvailable = "Unvailable";
+        public static string Unavailable = "Unvailable";
         public static string Invisible = "Invisible";
 
         /* Jabber / XMPP Mood Types */

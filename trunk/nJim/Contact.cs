@@ -257,7 +257,7 @@ namespace nJim
 				}
 			}
 			_status = new Status();
-			_status.type = Enums.StatusType.Unvailable;
+			_status.type = Enums.StatusType.Unavailable;
 			_status.message = string.Empty;
 			_mood = new Mood();
 			_mood.type = Enums.MoodType.none;
@@ -322,7 +322,7 @@ namespace nJim
 		/// </summary>
 		public void getVersion()
 		{
-			if (Jabber.xmpp.Authenticated && status.type != Enums.StatusType.Unvailable && status.type != Enums.StatusType.Invisible)
+			if (Jabber.xmpp.Authenticated && status.type != Enums.StatusType.Unavailable && status.type != Enums.StatusType.Invisible)
 			{
 				agsXMPP.protocol.iq.version.VersionIq viq = new agsXMPP.protocol.iq.version.VersionIq();
 				viq.From = Jabber.xmpp.MyJID;
@@ -338,7 +338,7 @@ namespace nJim
 		/// </summary>
 		public void getTime()
 		{
-			if (Jabber.xmpp.Authenticated && status.type != Enums.StatusType.Unvailable && status.type != Enums.StatusType.Invisible)
+			if (Jabber.xmpp.Authenticated && status.type != Enums.StatusType.Unavailable && status.type != Enums.StatusType.Invisible)
 			{
 				agsXMPP.protocol.iq.time.TimeIq tiq = new agsXMPP.protocol.iq.time.TimeIq();
 				tiq.From = Jabber.xmpp.MyJID;
@@ -354,7 +354,7 @@ namespace nJim
 		/// </summary>
 		public void getLast()
 		{
-			if (Jabber.xmpp.Authenticated && status.type != Enums.StatusType.Unvailable && status.type != Enums.StatusType.Invisible)
+			if (Jabber.xmpp.Authenticated && status.type != Enums.StatusType.Unavailable && status.type != Enums.StatusType.Invisible)
 			{
 				agsXMPP.protocol.iq.last.LastIq liq = new agsXMPP.protocol.iq.last.LastIq();
 				liq.From = Jabber.xmpp.MyJID;

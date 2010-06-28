@@ -10,18 +10,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nJim", "nJim\nJim.csproj", 
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		MyChitChatConfiguration|Any CPU = MyChitChatConfiguration|Any CPU
+		MyChitChatDebug|Any CPU = MyChitChatDebug|Any CPU
+		MyChitChatRelease|Any CPU = MyChitChatRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatConfiguration|Any CPU.ActiveCfg = MyChitChatConfiguration|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatConfiguration|Any CPU.Build.0 = MyChitChatConfiguration|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatDebug|Any CPU.Build.0 = Debug|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatRelease|Any CPU.Build.0 = Release|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatConfiguration|Any CPU.ActiveCfg = MyChitChatConfiguration|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatConfiguration|Any CPU.Build.0 = MyChitChatConfiguration|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatDebug|Any CPU.Build.0 = Debug|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatRelease|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

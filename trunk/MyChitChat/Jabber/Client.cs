@@ -4,6 +4,11 @@ using MyChitChat.Plugin;
 using nJim;
 using agsXMPP.protocol.client;
 using agsXMPP;
+using System.IO;
+using agsXMPP.protocol.x;
+using System.Security.Cryptography;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace MyChitChat.Jabber {
     /// <summary>

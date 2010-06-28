@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using nJim;
 using MyChitChat.Gui;
+using System.Drawing;
 
 namespace MyChitChat.Plugin {
     public static class Helper {
@@ -127,13 +128,13 @@ namespace MyChitChat.Plugin {
         }
 
         public static Presence JABBER_LAST_PRESENCE { get; set; }
-
+       
         public static void SetPluginEnterPresence() {
             if (JABBER_LAST_PRESENCE == null) {
-                JABBER_LAST_PRESENCE = SetDefaultPresence();                
+                JABBER_LAST_PRESENCE = SetDefaultPresence();
             } else {
                 SetStatus(JABBER_LAST_PRESENCE.status.type, JABBER_LAST_PRESENCE.status.message);
-            }            
+            }
         }
 
         public static void SetPluginLeavePresence() {
@@ -141,6 +142,8 @@ namespace MyChitChat.Plugin {
             SetStatus(JABBER_CLIENT.Presence.autoIdleStatus.type, JABBER_CLIENT.Presence.autoIdleStatus.message);
         }
 
+
+ 
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ GUI Helper Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -180,20 +183,32 @@ namespace MyChitChat.Plugin {
         }
 
         public static void SetStatus(Enums.StatusType type, string message) {
-            Status tmpStatus = new Status();
-            tmpStatus.type = type;
-            tmpStatus.message = message;
-            Helper.JABBER_CLIENT.Presence.status = tmpStatus;
-            Helper.JABBER_CLIENT.Presence.applyStatus();
+            try {
+                Status tmpStatus = new Status();
+                tmpStatus.type = type;
+                tmpStatus.message = message;
+                Helper.JABBER_CLIENT.Presence.status = tmpStatus;
+                Helper.JABBER_CLIENT.Presence.applyStatus();
+            } catch (Exception e) {
+                Log.Error(e);
+            }
         }
 
         public static void SetActivity(Enums.ActivityType type, string message) {
-            JABBER_CLIENT.Presence.setActivity(type, message);
+            try {
+                JABBER_CLIENT.Presence.setActivity(type, message);
+            } catch (Exception e) {
+                Log.Error(e);
+            }
         }
 
         public static void SetMood(Enums.MoodType type, string message) {
-            JABBER_CLIENT.Presence.setMood(type, message);
-        }
+            try {
+                JABBER_CLIENT.Presence.setMood(type, message);
+            } catch (Exception e) {
+                Log.Error(e);
+            }
+        }        
 
         public static Status GetStatusFromType(Enums.StatusType type, string message) {
             Status tmpStatus = new Status();
@@ -203,7 +218,15 @@ namespace MyChitChat.Plugin {
         }
 
         public static void SetTune(string title, string artist, int length) {
-            JABBER_CLIENT.Presence.setTune(title, artist, length);
+            try {
+                JABBER_CLIENT.Presence.setTune(title, artist, length);
+            } catch (Exception e) {
+                Log.Error(e);
+            }
+        }
+
+        public static void SetTune(Tune tune) {
+            SetTune(tune.title, tune.artist, tune.length);
         }
 
 

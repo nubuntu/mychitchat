@@ -448,7 +448,7 @@ namespace nJim
 			/// <summary>
 			/// Indisponible
 			/// </summary>
-			Unvailable,
+			Unavailable,
 
 			/// <summary>
 			/// Invisible
@@ -500,7 +500,7 @@ namespace nJim
 		{
 			switch (type)
 			{
-				case StatusType.Unvailable: return agsXMPP.protocol.client.PresenceType.unavailable;
+				case StatusType.Unavailable: return agsXMPP.protocol.client.PresenceType.unavailable;
 				case StatusType.Invisible: return agsXMPP.protocol.client.PresenceType.invisible;
 				default: return agsXMPP.protocol.client.PresenceType.available;
 			}
@@ -515,7 +515,7 @@ namespace nJim
 		{
 			switch (type)
 			{
-				case agsXMPP.protocol.client.PresenceType.unavailable: return StatusType.Unvailable;
+				case agsXMPP.protocol.client.PresenceType.unavailable: return StatusType.Unavailable;
 				case agsXMPP.protocol.client.PresenceType.invisible: return StatusType.Invisible;
 				default: return StatusType.Normal;
 			}

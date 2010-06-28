@@ -331,57 +331,57 @@ namespace nJim {
                     value.RawFormat.ToString().Contains(ImageFormat.Png.Guid.ToString())) {
                     _photo = value;
                 }
-                _photoHash = string.Empty;
-                if (_photo != null && photoFormat != null) {
-                    if (_photo.Width > 96 || _photo.Height > 96) {
-                        int sourceWidth = _photo.Width;
-                        int sourceHeight = _photo.Height;
-                        float nPercent = 0;
-                        float nPercentW = 0;
-                        float nPercentH = 0;
-                        nPercentW = (96.0f / (float)sourceWidth);
-                        nPercentH = (96.0f / (float)sourceHeight);
-                        if (nPercentH < nPercentW) {
-                            nPercent = nPercentH;
-                        } else {
-                            nPercent = nPercentW;
-                        }
-                        int destWidth = (int)(sourceWidth * nPercent);
-                        int destHeight = (int)(sourceHeight * nPercent);
-                        Bitmap b = new Bitmap(destWidth, destHeight);
-                        Graphics g = Graphics.FromImage((Image)b);
-                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        g.DrawImage(_photo, 0, 0, destWidth, destHeight);
-                        g.Dispose();
-                        _photo = (Image)b;
-                    }
-                    MemoryStream ms = new MemoryStream();
-                    _photo.Save(ms, photoFormat);
-                    byte[] hash = SHA1.Create().ComputeHash(ms.ToArray());
-                    ms.Close();
-                    ms.Dispose();
-                    string hashString = string.Empty;
-                    foreach (byte b in hash) {
-                        string hex = b.ToString("X").ToLower();
-                        hex = ((hex.Length == 1) ? "0" : string.Empty) + hex;
-                        hashString += hex;
-                    }
-                    hash = null;
-                    _photoHash = hashString;
-                    hashString = string.Empty;
-                }
-                if (Jabber.xmpp.Authenticated) {
-                    agsXMPP.protocol.client.Presence presence = new agsXMPP.protocol.client.Presence();
-                    presence.From = new agsXMPP.Jid(jabberID.full);
-                    presence.Priority = Jabber.xmpp.Priority;
-                    presence.To = new agsXMPP.Jid(Jabber.xmpp.Server);
-                    presence.XDelay = new agsXMPP.protocol.x.Delay();
-                    presence.XDelay.Stamp = DateTime.Now;
-                    agsXMPP.protocol.x.Avatar avatar = new agsXMPP.protocol.x.Avatar();
-                    avatar.Hash = photoHash;
-                    presence.AddChild(avatar);
-                    Jabber.xmpp.Send(presence);
-                }
+                //_photoHash = string.Empty;
+                //if (_photo != null && photoFormat != null) {
+                //    if (_photo.Width > 96 || _photo.Height > 96) {
+                //        int sourceWidth = _photo.Width;
+                //        int sourceHeight = _photo.Height;
+                //        float nPercent = 0;
+                //        float nPercentW = 0;
+                //        float nPercentH = 0;
+                //        nPercentW = (96.0f / (float)sourceWidth);
+                //        nPercentH = (96.0f / (float)sourceHeight);
+                //        if (nPercentH < nPercentW) {
+                //            nPercent = nPercentH;
+                //        } else {
+                //            nPercent = nPercentW;
+                //        }
+                //        int destWidth = (int)(sourceWidth * nPercent);
+                //        int destHeight = (int)(sourceHeight * nPercent);
+                //        Bitmap b = new Bitmap(destWidth, destHeight);
+                //        Graphics g = Graphics.FromImage((Image)b);
+                //        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                //        g.DrawImage(_photo, 0, 0, destWidth, destHeight);
+                //        g.Dispose();
+                //        _photo = (Image)b;
+                //    }
+                //    MemoryStream ms = new MemoryStream();
+                //    _photo.Save(ms, photoFormat);
+                //    byte[] hash = SHA1.Create().ComputeHash(ms.ToArray());
+                //    ms.Close();
+                //    ms.Dispose();
+                //    string hashString = string.Empty;
+                //    foreach (byte b in hash) {
+                //        string hex = b.ToString("X").ToLower();
+                //        hex = ((hex.Length == 1) ? "0" : string.Empty) + hex;
+                //        hashString += hex;
+                //    }
+                //    hash = null;
+                //    _photoHash = hashString;
+                //    hashString = string.Empty;
+                //}
+                //if (Jabber.xmpp.Authenticated) {
+                //    agsXMPP.protocol.client.Presence presence = new agsXMPP.protocol.client.Presence();
+                //    presence.From = new agsXMPP.Jid(jabberID.full);
+                //    presence.Priority = Jabber.xmpp.Priority;
+                //    presence.To = new agsXMPP.Jid(Jabber.xmpp.Server);
+                //    presence.XDelay = new agsXMPP.protocol.x.Delay();
+                //    presence.XDelay.Stamp = DateTime.Now;
+                //    agsXMPP.protocol.x.Avatar avatar = new agsXMPP.protocol.x.Avatar();
+                //    avatar.Hash = photoHash;
+                //    presence.AddChild(avatar);
+                //    Jabber.xmpp.Send(presence);
+                //}
             }
         }
 
@@ -433,6 +433,7 @@ namespace nJim {
             _organization = new Organization();
             _organization.name = string.Empty;
             _organization.unit = string.Empty;
+            //this.retrieve();
             //Load();
             Jabber.xmpp.OnIq += new agsXMPP.protocol.client.IqHandler(iqManager);
         }

@@ -23,7 +23,7 @@ namespace MyChitChat.Jabber {
 
         public bool IsActiveSession {
             get {
-                return Contact.status.type != Enums.StatusType.Unvailable;
+                return Contact.status.type != Enums.StatusType.Unavailable;
             }
         }
         public List<Message> Messages { get; private set; }
@@ -67,13 +67,14 @@ namespace MyChitChat.Jabber {
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
             chatPartner.identity.identityRetrieved += new IdentityHandler(identity_identityRetrieved);
             chatPartner.identity.NicknameUpdated += new IdentityHandler(identity_NicknameUpdated);
-            //ContactDetails.Load(GetVCardFilePath());
+            chatPartner.identity.retrieve();
+           
             DateTimeSessionStarted = DateTime.Now;
             Messages = new List<Message>();
             this.Path = ContactJID.ToString();
             UpdateItemInfo();
         }
-       
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -111,9 +112,15 @@ namespace MyChitChat.Jabber {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public void UpdateItemInfo() {
-            this.IconImage = this.IconImageBig = Helper.GetStatusIcon(Contact.status.type.ToString());
+            string tmpAvatarImage = Cache.GetAvatarImagePath(ContactDetails);
+            if (!String.IsNullOrEmpty(tmpAvatarImage)) {
+                this.IconImage = this.IconImageBig = tmpAvatarImage;
+            } else {
+                this.IconImage = this.IconImageBig = Helper.GetStatusIcon(Contact.status.type.ToString());
+            }
+            
             this.Label = ContactNickname;
-            this.Label2 =  String.Format("[{0}/{1}]", Messages.Count(msg => msg.Unread).ToString(), Messages.Count);
+            this.Label2 = String.Format("[{0}/{1}]", Messages.Count(msg => msg.Unread).ToString(), Messages.Count);
             this.IsPlayed = this.IsActiveSession;
             this.IsRemote = !this.IsActiveSession;
             this.IsDownloading = Messages.Count > 0;
@@ -142,12 +149,12 @@ namespace MyChitChat.Jabber {
         void identity_identityRetrieved(Identity sender) {
             this.ContactDetails = sender;
             //ContactDetails.Save(GetVCardFilePath());
-            Cache.GetAvatarImagePath(ContactDetails);
+            Cache.SaveAvatarImage(ContactDetails);
         }
 
         void identity_NicknameUpdated(Identity sender) {
             this.ContactNickname = sender.nickname;
-        }     
+        }
 
 
         #endregion
