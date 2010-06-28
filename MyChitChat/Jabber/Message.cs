@@ -56,7 +56,6 @@ namespace MyChitChat.Jabber {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         private void UpdateItemInfo() {
-            base.Label = ToString();
             base.FileInfo = new MediaPortal.Util.FileInformation();
             base.FileInfo.CreationTime = DateTimeReceived;
             this.Label = this.Subject;

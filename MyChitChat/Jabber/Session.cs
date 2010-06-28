@@ -66,7 +66,8 @@ namespace MyChitChat.Jabber {
             Contact = chatPartner;
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
             chatPartner.identity.identityRetrieved += new IdentityHandler(identity_identityRetrieved);
-            ContactDetails.Load(GetVCardFilePath());
+            chatPartner.identity.retrieve();
+            //ContactDetails.Load(GetVCardFilePath());
             DateTimeSessionStarted = DateTime.Now;
             Messages = new List<Message>();
             this.Path = ContactJID.ToString();
@@ -140,8 +141,8 @@ namespace MyChitChat.Jabber {
 
         void identity_identityRetrieved(Identity sender) {
             ContactDetails = sender;
-            ContactDetails.Save(GetVCardFilePath());
-            Cache.GetAvatarImagePath(sender);
+            //ContactDetails.Save(GetVCardFilePath());
+            Cache.GetAvatarImagePath(ContactDetails);
         }
 
         #endregion
