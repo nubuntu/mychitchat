@@ -66,14 +66,14 @@ namespace MyChitChat.Jabber {
             Contact = chatPartner;
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
             chatPartner.identity.identityRetrieved += new IdentityHandler(identity_identityRetrieved);
-            chatPartner.identity.retrieve();
+            chatPartner.identity.NicknameUpdated += new IdentityHandler(identity_NicknameUpdated);
             //ContactDetails.Load(GetVCardFilePath());
             DateTimeSessionStarted = DateTime.Now;
             Messages = new List<Message>();
             this.Path = ContactJID.ToString();
             UpdateItemInfo();
-        }     
-
+        }
+       
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,10 +140,15 @@ namespace MyChitChat.Jabber {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         void identity_identityRetrieved(Identity sender) {
-            ContactDetails = sender;
+            this.ContactDetails = sender;
             //ContactDetails.Save(GetVCardFilePath());
             Cache.GetAvatarImagePath(ContactDetails);
         }
+
+        void identity_NicknameUpdated(Identity sender) {
+            this.ContactNickname = sender.nickname;
+        }     
+
 
         #endregion
 
