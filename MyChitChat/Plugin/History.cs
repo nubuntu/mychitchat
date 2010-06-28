@@ -265,8 +265,7 @@ namespace MyChitChat.Plugin {
 
         void GUIPropertyManager_OnPropertyChanged(string tag, string tagValue) {
             if (tag == "#Play.Current.Title") {
-                //Helper.SetTune(GUIPropertyManager.GetProperty("#Play.Current.File"), GUIPropertyManager.GetProperty("#Play.Current.Artist"), 1);
-                Helper.SetTune("Hey Joe", "Jimi Hendrix", 1);
+                Helper.SetTune(GUIPropertyManager.GetProperty("#Play.Current.File"), GUIPropertyManager.GetProperty("#Play.Current.Artist"), 1);               
             }
 
         }
