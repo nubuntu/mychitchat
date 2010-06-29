@@ -551,12 +551,12 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Params>
       <Items>
         <SectionParam Name="Icon">
-          <Value />
+          <Value>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_default.png</Value>
           <ValueType>File</ValueType>
           <Description>The icon file of the package (jpg,png,bmp)</Description>
         </SectionParam>
         <SectionParam Name="Online Icon">
-          <Value />
+          <Value>http://mychitchat.googlecode.com/svn/trunk/MyChitChat/Skin/Blue3wide/Media/MyChitChat/plugin/icon_default.png</Value>
           <ValueType>String</ValueType>
           <Description>The icon file of the package stored online (jpg,png,bmp)</Description>
         </SectionParam>
@@ -723,7 +723,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <ZipFileName>Installer{CopyFile}\{0ae549ae-19b3-4713-9657-90d17db93dea}-hover_3Monkeys.png</ZipFileName>
         <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\hover_3Monkeys.png</DestinationFilename>
       </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
+      <FileItem InstallType="CopyFile" SystemFile="true" Modified="false">
         <Param1 />
         <UpdateOption>AlwaysOverwrite</UpdateOption>
         <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_default.png</LocalFileName>
