@@ -534,7 +534,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Author>Anthrax</Author>
     <HomePage>http://mychitchat.googlecode.com</HomePage>
     <ForumPage>http://forum.team-mediaportal.com/mediaportal-plugins-47/upcoming-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-83953/#post632708</ForumPage>
-    <UpdateUrl>http://mychitchat.googlecode.com/svn/trunk/MyChitChat/Setup/Extension/MyChitChat_Beta.xml</UpdateUrl>
+    <UpdateUrl />
     <Version>
       <Major>0</Major>
       <Minor>9</Minor>
@@ -544,10 +544,10 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <ExtensionDescription>MediaPortal - Jabber IM Plugin</ExtensionDescription>
     <VersionDescription>This is the first public release (Alpha!)</VersionDescription>
     <DevelopmentStatus>Alpha</DevelopmentStatus>
-    <OnlineLocation>http://mychitchat.googlecode.com/svn/trunk/MyChitChat/Setup/Extension/MyChitChat_Beta.mpe1</OnlineLocation>
+    <OnlineLocation />
     <ReleaseDate>2010-06-29T16:32:30.15625+02:00</ReleaseDate>
     <Tags>mediaportal, mychitchat, jabber, im, icq</Tags>
-    <Location>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Beta.mpe1</Location>
+    <Location />
     <Params>
       <Items>
         <SectionParam Name="Icon">
@@ -1003,9 +1003,9 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <Recursive>true</Recursive>
       </FolderGroup>
     </FolderGroups>
-    <ProjectFilename>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Beta.xmp2</ProjectFilename>
-    <UpdatePath1>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Beta.xml</UpdatePath1>
-    <UpdatePath2 />
-    <UpdatePath3 />
+    <ProjectFilename>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat.xmp2</ProjectFilename>
+    <UpdatePath1>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Stables.xml</UpdatePath1>
+    <UpdatePath2>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Betas.xml</UpdatePath2>
+    <UpdatePath3>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Stables.xml</UpdatePath3>
   </ProjectSettings>
 </PackageClass>
