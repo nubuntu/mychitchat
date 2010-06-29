@@ -113,7 +113,7 @@
     <Content Include="Resources\img\jabber.png" />
     <Content Include="Resources\img\Jabber_logo.png" />
     <Content Include="Resources\img\MyChitChat_3Monkeys.png" />
-    <Content Include="Resources\xmpp\agsXMPP.dll" />
+    <None Include="Resources\xmpp\agsXMPP.dll" />
     <Content Include="RegionsSnippet.txt" />
     <Content Include="Setup\Forum\screen_config_credentials.png" />
     <Content Include="Setup\Forum\screen_config_misc.png" />
@@ -193,7 +193,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>REM xcopy "$(TargetPath)" "..\..\..\MpiRelease" /Y
-xcopy "$(TargetPath)" "C:\Programme\Team MediaPortal\MediaPortal\plugins\Windows" /Y
+xcopy "$(TargetDir)*.*" "C:\Programme\Team MediaPortal\MediaPortal\plugins\Windows" /Y
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
