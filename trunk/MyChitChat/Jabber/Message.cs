@@ -24,10 +24,9 @@ namespace MyChitChat.Jabber {
             this.Unread = (directionType == DirectionTypes.Incoming);
             this.MessageID = Guid.NewGuid();
             this.InternalMessage = msg;
-            this.Replied = false;           
+            this.Replied = false;
             base.Path = MessageID.ToString();
             UpdateItemInfo();
-            base.OnItemSelected += new ItemSelectedHandler(Message_OnItemSelected);
         }
 
         #endregion
@@ -43,9 +42,9 @@ namespace MyChitChat.Jabber {
         public MessageType MessageType { get { return this.InternalMessage.Type; } }
         public DirectionTypes DirectionType { get; private set; }
         public string DirectionTypeSymbol {
-            get { return (DirectionType == DirectionTypes.Incoming) ? "=>" : "<="; }
+            get { return (DirectionType == DirectionTypes.Incoming) ? ">" : "<"; }
         }
-        
+
         public Chatstate ChatState { get { return this.InternalMessage.Chatstate; } }
         public DateTime DateTimeReceived { get; private set; }
         public Guid MessageID { get; private set; }
@@ -59,28 +58,31 @@ namespace MyChitChat.Jabber {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        private void UpdateItemInfo() {
+        public void UpdateItemInfo() {
             base.FileInfo = new MediaPortal.Util.FileInformation();
             base.FileInfo.CreationTime = DateTimeReceived;
             this.Label = this.Subject;
             this.Label2 = this.DateTimeReceived.ToShortTimeString();
-            this.IsPlayed = !this.Unread;
-            this.IsRemote = this.Unread;
-            UpdateMessageIcon(); 
+            this.IsPlayed = this.Unread;
+            this.IsRemote = (DirectionType == DirectionTypes.Incoming);
+            this.IsDownloading = this.Replied;
+            UpdateMessageIcon();
         }
 
         private void UpdateMessageIcon() {
-            string iconPath = String.Empty;
             if (DirectionType == DirectionTypes.Outgoing) {
-                iconPath = Helper.MEDIA_ICON_MESSAGE_OUT;
-            } else if(Replied){
-                iconPath = Helper.MEDIA_ICON_MESSAGE_IN_REPLIED;
+                base.IconImage = base.IconImageBig = Helper.MEDIA_ICON_MESSAGE_OUT;
+                return;
+            } else if (Replied) {
+                base.IconImage = base.IconImageBig = Helper.MEDIA_ICON_MESSAGE_IN_REPLIED;
+                return;
             } else if (Unread) {
-                iconPath = Helper.MEDIA_ICON_MESSAGE_IN_UNREAD;
+                base.IconImage = base.IconImageBig = Helper.MEDIA_ICON_MESSAGE_IN_UNREAD;
+                return;
             } else {
-                iconPath = Helper.MEDIA_ICON_MESSAGE_IN_READ;
+                base.IconImage = base.IconImageBig = Helper.MEDIA_ICON_MESSAGE_IN_READ;
+                return;
             }
-            base.IconImage = base.IconImageBig = iconPath;
         }
 
         #endregion
@@ -103,11 +105,7 @@ namespace MyChitChat.Jabber {
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        void Message_OnItemSelected(GUIListItem item, GUIControl parent) {
-            if (item.Path == this.Path) {
-                this.Unread = false;
-            }
-        }
+        
 
         #endregion
     }

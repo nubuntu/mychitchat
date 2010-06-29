@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using agsXMPP;
+using System.Diagnostics;
 
 namespace nJim {
 
@@ -67,7 +68,7 @@ namespace nJim {
         private void OnContactRemoved(string bare) {
             try {
                 ContactRemoved(bare);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace nJim {
         private void OnContactAdded(string bare) {
             try {
                 ContactAdded(bare);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace nJim {
         private void OnResourceAdded(Contact contact) {
             try {
                 ResourceAdded(contact);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace nJim {
         private void OnResourceRemoved(Contact contact) {
             try {
                 ResourceRemoved(contact);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace nJim {
         private void OnPresenceUpdated(Contact contact) {
             try {
                 PresenceUpdated(contact);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -117,7 +118,7 @@ namespace nJim {
         private void OnAskForSubscribtion(string bare) {
             try {
                 AskForSubscribtion(bare);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace nJim {
         private void OnInformUnsubscribtion(string bare) {
             try {
                 InformUnsubscribtion(bare);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -137,7 +138,7 @@ namespace nJim {
         private void OnBlocked(Contact contact) {
             try {
                 Blocked(contact);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -147,7 +148,7 @@ namespace nJim {
         private void OnUnblocked(Contact contact) {
             try {
                 Unblocked(contact);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -157,7 +158,7 @@ namespace nJim {
         private void OnMoodUpdated(Contact contact, Mood mood) {
             //try {
                 MoodUpdated(contact, mood);
-           // } catch { }
+           // } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace nJim {
         private void OnActivityUpdated(Contact contact, Activity activity) {
             //try {
                 ActivityUpdated(contact, activity);
-            //} catch { }
+            //} catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -177,7 +178,7 @@ namespace nJim {
         private void OnLocationUpdated(Contact contact, Location location) {
             try {
                 LocationUpdated(contact, location);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -187,7 +188,7 @@ namespace nJim {
         private void OnTuneUpdated(Contact contact, Tune tune) {
            // try {
                 TuneUpdated(contact, tune);
-           // } catch { }
+           // } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         #endregion
@@ -332,8 +333,7 @@ namespace nJim {
         private void xmppOnRosterItem(object sender, agsXMPP.protocol.iq.roster.RosterItem item) {
             if (item.Jid != null) {
                 string bare = item.Jid.Bare.Trim();
-
-                string resource = item.Jid.Resource;//(item.Jid.Resource != null) ? item.Jid.Resource.Trim() : "?";
+                string resource = (item.Jid.Resource != null) ? item.Jid.Resource.Trim() : string.Empty;
                 if (item.Subscription == agsXMPP.protocol.iq.roster.SubscriptionType.remove) {
                     // si le contact existe
                     if (contacts.ContainsKey(bare)) {
@@ -351,7 +351,7 @@ namespace nJim {
                         OnContactAdded(bare);
                     }
                     // si on a une resource disponible sur ce contact
-                    if (!String.IsNullOrEmpty(resource)) {
+                    if (resource != string.Empty) {
                         // si elle n'existe pas encore
                         if (!contacts[bare].ContainsKey(resource)) {
                             contacts[bare].Add(resource, new Contact(item.Jid, ((item.Name != null) ? item.Name : string.Empty), item.GetGroups()));
@@ -366,7 +366,6 @@ namespace nJim {
                 }
             }
         }
-
         /// <summary>
         /// Se produit lorsque uné presence est arrivée
         /// </summary>
@@ -375,7 +374,7 @@ namespace nJim {
         private void xmppOnPresence(object sender, agsXMPP.protocol.client.Presence presence) {
             if (presence.From != null && presence.To.Bare == Jabber.xmpp.MyJID.Bare) {
                 string bare = presence.From.Bare;
-                string resource = presence.From.Resource;//(presence.From.Resource != null) ? presence.From.Resource.Trim() : "?";
+                string resource = (presence.From.Resource != null) ? presence.From.Resource.Trim() : string.Empty;
                 if (presence.Error == null) {
                     switch (presence.Type) {
                         case agsXMPP.protocol.client.PresenceType.subscribe:
@@ -386,14 +385,14 @@ namespace nJim {
                             }
                             break;
                         case agsXMPP.protocol.client.PresenceType.subscribed:
-                            Jabber.xmpp.PresenceManager.Subscribe(presence.From);
+                            //Jabber.xmpp.PresenceManager.Subcribe(presence.From);
                             SetPresence(presence);
                             break;
                         case agsXMPP.protocol.client.PresenceType.unsubscribe:
                             OnInformUnsubscribtion(bare);
                             break;
                         case agsXMPP.protocol.client.PresenceType.unsubscribed:
-                            Jabber.xmpp.PresenceManager.Unsubscribe(presence.From);
+                            //Jabber.xmpp.PresenceManager.Unsubcribe(presence.From);
                             SetPresence(presence);
                             break;
                         case agsXMPP.protocol.client.PresenceType.error:
@@ -466,7 +465,7 @@ namespace nJim {
                         if (presence.XDelay != null) {
                             contacts[bare][resource].timeInterval = (DateTime.Now - presence.XDelay.Stamp);
                         }
-                        if (presence.Nickname != null) {
+                        if (presence.Nickname != null && contacts[bare][resource].identity.nickname == null) {
                             contacts[bare][resource].identity.nickname = presence.Nickname.ToString().Trim();
                         }
                         contacts[bare][resource].lastUpdated = DateTime.Now;
@@ -476,6 +475,117 @@ namespace nJim {
                 }
             }
         }
+
+
+        ///// <summary>
+        ///// Se produit lorsque uné presence est arrivée
+        ///// </summary>
+        ///// <param name="sender">Objet parant</param>
+        ///// <param name="presence">Contenu de la présence</param>
+        //private void xmppOnPresence(object sender, agsXMPP.protocol.client.Presence presence) {
+        //    if (presence.From != null && presence.To.Bare == Jabber.xmpp.MyJID.Bare) {
+        //        string bare = presence.From.Bare;
+        //        string resource = presence.From.Resource;//(presence.From.Resource != null) ? presence.From.Resource.Trim() : "?";
+        //        if (presence.Error == null) {
+        //            switch (presence.Type) {
+        //                case agsXMPP.protocol.client.PresenceType.subscribe:
+        //                    if (autoAcceptSubscribtion) {
+        //                        Jabber.xmpp.PresenceManager.ApproveSubscriptionRequest(presence.From);
+        //                    } else {
+        //                        OnAskForSubscribtion(bare);
+        //                    }
+        //                    break;
+        //                case agsXMPP.protocol.client.PresenceType.subscribed:
+        //                    Jabber.xmpp.PresenceManager.Subscribe(presence.From);
+        //                    SetPresence(presence);
+        //                    break;
+        //                case agsXMPP.protocol.client.PresenceType.unsubscribe:
+        //                    OnInformUnsubscribtion(bare);
+        //                    break;
+        //                case agsXMPP.protocol.client.PresenceType.unsubscribed:
+        //                    Jabber.xmpp.PresenceManager.Unsubscribe(presence.From);
+        //                    SetPresence(presence);
+        //                    break;
+        //                case agsXMPP.protocol.client.PresenceType.error:
+        //                    break;
+        //                default:
+        //                    SetPresence(presence);
+        //                    break;
+        //            }
+        //        }
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Change la Presence d'une resource
+        ///// </summary>
+        ///// <param name="presence">Contenu de la présence</param>
+        //private void SetPresence(agsXMPP.protocol.client.Presence presence) {
+        //    if (presence.From != null && presence.To.Bare == Jabber.xmpp.MyJID.Bare) {
+        //        string bare = presence.From.Bare.ToLower();
+        //        string resource = (presence.From.Resource != null) ? presence.From.Resource.Trim() : string.Empty;
+        //        if (contacts.ContainsKey(bare)) {
+        //            if (resource != string.Empty) {
+        //                if (!contacts[bare].ContainsKey(resource)) {
+        //                    contacts[bare].Add(resource, new Contact(presence.From, string.Empty, null));
+        //                    OnResourceAdded(contacts[bare][resource]);
+        //                }
+        //                contacts[bare][resource].priority = presence.Priority;
+        //                Status st = new Status();
+        //                st.message = (presence.Status != null) ? presence.Status.Trim() : string.Empty;
+        //                st.type = Enums.PresenceTypeConverter(presence.Type);
+        //                if (st.type == Enums.StatusType.Normal) {
+        //                    if (contacts[bare][resource].status.type != Enums.StatusType.Normal) {
+        //                        if (initialUserPEP.ContainsKey(bare)) {
+        //                            if (initialUserPEP[bare].activity.text != null) {
+        //                                contacts[bare][resource].activity = initialUserPEP[bare].activity;
+        //                                OnActivityUpdated(contacts[bare][resource], contacts[bare][resource].activity);
+        //                            }
+        //                            if (initialUserPEP[bare].mood.text != null) {
+        //                                contacts[bare][resource].mood = initialUserPEP[bare].mood;
+        //                                OnMoodUpdated(contacts[bare][resource], contacts[bare][resource].mood);
+        //                            }
+        //                            if (initialUserPEP[bare].location.text != null) {
+        //                                contacts[bare][resource].location = initialUserPEP[bare].location;
+        //                                OnLocationUpdated(contacts[bare][resource], contacts[bare][resource].location);
+        //                            }
+        //                            if (initialUserPEP[bare].tune.title != null) {
+        //                                contacts[bare][resource].tune = initialUserPEP[bare].tune;
+        //                                OnTuneUpdated(contacts[bare][resource], contacts[bare][resource].tune);
+        //                            }
+        //                            initialUserPEP.Remove(bare);
+        //                        }
+        //                    }
+        //                    st.type = Enums.StatusTypeConverter(presence.Show);
+        //                }
+        //                if (st.type == Enums.StatusType.Unavailable) {
+        //                    if (contacts[bare][resource].status.type != Enums.StatusType.Unavailable) {
+
+        //                        if (initialUserPEP.ContainsKey(bare)) {
+        //                            initialUserPEP.Remove(bare);
+        //                        }
+        //                        UserPEP up = new UserPEP();
+        //                        up.tune = contacts[bare][resource].tune;
+        //                        up.activity = contacts[bare][resource].activity;
+        //                        up.mood = contacts[bare][resource].mood;
+        //                        up.location = contacts[bare][resource].location;
+        //                        initialUserPEP.Add(bare, up);
+        //                    }
+        //                }
+        //                contacts[bare][resource].status = st;
+        //                if (presence.XDelay != null) {
+        //                    contacts[bare][resource].timeInterval = (DateTime.Now - presence.XDelay.Stamp);
+        //                }
+        //                if (presence.Nickname != null) {
+        //                    contacts[bare][resource].identity.nickname = presence.Nickname.ToString().Trim();
+        //                }
+        //                contacts[bare][resource].lastUpdated = DateTime.Now;
+        //                OnPresenceUpdated(contacts[bare][resource]);
+        //            }
+        //            privacyListUpdated(Jabber._privacy);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Lorsque la liste privée a été modifiée
@@ -616,7 +726,7 @@ namespace nJim {
                                                     if (o != null) {
                                                         activityType = (Enums.ActivityType)o;
                                                     }
-                                                } catch { }
+                                                } catch (Exception e) { Debug.WriteLine(e.ToString()); }
                                             }
                                             string activityString = string.Empty;
                                             if (activity.HasTag("text") && activity.SelectSingleElement("text").Value != null) {

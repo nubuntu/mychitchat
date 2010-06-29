@@ -6,6 +6,7 @@ using MediaPortal.Dialogs;
 using MediaPortal.GUI.Library;
 using nJim;
 using MyChitChat.Plugin;
+using System.Diagnostics;
 
 namespace MyChitChat.Gui {
     public sealed class Dialog {
@@ -217,7 +218,7 @@ namespace MyChitChat.Gui {
                         textDialog.Reset();
                         try {
                             textDialog.SetImage(icon);
-                        } catch { }
+                        } catch (Exception e) { Debug.WriteLine(e.ToString()); }
                         textDialog.SetHeading(header);
                         textDialog.SetText(text);
                         textDialog.DoModal(GUIWindowManager.ActiveWindow);

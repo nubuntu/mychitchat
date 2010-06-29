@@ -39,11 +39,8 @@ namespace MyChitChat.Jabber {
         }
         public String ContactNickname {
             get {
-                return (ContactDetails != null) ? ContactDetails.nickname : ContactJID.User;
-            }
-            private set {
-                if (ContactDetails != null) { ContactDetails.nickname = value; }
-            }
+                return (ContactDetails != null || String.IsNullOrEmpty(ContactDetails.nickname)) ? ContactDetails.nickname : ContactJID.User;
+            }            
         }
 
         public DateTime DateTimeLastActive {
@@ -65,8 +62,11 @@ namespace MyChitChat.Jabber {
         public Session(Contact chatPartner) {
             Contact = chatPartner;
             ContactJID = new Jid(chatPartner.identity.jabberID.full);
-            chatPartner.identity.identityRetrieved += new IdentityHandler(identity_identityRetrieved);
+            if (chatPartner.identity != null && chatPartner.identity.photo != null) {
+                Cache.SaveAvatarImage(chatPartner.identity);
+            }
             chatPartner.identity.NicknameUpdated += new IdentityHandler(identity_NicknameUpdated);
+            chatPartner.identity.identityRetrieved += new IdentityHandler(identity_identityRetrieved);
             chatPartner.identity.retrieve();
            
             DateTimeSessionStarted = DateTime.Now;
@@ -75,6 +75,7 @@ namespace MyChitChat.Jabber {
             UpdateItemInfo();
         }
 
+      
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -107,6 +108,10 @@ namespace MyChitChat.Jabber {
             DateTimeLastActive = DateTime.Now;
         }
 
+        public Message GetMessage(string messageGuid) {
+            return Messages.Find(message => message.MessageID.ToString().Equals(messageGuid));
+        }
+
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -127,7 +132,7 @@ namespace MyChitChat.Jabber {
         }
 
         private void AddMessageHistory(Message msg) {
-            Messages.Add(msg);
+            Messages.Insert(0,msg);
             UpdateItemInfo();
             OnChatSessionUpdated(this, msg);
         }
@@ -147,13 +152,13 @@ namespace MyChitChat.Jabber {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EventHandlers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         void identity_identityRetrieved(Identity sender) {
-            this.ContactDetails = sender;
+            //this.ContactDetails = sender;
             //ContactDetails.Save(GetVCardFilePath());
             Cache.SaveAvatarImage(ContactDetails);
         }
 
         void identity_NicknameUpdated(Identity sender) {
-            this.ContactNickname = sender.nickname;
+           
         }
 
 

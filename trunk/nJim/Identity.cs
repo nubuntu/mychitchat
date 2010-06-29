@@ -31,6 +31,7 @@ using System.Security.Cryptography;
 using System.Xml;
 using System.Reflection;
 using System.Drawing.Drawing2D;
+using System.Diagnostics;
 
 namespace nJim {
 
@@ -48,7 +49,7 @@ namespace nJim {
         private void onIdentityRetrieved() {
             try {
                 identityRetrieved(this);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace nJim {
         private void onIdentityPublished() {
             try {
                 identityPublished(this);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace nJim {
         private void OnNicknameUpdated() {
             try {
                 NicknameUpdated(this);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         #endregion
@@ -149,59 +150,65 @@ namespace nJim {
         /// </summary>
         public string nickname {
             get {
-                if (_nickname.Trim() != string.Empty) { return _nickname; }
-                if (_fullname.Trim() != string.Empty) { return _fullname; }
+                if (_nickname.Trim() != string.Empty) {
+                    return _nickname;
+                }
+                if (_fullname.Trim() != string.Empty) {
+                    return _fullname;
+                }
                 return jabberID.user;
             }
             set {
-                if (value != _nickname) {
+                if (value != _nickname) {                   
                     _nickname = value;
-                    if (Jabber.xmpp.Authenticated) {
-                        if (Jabber.xmpp.MyJID.ToString() != jabberID.full) {
-                            // si c'est la fiche d'un contact on change le compte du contact
-                            Jabber.xmpp.RosterManager.UpdateRosterItem(new agsXMPP.Jid(jabberID.full), _nickname);
-                            OnNicknameUpdated();
-                        } else {
-                            // si c'est notre pseudo alors on publie une notification
-                            if (Jabber.xmpp.Authenticated && Jabber._pepCapable) {
-                                agsXMPP.protocol.client.IQ iq = new agsXMPP.protocol.client.IQ();
-                                iq.Type = agsXMPP.protocol.client.IqType.set;
-                                iq.GenerateId();
-                                agsXMPP.Xml.Dom.Element pb = new agsXMPP.Xml.Dom.Element("pubsub");
-                                pb.Namespace = "http://jabber.org/protocol/pubsub";
-                                agsXMPP.Xml.Dom.Element ps = new agsXMPP.Xml.Dom.Element("publish");
-                                ps.Attributes.Add("node", "http://jabber.org/protocol/nick");
-                                agsXMPP.Xml.Dom.Element item = new agsXMPP.Xml.Dom.Element("item");
-                                item.Attributes.Add("id", "current");
-                                agsXMPP.Xml.Dom.Element nick = new agsXMPP.Xml.Dom.Element("nick");
-                                nick.Namespace = "http://jabber.org/protocol/nick";
-                                nick.Value = nickname;
-                                item.AddChild(nick);
-                                ps.AddChild(item);
-                                pb.AddChild(ps);
-                                agsXMPP.Xml.Dom.Element conf = new agsXMPP.Xml.Dom.Element("configure");
-                                agsXMPP.Xml.Dom.Element x = new agsXMPP.Xml.Dom.Element("x");
-                                agsXMPP.Xml.Dom.Element field1 = new agsXMPP.Xml.Dom.Element("field");
-                                field1.Attributes.Add("type", "hidden");
-                                field1.Attributes.Add("var", "FORM_TYPE");
-                                agsXMPP.Xml.Dom.Element value1 = new agsXMPP.Xml.Dom.Element("value");
-                                value1.Value = "http://jabber.org/protocol/pubsub#node_config";
-                                field1.AddChild(value1);
-                                x.AddChild(field1);
-                                agsXMPP.Xml.Dom.Element field2 = new agsXMPP.Xml.Dom.Element("field");
-                                field2.Attributes.Add("var", "pubsub#access_model");
-                                agsXMPP.Xml.Dom.Element value2 = new agsXMPP.Xml.Dom.Element("value");
-                                value2.Value = "presence";
-                                field2.AddChild(value2);
-                                x.AddChild(field2);
-                                conf.AddChild(x);
-                                pb.AddChild(conf);
-                                iq.AddChild(pb);
-                                Jabber.xmpp.Send(iq);
-                            }
-                        }
-                    }
-                }
+                    Debug.WriteLine(_nickname);
+                    //OnNicknameUpdated();
+                    //if (Jabber.xmpp.Authenticated) {
+                    //    if (Jabber.xmpp.MyJID.ToString() != jabberID.full) {
+                    //        // si c'est la fiche d'un contact on change le compte du contact
+                    //        Jabber.xmpp.RosterManager.UpdateRosterItem(new agsXMPP.Jid(jabberID.full), _nickname);
+                    //        OnNicknameUpdated();
+                }// else {
+                //    // si c'est notre pseudo alors on publie une notification
+                //    if (Jabber.xmpp.Authenticated && Jabber._pepCapable) {
+                //        agsXMPP.protocol.client.IQ iq = new agsXMPP.protocol.client.IQ();
+                //        iq.Type = agsXMPP.protocol.client.IqType.set;
+                //        iq.GenerateId();
+                //        agsXMPP.Xml.Dom.Element pb = new agsXMPP.Xml.Dom.Element("pubsub");
+                //        pb.Namespace = "http://jabber.org/protocol/pubsub";
+                //        agsXMPP.Xml.Dom.Element ps = new agsXMPP.Xml.Dom.Element("publish");
+                //        ps.Attributes.Add("node", "http://jabber.org/protocol/nick");
+                //        agsXMPP.Xml.Dom.Element item = new agsXMPP.Xml.Dom.Element("item");
+                //        item.Attributes.Add("id", "current");
+                //        agsXMPP.Xml.Dom.Element nick = new agsXMPP.Xml.Dom.Element("nick");
+                //        nick.Namespace = "http://jabber.org/protocol/nick";
+                //        nick.Value = nickname;
+                //        item.AddChild(nick);
+                //        ps.AddChild(item);
+                //        pb.AddChild(ps);
+                //        agsXMPP.Xml.Dom.Element conf = new agsXMPP.Xml.Dom.Element("configure");
+                //        agsXMPP.Xml.Dom.Element x = new agsXMPP.Xml.Dom.Element("x");
+                //        agsXMPP.Xml.Dom.Element field1 = new agsXMPP.Xml.Dom.Element("field");
+                //        field1.Attributes.Add("type", "hidden");
+                //        field1.Attributes.Add("var", "FORM_TYPE");
+                //        agsXMPP.Xml.Dom.Element value1 = new agsXMPP.Xml.Dom.Element("value");
+                //        value1.Value = "http://jabber.org/protocol/pubsub#node_config";
+                //        field1.AddChild(value1);
+                //        x.AddChild(field1);
+                //        agsXMPP.Xml.Dom.Element field2 = new agsXMPP.Xml.Dom.Element("field");
+                //        field2.Attributes.Add("var", "pubsub#access_model");
+                //        agsXMPP.Xml.Dom.Element value2 = new agsXMPP.Xml.Dom.Element("value");
+                //        value2.Value = "presence";
+                //        field2.AddChild(value2);
+                //        x.AddChild(field2);
+                //        conf.AddChild(x);
+                //        pb.AddChild(conf);
+                //        iq.AddChild(pb);
+                //        Jabber.xmpp.Send(iq);
+                //    }
+                //}
+                //}
+                // }
             }
         }
 
@@ -322,14 +329,14 @@ namespace nJim {
                     //return;
                 }
                 // Formats acceptés: BMP, PNG, GIG, JPG, et ICON
-                if (value == null) {
-                    _photo = null;
-                } else if (value.RawFormat.ToString().Contains(ImageFormat.Bmp.Guid.ToString()) ||
-                    value.RawFormat.ToString().Contains(ImageFormat.Gif.Guid.ToString()) ||
-                    value.RawFormat.ToString().Contains(ImageFormat.Icon.Guid.ToString()) ||
-                    value.RawFormat.ToString().Contains(ImageFormat.Jpeg.Guid.ToString()) ||
-                    value.RawFormat.ToString().Contains(ImageFormat.Png.Guid.ToString())) {
-                    _photo = value;
+                if (value != null) {
+                    if (value.RawFormat.ToString().Contains(ImageFormat.Bmp.Guid.ToString()) ||
+                      value.RawFormat.ToString().Contains(ImageFormat.Gif.Guid.ToString()) ||
+                      value.RawFormat.ToString().Contains(ImageFormat.Icon.Guid.ToString()) ||
+                      value.RawFormat.ToString().Contains(ImageFormat.Jpeg.Guid.ToString()) ||
+                      value.RawFormat.ToString().Contains(ImageFormat.Png.Guid.ToString())) {
+                        _photo = value;
+                    }
                 }
                 //_photoHash = string.Empty;
                 //if (_photo != null && photoFormat != null) {
@@ -480,7 +487,7 @@ namespace nJim {
             if (!Directory.Exists(Path.GetDirectoryName(vCardFilePath))) {
                 try {
                     Directory.CreateDirectory(vCardFilePath);
-                } catch (Exception ee) {                    
+                } catch {
                 }
             }
             if (File.Exists(vCardFilePath)) {
@@ -646,8 +653,8 @@ namespace nJim {
             if (!Directory.Exists(Path.GetDirectoryName(vCardFilePath))) {
                 try {
                     Directory.CreateDirectory(vCardFilePath);
-                } catch (Exception e) {
-                   
+                } catch {
+
                 }
             }
             XmlDocument xDoc = new XmlDocument();
@@ -734,7 +741,7 @@ namespace nJim {
                     ms.Dispose();
                 }
                 vcard.AppendChild(xPhoto);
-            } catch { }
+            } catch (Exception e) { Debug.WriteLine(e.ToString()); }
             XmlElement xRole = xDoc.CreateElement("role");
             xRole.AppendChild(xDoc.CreateTextNode(role));
             vcard.AppendChild(xRole);
@@ -814,7 +821,7 @@ namespace nJim {
             string iqID = data as string;
             // si on a une erreur alors on en informe la librairie
             if (iq.Type == agsXMPP.protocol.client.IqType.error) {
-                //throw new Exception(iq.Error.Code.ToString() + " - " + iq.Error.Message);
+                return;
             }
                 // sinon et seulement si c'est le résultat, on lance le traitement
             else if (iq.Type == agsXMPP.protocol.client.IqType.result) {
@@ -827,7 +834,9 @@ namespace nJim {
                     _name.firstname = (iq.Vcard.Name != null && iq.Vcard.Name.Given != null) ? iq.Vcard.Name.Given.Trim() : string.Empty;
                     _name.middle = (iq.Vcard.Name != null && iq.Vcard.Name.Middle != null) ? iq.Vcard.Name.Middle.Trim() : string.Empty;
                     _name.lastname = (iq.Vcard.Name != null && iq.Vcard.Name.Family != null) ? iq.Vcard.Name.Family.Trim() : string.Empty;
-                    nickname = (iq.Vcard.Nickname != null) ? iq.Vcard.Nickname.Trim() : string.Empty;
+                    if (iq.Vcard.Nickname != null) {
+                        nickname = iq.Vcard.Nickname.Trim();
+                    }
                     _organization = new Organization();
                     _organization.name = (iq.Vcard.Organization != null && iq.Vcard.Organization.Name != null) ? iq.Vcard.Organization.Name.Trim() : string.Empty;
                     _organization.unit = (iq.Vcard.Organization != null && iq.Vcard.Organization.Unit != null) ? iq.Vcard.Organization.Unit.Trim() : string.Empty;

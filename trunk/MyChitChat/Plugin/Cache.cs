@@ -15,6 +15,7 @@ namespace MyChitChat.Plugin {
                 }
                 if (contactIdentity.photo != null) {
                     contactIdentity.photo.Save(String.Format(thumbDir + "avatar_{0}.png", GetSafeFileName(contactIdentity.jabberID)));
+                    Log.Info("{0}: Avatar Image for '{1}' downloaded!", new string[] { Helper.PLUGIN_NAME, contactIdentity.jabberID.bare});
                 }
             } catch (Exception e) {
                 Log.Error(e);
