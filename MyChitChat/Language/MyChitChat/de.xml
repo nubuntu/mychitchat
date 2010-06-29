@@ -24,7 +24,7 @@
   <string Field="BtnJabberDisconnect">Jabber trennen</string>
   <string Field="BtnSelectKeyboard">Tastaturart wählen</string>
   <string Field="NothingSelected">Abbrechen</string>
-  <string Field="none">leer</string>
+  <string Field="none">keine Angabe</string>
   <string Field="Normal">Online</string>
   <string Field="ReadyToChat">Geschwätzig</string>
   <string Field="Away">Abwesend</string>

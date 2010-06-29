@@ -212,7 +212,7 @@ namespace MyChitChat.Plugin {
 
         /* Plugin default strings - these are overridden by the user defined strings in the plugin config */
 
-        public static string defaultStatusMessage = Normal + " using " + Helper.PLUGIN_NAME;
+        public static string defaultStatusMessage = "using " + Helper.PLUGIN_NAME;
         public static string defaultMoodMessage = "I'm feeling very entertained right now thx to MediaPortal ('Ya know the kick-ass open source MediaCenter alternative)...";
         public static string defaultActivityMessage = "I'm using MediaPortal at the moment...";
         public static string defaultIdleMessage = Helper.PLUGIN_NAME + " idle at the moment...";

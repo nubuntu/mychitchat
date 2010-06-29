@@ -166,6 +166,7 @@
     <ProjectReference Include="..\nJim\nJim.csproj">
       <Project>{3AAB1BC8-0466-411C-91AD-995D2D555A05}</Project>
       <Name>nJim</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

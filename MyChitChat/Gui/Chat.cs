@@ -66,21 +66,13 @@ namespace MyChitChat.Gui {
             get { return (int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_CHAT; }
         }
 
-        ///// <summary>
-        ///// Loads the XML for the window
-        ///// </summary>
-        //public override bool Init() {
-        //    return Load(Helper.SKIN_FILE_CHAT);
-        //}
-
-        protected override void OnWindowLoaded() {
+        protected override void OnPageLoad() {
+            SetupGuiControls();
             if (this._currentChatSession == null) {
                 Log.Error(new Exception(Helper.PLUGIN_NAME + " - Error: Chat.OnWindowLoaded() - CurrentChatSeesion empty!"));
             } else {
-                SetupGuiControls();
+                UpdateGuiContactProperties();
             }
-            base.OnWindowLoaded();
-
         }
 
         protected override void OnShowContextMenu() {
@@ -94,14 +86,21 @@ namespace MyChitChat.Gui {
             if (control == btnNewMessage && _currentChatSession != null) {
                 _currentChatSession.Reply();
             }
-            base.OnClicked(controlId, control, actionType);
         }
 
         private void HandleChatMessage(Message selectedMessage) {
+            if (ctrlTextboxSelectedMessage != null) {
+                ctrlTextboxSelectedMessage.Clear();
+                ctrlTextboxSelectedMessage.VerifyAccess();
+                if (ctrlTextboxSelectedMessage.CheckAccess()) {
+                    ctrlTextboxSelectedMessage.Label = selectedMessage.Body;
+                }
+            }
+            selectedMessage.Unread = false;
             if (_currentChatSession.Reply()) {
                 selectedMessage.Replied = true;
             }
-            selectedMessage.Unread = false;
+            selectedMessage.UpdateItemInfo();
         }
 
         #endregion
@@ -113,20 +112,31 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         private void SetupGuiControls() {
-            GUIPropertyManager.SetProperty("#header.value", Helper.PLUGIN_NAME);
-            GUIPropertyManager.SetProperty("#header.text", Helper.PLUGIN_NAME);
             GUIPropertyManager.SetProperty("#header.label", "Chat Window");
+            GUIPropertyManager.SetProperty("#currentmodule", Helper.PLUGIN_NAME);
+
+            GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, "Contact's Nickname");
+            GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_TYPE, "Contact's Status");
+            GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_MESSAGE, "Contact's Status Message");
+            GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_TYPE, "Contact's Mood");
+            GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_MESSAGE, "Contact's Mood Message");
+            GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_TYPE, "Contact's Activity");
+            GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_MESSAGE, "Contact's Activity Message");
+
+            GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_IMAGE, Helper.GetStatusIcon(""));
+            GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_IMAGE, Helper.GetMoodIcon(""));
+            GUIPropertyManager.SetProperty(TAG_CONTACT_ACTIVITY_IMAGE, Helper.GetActivityIcon(""));
+
             if (this.ctrlListMessages != null) {
                 this.ctrlListMessages.RemoteColor = 0xFFFF6347;
                 this.ctrlListMessages.PlayedColor = 0x2090EE90;
                 this.ctrlListMessages.DownloadColor = 0xFF90EE90;
                 this.ctrlListMessages.ShadedColor = 0xffff00000;
             }
-            UpdateGuiContactProperties();
         }
 
         private void AppendLogEvent(DateTime when, string why, string who, string what) {
-            string tmp = String.Format("[{0}] {1}: {2} (\"{3}\")", new string[] { when.ToShortTimeString(), why, who, what });
+            string tmp = String.Format("[{0}] {1}: '{3}'", new string[] { when.ToShortTimeString(), why, who, what });
             LogMessages.AppendLine(tmp);
             Log.Info(tmp);
             try {
@@ -149,19 +159,22 @@ namespace MyChitChat.Gui {
                 this.ctrlListMessages.Clear();
                 this.LogMessages = new StringBuilder();
                 foreach (Message currentMessageItem in _currentChatSession.Messages) {
-                    AppendLogEvent(currentMessageItem.DateTimeReceived, currentMessageItem.DirectionTypeSymbol , (currentMessageItem.DirectionType == DirectionTypes.Incoming) ? _currentChatSession.ContactNickname : Helper.JABBER_CLIENT.Identity.nickname, currentMessageItem.Body);
+                    currentMessageItem.UpdateItemInfo();
+                    AppendLogEvent(currentMessageItem.DateTimeReceived, currentMessageItem.DirectionTypeSymbol, (currentMessageItem.DirectionType == DirectionTypes.Incoming) ? _currentChatSession.ContactNickname : Helper.JABBER_CLIENT.Identity.nickname, currentMessageItem.Body);
                     this.ctrlListMessages.Add(currentMessageItem);
                 }
-                this.ctrlListMessages.Sort(new MessageComparerDateDesc());
+                //this.ctrlListMessages.Sort(new MessageComparerDateDesc());
             }
-        }
 
-        public void UpdateGuiContactProperties() {
+        }
+       
+        private void UpdateGuiContactProperties() {
             if (_currentChatSession != null) {
                 GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, _currentChatSession.ContactDetails.nickname);
                 GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_TYPE, Translations.GetByName(_currentChatSession.Contact.status.type.ToString()));
                 GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_IMAGE, Helper.GetStatusIcon(_currentChatSession.Contact.status.type.ToString()));
                 GUIPropertyManager.SetProperty(TAG_CONTACT_STATUS_MESSAGE, _currentChatSession.Contact.status.message);
+
                 GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_TYPE, Translations.GetByName(_currentChatSession.Contact.mood.type.ToString()));
                 GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_IMAGE, Helper.GetMoodIcon(_currentChatSession.Contact.mood.type.ToString()));
                 GUIPropertyManager.SetProperty(TAG_CONTACT_MOOD_MESSAGE, _currentChatSession.Contact.mood.text);
@@ -183,11 +196,12 @@ namespace MyChitChat.Gui {
 
         void _currentChatSession_OnChatSessionUpdated(Session session, Message msg) {
             if (this._currentChatSession.Equals(session)) {
-                UpdateChatHistory();
+                UpdateChatHistory();               
             } else {
                 Log.Error("Grabbed message from different Chat Session!");
             }
         }
+
 
         #endregion
 

@@ -8,6 +8,7 @@ using nJim;
 using MyChitChat.Gui;
 using agsXMPP;
 using agsXMPP.Collections;
+using System.Diagnostics;
 
 namespace MyChitChat.Plugin {
 
@@ -31,7 +32,7 @@ namespace MyChitChat.Plugin {
             Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JABBER_CLIENT_OnLogin);
             ChatSessions = new List<Session>();
             LogHistory = new StringBuilder();            
-            GUIPropertyManager.OnPropertyChanged += new GUIPropertyManager.OnPropertyChangedHandler(GUIPropertyManager_OnPropertyChanged);
+            
         }
 
         ~History() {
@@ -74,11 +75,6 @@ namespace MyChitChat.Plugin {
         //}
 
         public StringBuilder LogHistory { get; private set; }
-
-        private Tune currentTune = new Tune();
-       
-            
-
 
         #endregion
 
@@ -169,6 +165,7 @@ namespace MyChitChat.Plugin {
             string tmp = String.Format("[{0}] {1} {2}: \n      '{3}'", new string[] { when.ToShortTimeString(), why, who, what });
             LogHistory.Insert(0,tmp + Environment.NewLine);
             Log.Info(tmp);
+            Debug.WriteLine(tmp);
             OnUpdatedLog(LogHistory.ToString());
         }
 
@@ -196,14 +193,15 @@ namespace MyChitChat.Plugin {
             AppendLogEvent(DateTime.Now, "MyChitChat started!",  Settings.username , "Jabber connected...");
         }
 
-        void Roster_ResourceAdded(nJim.Contact contact) {
+       void Roster_ResourceAdded(nJim.Contact contact) {
             Session newSession = new Session(contact);
             newSession.OnChatSessionUpdated += new OnChatSessionUpdatedEventHandler(newSession_OnChatSessionUpdated);
-            if (!ChatSessions.Contains(newSession)) {
+           if (!ChatSessions.Contains(newSession)) {
                 ChatSessions.Add(newSession);
-            }
-            OnUpdatedRoster(contact);
-            AppendLogEvent(contact.lastUpdated, "Added", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
+                OnUpdatedRoster(contact);
+                AppendLogEvent(contact.lastUpdated, "Added", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
+           }
+            
         }
 
 
@@ -234,6 +232,7 @@ namespace MyChitChat.Plugin {
                 NotifyPresMooActTun(contact, null, null, null);
             }
             AppendLogEvent(contact.lastUpdated, "Status", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
+            
             OnUpdatedPresence(contact);      
         }
 
@@ -263,21 +262,7 @@ namespace MyChitChat.Plugin {
             AppendLogEvent(contact.lastUpdated, "Tune", contact.identity.nickname, tune.artist + " - " + tune.title);
         }
 
-        void GUIPropertyManager_OnPropertyChanged(string tag, string tagValue) {
-            if (tag == "#Play.Current.Title") {
-               currentTune.title = tagValue;            
-            }
-            if (tag == "#Play.Current.Album") {
-                currentTune.source = tagValue;
-            }           
-            if (tag == "#Play.Current.Artist"){
-                if (currentTune.artist != tagValue) {
-                    currentTune.artist = tagValue;
-                    Helper.SetTune(currentTune);
-                }
-            }
-
-        }
+       
         void newSession_OnChatSessionUpdated(Session session, Message msg) {
             if (((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally && !Helper.PLUGIN_WINDOW_ACTIVE )&& msg.DirectionType != DirectionTypes.Outgoing) {
                 NotifyMessage(msg);
