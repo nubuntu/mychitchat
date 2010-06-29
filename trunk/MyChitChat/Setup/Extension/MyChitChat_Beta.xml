@@ -44,12 +44,12 @@
         <Params>
           <Items>
             <SectionParam Name="Icon">
-              <Value />
+              <Value>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Skin\Blue3wide\Media\MyChitChat\plugin\icon_default.png</Value>
               <ValueType>File</ValueType>
               <Description>The icon file of the package (jpg,png,bmp)</Description>
             </SectionParam>
             <SectionParam Name="Online Icon">
-              <Value />
+              <Value>http://mychitchat.googlecode.com/svn/trunk/MyChitChat/Skin/Blue3wide/Media/MyChitChat/plugin/icon_default.png</Value>
               <ValueType>String</ValueType>
               <Description>The icon file of the package stored online (jpg,png,bmp)</Description>
             </SectionParam>
