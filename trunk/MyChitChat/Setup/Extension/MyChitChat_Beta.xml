@@ -40,7 +40,7 @@
         <OnlineLocation>http://mychitchat.googlecode.com/svn/trunk/MyChitChat/Setup/Extension/MyChitChat_Beta.mpe1</OnlineLocation>
         <ReleaseDate>2010-06-29T16:32:30.15625+02:00</ReleaseDate>
         <Tags>mediaportal, mychitchat, jabber, im, icq</Tags>
-        <Location />
+        <Location>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Beta.mpe1</Location>
         <Params>
           <Items>
             <SectionParam Name="Icon">
@@ -61,7 +61,8 @@
  If have .dll extension used like MP plugin configuration</Description>
             </SectionParam>
             <SectionParam Name="Online Screenshots">
-              <Value />
+              <Value>http://forum.team-mediaportal.com/attachments/mediaportal-plugins-47/64368d1277841997-release-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-22-00-21.png;http://forum.team-mediaportal.com/attachments/mediaportal-plugins-47/64369d1277841997-release-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-22-00-38.png;http://forum.team-mediaportal.com/attachments/mediaportal-plugins-47/64370d1277841997-release-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-22-01-03.png;http://forum.team-mediaportal.com/attachments/mediaportal-plugins-47/64371d1277841997-release-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-22-01-27.png;http://forum.team-mediaportal.com/attachments/mediaportal-plugins-47/64372d1277841997-release-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-22-01-33.png;http://forum.team-mediaportal.com/attachments/mediaportal-plugins-47/64274d1277662843-release-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-screen_config_credentials.png;http://forum.team-mediaportal.com/attachments/mediaportal-plugins-47/64275d1277662843-release-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-screen_config_misc.png;http://forum.team-mediaportal.com/attachments/mediaportal-plugins-47/64276d1277662843-release-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-screen_config_notification.png;http://forum.team-mediaportal.com/attachments/mediaportal-plugins-47/64277d1277662843-release-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-screen_config_presence.png
+</Value>
               <ValueType>String</ValueType>
               <Description>Online stored screenshot urls separated by ; </Description>
             </SectionParam>
