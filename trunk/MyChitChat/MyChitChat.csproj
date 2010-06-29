@@ -26,21 +26,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
+    <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MyChitChatConfiguration|AnyCPU' ">
     <OutputPath>bin\MyChitChatConfiguration\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL" />
-    <Reference Include="agsXMPP.ui, Version=1.0.3800.21063, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL" />
-    <Reference Include="core, Version=1.0.9.14226, Culture=neutral, processorArchitecture=x86" />
-    <Reference Include="dialogs, Version=1.0.9.14231, Culture=neutral, processorArchitecture=x86" />
+    <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="core, Version=1.0.9.14226, Culture=neutral, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="dialogs, Version=1.0.9.14231, Culture=neutral, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -49,8 +54,12 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="utils, Version=2.2.7.14221, Culture=neutral, processorArchitecture=x86" />
-    <Reference Include="WindowPlugins, Version=1.0.9.14241, Culture=neutral, processorArchitecture=x86" />
+    <Reference Include="utils, Version=2.2.7.14221, Culture=neutral, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WindowPlugins, Version=1.0.9.14241, Culture=neutral, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gui\Details.cs" />
@@ -105,13 +114,12 @@
     <Content Include="Resources\img\Jabber_logo.png" />
     <Content Include="Resources\img\MyChitChat_3Monkeys.png" />
     <Content Include="Resources\xmpp\agsXMPP.dll" />
-    <Content Include="Resources\xmpp\agsXMPP.ui.dll" />
-    <Content Include="Resources\xmpp\agsXMPP.xml" />
     <Content Include="RegionsSnippet.txt" />
     <Content Include="Setup\Forum\screen_config_credentials.png" />
     <Content Include="Setup\Forum\screen_config_misc.png" />
     <Content Include="Setup\Forum\screen_config_notification.png" />
     <Content Include="Setup\Forum\screen_config_presence.png" />
+    <Content Include="Setup\Forum\screen_main_preview.png" />
     <Content Include="Skin\Blue3wide\Media\hover_MyChitChat.png" />
     <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\coding.png" />
     <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\cooking.png" />
@@ -158,7 +166,6 @@
     <Content Include="Skin\Blue3wide\Media\MyChitChat\status\Unavailable.png" />
     <Content Include="Skin\Blue3wide\Media\MyChitChat\tune\default_tune.png" />
     <Content Include="Skin\Blue3wide\MyChitChat_Chat.xml" />
-    <Content Include="Skin\Blue3wide\MyChitChat_Contact.xml" />
     <Content Include="Skin\Blue3wide\MyChitChat_Main.xml" />
     <Content Include="Skin\Blue3wide\properties.xml" />
   </ItemGroup>
@@ -171,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\dll\merge.bat" />
+    <None Include="Setup\Extension\MyChitChat.xmp2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />

@@ -1,4 +1,3 @@
 @echo off
-IF EXIST JabberMP_UNMERGED.dll del JabberMP_UNMERGED.dll 
-ren Jabber.MP.dll JabberMP_UNMERGED.dll 
-ilmerge /out:Jabber.MP.dll JabberMP_UNMERGED.dll agsXMPP.dll
+ilmerge /out:MyChitChat_v.dll MyChitChat.dll agsXMPP.dll nJim.dll
+pause
