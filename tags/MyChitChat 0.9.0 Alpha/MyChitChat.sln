@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChitChat", "MyChitChat\MyChitChat.csproj", "{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05} = {3AAB1BC8-0466-411C-91AD-995D2D555A05}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nJim", "nJim\nJim.csproj", "{3AAB1BC8-0466-411C-91AD-995D2D555A05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		MyChitChatConfiguration|Any CPU = MyChitChatConfiguration|Any CPU
+		MyChitChatDebug|Any CPU = MyChitChatDebug|Any CPU
+		MyChitChatRelease|Any CPU = MyChitChatRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatConfiguration|Any CPU.ActiveCfg = MyChitChatConfiguration|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatConfiguration|Any CPU.Build.0 = MyChitChatConfiguration|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatDebug|Any CPU.Build.0 = Debug|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}.MyChitChatRelease|Any CPU.Build.0 = Release|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatConfiguration|Any CPU.ActiveCfg = MyChitChatConfiguration|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatConfiguration|Any CPU.Build.0 = MyChitChatConfiguration|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatDebug|Any CPU.Build.0 = Debug|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{3AAB1BC8-0466-411C-91AD-995D2D555A05}.MyChitChatRelease|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

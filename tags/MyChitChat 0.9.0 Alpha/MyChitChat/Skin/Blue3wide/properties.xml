@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<properties>
+    <property name="#MyChitChat.User.Status.Image">MyChitChat\status\default_status.png</property>
+    <property name="#MyChitChat.User.Status.Type">My Status</property>
+    <property name="#MyChitChat.User.Status.Message">My Status Message</property>
+    <property name="#MyChitChat.User.Mood.Image">MyChitChat\mood\default_mood.png</property>
+    <property name="#MyChitChat.User.Mood.Type">My Mood</property>
+    <property name="#MyChitChat.User.Mood.Message">My Mood Message</property>
+    <property name="#MyChitChat.User.Activity.Image">MyChitChat\activity\default_activity.png</property>
+    <property name="#MyChitChat.User.Activity.Type">My Activity</property>
+    <property name="#MyChitChat.User.Activity.Message">My Activity Message</property>
+    <property name="#MyChitChat.Contact.Status.Image">MyChitChat\status\default_status.png</property>
+    <property name="#MyChitChat.Contact.Status.Type">Contact's Status</property>
+    <property name="#MyChitChat.Contact.Status.Message">Contact's Status Message</property>
+    <property name="#MyChitChat.Contact.Mood.Image">MyChitChat\mood\default_mood.png</property>
+    <property name="#MyChitChat.Contact.Mood.Type">Contact's Mood</property>
+    <property name="#MyChitChat.Contact.Activity.Image">MyChitChat\activity\default_activity.png</property>
+    <property name="#MyChitChat.Contact.Activity.Type">Contact's Activity</property>
+    <property name="#MyChitChat.Contact.Activity.Message">Contact's Activity Message</property>
+    <property name="#MyChitChat.Contact.Mood.Message">Contact's Mood Message</property>
+    <property name="#MyChitChat.Contact.Avatar.Image">Contact's Avatar</property>
+    <property name="#MyChitChat.User.Name.Nick">My Nick</property>
+    <property name="#MyChitChat.Contact.Name.Nick">Contact's Nick</property>
+    <property name="#MyChitChat.Plugin.Name">MyChitChat</property>
+</properties>

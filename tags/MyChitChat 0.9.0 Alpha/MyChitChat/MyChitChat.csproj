@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyChitChat</RootNamespace>
+    <AssemblyName>MyChitChat</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+    <TargetFrameworkSubset>Full</TargetFrameworkSubset>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MyChitChatConfiguration|AnyCPU' ">
+    <OutputPath>bin\MyChitChatConfiguration\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="core, Version=1.0.9.14226, Culture=neutral, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="dialogs, Version=1.0.9.14231, Culture=neutral, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="utils, Version=2.2.7.14221, Culture=neutral, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WindowPlugins, Version=1.0.9.14241, Culture=neutral, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Gui\Details.cs" />
+    <Compile Include="Gui\Dialog.cs" />
+    <Compile Include="Gui\Main.cs" />
+    <Compile Include="Jabber\Client.cs" />
+    <Compile Include="Gui\Chat.cs" />
+    <Compile Include="Jabber\Message.cs" />
+    <Compile Include="Plugin\Cache.cs" />
+    <Compile Include="Plugin\History.cs" />
+    <Compile Include="Plugin\Plugin.cs" />
+    <Compile Include="Plugin\Helper.cs" />
+    <Compile Include="Jabber\Session.cs" />
+    <Compile Include="Plugin\Translations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Plugin\Settings.cs" />
+    <Compile Include="Plugin\Config.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plugin\Config.Designer.cs">
+      <DependentUpon>Config.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Plugin\Config.resx">
+      <DependentUpon>Config.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Language\MyChitChat\de.xml" />
+    <Content Include="Resources\dll\core.dll" />
+    <Content Include="Resources\dll\dialogs.dll" />
+    <Content Include="Resources\dll\ILMerge.exe" />
+    <Content Include="Resources\dll\utils.dll" />
+    <Content Include="Resources\dll\WindowPlugins.dll" />
+    <EmbeddedResource Include="Resources\img\MyChitChat_icon_disabled.png" />
+    <EmbeddedResource Include="Resources\img\MyChitChat_icon_enabled.png" />
+    <Content Include="Resources\img\Config_Stripes.png" />
+    <Content Include="Resources\img\icon_thinking.png" />
+    <Content Include="Resources\img\jabber.png" />
+    <Content Include="Resources\img\Jabber_logo.png" />
+    <Content Include="Resources\img\MyChitChat_3Monkeys.png" />
+    <None Include="Resources\xmpp\agsXMPP.dll" />
+    <Content Include="RegionsSnippet.txt" />
+    <Content Include="Setup\Forum\screen_config_credentials.png" />
+    <Content Include="Setup\Forum\screen_config_misc.png" />
+    <Content Include="Setup\Forum\screen_config_notification.png" />
+    <Content Include="Setup\Forum\screen_config_presence.png" />
+    <Content Include="Setup\Forum\screen_main_preview.png" />
+    <Content Include="Skin\Blue3wide\Media\hover_MyChitChat.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\coding.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\cooking.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\default_activity.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\gaming.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\going_out.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\having_appointment.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\in_a_meeting.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\in_real_life.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\on_vacation.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\reading.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\sleeping.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\socializing.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\studying.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\traveling.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\watching_a_movie.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\watching_tv.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\working.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\working_out.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\writing.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\mood\default_mood.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\mood\happy.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\contacts.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\hover_3Monkeys.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_default.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_error.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_message.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_in_read.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_in_replied.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_in_unread.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_new.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_out.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\icon_presence.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\inbox_empty.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\inbox_full.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\plugin\read_message.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\Away.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\default_status.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\DoNotDisturb.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\ExtendedAway.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\Invisible.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\Normal.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\ReadyToChat.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\status\Unavailable.png" />
+    <Content Include="Skin\Blue3wide\Media\MyChitChat\tune\default_tune.png" />
+    <Content Include="Skin\Blue3wide\MyChitChat_Chat.xml" />
+    <Content Include="Skin\Blue3wide\MyChitChat_Main.xml" />
+    <Content Include="Skin\Blue3wide\properties.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nJim\nJim.csproj">
+      <Project>{3AAB1BC8-0466-411C-91AD-995D2D555A05}</Project>
+      <Name>nJim</Name>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dll\merge.bat" />
+    <None Include="Setup\Extension\MyChitChat.xmp2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>REM xcopy "$(TargetPath)" "..\..\..\MpiRelease" /Y
+xcopy "$(TargetDir)*.*" "C:\Programme\Team MediaPortal\MediaPortal\plugins\Windows" /Y
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>
