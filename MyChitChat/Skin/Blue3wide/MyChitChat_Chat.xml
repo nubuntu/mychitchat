@@ -21,7 +21,7 @@
             <posY>0</posY>
             <width>300</width>
             <height>132</height>
-            <texture>MyChitChat\plugin\hover_3Monkeys.png</texture>
+            <texture>MyChitChat\plugin\plugin_logo.png</texture>
         </control>
         <control>
             <id>100</id>
@@ -170,15 +170,6 @@
             <posY>624</posY>
             <width>65</width>
             <height>65</height>
-            <texture>MyChitChat\plugin\icon_error.png</texture>
-        </control>
-        <control>
-            <type>image</type>
-            <colordiffuse>50ffffff</colordiffuse>
-            <posX>1184</posX>
-            <posY>624</posY>
-            <width>65</width>
-            <height>65</height>
             <texture>MyChitChat\plugin\inbox_full.png</texture>
         </control>
         <control>
@@ -199,8 +190,8 @@
             <posY>624</posY>
             <width>65</width>
             <height>65</height>
-            <textureFocus>MyChitChat\plugin\icon_message_new.png</textureFocus>
-            <textureNoFocus>MyChitChat\plugin\icon_message_new.png</textureNoFocus>
+            <textureFocus>MyChitChat\plugin\icon_message_new_focused.png</textureFocus>
+            <textureNoFocus>MyChitChat\plugin\icon_message_new_unfocussed.png</textureNoFocus>
         </control>
         <control>
             <type>image</type>
@@ -265,6 +256,28 @@
             <width>345</width>
             <textcolor>ffffcc00</textcolor>
             <label>#MyChitChat.Contact.Name.Nick</label>
+        </control>
+        <control>
+            <id>1</id>
+            <description>Page text label</description>
+            <type>label</type>
+            <posX>456</posX>
+            <posY>96</posY>
+            <font>font16</font>
+            <textcolor>ffffffff</textcolor>
+            <align>RIGHT</align>
+            <label>#header.label</label>
+            <animation effect="Fade" time="250">WindowOpen</animation>
+            <animation effect="Fade" time="250">WindowClose</animation>
+        </control>
+        <control>
+            <type>image</type>
+            <colordiffuse>50ffffff</colordiffuse>
+            <posX>1184</posX>
+            <posY>624</posY>
+            <width>65</width>
+            <height>65</height>
+            <texture>MyChitChat\plugin\icon_presence.png</texture>
         </control>
     </controls>
 </window>
