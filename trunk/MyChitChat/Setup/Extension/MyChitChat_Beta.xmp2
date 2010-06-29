@@ -547,6 +547,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <OnlineLocation />
     <ReleaseDate>2010-06-29T16:32:30.15625+02:00</ReleaseDate>
     <Tags>mediaportal, mychitchat, jabber, im, icq</Tags>
+    <Location />
     <Params>
       <Items>
         <SectionParam Name="Icon">
@@ -1003,8 +1004,8 @@ Click Next to continue or Cancel to exit Setup.</Value>
       </FolderGroup>
     </FolderGroups>
     <ProjectFilename>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat.xmp2</ProjectFilename>
-    <UpdatePath1 />
-    <UpdatePath2 />
-    <UpdatePath3 />
+    <UpdatePath1>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Stables.xml</UpdatePath1>
+    <UpdatePath2>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Betas.xml</UpdatePath2>
+    <UpdatePath3>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Stables.xml</UpdatePath3>
   </ProjectSettings>
 </PackageClass>
