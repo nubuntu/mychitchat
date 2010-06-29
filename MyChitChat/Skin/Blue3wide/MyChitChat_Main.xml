@@ -30,7 +30,7 @@
             <onleft>401</onleft>
             <posX>960</posX>
             <posY>176</posY>
-            <width>281</width>
+            <width>289</width>
             <height>473</height>
         </control>
         <control>
@@ -80,14 +80,6 @@
             <label>#MyChitChat.User.Mood.Message</label>
         </control>
         <control>
-            <type>label</type>
-            <posX>112</posX>
-            <posY>136</posY>
-            <font>font13</font>
-            <textcolor>ffffcc00</textcolor>
-            <label>#MyChitChat.User.Name.Nick</label>
-        </control>
-        <control>
             <type>image</type>
             <posX>32</posX>
             <posY>320</posY>
@@ -109,14 +101,6 @@
             <width>346</width>
             <font>fontSVT</font>
             <label>#MyChitChat.User.Activity.Message</label>
-        </control>
-        <control>
-            <type>label</type>
-            <posX>112</posX>
-            <posY>408</posY>
-            <font>font13</font>
-            <textcolor>ffffcc00</textcolor>
-            <label>#MyChitChat.Contact.Name.Nick</label>
         </control>
         <control>
             <type>image</type>
@@ -183,7 +167,8 @@
             <posY>176</posY>
             <width>441</width>
             <height>473</height>
-            <spinPosX>800</spinPosX>
+            <spinPosX>488</spinPosX>
+            <spinPosY>661</spinPosY>
             <font>font9</font>
         </control>
         <control>
@@ -212,7 +197,7 @@
         <control>
             <type>image</type>
             <colordiffuse>50ffffff</colordiffuse>
-            <posX>1176</posX>
+            <posX>1184</posX>
             <posY>616</posY>
             <width>65</width>
             <height>65</height>
@@ -222,7 +207,7 @@
             <id>401</id>
             <description>Reply Message</description>
             <type>button</type>
-            <dimColor>ff999999</dimColor>
+            <dimColor>ffff0000</dimColor>
             <posX>32</posX>
             <posY>624</posY>
             <width>65</width>
@@ -258,7 +243,7 @@
             <type>image</type>
             <posX>960</posX>
             <posY>160</posY>
-            <width>281</width>
+            <width>289</width>
             <height>10</height>
             <texture>bar_hor.png</texture>
         </control>
@@ -296,11 +281,14 @@
             <animation effect="Fade" time="250">WindowClose</animation>
         </control>
         <control>
-            <id>1</id>
+            <id>801</id>
+            <description>Plugin Name</description>
             <type>label</type>
-            <posX>136</posX>
-            <posY>48</posY>
-            <font>font32</font>
+            <colordiffuse>ffffffff</colordiffuse>
+            <dimColor>ffffffff</dimColor>
+            <posX>72</posX>
+            <posY>16</posY>
+            <font>font48</font>
             <textcolor>50ffffff</textcolor>
             <label>#MyChitChat.Plugin.Name</label>
             <animation effect="Fade" time="250">Visible</animation>
@@ -318,6 +306,22 @@
             <label>#header.label</label>
             <animation effect="Fade" time="250">WindowOpen</animation>
             <animation effect="Fade" time="250">WindowClose</animation>
+        </control>
+        <control>
+            <type>fadelabel</type>
+            <posX>112</posX>
+            <posY>136</posY>
+            <width>345</width>
+            <textcolor>ffffcc00</textcolor>
+            <label>#MyChitChat.User.Name.Nick</label>
+        </control>
+        <control>
+            <type>fadelabel</type>
+            <posX>112</posX>
+            <posY>408</posY>
+            <width>345</width>
+            <textcolor>ffffcc00</textcolor>
+            <label>#MyChitChat.Contact.Name.Nick</label>
         </control>
     </controls>
 </window>
