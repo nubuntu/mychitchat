@@ -54,10 +54,6 @@ namespace MyChitChat.Jabber {
         #endregion
 
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Public Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        #endregion
-
-        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
         public void UpdateItemInfo() {
             base.FileInfo = new MediaPortal.Util.FileInformation();
             base.FileInfo.CreationTime = DateTimeReceived;
@@ -68,7 +64,9 @@ namespace MyChitChat.Jabber {
             this.IsDownloading = this.Replied;
             UpdateMessageIcon();
         }
+        #endregion
 
+        #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Private Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
         private void UpdateMessageIcon() {
             if (DirectionType == DirectionTypes.Outgoing) {
                 base.IconImage = base.IconImageBig = Helper.MEDIA_ICON_MESSAGE_OUT;

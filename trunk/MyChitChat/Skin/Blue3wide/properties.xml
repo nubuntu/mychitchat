@@ -22,4 +22,5 @@
     <property name="#MyChitChat.User.Name.Nick">My Nick</property>
     <property name="#MyChitChat.Contact.Name.Nick">Contact's Nick</property>
     <property name="#MyChitChat.Plugin.Name">MyChitChat</property>
+    <property name=""/>
 </properties>

@@ -35,6 +35,13 @@ namespace MyChitChat.Plugin {
         public static bool notifyOnErrorGlobally = true;
         public static bool selectStatusOnStartup = false;
 
+        public static bool publishTuneInfo = true;
+        public static bool publishActivityMusic = true;
+        public static bool publishActivityRadio = true;
+        public static bool publishActivityTV = false;
+        public static bool publishActivityRecording = false;
+        public static bool publishActivityMovie = false;
+
         public static int autoIdleTimeOut = 5;
         public static Enums.StatusType autoIdleStatusType = Enums.StatusType.Away;
         public static string autoIdleStatusMessage = Translations.defaultIdleMessage;
@@ -106,6 +113,12 @@ namespace MyChitChat.Plugin {
                 notifyWindowType = (Helper.PLUGIN_NOTIFY_WINDOWS)reader.GetValueAsInt(Helper.PLUGIN_NAME, "notifyWindowType", (int)notifyWindowType);
                 defaultKeyboardType = (Dialog.KeyBoardTypes)reader.GetValueAsInt(Helper.PLUGIN_NAME, "defaultKeyboardType", (int)Dialog.KeyBoardTypes.Default);
 
+                publishTuneInfo = reader.GetValueAsBool(Helper.PLUGIN_NAME, "publishTuneInfo", publishTuneInfo);
+                publishActivityMusic = reader.GetValueAsBool(Helper.PLUGIN_NAME, "publishActivityMusic", publishActivityMusic);
+                publishActivityRadio = reader.GetValueAsBool(Helper.PLUGIN_NAME, "publishActivityRadio", publishActivityRadio);
+                publishActivityMovie = reader.GetValueAsBool(Helper.PLUGIN_NAME, "publishActivityMovie", publishActivityMovie);
+                publishActivityTV = reader.GetValueAsBool(Helper.PLUGIN_NAME, "publishActivityTV", publishActivityTV);
+                publishActivityRecording = reader.GetValueAsBool(Helper.PLUGIN_NAME, "publishActivityRecording", publishActivityRecording);       
             }
         }
 
@@ -147,7 +160,12 @@ namespace MyChitChat.Plugin {
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultActivityMessage", defaultActivityMessage);
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "notifyWindowType", (int)notifyWindowType);
                 xmlwriter.SetValue(Helper.PLUGIN_NAME, "defaultKeyboardType", (int)defaultKeyboardType);
-
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "publishTuneInfo", publishTuneInfo);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "publishActivityMusic", publishActivityMusic);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "publishActivityRadio", publishActivityRadio);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "publishActivityMovie", publishActivityMovie);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "publishActivityTV", publishActivityTV);
+                xmlwriter.SetValueAsBool(Helper.PLUGIN_NAME, "publishActivityRecording", publishActivityRecording);          
             }
         }
 

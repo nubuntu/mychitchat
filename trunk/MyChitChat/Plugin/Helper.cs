@@ -22,12 +22,13 @@ namespace MyChitChat.Plugin {
         static Helper() {
             JABBER_CLIENT.OnError += new OnErrorEventHandler(JABBER_CLIENT_OnError);
             MediaPortal.Player.g_Player.PlayBackStarted += new MediaPortal.Player.g_Player.StartedHandler(g_Player_PlayBackStarted);
+            MediaPortal.Player.g_Player.PlayBackChanged += new MediaPortal.Player.g_Player.ChangedHandler(g_Player_PlayBackChanged);
+            MediaPortal.Player.g_Player.PlayBackStopped += new MediaPortal.Player.g_Player.StoppedHandler(g_Player_PlayBackStopped);
             MediaPortal.Player.g_Player.PlayBackEnded += new MediaPortal.Player.g_Player.EndedHandler(g_Player_PlayBackEnded);
             GUIPropertyManager.OnPropertyChanged += new GUIPropertyManager.OnPropertyChangedHandler(GUIPropertyManager_OnPropertyChanged);
             CurrentKeyboardType = Settings.defaultKeyboardType;
         }
 
-     
         /// <summary>
         /// Section in the MediaPortal config for this plugin
         /// </summary>
@@ -141,8 +142,8 @@ namespace MyChitChat.Plugin {
 
         public static void SetPluginEnterPresence() {
             if (JABBER_LAST_STATUS.message == null) {
-               JABBER_LAST_STATUS = SetDefaultPresence().status;
-                
+                JABBER_LAST_STATUS = SetDefaultPresence().status;
+
             } else {
                 SetStatus(JABBER_LAST_STATUS.type, JABBER_LAST_STATUS.message);
             }
@@ -154,7 +155,7 @@ namespace MyChitChat.Plugin {
                 idleStatus.type = JABBER_CLIENT.Presence.autoIdleStatus.type;
                 idleStatus.message = JABBER_CLIENT.Presence.autoIdleStatus.message;
                 Helper.JABBER_CLIENT.Presence.status = idleStatus;
-                Helper.JABBER_CLIENT.Presence.applyStatus();      
+                Helper.JABBER_CLIENT.Presence.applyStatus();
             } catch (Exception e) {
                 Log.Error(e);
             }
@@ -205,9 +206,9 @@ namespace MyChitChat.Plugin {
                 Status tmpStatus = new Status();
                 tmpStatus.type = type;
                 tmpStatus.message = message;
-                JABBER_LAST_STATUS = tmpStatus;                
+                JABBER_LAST_STATUS = tmpStatus;
                 Helper.JABBER_CLIENT.Presence.status = tmpStatus;
-                Helper.JABBER_CLIENT.Presence.applyStatus();                
+                Helper.JABBER_CLIENT.Presence.applyStatus();
             } catch (Exception e) {
                 Log.Error(e);
             }
@@ -256,43 +257,58 @@ namespace MyChitChat.Plugin {
             return tmpStatus;
         }
 
+        static void g_Player_PlayBackStopped(MediaPortal.Player.g_Player.MediaType type, int stoptime, string filename) {
+            SetActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
+        }
+
 
         static void g_Player_PlayBackEnded(MediaPortal.Player.g_Player.MediaType type, string filename) {
             SetActivity(Settings.defaultActivityType, Settings.defaultActivityMessage);
         }
 
         private static bool setTuneOnChange = false;
+
         static void g_Player_PlayBackStarted(MediaPortal.Player.g_Player.MediaType type, string filename) {
             switch (type) {
                 case MediaPortal.Player.g_Player.MediaType.Music:
                     setTuneOnChange = true;
-                    SetActivity(Enums.ActivityType.partying, "");                    
+                    if (Settings.publishActivityMusic) {
+                        SetActivity(Enums.ActivityType.partying, "see Tune");
+                    }
                     break;
                 case MediaPortal.Player.g_Player.MediaType.Radio:
                     setTuneOnChange = true;
-                    SetActivity(Enums.ActivityType.relaxing,"");                    
+                    if (Settings.publishActivityRadio) {
+                        SetActivity(Enums.ActivityType.relaxing, "see Tune");
+                    }
                     break;
                 case MediaPortal.Player.g_Player.MediaType.TV:
-                    SetActivity(Enums.ActivityType.watching_tv, "watching: " + GUIPropertyManager.GetProperty("#TV.View.title") + " on " + GUIPropertyManager.GetProperty("#TV.View.channel"));
+                    if (Settings.publishActivityTV) {
+                        SetActivity(Enums.ActivityType.watching_tv, String.Format("watching: {0} on {1}", GUIPropertyManager.GetProperty("#TV.View.title"), GUIPropertyManager.GetProperty("#TV.View.channel")));
+                    }
                     break;
                 case MediaPortal.Player.g_Player.MediaType.Video:
-                    SetActivity(Enums.ActivityType.watching_a_movie, "watching: " + GUIPropertyManager.GetProperty("#Play.Current.Director") + "'s '" + GUIPropertyManager.GetProperty("#Play.Current.Title") + "' with " + GUIPropertyManager.GetProperty("#Play.Current.Cast"));
+                    if (Settings.publishActivityMovie) {
+                        SetActivity(Enums.ActivityType.watching_a_movie, String.Format("watching: '{0}' (Director: {1}, Cast: {2}",GUIPropertyManager.GetProperty("#Play.Current.Title"), GUIPropertyManager.GetProperty("#Play.Current.Director"),GUIPropertyManager.GetProperty("#Play.Current.Cast")));
+                    }
                     break;
                 case MediaPortal.Player.g_Player.MediaType.Recording:
-                    SetActivity(Enums.ActivityType.watching_tv, "recording: " + GUIPropertyManager.GetProperty("#TV.View.title") + " on " + GUIPropertyManager.GetProperty("#TV.View.channel"));
+                    if (Settings.publishActivityRecording) {
+                        SetActivity(Enums.ActivityType.watching_tv, String.Format("recording: {0} on {1}" + GUIPropertyManager.GetProperty("#TV.View.title") + " on " + GUIPropertyManager.GetProperty("#TV.View.channel")));
+                    }
                     break;
                 case MediaPortal.Player.g_Player.MediaType.Unknown:
-                    SetActivity(Enums.ActivityType.relaxing, "");
+                default:
                     break;
             }
         }
 
+        static void g_Player_PlayBackChanged(MediaPortal.Player.g_Player.MediaType type, int stoptime, string filename) {
+            g_Player_PlayBackStarted(type, filename);
+        }
+
         static void GUIPropertyManager_OnPropertyChanged(string tag, string tagValue) {
-            if (setTuneOnChange) {
-                Debug.Write(tag + " : ");
-                Debug.WriteLine(tagValue);
-            }
-            if (tag.Equals("#Play.Current.Duration") && setTuneOnChange) {
+            if (setTuneOnChange && tag.Equals("#Play.Current.Duration")) {
                 if (!String.IsNullOrEmpty(tagValue)) {
                     GetSetCurrentTune();
                 }
@@ -302,19 +318,20 @@ namespace MyChitChat.Plugin {
 
 
         private static void GetSetCurrentTune() {
-            Tune currentTune = new Tune();
-            currentTune.artist = GUIPropertyManager.GetProperty("#Play.Current.Artist");
-            currentTune.title = GUIPropertyManager.GetProperty("#Play.Current.Title");
-            currentTune.source = GUIPropertyManager.GetProperty("#Play.Current.Album");
-            try {
-                currentTune.track = int.Parse(GUIPropertyManager.GetProperty("#Play.Current.Track"));
-                currentTune.length = (int)TimeSpan.Parse(GUIPropertyManager.GetProperty("#Play.Current.Duration")).TotalSeconds;
-                currentTune.rating = int.Parse(GUIPropertyManager.GetProperty("#Play.Current.Rating"));
-            } catch (Exception e) {
-                Log.Error(e);
+            if (Settings.publishTuneInfo) {
+                Tune currentTune = new Tune();
+                currentTune.artist = GUIPropertyManager.GetProperty("#Play.Current.Artist");
+                currentTune.title = GUIPropertyManager.GetProperty("#Play.Current.Title");
+                currentTune.source = GUIPropertyManager.GetProperty("#Play.Current.Album");
+                try {
+                    currentTune.track = int.Parse(GUIPropertyManager.GetProperty("#Play.Current.Track"));
+                    currentTune.length = (int)TimeSpan.Parse(GUIPropertyManager.GetProperty("#Play.Current.Duration")).TotalSeconds;
+                    currentTune.rating = int.Parse(GUIPropertyManager.GetProperty("#Play.Current.Rating"));
+                } catch (Exception e) {
+                    Log.Error(e);
+                }
+                SetTune(currentTune);
             }
-            SetTune(currentTune);
         }
-
     }
 }

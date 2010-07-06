@@ -131,7 +131,7 @@ namespace MyChitChat.Gui {
                 this.ctrlListMessages.RemoteColor = 0xFFFF6347;
                 this.ctrlListMessages.PlayedColor = 0x2090EE90;
                 this.ctrlListMessages.DownloadColor = 0xFF90EE90;
-                this.ctrlListMessages.ShadedColor = 0xffff00000;
+                this.ctrlListMessages.ShadedColor = 0xffff00000;               
             }
         }
 
