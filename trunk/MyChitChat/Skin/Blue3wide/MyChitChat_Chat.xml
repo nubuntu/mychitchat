@@ -35,6 +35,8 @@
             <height>481</height>
             <spinPosX>1082</spinPosX>
             <spinPosY>660</spinPosY>
+            <spinWidth>20</spinWidth>
+            <spinHeight>20</spinHeight>
             <font>font12</font>
             <font2>fontSVT</font2>
         </control>
@@ -154,6 +156,8 @@
             <height>481</height>
             <spinPosX>688</spinPosX>
             <spinPosY>660</spinPosY>
+            <spinWidth>20</spinWidth>
+            <spinHeight>20</spinHeight>
             <font>font9</font>
             <disabledcolor>ff333333</disabledcolor>
         </control>
