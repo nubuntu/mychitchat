@@ -12,9 +12,7 @@ using System.Text;
 
 namespace MyChitChat.Plugin {
     public partial class Config : MPConfigForm {
-        private Client _testClient = null;
-        private Thread backgroundWorker = null;
-
+       
         public Config() {
             InitializeComponent();
             this.Load += new EventHandler(MyChitChatConfig_Load);
@@ -271,6 +269,30 @@ namespace MyChitChat.Plugin {
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             System.Diagnostics.Process.Start("iexplore", Helper.PLUGIN_LINK_FORUM);
+        }
+
+        private void checkBoxCurrentTuneInfo_CheckedChanged(object sender, EventArgs e) {
+            Settings.publishTuneInfo = checkBoxCurrentTuneInfo.Checked;
+        }
+
+        private void checkBoxPublishActivityRadio_CheckedChanged(object sender, EventArgs e) {
+            Settings.publishActivityRadio = checkBoxPublishActivityRadio.Checked;
+        }
+
+        private void checkBoxPublishActivityMusic_CheckedChanged(object sender, EventArgs e) {
+            Settings.publishActivityMusic = checkBoxPublishActivityMusic.Checked;
+        }
+
+        private void checkBoxPublishActivityMovie_CheckedChanged(object sender, EventArgs e) {
+            Settings.publishActivityMovie = checkBoxPublishActivityMovie.Checked;
+        }
+
+        private void checkBoxPublishActivityTV_CheckedChanged(object sender, EventArgs e) {
+            Settings.publishActivityTV = checkBoxPublishActivityTV.Checked;
+        }
+
+        private void checkBoxPublishActivityRecording_CheckedChanged(object sender, EventArgs e) {
+            Settings.publishActivityRecording = checkBoxPublishActivityRecording.Checked;
         }
 
     }

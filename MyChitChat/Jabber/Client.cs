@@ -224,6 +224,17 @@ namespace MyChitChat.Jabber {
                 case Enums.ErrorType.Server:
                     Reconnect();
                     break;
+                case Enums.ErrorType.Warning:
+                case Enums.ErrorType.Query:
+                    //do nothing for now
+                    break;
+                case Enums.ErrorType.Client:
+                default:
+                    Close();
+                    this._jabberConnection.Dispose();
+                    this._jabberConnection = new nJim.Jabber();
+                    Login();
+                    break;
             }
             OnError(type, message);
         }

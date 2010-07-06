@@ -233,7 +233,7 @@ namespace MyChitChat.Gui {
         }
 
         public void ShowErrorDialog(nJim.Enums.ErrorType type, string message) {
-            Dialog.Instance.ShowNotifyDialog(3 * Settings.notifyTimeOut,
+            Dialog.Instance.ShowNotifyDialog(2 * Settings.notifyTimeOut,
                 Helper.PLUGIN_NAME + " Error!",
                 Helper.MEDIA_ICON_ERROR,
                 type.ToString() + "\n" + message,
