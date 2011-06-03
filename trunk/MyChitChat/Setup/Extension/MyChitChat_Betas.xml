@@ -7,7 +7,7 @@
         <Items>
           <GroupItem Name="Default">
             <DisplayName>Default</DisplayName>
-            <DefaulChecked>true</DefaulChecked>
+            <DefaulChecked>false</DefaulChecked>
             <Description>Default</Description>
             <Files>
               <Items />
@@ -86,7 +86,7 @@
         <Items>
           <GroupItem Name="Default">
             <DisplayName>Default</DisplayName>
-            <DefaulChecked>true</DefaulChecked>
+            <DefaulChecked>false</DefaulChecked>
             <Description>Default</Description>
             <Files>
               <Items />
