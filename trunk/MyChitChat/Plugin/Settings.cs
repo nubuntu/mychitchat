@@ -20,22 +20,22 @@ namespace MyChitChat.Plugin {
 
         public static int notifyTimeOut = 10;
         public static bool autoConnectStartup = true;
-        public static bool notifyOnMessagePlugin = true;
-        public static bool notifyOnMessageGlobally = false;
-        public static bool notifyOnStatusPlugin = true;
+        public static bool notifyOnMessagePlugin = false;
+        public static bool notifyOnMessageGlobally = true;
+        public static bool notifyOnStatusPlugin = false;
         public static bool notifyOnStatusGlobally = false;
-        public static bool notifyOnMoodPlugin = true;
+        public static bool notifyOnMoodPlugin = false;
         public static bool notifyOnMoodGlobally = false;
-        public static bool notifyOnActivityPlugin = true;
+        public static bool notifyOnActivityPlugin = false;
         public static bool notifyOnActivityGlobally = false;
-        public static bool notifyOnTunePlugin = true;
+        public static bool notifyOnTunePlugin = false;
         public static bool notifyOnTuneGlobally = false;
 
         public static bool notifyOnErrorPlugin = true;
         public static bool notifyOnErrorGlobally = true;
         public static bool selectStatusOnStartup = false;
 
-        public static bool publishTuneInfo = true;
+        public static bool publishTuneInfo = false;
         public static bool publishActivityMusic = true;
         public static bool publishActivityRadio = true;
         public static bool publishActivityTV = false;

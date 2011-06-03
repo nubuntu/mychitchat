@@ -310,7 +310,7 @@ namespace MyChitChat.Gui {
                 case GUIMessage.MessageType.GUI_MSG_WINDOW_DEINIT:
                     base.OnMessage(message);
                     GUIGraphicsContext.Overlay = m_bPrevOverlay;
-                    FreeResources();
+                    Dispose();
                     DeInitControls();
                     GUILayerManager.UnRegisterLayer(this);
                     return true;

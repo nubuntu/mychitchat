@@ -1,16 +1,17 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
+using MediaPortal.Common.Utils;
+[assembly: CompatibleVersion("1.1.7.0")]
 // Allgemeine Informationen über eine Assembly werden über die folgenden 
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
-[assembly: AssemblyTitle("Jabber.MP")]
+[assembly: AssemblyTitle("MyChitChat")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Jabber.MP")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2009")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("MediaPortal")]
+[assembly: AssemblyCopyright("Anthrax")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MediaPortal.GUI.Library;
+using MediaPortal.Dialogs;
 using MediaPortal.Configuration;
 using MediaPortal.Profile;
 using MyChitChat.Jabber;
@@ -9,20 +10,19 @@ using MyChitChat.Gui;
 
 namespace MyChitChat.Plugin {
     [PluginIcons("MyChitChat.Resources.img.MyChitChat_icon_enabled.png", "MyChitChat.Resources.img.MyChitChat_icon_disabled")]
-    public class Plugin : ISetupForm, IShowPlugin {
+    public class Plugin : ISetupForm{
         #region Constants
 
 
         #endregion
 
         [STAThread]
-        static void Main() {
+        static void Main() {            
             new Plugin().ShowPlugin();           
         }
 
         public Plugin() {
-            Log.Debug("MyChitChat started");
-            Settings.Load();
+            Log.Debug("MyChitChat started");            
         }
 
         #region ISetupForm Members
@@ -87,22 +87,16 @@ namespace MyChitChat.Plugin {
             strPictureImage = Helper.MEDIA_HOVER_HOME;
             return true;
         }
-
-
-        #endregion
-
-        #region IShowPlugin Member
-
-        public bool ShowDefaultHome() {
-            return false;
-        }
+       
 
         public static int GetWID {
             get {
                 return (int)Helper.PLUGIN_WINDOW_IDS.WINDOW_ID_MAIN;
             }
         }
-
+        
         #endregion
+
+      
     }
 }

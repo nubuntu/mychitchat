@@ -34,6 +34,7 @@ namespace MyChitChat.Plugin
             this.labelStatus = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageJabber = new System.Windows.Forms.TabPage();
+            this.buttonTestConnection = new System.Windows.Forms.Button();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -94,6 +95,14 @@ namespace MyChitChat.Plugin
             this.checkBoxErrorGlobally = new System.Windows.Forms.CheckBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.comboBoxWindowSize = new System.Windows.Forms.ComboBox();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.checkBoxPublishActivityRecording = new System.Windows.Forms.CheckBox();
+            this.checkBoxPublishActivityMovie = new System.Windows.Forms.CheckBox();
+            this.checkBoxPublishActivityRadio = new System.Windows.Forms.CheckBox();
+            this.checkBoxPublishActivityTV = new System.Windows.Forms.CheckBox();
+            this.checkBoxPublishActivityMusic = new System.Windows.Forms.CheckBox();
+            this.checkBoxCurrentTuneInfo = new System.Windows.Forms.CheckBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
@@ -112,14 +121,6 @@ namespace MyChitChat.Plugin
             this.label16 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.statusTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.checkBoxCurrentTuneInfo = new System.Windows.Forms.CheckBox();
-            this.checkBoxPublishActivityMusic = new System.Windows.Forms.CheckBox();
-            this.checkBoxPublishActivityTV = new System.Windows.Forms.CheckBox();
-            this.checkBoxPublishActivityRadio = new System.Windows.Forms.CheckBox();
-            this.checkBoxPublishActivityMovie = new System.Windows.Forms.CheckBox();
-            this.checkBoxPublishActivityRecording = new System.Windows.Forms.CheckBox();
-            this.label18 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageJabber.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -140,6 +141,7 @@ namespace MyChitChat.Plugin
             this.groupBox11.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.groupBox16.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.groupBox12.SuspendLayout();
@@ -149,7 +151,6 @@ namespace MyChitChat.Plugin
             ((System.ComponentModel.ISupportInitialize)(this.activityTypeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusTypeBindingSource)).BeginInit();
-            this.groupBox16.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelStatus
@@ -178,6 +179,7 @@ namespace MyChitChat.Plugin
             // tabPageJabber
             // 
             this.tabPageJabber.BackColor = System.Drawing.SystemColors.Menu;
+            this.tabPageJabber.Controls.Add(this.buttonTestConnection);
             this.tabPageJabber.Controls.Add(this.pictureBox3);
             this.tabPageJabber.Controls.Add(this.pictureBox1);
             this.tabPageJabber.Controls.Add(this.label14);
@@ -197,6 +199,16 @@ namespace MyChitChat.Plugin
             this.tabPageJabber.Size = new System.Drawing.Size(627, 239);
             this.tabPageJabber.TabIndex = 0;
             this.tabPageJabber.Text = "Jabber Credentials";
+            // 
+            // buttonTestConnection
+            // 
+            this.buttonTestConnection.Location = new System.Drawing.Point(331, 160);
+            this.buttonTestConnection.Name = "buttonTestConnection";
+            this.buttonTestConnection.Size = new System.Drawing.Size(156, 23);
+            this.buttonTestConnection.TabIndex = 21;
+            this.buttonTestConnection.Text = "Test Connection";
+            this.buttonTestConnection.UseVisualStyleBackColor = true;
+            this.buttonTestConnection.Click += new System.EventHandler(this.buttonTestConnection_Click);
             // 
             // pictureBox3
             // 
@@ -831,6 +843,99 @@ namespace MyChitChat.Plugin
             this.comboBoxWindowSize.Size = new System.Drawing.Size(290, 21);
             this.comboBoxWindowSize.TabIndex = 5;
             // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.label18);
+            this.groupBox16.Controls.Add(this.checkBoxPublishActivityRecording);
+            this.groupBox16.Controls.Add(this.checkBoxPublishActivityMovie);
+            this.groupBox16.Controls.Add(this.checkBoxPublishActivityRadio);
+            this.groupBox16.Controls.Add(this.checkBoxPublishActivityTV);
+            this.groupBox16.Controls.Add(this.checkBoxPublishActivityMusic);
+            this.groupBox16.Controls.Add(this.checkBoxCurrentTuneInfo);
+            this.groupBox16.Location = new System.Drawing.Point(3, 145);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(612, 65);
+            this.groupBox16.TabIndex = 7;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Publish Current Media Info (Song/Movie Titles, Artists, Channel, Cast, etc...)";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.Red;
+            this.label18.Location = new System.Drawing.Point(467, 30);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(74, 16);
+            this.label18.TabIndex = 8;
+            this.label18.Text = "(Privacy!)";
+            // 
+            // checkBoxPublishActivityRecording
+            // 
+            this.checkBoxPublishActivityRecording.AutoSize = true;
+            this.checkBoxPublishActivityRecording.Location = new System.Drawing.Point(314, 42);
+            this.checkBoxPublishActivityRecording.Name = "checkBoxPublishActivityRecording";
+            this.checkBoxPublishActivityRecording.Size = new System.Drawing.Size(92, 17);
+            this.checkBoxPublishActivityRecording.TabIndex = 7;
+            this.checkBoxPublishActivityRecording.Text = "Recording TV";
+            this.checkBoxPublishActivityRecording.UseVisualStyleBackColor = true;
+            this.checkBoxPublishActivityRecording.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityRecording_CheckedChanged);
+            // 
+            // checkBoxPublishActivityMovie
+            // 
+            this.checkBoxPublishActivityMovie.AutoSize = true;
+            this.checkBoxPublishActivityMovie.Location = new System.Drawing.Point(6, 42);
+            this.checkBoxPublishActivityMovie.Name = "checkBoxPublishActivityMovie";
+            this.checkBoxPublishActivityMovie.Size = new System.Drawing.Size(113, 17);
+            this.checkBoxPublishActivityMovie.TabIndex = 6;
+            this.checkBoxPublishActivityMovie.Text = "Watching a Movie";
+            this.checkBoxPublishActivityMovie.UseVisualStyleBackColor = true;
+            this.checkBoxPublishActivityMovie.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityMovie_CheckedChanged);
+            // 
+            // checkBoxPublishActivityRadio
+            // 
+            this.checkBoxPublishActivityRadio.AutoSize = true;
+            this.checkBoxPublishActivityRadio.Location = new System.Drawing.Point(158, 19);
+            this.checkBoxPublishActivityRadio.Name = "checkBoxPublishActivityRadio";
+            this.checkBoxPublishActivityRadio.Size = new System.Drawing.Size(111, 17);
+            this.checkBoxPublishActivityRadio.TabIndex = 5;
+            this.checkBoxPublishActivityRadio.Text = "Listening to Radio";
+            this.checkBoxPublishActivityRadio.UseVisualStyleBackColor = true;
+            this.checkBoxPublishActivityRadio.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityRadio_CheckedChanged);
+            // 
+            // checkBoxPublishActivityTV
+            // 
+            this.checkBoxPublishActivityTV.AutoSize = true;
+            this.checkBoxPublishActivityTV.Location = new System.Drawing.Point(158, 42);
+            this.checkBoxPublishActivityTV.Name = "checkBoxPublishActivityTV";
+            this.checkBoxPublishActivityTV.Size = new System.Drawing.Size(89, 17);
+            this.checkBoxPublishActivityTV.TabIndex = 4;
+            this.checkBoxPublishActivityTV.Text = "Watching TV";
+            this.checkBoxPublishActivityTV.UseVisualStyleBackColor = true;
+            this.checkBoxPublishActivityTV.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityTV_CheckedChanged);
+            // 
+            // checkBoxPublishActivityMusic
+            // 
+            this.checkBoxPublishActivityMusic.AutoSize = true;
+            this.checkBoxPublishActivityMusic.Location = new System.Drawing.Point(314, 19);
+            this.checkBoxPublishActivityMusic.Name = "checkBoxPublishActivityMusic";
+            this.checkBoxPublishActivityMusic.Size = new System.Drawing.Size(111, 17);
+            this.checkBoxPublishActivityMusic.TabIndex = 3;
+            this.checkBoxPublishActivityMusic.Text = "Listening to Music";
+            this.checkBoxPublishActivityMusic.UseVisualStyleBackColor = true;
+            this.checkBoxPublishActivityMusic.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityMusic_CheckedChanged);
+            // 
+            // checkBoxCurrentTuneInfo
+            // 
+            this.checkBoxCurrentTuneInfo.AutoSize = true;
+            this.checkBoxCurrentTuneInfo.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxCurrentTuneInfo.Name = "checkBoxCurrentTuneInfo";
+            this.checkBoxCurrentTuneInfo.Size = new System.Drawing.Size(136, 17);
+            this.checkBoxCurrentTuneInfo.TabIndex = 2;
+            this.checkBoxCurrentTuneInfo.Text = "Tune Info (Artist && Title)";
+            this.checkBoxCurrentTuneInfo.UseVisualStyleBackColor = true;
+            this.checkBoxCurrentTuneInfo.CheckedChanged += new System.EventHandler(this.checkBoxCurrentTuneInfo_CheckedChanged);
+            // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.flowLayoutPanel3);
@@ -1001,103 +1106,6 @@ namespace MyChitChat.Plugin
             this.pictureBox2.TabIndex = 6;
             this.pictureBox2.TabStop = false;
             // 
-            // statusTypeBindingSource
-            // 
-            this.statusTypeBindingSource.DataSource = typeof(nJim.Enums.StatusType);
-            // 
-            // groupBox16
-            // 
-            this.groupBox16.Controls.Add(this.label18);
-            this.groupBox16.Controls.Add(this.checkBoxPublishActivityRecording);
-            this.groupBox16.Controls.Add(this.checkBoxPublishActivityMovie);
-            this.groupBox16.Controls.Add(this.checkBoxPublishActivityRadio);
-            this.groupBox16.Controls.Add(this.checkBoxPublishActivityTV);
-            this.groupBox16.Controls.Add(this.checkBoxPublishActivityMusic);
-            this.groupBox16.Controls.Add(this.checkBoxCurrentTuneInfo);
-            this.groupBox16.Location = new System.Drawing.Point(3, 145);
-            this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(612, 65);
-            this.groupBox16.TabIndex = 7;
-            this.groupBox16.TabStop = false;
-            this.groupBox16.Text = "Publish Current Media Info (Song/Movie Titles, Artists, Channel, Cast, etc...)";
-            // 
-            // checkBoxCurrentTuneInfo
-            // 
-            this.checkBoxCurrentTuneInfo.AutoSize = true;
-            this.checkBoxCurrentTuneInfo.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxCurrentTuneInfo.Name = "checkBoxCurrentTuneInfo";
-            this.checkBoxCurrentTuneInfo.Size = new System.Drawing.Size(136, 17);
-            this.checkBoxCurrentTuneInfo.TabIndex = 2;
-            this.checkBoxCurrentTuneInfo.Text = "Tune Info (Artist && Title)";
-            this.checkBoxCurrentTuneInfo.UseVisualStyleBackColor = true;
-            this.checkBoxCurrentTuneInfo.CheckedChanged += new System.EventHandler(this.checkBoxCurrentTuneInfo_CheckedChanged);
-            // 
-            // checkBoxPublishActivityMusic
-            // 
-            this.checkBoxPublishActivityMusic.AutoSize = true;
-            this.checkBoxPublishActivityMusic.Location = new System.Drawing.Point(314, 19);
-            this.checkBoxPublishActivityMusic.Name = "checkBoxPublishActivityMusic";
-            this.checkBoxPublishActivityMusic.Size = new System.Drawing.Size(111, 17);
-            this.checkBoxPublishActivityMusic.TabIndex = 3;
-            this.checkBoxPublishActivityMusic.Text = "Listening to Music";
-            this.checkBoxPublishActivityMusic.UseVisualStyleBackColor = true;
-            this.checkBoxPublishActivityMusic.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityMusic_CheckedChanged);
-            // 
-            // checkBoxPublishActivityTV
-            // 
-            this.checkBoxPublishActivityTV.AutoSize = true;
-            this.checkBoxPublishActivityTV.Location = new System.Drawing.Point(158, 42);
-            this.checkBoxPublishActivityTV.Name = "checkBoxPublishActivityTV";
-            this.checkBoxPublishActivityTV.Size = new System.Drawing.Size(89, 17);
-            this.checkBoxPublishActivityTV.TabIndex = 4;
-            this.checkBoxPublishActivityTV.Text = "Watching TV";
-            this.checkBoxPublishActivityTV.UseVisualStyleBackColor = true;
-            this.checkBoxPublishActivityTV.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityTV_CheckedChanged);
-            // 
-            // checkBoxPublishActivityRadio
-            // 
-            this.checkBoxPublishActivityRadio.AutoSize = true;
-            this.checkBoxPublishActivityRadio.Location = new System.Drawing.Point(158, 19);
-            this.checkBoxPublishActivityRadio.Name = "checkBoxPublishActivityRadio";
-            this.checkBoxPublishActivityRadio.Size = new System.Drawing.Size(111, 17);
-            this.checkBoxPublishActivityRadio.TabIndex = 5;
-            this.checkBoxPublishActivityRadio.Text = "Listening to Radio";
-            this.checkBoxPublishActivityRadio.UseVisualStyleBackColor = true;
-            this.checkBoxPublishActivityRadio.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityRadio_CheckedChanged);
-            // 
-            // checkBoxPublishActivityMovie
-            // 
-            this.checkBoxPublishActivityMovie.AutoSize = true;
-            this.checkBoxPublishActivityMovie.Location = new System.Drawing.Point(6, 42);
-            this.checkBoxPublishActivityMovie.Name = "checkBoxPublishActivityMovie";
-            this.checkBoxPublishActivityMovie.Size = new System.Drawing.Size(113, 17);
-            this.checkBoxPublishActivityMovie.TabIndex = 6;
-            this.checkBoxPublishActivityMovie.Text = "Watching a Movie";
-            this.checkBoxPublishActivityMovie.UseVisualStyleBackColor = true;
-            this.checkBoxPublishActivityMovie.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityMovie_CheckedChanged);
-            // 
-            // checkBoxPublishActivityRecording
-            // 
-            this.checkBoxPublishActivityRecording.AutoSize = true;
-            this.checkBoxPublishActivityRecording.Location = new System.Drawing.Point(314, 42);
-            this.checkBoxPublishActivityRecording.Name = "checkBoxPublishActivityRecording";
-            this.checkBoxPublishActivityRecording.Size = new System.Drawing.Size(92, 17);
-            this.checkBoxPublishActivityRecording.TabIndex = 7;
-            this.checkBoxPublishActivityRecording.Text = "Recording TV";
-            this.checkBoxPublishActivityRecording.UseVisualStyleBackColor = true;
-            this.checkBoxPublishActivityRecording.CheckedChanged += new System.EventHandler(this.checkBoxPublishActivityRecording_CheckedChanged);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.Red;
-            this.label18.Location = new System.Drawing.Point(467, 30);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(74, 16);
-            this.label18.TabIndex = 8;
-            this.label18.Text = "(Privacy!)";
-            // 
             // Config
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1114,7 +1122,7 @@ namespace MyChitChat.Plugin
             this.Name = "Config";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "MyChitChat - Configuration (0.9.0)";
+            this.Text = "MyChitChat - Configuration (1.0.0 RC)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SetupForm_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabPageJabber.ResumeLayout(false);
@@ -1147,6 +1155,8 @@ namespace MyChitChat.Plugin
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.groupBox9.ResumeLayout(false);
+            this.groupBox16.ResumeLayout(false);
+            this.groupBox16.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
             this.groupBox12.ResumeLayout(false);
@@ -1160,8 +1170,6 @@ namespace MyChitChat.Plugin
             ((System.ComponentModel.ISupportInitialize)(this.activityTypeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusTypeBindingSource)).EndInit();
-            this.groupBox16.ResumeLayout(false);
-            this.groupBox16.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1258,5 +1266,6 @@ namespace MyChitChat.Plugin
         private System.Windows.Forms.CheckBox checkBoxCurrentTuneInfo;
         private System.Windows.Forms.CheckBox checkBoxPublishActivityRecording;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button buttonTestConnection;
     }
 }

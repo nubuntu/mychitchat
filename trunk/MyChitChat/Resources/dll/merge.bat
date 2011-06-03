@@ -1,3 +1,3 @@
 @echo off
-ilmerge /out:MyChitChat_v.dll MyChitChat.dll agsXMPP.dll nJim.dll
+ilmerge /out:..\..\bin\MyChitChatConfiguration\MyChitChat_merged.dll ..\..\bin\MyChitChatConfiguration\MyChitChat.dll ..\..\bin\MyChitChatConfiguration\agsXMPP.dll ..\..\bin\MyChitChatConfiguration\nJim.dll
 pause

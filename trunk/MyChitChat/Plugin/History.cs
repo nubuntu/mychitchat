@@ -31,8 +31,7 @@ namespace MyChitChat.Plugin {
         History() {
             Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JABBER_CLIENT_OnLogin);
             ChatSessions = new List<Session>();
-            LogHistory = new StringBuilder();            
-            
+            LogHistory = new StringBuilder();
         }
 
         ~History() {
@@ -214,9 +213,9 @@ namespace MyChitChat.Plugin {
 
         void JABBER_CLIENT_OnMessage(Message msg) {
             if ((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally && !Helper.PLUGIN_WINDOW_ACTIVE) {
-                NotifyMessage(msg);
-                AppendLogEvent(msg.DateTimeReceived, "Msg", msg.FromJID.User, msg.Subject);
+                NotifyMessage(msg);               
             }
+            AppendLogEvent(msg.DateTimeReceived, "Msg", msg.FromJID.User, msg.Subject);
             try {
                 if (msg.FromJID.User != null) {
                     GetSession(msg.FromJID).AddMessage(msg);
@@ -231,8 +230,7 @@ namespace MyChitChat.Plugin {
             if (((Settings.notifyOnStatusPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnStatusGlobally && !Helper.PLUGIN_WINDOW_ACTIVE) && contact.identity.jabberID.full != Helper.JABBER_CLIENT.MyJabberID.full && contact.status.type != Enums.StatusType.Unavailable) {
                 NotifyPresMooActTun(contact, null, null, null);
             }
-            AppendLogEvent(contact.lastUpdated, "Status", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));
-            
+            AppendLogEvent(contact.lastUpdated, "Status", contact.identity.nickname, Translations.GetByName(contact.status.type.ToString()));            
             OnUpdatedPresence(contact);      
         }
 
@@ -240,8 +238,8 @@ namespace MyChitChat.Plugin {
             if ((Settings.notifyOnMoodPlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMoodGlobally && !Helper.PLUGIN_WINDOW_ACTIVE) {
                 NotifyPresMooActTun(contact, mood, null, null);
             }
-            OnUpdatedPresence(contact);
             AppendLogEvent(contact.lastUpdated, "Mood", contact.identity.nickname, Translations.GetByName(mood.type.ToString()));
+            OnUpdatedPresence(contact);           
         }
 
         void Roster_ActivityUpdated(nJim.Contact contact, Activity activity) {
@@ -264,11 +262,11 @@ namespace MyChitChat.Plugin {
 
        
         void newSession_OnChatSessionUpdated(Session session, Message msg) {
-            if (((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally && !Helper.PLUGIN_WINDOW_ACTIVE )&& msg.DirectionType != DirectionTypes.Outgoing) {
-                NotifyMessage(msg);
-            }
+            //if (((Settings.notifyOnMessagePlugin && Helper.PLUGIN_WINDOW_ACTIVE) || Settings.notifyOnMessageGlobally && !Helper.PLUGIN_WINDOW_ACTIVE )&& msg.DirectionType != DirectionTypes.Outgoing) {
+            //    NotifyMessage(msg);
+            //}
             OnUpdatedSession(session, msg);
-            AppendLogEvent(msg.DateTimeReceived, "Msg", session.ContactNickname, msg.Subject);
+            
         }
 
         #endregion
