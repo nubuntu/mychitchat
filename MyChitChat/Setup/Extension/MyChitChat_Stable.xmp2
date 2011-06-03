@@ -485,7 +485,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <Author>Anthrax</Author>
     <HomePage>http://mychitchat.googlecode.com</HomePage>
     <ForumPage>http://forum.team-mediaportal.com/mediaportal-plugins-47/upcoming-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-83953/#post632708</ForumPage>
-    <UpdateUrl />
+    <UpdateUrl>http://mychitchat.googlecode.com/svn/trunk/MyChitChat/Setup/Extension/MyChitChat_Stables.xml</UpdateUrl>
     <Version>
       <Major>1</Major>
       <Minor>0</Minor>
@@ -495,7 +495,7 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <ExtensionDescription>MediaPortal - Jabber IM Plugin</ExtensionDescription>
     <VersionDescription>This is the release candidate for version 1.0.0.</VersionDescription>
     <DevelopmentStatus>Rc</DevelopmentStatus>
-    <OnlineLocation />
+    <OnlineLocation>http://mychitchat.googlecode.com/svn/trunk/MyChitChat/Setup/Extension/MyChitChat_1.0.0.RC.mpe1</OnlineLocation>
     <ReleaseDate>2011-06-03T16:32:30</ReleaseDate>
     <Tags>mediaportal, mychitchat, jabber, im, icq</Tags>
     <Location>C:\Users\Anthrax-Leprosy-Pi\Documents\Development\Projekte\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_1.0.0.RC.mpe1</Location>
