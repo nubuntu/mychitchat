@@ -13,401 +13,9 @@
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
               <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\bin\Release\MyChitChat_0.9.0_Alpha.dll</LocalFileName>
+              <LocalFileName>..\..\..\..\..\..\..\..\..\Program Files (x86)\Team MediaPortal\MediaPortal\plugins\Windows\MyChitChat.dll</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{4a402381-991a-4bc2-a0e5-8755cda75801}-MyChitChat_0.9.0_Alpha.dll</ZipFileName>
-              <DestinationFilename>%Plugins%\windows\MyChitChat_0.9.0_Alpha.dll</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\MyChitChat_Chat.xml</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b803309a-bbba-4e1b-a6dc-ee12bf8379f1}-MyChitChat_Chat.xml</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\MyChitChat_Chat.xml</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\MyChitChat_Main.xml</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{a6779b0a-5967-4c85-b8da-7b0d1d7175eb}-MyChitChat_Main.xml</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\MyChitChat_Main.xml</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\properties.xml</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{942c98de-1949-4c6e-9357-e3dbf4abb7bc}-properties.xml</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\properties.xml</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\hover_MyChitChat.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{95d74d7f-5267-496e-b7bb-4a77a4e25a58}-hover_MyChitChat.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\hover_MyChitChat.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\Thumbs.db</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{888f731a-b610-4059-bc02-6bc2260e3079}-Thumbs.db</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\Thumbs.db</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\Thumbs.db</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{a64a8996-b8be-417e-b46c-3d8fd283ce19}-Thumbs.db</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\Thumbs.db</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\tune\default_tune.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{418f575d-6216-42ea-b454-cfe37fcafb2f}-default_tune.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\tune\default_tune.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\tune\Thumbs.db</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{c9ca7d9f-983c-48d1-89b6-ff648e113195}-Thumbs.db</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\tune\Thumbs.db</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Away.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{fcd9884e-1956-4956-8ce0-e600a397b5b2}-Away.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Away.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\default_status.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{2269e86c-7592-43b7-baf1-40637ca4c8fe}-default_status.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\default_status.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\DoNotDisturb.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{38507373-0b22-471a-8112-0fb127de11d1}-DoNotDisturb.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\DoNotDisturb.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\ExtendedAway.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b15eedbe-8047-4503-8f61-f58163886696}-ExtendedAway.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\ExtendedAway.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Invisible.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{f9a7ed96-d80b-4cc8-bd0a-79e677055cf5}-Invisible.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Invisible.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Normal.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{de0ee6ae-67f9-4bf9-9a93-d4f8b7e03e06}-Normal.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Normal.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\ReadyToChat.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{ebe09235-f496-407a-b15f-9d3497d728af}-ReadyToChat.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\ReadyToChat.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Thumbs.db</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{56f81b2c-8f24-4665-abc4-b1feeb8e7ec1}-Thumbs.db</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Thumbs.db</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Unavailable.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{ab4c9aec-d9d7-4703-9c1f-2c5d7c438347}-Unavailable.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Unavailable.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\contacts.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{abec3754-100c-44bb-8462-6799cd3eefdf}-contacts.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\contacts.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\hover_3Monkeys.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{0ae549ae-19b3-4713-9657-90d17db93dea}-hover_3Monkeys.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\hover_3Monkeys.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_default.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{9e5f0571-d126-443d-83f4-53b43fdf359f}-icon_default.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_default.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_error.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{a77169b5-e790-4ce0-853c-5e9f0203f76e}-icon_error.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_error.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{0b45700c-b88f-407a-b643-9f6cbecf8f92}-icon_message.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_in_read.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{4390063c-277d-4309-96f6-9040fea4642a}-icon_message_in_read.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_in_read.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_in_replied.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{6959ea22-2e23-44b7-a09b-a0f9e7b8fb50}-icon_message_in_replied.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_in_replied.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_in_unread.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{cb626424-affb-447b-b3a3-4e57b6f42911}-icon_message_in_unread.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_in_unread.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_new_focused.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{14ca16fc-6525-4d57-a639-9b75325f1fc2}-icon_message_new_focused.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_new_focused.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_new_unfocussed.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{b7a1bc33-7388-4bec-a044-2b7bf6960c44}-icon_message_new_unfocussed.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_new_unfocussed.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_out.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{26ef54cd-ddae-4da5-88e4-539c8dc01fb2}-icon_message_out.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_out.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_presence.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{1de2d691-b638-4f5a-8d8e-6492fcfe9044}-icon_presence.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_presence.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\inbox_full.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{60cbccca-b7fa-4853-a518-6c617cb60225}-inbox_full.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\inbox_full.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\plugin_logo.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{153bb10f-f16e-48ef-bcee-51b207238a11}-plugin_logo.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\plugin_logo.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\read_message.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{7261d843-3287-4f4a-9ff2-8960c00caef5}-read_message.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\read_message.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\Thumbs.db</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{58050e68-90e6-49d8-9ce0-00b3edcdc842}-Thumbs.db</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\Thumbs.db</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\mood\default_mood.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{76424b70-2d2c-445c-afcd-d59474582365}-default_mood.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\mood\default_mood.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\mood\happy.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{bfcd9570-452e-4e17-9b1d-3a662e6dbde1}-happy.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\mood\happy.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\mood\Thumbs.db</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{1b2c60bb-5c5f-4fe8-87b6-77c88e16e4d0}-Thumbs.db</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\mood\Thumbs.db</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\coding.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{94b12b15-fda3-4a64-b606-2ce3773186be}-coding.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\coding.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\cooking.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{fb7f5a83-85c3-4ed2-9a08-f1ea8deffcab}-cooking.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\cooking.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\default_activity.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{f20542b9-8598-4b7c-9850-d87be7ae3472}-default_activity.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\default_activity.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\gaming.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{01525dc8-5f13-4d4b-8b70-50e20243da52}-gaming.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\gaming.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\going_out.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{1dd01e99-33cf-42cd-9ce7-61f68c71c6e4}-going_out.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\going_out.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\having_appointment.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{5e0c2585-c9fd-40a8-b33f-14ea77c95e7a}-having_appointment.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\having_appointment.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\in_a_meeting.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{5614cabe-31aa-4713-9dbb-f4e88e5d9e14}-in_a_meeting.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\in_a_meeting.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\in_real_life.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{948b0787-d4b4-4e85-b0dc-ec3beaae2e06}-in_real_life.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\in_real_life.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\on_vacation.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{02b7fbc2-1746-467c-9a49-9df118ed89fc}-on_vacation.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\on_vacation.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\reading.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{159defda-6c0d-4af3-b386-b97e4ca03bed}-reading.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\reading.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\sleeping.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{9c9a5e7c-a72a-4150-9787-98f020194e7b}-sleeping.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\sleeping.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\socializing.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{f3028e63-4cd1-493f-8de0-cac911217469}-socializing.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\socializing.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\studying.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{07926137-1e7e-430d-a624-ca76412cf4bb}-studying.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\studying.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\Thumbs.db</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{70babfd6-f5c5-467d-9e18-b65829e38796}-Thumbs.db</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\Thumbs.db</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\traveling.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{be136745-ddb1-4a31-8de5-40e8adaba3e6}-traveling.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\traveling.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\watching_a_movie.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{f453bf7a-0487-4aea-b7a5-4af9cf1d1f28}-watching_a_movie.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\watching_a_movie.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\watching_tv.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{54ce1670-f23c-418d-bc6e-b8146d5429b6}-watching_tv.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\watching_tv.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\working.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{52b0edaf-c87e-452e-8c4d-85399a94c764}-working.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\working.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\working_out.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{775a8925-9e42-4c85-abe2-440e007ec474}-working_out.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\working_out.png</DestinationFilename>
-            </FileItem>
-            <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-              <Param1 />
-              <UpdateOption>AlwaysOverwrite</UpdateOption>
-              <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\writing.png</LocalFileName>
-              <ZipFileName>Installer{CopyFile}\{768aaf6c-9d45-47a5-999e-9f5959b3c217}-writing.png</ZipFileName>
-              <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\writing.png</DestinationFilename>
+              <DestinationFilename>%Base%\plugins\Windows\MyChitChat.dll</DestinationFilename>
             </FileItem>
             <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
               <Param1 />
@@ -415,6 +23,349 @@
               <LocalFileName>..\..\Language\MyChitChat\de.xml</LocalFileName>
               <ZipFileName>Installer{CopyFile}\{f86b5f2c-8c94-4629-917a-23e3aef5c099}-de.xml</ZipFileName>
               <DestinationFilename>%Language%\MyChitChat\de.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\MyChitChat_Chat.xml</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{d7452cb8-7030-465b-ad2d-12e9db8cc3f0}-MyChitChat_Chat.xml</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\MyChitChat_Chat.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\MyChitChat_Main.xml</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{d53ae2da-d70c-469c-84e6-e5e9bb7d4a40}-MyChitChat_Main.xml</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\MyChitChat_Main.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\properties.xml</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{65391493-d19c-4654-b7a7-6ee69361fd29}-properties.xml</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\properties.xml</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\hover_MyChitChat.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{ac98fed3-896c-432f-bf28-2700a1e0f298}-hover_MyChitChat.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\hover_MyChitChat.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\tune\default_tune.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{26eb61b8-2985-4863-a67e-28cc77eaec6f}-default_tune.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\tune\default_tune.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\Away.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{55624b20-0cd8-40e9-b479-5bcff314915a}-Away.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\Away.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\default_status.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{8847d971-34d3-43d2-8d9d-37823a83faf4}-default_status.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\default_status.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\DoNotDisturb.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{a7d1e120-bc27-4e73-879f-494c82270142}-DoNotDisturb.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\DoNotDisturb.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\ExtendedAway.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{cdc64416-e157-4cd6-a62d-4a1fd702af64}-ExtendedAway.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\ExtendedAway.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\Invisible.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{64f6e969-69fa-4400-992b-8d60d01fecee}-Invisible.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\Invisible.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\Normal.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{735f3562-7d1d-4980-896c-ac4dbf571dba}-Normal.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\Normal.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\ReadyToChat.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{4f13aab1-9172-4dad-9c59-fbb0fd10cfb8}-ReadyToChat.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\ReadyToChat.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\Unavailable.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{6e33df21-acc9-42b6-af47-ac3c4fa529dc}-Unavailable.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\Unavailable.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\contacts.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{78d5c3e6-5535-4d26-846f-a26de9ca0140}-contacts.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\contacts.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\hover_3Monkeys.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{4cf15487-4247-40dc-a176-7ef79eea9254}-hover_3Monkeys.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\hover_3Monkeys.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_default.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{9160b0e8-0b4d-4b50-9679-194c6b820bff}-icon_default.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_default.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_error.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{12de7c97-5ffb-4236-8c8f-53b49763c098}-icon_error.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_error.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{014c7979-c545-445a-bab2-cb643f27a85e}-icon_message.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_in_read.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{791f2ce3-0514-41a6-acce-ed27705ee5b3}-icon_message_in_read.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_in_read.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_in_replied.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{5b4bf041-b6e1-4b87-93b0-7270b3949a35}-icon_message_in_replied.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_in_replied.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_in_unread.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{c612c40d-eefb-4ddb-8c06-fc04626d3649}-icon_message_in_unread.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_in_unread.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_new_focused.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{04c4ec5c-ceee-42de-981b-0391b9ffe7ad}-icon_message_new_focused.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_new_focused.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_new_unfocussed.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{6a3cde2d-3d2d-417e-9323-f1e9499829ec}-icon_message_new_unfocussed.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_new_unfocussed.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_out.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{9d54134d-af3a-4068-80aa-c2f35b149c74}-icon_message_out.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_out.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_presence.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{97f53f9f-0f6c-47d1-af71-00190dccaf3d}-icon_presence.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_presence.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\inbox_full.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{8e9c48b9-bbb5-4fe6-ad56-2f81ad1e39d5}-inbox_full.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\inbox_full.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\plugin_logo.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{ea692afd-190f-42c2-9fb2-a28d645be8a8}-plugin_logo.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\plugin_logo.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\read_message.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{c4b51c93-bee8-445d-8e68-7bdfdf6c6041}-read_message.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\read_message.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\mood\default_mood.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{041fa7ad-08c9-4db9-ba6b-ae7944f4585b}-default_mood.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\mood\default_mood.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\mood\happy.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{620be92d-01c1-4357-870f-836bbab81c58}-happy.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\mood\happy.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\coding.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{9606f7ba-ea35-4e98-9009-f7ad31f6cb5d}-coding.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\coding.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\cooking.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{a66a6c41-2a19-4e97-909b-d7aa2304f5a6}-cooking.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\cooking.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\default_activity.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{f6a890e2-86f6-4abe-b366-23ada9693686}-default_activity.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\default_activity.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\gaming.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{37bd28c4-2e2b-4e43-b853-6d93fa81d796}-gaming.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\gaming.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\going_out.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{dcf35ebc-53b7-49b7-9a86-46949ac84939}-going_out.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\going_out.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\having_appointment.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{47d0ccfa-cc27-4ff3-8f59-b16174ab375d}-having_appointment.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\having_appointment.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\in_a_meeting.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{f3ce1139-94d7-445e-9667-072b63a1bc9e}-in_a_meeting.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\in_a_meeting.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\in_real_life.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{3cef3a92-b694-4fe8-b7a3-b8aa34502f6c}-in_real_life.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\in_real_life.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\on_vacation.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{768c54ba-5cce-491e-ad13-2cf860dcbde9}-on_vacation.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\on_vacation.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\reading.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{95629a25-50e3-4f0b-868d-652f38d78f8b}-reading.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\reading.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\sleeping.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{3442c14b-56a3-440b-bab7-b8709cd4652f}-sleeping.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\sleeping.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\socializing.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{a1055c5b-1abb-49c2-94aa-751469f423ac}-socializing.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\socializing.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\studying.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{0b6229be-04aa-4f9e-bf1a-71f7197a39af}-studying.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\studying.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\traveling.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{afb46706-9099-4fea-b8bb-6c5a3fb5643a}-traveling.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\traveling.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\watching_a_movie.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{8609bb48-b0be-40f6-b3d7-a475f448872f}-watching_a_movie.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\watching_a_movie.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\watching_tv.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{11ba9058-7d1c-47d0-a7f6-e1fde3504338}-watching_tv.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\watching_tv.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\working.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{d329083b-382d-4c89-9a47-3cb461174214}-working.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\working.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\working_out.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{df1f3826-081e-43c1-b6f1-f711e4a6e024}-working_out.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\working_out.png</DestinationFilename>
+            </FileItem>
+            <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+              <Param1 />
+              <UpdateOption>AlwaysOverwrite</UpdateOption>
+              <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\writing.png</LocalFileName>
+              <ZipFileName>Installer{GenericSkinFile}\{1a6df1ed-01b3-434d-af5d-e67b83b6d40d}-writing.png</ZipFileName>
+              <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\writing.png</DestinationFilename>
             </FileItem>
           </Items>
         </Files>
@@ -536,18 +487,18 @@ Click Next to continue or Cancel to exit Setup.</Value>
     <ForumPage>http://forum.team-mediaportal.com/mediaportal-plugins-47/upcoming-mychitchat-jabber-im-plugin-muc-irc-aim-gg-gtalk-icq-msn-qq-sms-email-83953/#post632708</ForumPage>
     <UpdateUrl />
     <Version>
-      <Major>0</Major>
-      <Minor>9</Minor>
+      <Major>1</Major>
+      <Minor>0</Minor>
       <Build>0</Build>
       <Revision>0</Revision>
     </Version>
     <ExtensionDescription>MediaPortal - Jabber IM Plugin</ExtensionDescription>
-    <VersionDescription>This is the first public release (Alpha!)</VersionDescription>
-    <DevelopmentStatus>Alpha</DevelopmentStatus>
+    <VersionDescription>This is the release candidate for version 1.0.0.</VersionDescription>
+    <DevelopmentStatus>Rc</DevelopmentStatus>
     <OnlineLocation />
-    <ReleaseDate>2010-06-29T16:32:30.15625+02:00</ReleaseDate>
+    <ReleaseDate>2011-06-03T16:32:30</ReleaseDate>
     <Tags>mediaportal, mychitchat, jabber, im, icq</Tags>
-    <Location />
+    <Location>C:\Users\Anthrax-Leprosy-Pi\Documents\Development\Projekte\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_1.0.0.RC.mpe1</Location>
     <Params>
       <Items>
         <SectionParam Name="Icon">
@@ -585,401 +536,9 @@ Click Next to continue or Cancel to exit Setup.</Value>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\bin\Release\MyChitChat_0.9.0_Alpha.dll</LocalFileName>
+        <LocalFileName>..\..\..\..\..\..\..\..\..\Program Files (x86)\Team MediaPortal\MediaPortal\plugins\Windows\MyChitChat.dll</LocalFileName>
         <ZipFileName>Installer{CopyFile}\{4a402381-991a-4bc2-a0e5-8755cda75801}-MyChitChat_0.9.0_Alpha.dll</ZipFileName>
-        <DestinationFilename>%Plugins%\windows\MyChitChat_0.9.0_Alpha.dll</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\MyChitChat_Chat.xml</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b803309a-bbba-4e1b-a6dc-ee12bf8379f1}-MyChitChat_Chat.xml</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\MyChitChat_Chat.xml</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\MyChitChat_Main.xml</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{a6779b0a-5967-4c85-b8da-7b0d1d7175eb}-MyChitChat_Main.xml</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\MyChitChat_Main.xml</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\properties.xml</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{942c98de-1949-4c6e-9357-e3dbf4abb7bc}-properties.xml</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\properties.xml</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\hover_MyChitChat.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{95d74d7f-5267-496e-b7bb-4a77a4e25a58}-hover_MyChitChat.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\hover_MyChitChat.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\Thumbs.db</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{888f731a-b610-4059-bc02-6bc2260e3079}-Thumbs.db</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\Thumbs.db</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\Thumbs.db</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{a64a8996-b8be-417e-b46c-3d8fd283ce19}-Thumbs.db</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\Thumbs.db</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\tune\default_tune.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{418f575d-6216-42ea-b454-cfe37fcafb2f}-default_tune.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\tune\default_tune.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\tune\Thumbs.db</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{c9ca7d9f-983c-48d1-89b6-ff648e113195}-Thumbs.db</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\tune\Thumbs.db</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Away.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{fcd9884e-1956-4956-8ce0-e600a397b5b2}-Away.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Away.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\default_status.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{2269e86c-7592-43b7-baf1-40637ca4c8fe}-default_status.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\default_status.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\DoNotDisturb.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{38507373-0b22-471a-8112-0fb127de11d1}-DoNotDisturb.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\DoNotDisturb.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\ExtendedAway.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b15eedbe-8047-4503-8f61-f58163886696}-ExtendedAway.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\ExtendedAway.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Invisible.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{f9a7ed96-d80b-4cc8-bd0a-79e677055cf5}-Invisible.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Invisible.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Normal.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{de0ee6ae-67f9-4bf9-9a93-d4f8b7e03e06}-Normal.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Normal.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\ReadyToChat.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{ebe09235-f496-407a-b15f-9d3497d728af}-ReadyToChat.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\ReadyToChat.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Thumbs.db</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{56f81b2c-8f24-4665-abc4-b1feeb8e7ec1}-Thumbs.db</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Thumbs.db</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\status\Unavailable.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{ab4c9aec-d9d7-4703-9c1f-2c5d7c438347}-Unavailable.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\status\Unavailable.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\contacts.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{abec3754-100c-44bb-8462-6799cd3eefdf}-contacts.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\contacts.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\hover_3Monkeys.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{0ae549ae-19b3-4713-9657-90d17db93dea}-hover_3Monkeys.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\hover_3Monkeys.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_default.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{9e5f0571-d126-443d-83f4-53b43fdf359f}-icon_default.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_default.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_error.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{a77169b5-e790-4ce0-853c-5e9f0203f76e}-icon_error.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_error.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{0b45700c-b88f-407a-b643-9f6cbecf8f92}-icon_message.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_in_read.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{4390063c-277d-4309-96f6-9040fea4642a}-icon_message_in_read.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_in_read.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_in_replied.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{6959ea22-2e23-44b7-a09b-a0f9e7b8fb50}-icon_message_in_replied.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_in_replied.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_in_unread.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{cb626424-affb-447b-b3a3-4e57b6f42911}-icon_message_in_unread.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_in_unread.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_new_focused.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{14ca16fc-6525-4d57-a639-9b75325f1fc2}-icon_message_new_focused.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_new_focused.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_new_unfocussed.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{b7a1bc33-7388-4bec-a044-2b7bf6960c44}-icon_message_new_unfocussed.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_new_unfocussed.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_message_out.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{26ef54cd-ddae-4da5-88e4-539c8dc01fb2}-icon_message_out.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_message_out.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\icon_presence.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{1de2d691-b638-4f5a-8d8e-6492fcfe9044}-icon_presence.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\icon_presence.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\inbox_full.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{60cbccca-b7fa-4853-a518-6c617cb60225}-inbox_full.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\inbox_full.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\plugin_logo.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{153bb10f-f16e-48ef-bcee-51b207238a11}-plugin_logo.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\plugin_logo.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\read_message.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{7261d843-3287-4f4a-9ff2-8960c00caef5}-read_message.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\read_message.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\plugin\Thumbs.db</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{58050e68-90e6-49d8-9ce0-00b3edcdc842}-Thumbs.db</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\plugin\Thumbs.db</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\mood\default_mood.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{76424b70-2d2c-445c-afcd-d59474582365}-default_mood.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\mood\default_mood.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\mood\happy.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{bfcd9570-452e-4e17-9b1d-3a662e6dbde1}-happy.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\mood\happy.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\mood\Thumbs.db</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{1b2c60bb-5c5f-4fe8-87b6-77c88e16e4d0}-Thumbs.db</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\mood\Thumbs.db</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\coding.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{94b12b15-fda3-4a64-b606-2ce3773186be}-coding.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\coding.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\cooking.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{fb7f5a83-85c3-4ed2-9a08-f1ea8deffcab}-cooking.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\cooking.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\default_activity.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{f20542b9-8598-4b7c-9850-d87be7ae3472}-default_activity.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\default_activity.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\gaming.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{01525dc8-5f13-4d4b-8b70-50e20243da52}-gaming.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\gaming.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\going_out.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{1dd01e99-33cf-42cd-9ce7-61f68c71c6e4}-going_out.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\going_out.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\having_appointment.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{5e0c2585-c9fd-40a8-b33f-14ea77c95e7a}-having_appointment.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\having_appointment.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\in_a_meeting.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{5614cabe-31aa-4713-9dbb-f4e88e5d9e14}-in_a_meeting.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\in_a_meeting.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\in_real_life.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{948b0787-d4b4-4e85-b0dc-ec3beaae2e06}-in_real_life.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\in_real_life.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\on_vacation.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{02b7fbc2-1746-467c-9a49-9df118ed89fc}-on_vacation.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\on_vacation.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\reading.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{159defda-6c0d-4af3-b386-b97e4ca03bed}-reading.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\reading.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\sleeping.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{9c9a5e7c-a72a-4150-9787-98f020194e7b}-sleeping.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\sleeping.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\socializing.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{f3028e63-4cd1-493f-8de0-cac911217469}-socializing.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\socializing.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\studying.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{07926137-1e7e-430d-a624-ca76412cf4bb}-studying.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\studying.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\Thumbs.db</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{70babfd6-f5c5-467d-9e18-b65829e38796}-Thumbs.db</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\Thumbs.db</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\traveling.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{be136745-ddb1-4a31-8de5-40e8adaba3e6}-traveling.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\traveling.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\watching_a_movie.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{f453bf7a-0487-4aea-b7a5-4af9cf1d1f28}-watching_a_movie.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\watching_a_movie.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\watching_tv.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{54ce1670-f23c-418d-bc6e-b8146d5429b6}-watching_tv.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\watching_tv.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\working.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{52b0edaf-c87e-452e-8c4d-85399a94c764}-working.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\working.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\working_out.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{775a8925-9e42-4c85-abe2-440e007ec474}-working_out.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\working_out.png</DestinationFilename>
-      </FileItem>
-      <FileItem InstallType="CopyFile" SystemFile="false" Modified="false">
-        <Param1 />
-        <UpdateOption>AlwaysOverwrite</UpdateOption>
-        <LocalFileName>..\..\Skin\Blue3wide\Media\MyChitChat\activity\writing.png</LocalFileName>
-        <ZipFileName>Installer{CopyFile}\{768aaf6c-9d45-47a5-999e-9f5959b3c217}-writing.png</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\Media\MyChitChat\activity\writing.png</DestinationFilename>
+        <DestinationFilename>%Base%\plugins\Windows\MyChitChat.dll</DestinationFilename>
       </FileItem>
       <FileItem InstallType="CopyFile" SystemFile="false" Modified="true">
         <Param1 />
@@ -988,24 +547,367 @@ Click Next to continue or Cancel to exit Setup.</Value>
         <ZipFileName>Installer{CopyFile}\{f86b5f2c-8c94-4629-917a-23e3aef5c099}-de.xml</ZipFileName>
         <DestinationFilename>%Language%\MyChitChat\de.xml</DestinationFilename>
       </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\MyChitChat_Chat.xml</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{d7452cb8-7030-465b-ad2d-12e9db8cc3f0}-MyChitChat_Chat.xml</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\MyChitChat_Chat.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\MyChitChat_Main.xml</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{d53ae2da-d70c-469c-84e6-e5e9bb7d4a40}-MyChitChat_Main.xml</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\MyChitChat_Main.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\properties.xml</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{65391493-d19c-4654-b7a7-6ee69361fd29}-properties.xml</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\properties.xml</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\hover_MyChitChat.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{ac98fed3-896c-432f-bf28-2700a1e0f298}-hover_MyChitChat.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\hover_MyChitChat.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\tune\default_tune.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{26eb61b8-2985-4863-a67e-28cc77eaec6f}-default_tune.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\tune\default_tune.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\Away.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{55624b20-0cd8-40e9-b479-5bcff314915a}-Away.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\Away.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\default_status.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{8847d971-34d3-43d2-8d9d-37823a83faf4}-default_status.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\default_status.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\DoNotDisturb.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{a7d1e120-bc27-4e73-879f-494c82270142}-DoNotDisturb.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\DoNotDisturb.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\ExtendedAway.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{cdc64416-e157-4cd6-a62d-4a1fd702af64}-ExtendedAway.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\ExtendedAway.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\Invisible.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{64f6e969-69fa-4400-992b-8d60d01fecee}-Invisible.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\Invisible.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\Normal.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{735f3562-7d1d-4980-896c-ac4dbf571dba}-Normal.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\Normal.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\ReadyToChat.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{4f13aab1-9172-4dad-9c59-fbb0fd10cfb8}-ReadyToChat.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\ReadyToChat.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\status\Unavailable.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{6e33df21-acc9-42b6-af47-ac3c4fa529dc}-Unavailable.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\status\Unavailable.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\contacts.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{78d5c3e6-5535-4d26-846f-a26de9ca0140}-contacts.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\contacts.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\hover_3Monkeys.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{4cf15487-4247-40dc-a176-7ef79eea9254}-hover_3Monkeys.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\hover_3Monkeys.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_default.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{9160b0e8-0b4d-4b50-9679-194c6b820bff}-icon_default.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_default.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_error.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{12de7c97-5ffb-4236-8c8f-53b49763c098}-icon_error.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_error.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{014c7979-c545-445a-bab2-cb643f27a85e}-icon_message.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_in_read.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{791f2ce3-0514-41a6-acce-ed27705ee5b3}-icon_message_in_read.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_in_read.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_in_replied.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{5b4bf041-b6e1-4b87-93b0-7270b3949a35}-icon_message_in_replied.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_in_replied.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_in_unread.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{c612c40d-eefb-4ddb-8c06-fc04626d3649}-icon_message_in_unread.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_in_unread.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_new_focused.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{04c4ec5c-ceee-42de-981b-0391b9ffe7ad}-icon_message_new_focused.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_new_focused.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_new_unfocussed.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{6a3cde2d-3d2d-417e-9323-f1e9499829ec}-icon_message_new_unfocussed.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_new_unfocussed.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_message_out.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{9d54134d-af3a-4068-80aa-c2f35b149c74}-icon_message_out.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_message_out.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\icon_presence.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{97f53f9f-0f6c-47d1-af71-00190dccaf3d}-icon_presence.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\icon_presence.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\inbox_full.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{8e9c48b9-bbb5-4fe6-ad56-2f81ad1e39d5}-inbox_full.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\inbox_full.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\plugin_logo.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{ea692afd-190f-42c2-9fb2-a28d645be8a8}-plugin_logo.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\plugin_logo.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\plugin\read_message.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{c4b51c93-bee8-445d-8e68-7bdfdf6c6041}-read_message.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\plugin\read_message.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\mood\default_mood.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{041fa7ad-08c9-4db9-ba6b-ae7944f4585b}-default_mood.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\mood\default_mood.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\mood\happy.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{620be92d-01c1-4357-870f-836bbab81c58}-happy.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\mood\happy.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\coding.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{9606f7ba-ea35-4e98-9009-f7ad31f6cb5d}-coding.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\coding.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\cooking.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{a66a6c41-2a19-4e97-909b-d7aa2304f5a6}-cooking.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\cooking.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\default_activity.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{f6a890e2-86f6-4abe-b366-23ada9693686}-default_activity.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\default_activity.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\gaming.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{37bd28c4-2e2b-4e43-b853-6d93fa81d796}-gaming.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\gaming.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\going_out.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{dcf35ebc-53b7-49b7-9a86-46949ac84939}-going_out.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\going_out.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\having_appointment.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{47d0ccfa-cc27-4ff3-8f59-b16174ab375d}-having_appointment.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\having_appointment.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\in_a_meeting.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{f3ce1139-94d7-445e-9667-072b63a1bc9e}-in_a_meeting.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\in_a_meeting.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\in_real_life.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{3cef3a92-b694-4fe8-b7a3-b8aa34502f6c}-in_real_life.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\in_real_life.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\on_vacation.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{768c54ba-5cce-491e-ad13-2cf860dcbde9}-on_vacation.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\on_vacation.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\reading.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{95629a25-50e3-4f0b-868d-652f38d78f8b}-reading.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\reading.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\sleeping.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{3442c14b-56a3-440b-bab7-b8709cd4652f}-sleeping.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\sleeping.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\socializing.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{a1055c5b-1abb-49c2-94aa-751469f423ac}-socializing.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\socializing.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\studying.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{0b6229be-04aa-4f9e-bf1a-71f7197a39af}-studying.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\studying.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\traveling.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{afb46706-9099-4fea-b8bb-6c5a3fb5643a}-traveling.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\traveling.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\watching_a_movie.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{8609bb48-b0be-40f6-b3d7-a475f448872f}-watching_a_movie.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\watching_a_movie.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\watching_tv.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{11ba9058-7d1c-47d0-a7f6-e1fde3504338}-watching_tv.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\watching_tv.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\working.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{d329083b-382d-4c89-9a47-3cb461174214}-working.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\working.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\working_out.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{df1f3826-081e-43c1-b6f1-f711e4a6e024}-working_out.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\working_out.png</DestinationFilename>
+      </FileItem>
+      <FileItem InstallType="GenericSkinFile" SystemFile="false" Modified="false">
+        <Param1 />
+        <UpdateOption>AlwaysOverwrite</UpdateOption>
+        <LocalFileName>..\..\Skin\DefaultWide\Media\MyChitChat\activity\writing.png</LocalFileName>
+        <ZipFileName>Installer{GenericSkinFile}\{1a6df1ed-01b3-434d-af5d-e67b83b6d40d}-writing.png</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\Media\MyChitChat\activity\writing.png</DestinationFilename>
+      </FileItem>
     </Items>
   </UniqueFileList>
   <ProjectSettings>
     <FolderGroups>
-      <FolderGroup InstallType="CopyFile" SystemFile="false" Modified="true">
+      <FolderGroup InstallType="GenericSkinFile" SystemFile="false" Modified="true">
         <Param1 />
         <UpdateOption>AlwaysOverwrite</UpdateOption>
         <LocalFileName />
-        <ZipFileName>Installer{CopyFile}\{e8e56030-f904-49ab-960a-435b33da5edf}-</ZipFileName>
-        <DestinationFilename>%Skin%\Blue3wide\</DestinationFilename>
-        <Folder>..\..\Skin\Blue3wide</Folder>
+        <ZipFileName>Installer{GenericSkinFile}\{ff03c969-1cec-4871-a646-7f84767d379e}-</ZipFileName>
+        <DestinationFilename>%Skin%\[DEFAULT]\</DestinationFilename>
+        <Folder>..\..\Skin\DefaultWide</Folder>
         <Group>Default</Group>
         <Recursive>true</Recursive>
       </FolderGroup>
     </FolderGroups>
-    <ProjectFilename>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat.xmp2</ProjectFilename>
-    <UpdatePath1>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Stables.xml</UpdatePath1>
-    <UpdatePath2>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Betas.xml</UpdatePath2>
-    <UpdatePath3>D:\!Prasse\Development\MediaPortalPlugins\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Stables.xml</UpdatePath3>
+    <ProjectFilename>C:\Users\Anthrax-Leprosy-Pi\Documents\Development\Projekte\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Stable.xmp2</ProjectFilename>
+    <UpdatePath1>C:\Users\Anthrax-Leprosy-Pi\Documents\Development\Projekte\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Stables.xml</UpdatePath1>
+    <UpdatePath2>C:\Users\Anthrax-Leprosy-Pi\Documents\Development\Projekte\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Betas.xml</UpdatePath2>
+    <UpdatePath3>C:\Users\Anthrax-Leprosy-Pi\Documents\Development\Projekte\MyChitChat\MyChitChat\Setup\Extension\MyChitChat_Stables.xml</UpdatePath3>
   </ProjectSettings>
 </PackageClass>
