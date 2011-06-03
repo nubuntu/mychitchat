@@ -67,7 +67,9 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor & Initialization ~~~~~~~~~~~~~~~~~~~~~~
 
         public Main() {
+            Settings.Load();
             AddRosterEventHandlers();
+            AddHistoryEventHandlers();
             guiWindowChat = new Chat(Helper.SKIN_FILE_CHAT);
             StatusFilter = true;
         }
@@ -85,6 +87,7 @@ namespace MyChitChat.Gui {
         #region ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Override Methods ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public override bool Init() {
+            Settings.Load();
             History.Instance.ToString();
             GUIWindow window = (GUIWindow)guiWindowChat;
             GUIWindowManager.Add(ref window);
@@ -92,6 +95,7 @@ namespace MyChitChat.Gui {
             if (Settings.autoConnectStartup) {
                 Helper.JABBER_CLIENT.Login();
             }
+           
             return Load(Helper.SKIN_FILE_MAIN);
         }
 
@@ -104,6 +108,7 @@ namespace MyChitChat.Gui {
             SetupGuiControls();
             UpdateGuiUserProperties();
             History_OnUpdatedLog(History.Instance.LogHistory.ToString());
+            UpdateContactsFacade();
             base.OnPageLoad();
         }
 
@@ -119,7 +124,7 @@ namespace MyChitChat.Gui {
                 case MediaPortal.GUI.Library.Action.ActionType.ACTION_KEY_PRESSED:
                     if (ctrlListControlContacts.IsFocused && ctrlListControlContacts.SelectedListItem != null) {
                         if (action.m_key.KeyChar != 13 && action.m_key.KeyChar != 27 && ctrlListControlContacts != null) {
-                            History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path).Reply(Dialog.Instance.GetKeyBoardInput(((char)action.m_key.KeyChar).ToString(), Helper.CurrentKeyboardType));
+                            History.Instance.GetSession(ctrlListControlContacts.SelectedListItem.Path).Reply(Dialog.Instance.GetKeyBoardInput(((char)action.m_key.KeyChar).ToString()));
                             return;
                         }
                     }
@@ -254,29 +259,26 @@ namespace MyChitChat.Gui {
         /// </summary>
         private void UpdateContactsFacade() {
             if (ctrlListControlContacts != null) {
-                ctrlListControlContacts.VerifyAccess();
-                if (ctrlListControlContacts.CheckAccess()) {
-                    ctrlListControlContacts.Clear();
-                    foreach (Session currentSession in History.Instance.ChatSessions) {
-                        currentSession.UpdateItemInfo();
-                        currentSession.OnItemSelected -= new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
-                        currentSession.OnItemSelected += new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
+                ctrlListControlContacts.Clear();
+                foreach (Session currentSession in History.Instance.ChatSessions) {
+                    currentSession.UpdateItemInfo();
+                    currentSession.OnItemSelected -= new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
+                    currentSession.OnItemSelected += new GUIListItem.ItemSelectedHandler(OnSessionItemSelected);
 
-                        try {
-                            if (StatusFilter.HasValue) {
-                                if (StatusFilter.Value == currentSession.IsActiveSession) {
-                                    ctrlListControlContacts.Add(currentSession);
-                                }
-                            } else {
+                    try {
+                        if (StatusFilter.HasValue) {
+                            if (StatusFilter.Value == currentSession.IsActiveSession) {
                                 ctrlListControlContacts.Add(currentSession);
                             }
-
-                        } catch (Exception e) {
-                            Log.Error(e);
+                        } else {
+                            ctrlListControlContacts.Add(currentSession);
                         }
+
+                    } catch (Exception e) {
+                        Log.Error(e);
                     }
-                    ctrlListControlContacts.DoUpdate();
                 }
+                ctrlListControlContacts.DoUpdate();
             }
         }
         private void UpdateGuiUserProperties() {
@@ -314,10 +316,9 @@ namespace MyChitChat.Gui {
                 if (ctrlTextboxLastMessage != null) {
                     ctrlTextboxLastMessage.Clear();
                     if (selectedSession.Messages.Count > 0) {
-                        ctrlTextboxLastMessage.VerifyAccess();
-                        if (ctrlTextboxLastMessage.CheckAccess()) {
-                            ctrlTextboxLastMessage.Label = selectedSession.Messages.Last().ToString();
-                        }
+
+                        ctrlTextboxLastMessage.Label = selectedSession.Messages.Last().ToString();
+
                     }
                 }
             } catch (Exception e) {
@@ -366,9 +367,10 @@ namespace MyChitChat.Gui {
 
 
         void JABBER_CLIENT_OnRosterStart() {
-            AddHistoryEventHandlers();
-            GUIWaitCursor.Init();
-            GUIWaitCursor.Show();
+            try {
+                GUIWaitCursor.Init();
+                GUIWaitCursor.Show();
+            } catch { }
         }
 
         void JABBER_CLIENT_OnRosterEnd() {
@@ -425,10 +427,9 @@ namespace MyChitChat.Gui {
         void History_OnUpdatedLog(string logText) {
             try {
                 if (ctrlTextboxEventLog != null) {
-                    ctrlTextboxEventLog.VerifyAccess();
-                    if (ctrlTextboxEventLog.CheckAccess()) {
+                    
                         ctrlTextboxEventLog.Label = logText;
-                    }
+                    
                 }
             } catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }

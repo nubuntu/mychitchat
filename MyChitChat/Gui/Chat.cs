@@ -91,10 +91,7 @@ namespace MyChitChat.Gui {
         private void HandleChatMessage(Message selectedMessage) {
             if (ctrlTextboxSelectedMessage != null) {
                 ctrlTextboxSelectedMessage.Clear();
-                ctrlTextboxSelectedMessage.VerifyAccess();
-                if (ctrlTextboxSelectedMessage.CheckAccess()) {
-                    ctrlTextboxSelectedMessage.Label = selectedMessage.Body;
-                }
+                ctrlTextboxSelectedMessage.Label = selectedMessage.Body;
             }
             selectedMessage.Unread = false;
             if (_currentChatSession.Reply()) {
@@ -131,7 +128,7 @@ namespace MyChitChat.Gui {
                 this.ctrlListMessages.RemoteColor = 0xFFFF6347;
                 this.ctrlListMessages.PlayedColor = 0x2090EE90;
                 this.ctrlListMessages.DownloadColor = 0xFF90EE90;
-                this.ctrlListMessages.ShadedColor = 0xffff00000;               
+                this.ctrlListMessages.ShadedColor = 0xffff00000;
             }
         }
 
@@ -142,11 +139,10 @@ namespace MyChitChat.Gui {
             try {
                 if (Helper.PLUGIN_WINDOW_ACTIVE) {
                     if (this.ctrlListMessages != null) {
-                        ctrlTextboxMessageHistory.VerifyAccess();
-                        if (ctrlTextboxMessageHistory.CheckAccess()) {
-                            this.ctrlTextboxMessageHistory.Clear();
-                            this.ctrlTextboxMessageHistory.Label = LogMessages.ToString();
-                        }
+
+                        this.ctrlTextboxMessageHistory.Clear();
+                        this.ctrlTextboxMessageHistory.Label = LogMessages.ToString();
+
                     }
                 }
             } catch (Exception e) {
@@ -167,7 +163,7 @@ namespace MyChitChat.Gui {
             }
 
         }
-       
+
         private void UpdateGuiContactProperties() {
             if (_currentChatSession != null) {
                 GUIPropertyManager.SetProperty(TAG_CONTACT_NAME_NICK, _currentChatSession.ContactDetails.nickname);
@@ -196,7 +192,7 @@ namespace MyChitChat.Gui {
 
         void _currentChatSession_OnChatSessionUpdated(Session session, Message msg) {
             if (this._currentChatSession.Equals(session)) {
-                UpdateChatHistory();               
+                UpdateChatHistory();
             } else {
                 Log.Error("Grabbed message from different Chat Session!");
             }

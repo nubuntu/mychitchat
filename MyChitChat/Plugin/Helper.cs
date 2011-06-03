@@ -34,7 +34,7 @@ namespace MyChitChat.Plugin {
         /// </summary>
         public const string PLUGIN_NAME = "MyChitChat";
         public const string PLUGIN_AUTHOR = "Anthrax";
-        public const string PLUGIN_VERSION = "0.9.0";
+        public const string PLUGIN_VERSION = "1.0.0 RC";
         public const string PLUGIN_DESCRIPTION = "TODO";
 
         public static readonly string PLUGIN_LINK_PROJECT_HOME = new UriBuilder("http://mychitchat.googlecode.com").ToString();

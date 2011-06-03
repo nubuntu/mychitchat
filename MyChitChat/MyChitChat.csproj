@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,7 +14,26 @@
     <FileAlignment>512</FileAlignment>
     <StartupObject>
     </StartupObject>
-    <TargetFrameworkSubset>Full</TargetFrameworkSubset>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,6 +43,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -32,18 +52,30 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MyChitChatConfiguration|AnyCPU' ">
     <OutputPath>bin\MyChitChatConfiguration\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="core, Version=1.0.9.14226, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Common.Utils, Version=1.1.7.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\dll\Common.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Core, Version=1.1.7.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\dll\Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="dialogs, Version=1.0.9.14231, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Dialogs, Version=1.1.7.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\dll\Dialogs.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -54,10 +86,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="utils, Version=2.2.7.14221, Culture=neutral, processorArchitecture=x86">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="WindowPlugins, Version=1.0.9.14241, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Utils, Version=1.1.7.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\dll\Utils.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -101,13 +132,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Language\MyChitChat\de.xml" />
-    <Content Include="Resources\dll\core.dll" />
-    <Content Include="Resources\dll\dialogs.dll" />
+    <Content Include="Resources\dll\Common.Utils.dll" />
+    <Content Include="Resources\dll\Core.dll" />
+    <Content Include="Resources\dll\Dialogs.dll" />
     <Content Include="Resources\dll\ILMerge.exe" />
-    <Content Include="Resources\dll\utils.dll" />
-    <Content Include="Resources\dll\WindowPlugins.dll" />
     <EmbeddedResource Include="Resources\img\MyChitChat_icon_disabled.png" />
     <EmbeddedResource Include="Resources\img\MyChitChat_icon_enabled.png" />
+    <Content Include="Resources\dll\Utils.dll" />
     <Content Include="Resources\img\Config_Stripes.png" />
     <Content Include="Resources\img\icon_thinking.png" />
     <Content Include="Resources\img\jabber.png" />
@@ -115,11 +146,16 @@
     <Content Include="Resources\img\MyChitChat_3Monkeys.png" />
     <None Include="Resources\xmpp\agsXMPP.dll" />
     <Content Include="RegionsSnippet.txt" />
-    <Content Include="Setup\Forum\screen_config_credentials.png" />
-    <Content Include="Setup\Forum\screen_config_misc.png" />
-    <Content Include="Setup\Forum\screen_config_notification.png" />
-    <Content Include="Setup\Forum\screen_config_presence.png" />
-    <Content Include="Setup\Forum\screen_main_preview.png" />
+    <Content Include="Setup\Forum\MediaPortal Screenshots\22-00-21.png" />
+    <Content Include="Setup\Forum\MediaPortal Screenshots\22-00-38.png" />
+    <Content Include="Setup\Forum\MediaPortal Screenshots\22-01-03.png" />
+    <Content Include="Setup\Forum\MediaPortal Screenshots\22-01-27.png" />
+    <Content Include="Setup\Forum\MediaPortal Screenshots\22-01-33.png" />
+    <Content Include="Setup\Forum\Misc\screen_config_credentials.png" />
+    <Content Include="Setup\Forum\Misc\screen_config_misc.png" />
+    <Content Include="Setup\Forum\Misc\screen_config_notification.png" />
+    <Content Include="Setup\Forum\Misc\screen_config_presence.png" />
+    <Content Include="Setup\Forum\Misc\screen_main_preview.png" />
     <Content Include="Skin\Blue3wide\Media\hover_MyChitChat.png" />
     <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\coding.png" />
     <Content Include="Skin\Blue3wide\Media\MyChitChat\activity\cooking.png" />
@@ -170,18 +206,34 @@
     <Content Include="Skin\Blue3wide\properties.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\nJim\nJim.csproj">
-      <Project>{3AAB1BC8-0466-411C-91AD-995D2D555A05}</Project>
-      <Name>nJim</Name>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\dll\merge.bat" />
     <None Include="Setup\Extension\MyChitChat.xmp2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nJim\nJim.csproj">
+      <Project>{3AAB1BC8-0466-411C-91AD-995D2D555A05}</Project>
+      <Name>nJim</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -193,7 +245,8 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>REM xcopy "$(TargetPath)" "..\..\..\MpiRelease" /Y
-xcopy "$(TargetDir)*.*" "C:\Programme\Team MediaPortal\MediaPortal\plugins\Windows" /Y
+call "$(ProjectDir)Resources\dll\merge.bat"
+xcopy "$(TargetDir)MyChitChat_*.*" "C:\Program Files (x86)\Team MediaPortal\MediaPortal\plugins\Windows\" /Y
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

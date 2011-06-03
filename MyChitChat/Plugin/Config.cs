@@ -295,6 +295,27 @@ namespace MyChitChat.Plugin {
             Settings.publishActivityRecording = checkBoxPublishActivityRecording.Checked;
         }
 
+        private void buttonTestConnection_Click(object sender, EventArgs e) {
+            buttonTestConnection.Enabled = false;
+            Settings.Save();
+            Settings.Load();
+            Helper.JABBER_CLIENT.OnError += new OnErrorEventHandler(JABBER_CLIENT_OnError);
+            Helper.JABBER_CLIENT.OnLogin += new OnLoginEventHandler(JABBER_CLIENT_OnLogin);
+            Helper.JABBER_CLIENT.Login();
+        }
+
+        void JABBER_CLIENT_OnLogin(object sender) {
+            Helper.JABBER_CLIENT.Close();
+            buttonTestConnection.BackColor = Color.LightGreen;
+            buttonTestConnection.Enabled = true;
+        }
+
+        void JABBER_CLIENT_OnError(Enums.ErrorType type, string message) {            
+            buttonTestConnection.BackColor = Color.Tomato;
+            MessageBox.Show(message, "Jabber Error: " + type.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            buttonTestConnection.Enabled = true;
+        }            
+
     }
     /// <summary>
     /// Event args for the test event

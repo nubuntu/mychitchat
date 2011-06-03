@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyChitChat", "MyChitChat\MyChitChat.csproj", "{F24BDE0D-7AA9-43A1-88E7-82164DF7CF1B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3AAB1BC8-0466-411C-91AD-995D2D555A05} = {3AAB1BC8-0466-411C-91AD-995D2D555A05}
