@@ -1,0 +1,1 @@
+Instant Messaging Plugin for MediaPortal based on Jabber/agsXMPP
